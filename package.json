@@ -26,6 +26,7 @@
     "@ionic-native/core": "^5.0.7",
     "@ionic-native/firebase-x": "^5.27.0",
     "@ionic-native/http": "^5.28.0",
+    "@ionic-native/in-app-browser": "^5.28.0",
     "@ionic-native/media": "^5.27.0",
     "@ionic-native/social-sharing": "^5.27.0",
     "@ionic-native/splash-screen": "^5.0.0",
@@ -37,6 +38,7 @@
     "cordova-ios": "5.1.1",
     "cordova-plugin-advanced-http": "^3.0.0",
     "cordova-plugin-file": "^6.0.2",
+    "cordova-plugin-inappbrowser": "^4.0.0",
     "cordova-plugin-media": "^5.0.3",
     "leaflet": "^1.6.0",
     "rss-parser": "^3.9.0",
@@ -95,7 +97,8 @@
       "cordova-plugin-x-socialsharing": {
         "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly."
-      }
+      },
+      "cordova-plugin-inappbrowser": {}
     },
     "platforms": [
       "android",

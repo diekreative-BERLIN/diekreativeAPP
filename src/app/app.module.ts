@@ -10,7 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FirebaseX } from "@ionic-native/firebase-x/ngx";
 import '@angular/common/locales/global/de';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,7 +40,7 @@ BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
     FeedsService,
     ChurchapiService,
     UserstateService,
-    SocialSharing
+    SocialSharing,InAppBrowser
   ],
   bootstrap: [AppComponent]
 })

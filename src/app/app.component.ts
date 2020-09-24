@@ -12,6 +12,8 @@ import { ChurchapiService } from './connectors/churchapi.service';
 import { UserstateService } from './userstate.service';
 import { Router } from '@angular/router';
 import { HTTP } from '@ionic-native/http/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 
 @Component({
   selector: 'app-root',
@@ -32,7 +34,8 @@ export class AppComponent {
     private churchToolsApi: ChurchapiService,
     public userState: UserstateService,
     private router: Router,
-    private http: HTTP
+    private http: HTTP,
+    private iab: InAppBrowser
   ) {
     this.initializeApp();
   }
@@ -109,6 +112,13 @@ close(){
   homeActivated(){
     this.router.navigate(["/tabs/tab1"]);
     this.close();
+  }
+
+  openWebsite(url){
+    this.platform.ready().then(() => {
+      this.iab.create(url,'_system');
+
+  });
   }
 }
 

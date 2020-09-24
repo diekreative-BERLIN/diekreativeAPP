@@ -79,14 +79,14 @@
          
         <ion-grid>
           <ion-row class="socialmediaicons"> 
-            <ion-col size="1.4"><a href="https://diekreative.org"><ion-icon class="menuicon"  color="secondary" name="earth"></ion-icon></a></ion-col>
-            <ion-col size="1.4"><a target= "_blank" href="https://www.facebook.com/diekreative.org/"><ion-icon class="menuicon" src="/assets/icon/F_icon.svg"></ion-icon> </a></ion-col>
-            <ion-col size="1.4"><a target= "_blank" href="https://www.youtube.com/c/diekreative/featured"><ion-icon class="menuicon" src="/assets/icon/g5.svg"></ion-icon></a></ion-col>
-            <ion-col size="1.4"><a target= "_blank" href="https://www.instagram.com/diekreative_berlin/"><ion-icon  class="menuicon" src="/assets/icon/20160929161413!Instagram_logo_2016.svg"></ion-icon></a></ion-col>
+            <ion-col size="1.4"><a href="#" (click)="openWebsite('https://diekreative.org')"><ion-icon class="menuicon"  color="secondary" name="earth"></ion-icon></a></ion-col>
+            <ion-col size="1.4"><a (click)="openWebsite('https://www.facebook.com/diekreative.org/')" href="#"><ion-icon class="menuicon" src="/assets/icon/F_icon.svg"></ion-icon> </a></ion-col>
+            <ion-col size="1.4"><a (click)="openWebsite('https://www.youtube.com/c/diekreative/featured')" href="#"><ion-icon class="menuicon" src="/assets/icon/g5.svg"></ion-icon></a></ion-col>
+            <ion-col size="1.4"><a (click)="openWebsite('https://www.instagram.com/diekreative_berlin/')" href="#"><ion-icon  class="menuicon" src="/assets/icon/20160929161413!Instagram_logo_2016.svg"></ion-icon></a></ion-col>
           </ion-row>
           <ion-row class="minorinfo">
             <ion-col>
-              <a href="https://diekreative.org/impressum" onclick="window.open('https://diekreative.org/impressum', '_system'); return false;">Impressum</a>
+              <a href="#" (click)="openWebsite('https://diekreative.org/impressum')">Impressum</a>
             </ion-col>
             <ion-col></ion-col>
           </ion-row>
