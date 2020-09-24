@@ -1,0 +1,109 @@
+.my-custom-menu {
+    --width: 500px;
+  }
+
+  ion-menu{
+    padding-left: 20%;
+    
+  }
+
+
+  ion-menu-button {
+    position: absolute; top: 10px; right: 20px;
+  }
+
+.menuheader_gast {
+  position: absolute; top: 35px; right: 16px;
+}
+
+  .diekreativemenu {
+    top: 80px;
+    left: 0px;
+    width: 400px;
+    height: 600px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+  }
+
+ion-menu > ion-content > ion-list > ion-item > ion-label {
+  //border-bottom: 1px solid grey !important;
+  text-align: left;
+  font: normal normal 600 16px/22px Source Sans Pro;
+  letter-spacing: 0px;
+  color: #777777;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+ion-menu > ion-content > ion-list {
+  //MA from 13 to 7
+    margin-left:7%;
+}
+
+
+.shadow {
+    -moz-box-shadow:    0px 3px 6px #00000029;
+    -webkit-box-shadow: 0px 3px 6px #00000029;
+    box-shadow: 0px 3px 6px #00000029;
+  }
+
+
+
+ #logoimage{
+     height: 45px;
+     width: 133.54px;
+     padding: 0px 0px 0px 22px;
+ } 
+
+ .socialmediabar{
+    position: absolute;
+    bottom: 90px;
+     margin-left: 13%;
+     height: 90px;
+     width: 100%;
+     border-top: 1px solid var(--ion-color-secondary);
+ }
+
+ .menuicon{
+     margin:4%;
+     font-size: 22px;
+ }
+ .socialmediaicons{
+  margin-top:2%;
+ }
+
+ .minorinfo{
+   margin-top:2%;
+ }
+
+
+ #personlogo{
+   font-size: 80px;
+ }
+
+ #herzlichwillkommen{
+  font-size: 10px;
+ }
+
+ #fullusername{
+   font-size: 12px;
+   text-transform: uppercase;
+ }
+
+ #username{
+   letter-spacing: normal;
+   line-height: normal;
+ }
+
+ #closebutton{
+   top:25px;
+   stroke:#474747;
+ }
+
+ #logo {
+  background-image: url(../assets/icon/Logo.png);
+  background-size: cover;
+  margin-top: 5px;
+  height:45px;
+  width:132px;
+ }

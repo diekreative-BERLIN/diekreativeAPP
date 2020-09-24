@@ -1,0 +1,36 @@
+<ion-item>
+  <ion-grid>
+    <ion-row (click)="toggleTab()">
+      <ion-col size="11">
+        <div class="title">{{title}}</div>
+      </ion-col>
+      <ion-col size="1">
+        <ion-icon *ngIf="fulltext" class="accordion-closed" name="close-outline" ></ion-icon>
+        <ion-icon *ngIf="!fulltext" class="accordion-open" name="chevron-down-outline" ></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row class="accordion-body">
+      <ion-col size="12">
+        <div *ngIf="fulltext" class="descriptionopen">
+          <ul class="dashed"><li>
+            Menschen, die wissen, dass Gott sie leidenschaftlich liebt
+          </li>
+        <li>
+          dass diese Menschen leidenschaftlich Gott lieben
+        </li><li>
+          dass ein jeder seine Leidenschaften und Begabungen erkennt und trainiert
+        </li></ul>
+<br>
+All das soll finden – fördern – freisetzen ausdrücken!<br>
+Unter “Himmel auf die Erde bringen” verstehen wir, was Jesus in Mt 6,10 sagt: dein Reich komme, dein Wille geschehe, wie im Himmel so auch auf Erden. Gottes Wille ist also: Himmel auf Erden.<br>
+Jesus erklärt, dass sein Reich, die Königsherrschaft Gottes (der Himmel) vor der Tür steht. Gottes Welt ist zum Greifen nah. Seine Lösungen und Antworten, seine Heilungskraft, seine Liebe, seine Fähigkeit zu befreien. Gott ist die Antwort für alle Probleme dieser Welt, unserer Gesellschaften, unserer Familien und unseres persönlichen Lebens.<br>
+Gott möchte ganze Nationen verändern, sie mit Leidenschaft für seinen Sohn entzünden und Segen in alle Lebensbereiche und Sphären der Gesellschaft geben.<br>
+Davon träumen wir und dafür wollen wir uns von Gott gebrauchen lassen.
+      </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+ 
+ 
+
+</ion-item>

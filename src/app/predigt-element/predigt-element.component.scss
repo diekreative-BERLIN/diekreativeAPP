@@ -1,0 +1,21 @@
+h3{
+    color: var(--ion-color-secondary)
+
+}
+
+h2 {
+    color: var(--ion-color-primary)
+}
+
+.accordionbutton{
+    position: absolute;
+    top:25%;
+}
+
+.descriptionopen{
+    white-space: normal;
+}
+
+.title{
+    text-overflow: ellipsis;
+}

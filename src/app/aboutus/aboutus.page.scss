@@ -1,0 +1,139 @@
+    .ueber-uns-title {
+
+        box-shadow: 0px 3px 6px #00000029;
+        width:100%; 
+        height:209px; 
+        background-image: url('../../assets/headerimages/Header_Unterseiten_UEBER-UNS.jpg'); 
+        background-size: cover;
+    
+    }
+
+    .header-label{
+        position: absolute;
+        top: 158px;
+        left: 26px;
+    
+    }
+
+ 
+    h1.ueberuns-text {
+
+        margin-top: 43px;
+        margin-left: 119px;
+        
+        margin-bottom: 0px;
+        font: Bold var(--unnamed-font-size-27)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-lato);
+        letter-spacing: var(--unnamed-character-spacing-2-02);
+        color: var(--unnamed-color-003d58);
+        text-align: left;
+        font: Bold 27px/27px Lato;
+        letter-spacing: 2.02px;
+        color: #003D58;
+        opacity: 1;
+    
+    }
+    
+    h2.ueberuns-text {
+        margin-top:0px;
+        margin-left: 119px;
+        
+        font: Bold var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-lato);
+        letter-spacing: var(--unnamed-character-spacing-1-5);
+        color: var(--unnamed-color-777777);
+        text-align: left;
+        font-weight: 600px;
+        font: Bold 20px/27px Lato;
+        letter-spacing: 1.5px;
+        color: #777777;
+        opacity: 1;
+    }
+    
+    h3.ueberuns-text {
+    
+ 
+        font: Bold var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-lato);
+        letter-spacing: var(--unnamed-character-spacing-1-5);
+        color: var(--unnamed-color-777777);
+        text-align: left;
+        font: Bold 20px/27px Lato;
+        letter-spacing: 1.5px;
+        color: #777777;
+        opacity: 1;
+    
+    }
+    
+    p.ueberuns-text {
+    
+        margin-left: 30px;
+        margin-right: 86px;
+        margin-top: 45px;
+        //text-align: justify; 
+        font: Regular var(--unnamed-font-size-14)/var(--unnamed-line-spacing-18) var(--unnamed-font-family-source-sans-pro);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--unnamed-color-707070);
+        text-align: left;
+        font: Regular 14px/18px Source Sans Pro;
+        letter-spacing: 0px;
+        color: #707070;
+        opacity: 1;
+    
+    }
+    .pfeil-blau {
+        position: fixed;
+        top: 332px;
+        left: 50px;
+        width: 33px;
+        height: auto;
+        // top: 448px;
+        // left: 325px;
+        // width: 94px;
+        // height: 59px;
+        /* border: 1.5px solid var(--unnamed-color-e1a730); 
+        border: 1.5px;  
+        border: 2px solid #E1A730; */
+    }
+.kreuze {
+    stroke-width: 0.1px;
+    top: 240px;
+    left: 12px;
+    width: 75px;
+    height: 75px;
+    opacity: 1; 
+position: absolute;}
+
+.pfeil
+{position: absolute;
+    top: 351px;
+    left: 318px;
+    width: 79px;
+    height: 50px;
+    /* border: 1.5px solid var(--unnamed-color-e1a730); 
+    border: 1.5px;  
+    border: 2px solid #E1A730; */
+}
+#werwirsind{
+    margin-top:46px;
+    margin-left:45px;
+    width:256px;
+    margin-bottom: 14vw;
+}
+
+#label{
+    font-size: 14px;
+   letter-spacing: var(--unnamed-character-spacing-0);
+color: var(--unnamed-color-777777);
+text-align: left;
+font: SemiBold 14px/18px Source Sans Pro;
+font-weight: 600;
+letter-spacing: 0px;
+color: #777777;
+
+}
+
+#text{
+    font-size:14px;
+    font-weight: normal;
+    line-height: normal;
+    white-space: normal;
+    
+}

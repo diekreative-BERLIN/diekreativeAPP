@@ -1,0 +1,81 @@
+
+.tagundnacht-title {
+
+    box-shadow: 0px 3px 6px #00000029;
+    width:100%; 
+    height:209px; 
+    background-image: url('../../assets/headerimages/Header_Unterseiten_TAGUNDNACHT.jpg'); 
+    background-size: cover;
+
+}
+
+.header-label{
+    position: absolute;
+    top: 158px;
+    left: 26px;
+
+}
+
+.subtitle{
+    font-size: 14px;
+    font-family: Lato;
+    font-weight: normal;
+    line-height: normal;
+    margin-top:41px;
+    margin-bottom:41px;
+    margin-left:45px;
+    margin-right:45px;
+
+color: var(--unnamed-color-777777);
+text-align: left;
+font: Regular 14px/18px Source Sans Pro;
+letter-spacing: 0px;
+color: #777777;
+opacity: 1;
+}
+
+.fullwidthbutton{
+    width:100%;
+    background: var(--unnamed-color-777777) 0% 0% no-repeat padding-box;
+background: #777777 0% 0% no-repeat padding-box;
+border-radius: 3px;
+opacity: 1;
+height: 50px;
+margin-left:20px;
+margin-right:20px;
+margin-bottom:10px;
+}
+
+h3{
+    color: var(--ion-color-secondary)
+}
+
+h2 {
+    color: var(--ion-color-primary)
+}
+
+
+   /* .headercaption */
+
+.punkte
+{ position: fixed;
+    top: 317px;
+    left: 9px;
+    width: 79px;
+    height: 79px;
+    opacity: 1;}
+
+.pfeil
+{ position: fixed;
+top: 500px;
+left: 312px;
+width: 33px;
+height: 21px;
+opacity: 1;}
+
+ion-button{
+    color:#ffffff;
+    font-weight: bold;
+}
+
+

@@ -1,0 +1,58 @@
+<ion-item>
+  
+  <ion-label>
+    
+  
+ 
+    
+    <ion-grid>
+      <ion-row (click)="toggleTab()">
+        <ion-col size="11">  <div>{{predigt.pubDate[0] | date:'fullDate':'':'de'}}</div>
+          <div class="title">{{predigt.title[0]}}</div></ion-col>
+        <ion-col size="1" >  <ion-icon *ngIf="fulltext" class="accordionbutton accordion-closed" name="close-outline"></ion-icon><ion-icon *ngIf="!fulltext" class="accordionbutton accordion-open" name="chevron-down-outline" ></ion-icon></ion-col>
+      </ion-row>
+    </ion-grid>
+    <div>
+    <div *ngIf="!fulltext">{{predigt.description[0]}}</div>
+    <div *ngIf="fulltext" class="descriptionopen">{{predigt.description[0]}}</div>
+    <div *ngIf="fulltext">
+      <ion-toolbar >
+        <ion-buttons>
+            <ion-tab-button (click)="openPlayer()">
+              <ion-icon  name="headset-sharp"></ion-icon>
+              <ion-label>ANHÖREN</ion-label>
+            </ion-tab-button>
+            <ion-tab-button (click)="shareLink(predigt.enclosure[0].$.url, predigt.title[0])">
+              <ion-icon  name="share-sharp"></ion-icon>
+              <ion-label>TEILEN</ion-label>
+            </ion-tab-button>
+            <!--ion-tab-button>
+              <ion-icon  name="star-sharp"></ion-icon>
+              <ion-label>MERKEN</ion-label>
+            </ion-tab-button-->
+            <!--ion-tab-button>
+              <ion-icon  name="reader-sharp"></ion-icon>
+              <ion-label>SKRIPT</ion-label>
+            </ion-tab-button-->
+            <!--ion-tab-button>
+              <ion-icon  name="share-sharp"></ion-icon>
+              <ion-label>YOUTUBE</ion-label>
+            </ion-tab-button-->
+        </ion-buttons>
+        </ion-toolbar>
+      <div *ngIf="playervisible">
+       <audio  controls class="descriptionopen">
+                <source src={{predigt.enclosure[0].$.url}} type="audio/mpeg">
+      </audio>
+      </div>
+    </div>
+  </div>
+  </ion-label>
+
+  <!--div>
+    <h3>{{predigt.pubDate[0] | date:'fullDate':'':'de'}}</h3>
+    <h2>{{predigt.title[0]}}</h2>
+    <h3>{{predigt.description[0]}}</h3>
+  </div-->
+
+</ion-item>

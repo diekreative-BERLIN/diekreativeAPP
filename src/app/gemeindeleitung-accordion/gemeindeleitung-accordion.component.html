@@ -1,0 +1,49 @@
+<ion-item>
+  <ion-grid>
+    <ion-row (click)="toggleTab()">
+      <ion-col size="11" >
+        <div class="title">{{title}}</div>
+      </ion-col>
+      <ion-col >
+        <ion-icon *ngIf="fulltext" class="accordion-closed" name="close-outline" ></ion-icon>
+        <ion-icon *ngIf="!fulltext" class="accordion-open" name="chevron-down-outline" ></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row class="accordion-body"  *ngIf="fulltext">
+      <ion-col size="12">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="3">
+              <img src="../assets/gemeindeleitung/Christophe.jpeg">
+            </ion-col>
+            <ion-col>
+              <div class="name"><ion-label color="secondary">CHRISTOPHE</ion-label></div>
+              <div class="function"><ion-label color="secondary">HAUPTPASTOR & ÄLTESTER</ion-label></div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3">
+              <img src="../assets/gemeindeleitung/Dunja.jpeg">
+            </ion-col>
+            <ion-col>
+              <div class="name"><ion-label color="secondary">Dunja</ion-label></div>
+              <div class="function"><ion-label color="secondary">PASTORIN</ion-label></div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3">
+              <img src="../assets/gemeindeleitung/Marc.jpeg">
+            </ion-col>
+            <ion-col>
+              <div class="name"><ion-label color="secondary">Marc</ion-label></div>
+              <div class="function"><ion-label color="secondary">PASTOR FÜR FAMILIEN,<br>JUGEND UND KINDER<br> & ÄLTESTER</ion-label></div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+ 
+ 
+
+</ion-item>

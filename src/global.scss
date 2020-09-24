@@ -1,0 +1,103 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+.login-modal-class {
+    --background: #222;
+  }
+
+  .login-modal-class .modal-wrapper {
+    background: #222;
+  }
+
+  .modal {
+    display: flex !important;
+    }
+
+body { 
+  text-align: left;
+  letter-spacing: 0px;
+  color: #777777;
+  opacity: 1;
+  font: normal normal normal 14px/18px Source Sans Pro;
+ }
+
+a {
+  text-decoration-color: #E1A730;
+}
+
+h1, h2, h3, h4, h5 {
+  text-align: left;
+  font: Bold 27px/27px Lato;
+  text-decoration-color: #E1A730;
+}
+/*
+load mobiscroll extension for acdordion
+*/
+@import "~@mobiscroll/angular/dist/css/mobiscroll.scss";
+/*
+..and overwrite settings (by M.Andersohn)
+*/
+.mbsc-mobiscroll.mbsc-card.mbsc-form {
+	box-shadow: 0 0 0;
+}
+.mbsc-card {
+	margin: 0;
+}
+.mbsc-card-header {
+	padding: 0.5em;
+}
+
+.mbsc-ios.mbsc-card.mbsc-form {
+	margin: 0 0 0;
+  border-radius: 0;
+  box-shadow: 0 0 3px #00000029;
+}
+
+.mbsc-form, .mbsc-control-w, .mbsc-btn, .mbsc-segmented {
+	font-size: 16px;
+	font-family: Source Sans Pro;
+}
+.mbsc-bold {
+  font-weight: bold;
+  color: #474747;
+}
+.mbsc-ios .mbsc-btn-group-block {
+  margin: 0.5em 1em;
+  font-size: 14px;
+  font-family: Source Sans Pro;
+  color: #777777;
+}
+.mbsc-ios .mbsc-collapsible .mbsc-collapsible-header {
+	padding-right: 3em;
+	padding-left: 25px;
+}
+.mbsc-card-content.mbsc-no-padding {
+	padding: 0;
+  padding-left: 45px;
+  padding-right: 32px;
+}
+

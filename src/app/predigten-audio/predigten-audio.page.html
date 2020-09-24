@@ -1,0 +1,18 @@
+
+
+<ion-content>
+  <div class="predigt-title">
+    <ion-label class="header-label" color="light">PREDIGTEN</ion-label>
+  </div>
+
+
+  <ion-list>
+    <div class="kreuze"> <img src="../assets/svg/kreuze_blue.svg" id="kreuze" > </div>
+
+<div class="pfeil"> <img src="../assets/svg/pfeil_yellow_2.svg" id="pfeile" > </div>
+
+   <div *ngFor="let predigt of predigten"> 
+      <app-predigt-element [predigt]=predigt></app-predigt-element>
+  </div>
+  </ion-list>
+</ion-content>

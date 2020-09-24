@@ -1,0 +1,51 @@
+.tabs{
+    position:fixed;
+    overflow-y: hidden;
+}
+
+ion-icon {
+    font-size:22px;
+    margin-top:4px;
+}
+
+ion-tabs{
+    border:0x;
+}
+
+ion-tab-bar {
+    border:0px;
+}
+
+ion-tab-bar > {
+
+top: 608px;
+left: 0px;
+width: 375px;
+height: 55px;
+position:fixed;
+overflow-y: hidden;
+border: 0px;
+
+ion-tab-button > ion-icon{
+
+top: 622px;
+left: 31px;
+
+}
+
+ion-tab-button > ion-label {
+top: 633px;
+left: 27px;
+font-size:8.5px;
+font-weight: bold;
+letter-spacing: 0.5px;
+margin-top:-3px;
+//height: 13px;
+}
+
+ion-tab-button.tab-selected {
+    margin-top: -1px;
+    border-top: 3px solid var(--color-selected);
+}
+
+}

@@ -1,0 +1,8 @@
+{
+  "name": "diekreativeAPP",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,32 @@
+
+
+<ion-content>
+    <div class="tagundnacht-title" style="background-color: #fff;">
+      <ion-label class="header-label" color="light">TAGUNDNACHT</ion-label>
+  
+  
+   <div class="punkte"> <img src="../assets/svg/punkte_yellow.svg" id="kreuze" > </div>
+  
+   <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
+
+  
+</div>
+<ion-label ><div class="subtitle">
+Wir beten 24 Stunden - 7 Tage - 52 Wochen <br>
+Du bist herzlich eingeladen mitzubeten
+</div></ion-label>
+<ion-buttons *ngIf="userState.hasTuerOeffner">
+  <ion-grid>
+    <ion-row>
+      <ion-button (click)="tueroeffner.openFrontDoor()" class="fullwidthbutton">Türöffner vorne</ion-button>
+    </ion-row>
+    <ion-row> 
+      <ion-button (click)="tueroeffner.openSecondDoor()" class="fullwidthbutton">Türöffner hinten</ion-button>
+    </ion-row>
+  </ion-grid>
+</ion-buttons>
+
+<iframe  src="https://diekreative.org/churchtools/?q=churchcal&amp;embedded=true&amp;viewname=calView&amp;category_id=17&amp;title=Gebetskalender&amp;cal4web=true" width="100%" height="90%" frameborder="0" scrolling="no">Dein Brower unterstützt leider keine iFrames!&nbsp;</iframe>
+
+
+</ion-content>
