@@ -71,6 +71,11 @@ export class ChurchapiService {
     //return this.httpClient.get(this.REST_API_SERVER+'/'+request,{params:params, withCredentials:true});
   }
 
+  public getLoginString(personid){
+    var request = "persons"+'/'+personid+'/loginstring'
+    //var params = new HttpParams()
+    return this.http.get(this.REST_API_SERVER+'/'+request,{},{});
+  }
   
   public getPersonData(personid){
     var request = "persons"+'/'+personid

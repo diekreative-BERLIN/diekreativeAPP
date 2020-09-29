@@ -1,4 +1,3 @@
-import { MbscModule } from '@mobiscroll/angular';
 import { FormsModule } from '@angular/forms';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,15 +18,15 @@ import { FeedsService } from './communications/feeds.service';
 import { UserstateService } from './userstate.service';
 import { PredigtElementComponent } from './predigt-element/predigt-element.component';
 import { HTTP } from '@ionic-native/http/ngx';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [ 
-    MbscModule,  
     FormsModule,  
-BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
+BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, BrowserAnimationsModule],
   providers: [
     StatusBar,
     SplashScreen,

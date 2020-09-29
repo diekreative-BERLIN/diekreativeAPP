@@ -27,10 +27,6 @@ const routes: Routes = [
     loadChildren: () => import('./predigten-audio-details/predigten-audio-details.module').then( m => m.PredigtenAudioDetailsPageModule)
   },
   {
-    path: 'dummytab',
-    loadChildren: () => import('./dummytab/dummytab.module').then( m => m.DummytabPageModule)
-  },
-  {
     path: 'lifegroups',
     loadChildren: () => import('./lifegroups/lifegroups.module').then( m => m.LifegroupsPageModule)
   },
@@ -41,10 +37,19 @@ const routes: Routes = [
   {
     path: 'ctapp',
     loadChildren: () => import('./ctapp/ctapp.module').then( m => m.CtappPageModule)
-  },  {
+  },
+  {
     path: 'aboutus',
     loadChildren: () => import('./aboutus/aboutus.module').then( m => m.AboutusPageModule)
+  },  {
+    path: 'itemslide',
+    loadChildren: () => import('./itemslide/itemslide.module').then( m => m.ItemslidePageModule)
+  },
+  {
+    path: 'tun-gebetscal',
+    loadChildren: () => import('./tun-gebetscal/tun-gebetscal.module').then( m => m.TunGebetscalPageModule)
   }
+
 
 
 

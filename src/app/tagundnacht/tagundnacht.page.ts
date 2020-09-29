@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserstateService } from '../userstate.service';
 import { TueroeffnerService } from '../tueroeffner.service';
+import {MatAccordion} from '@angular/material/expansion';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-tagundnacht',
@@ -9,9 +12,23 @@ import { TueroeffnerService } from '../tueroeffner.service';
 })
 export class TagundnachtPage implements OnInit {
 
-  constructor(public userState:UserstateService, public tueroeffner:TueroeffnerService) { }
+  constructor(
+    public userState:UserstateService,
+    public tueroeffner:TueroeffnerService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
+  
+  meineSchichtenActivated(){
+    this.router.navigate(["/itemslide"]);
+    //this.close();
+  }
+  GebetskalenderActivated(){
+    this.router.navigate(["/tun-gebetscal"]);
+    //this.close();
+  }
 
+  @ViewChild(MatAccordion) accordion: MatAccordion;
 }

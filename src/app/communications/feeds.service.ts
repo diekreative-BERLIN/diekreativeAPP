@@ -9,7 +9,9 @@ import { HttpClient,  HttpErrorResponse, HttpHeaders } from "@angular/common/htt
 export class FeedsService {
   RssData: NewsRss;
 
-  public PREDIGTEN_URL = 'https://x9upj2z4ji.execute-api.eu-central-1.amazonaws.com/cors/feed/podcast';
+  //public PREDIGTEN_URL = 'https://x9upj2z4ji.execute-api.eu-central-1.amazonaws.com/cors/feed/podcast';
+//  public PREDIGTEN_URL = 'https://diekreative.org/feed/podcast';
+  public PREDIGTEN_URL = 'https://diekreative.org/addons/simplehtmldom/sermonrss_app.php';
   constructor(private http: HttpClient) { 
     this.GetRssFeedData(this.PREDIGTEN_URL);
   }

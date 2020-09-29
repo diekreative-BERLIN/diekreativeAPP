@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DummytabPage } from './dummytab.page';
+import { TunGebetscalPage } from './tun-gebetscal.page';
 
-describe('DummytabPage', () => {
-  let component: DummytabPage;
-  let fixture: ComponentFixture<DummytabPage>;
+describe('TunGebetscalPage', () => {
+  let component: TunGebetscalPage;
+  let fixture: ComponentFixture<TunGebetscalPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DummytabPage ],
+      declarations: [ TunGebetscalPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DummytabPage);
+    fixture = TestBed.createComponent(TunGebetscalPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

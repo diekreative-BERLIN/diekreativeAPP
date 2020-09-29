@@ -16,85 +16,89 @@
   
    <div class="kreuze"> <img src="../assets/svg/kreuze_blue.svg" id="kreuze" > </div>
    <div class="pfeil"> <img src="../assets/svg/pfeil_yellow_2.svg" id="pfeile" > </div>
-    <mbsc-page>
-        <mbsc-card collapsible #run1="mobiscroll">
-            <mbsc-card-header class="mbsc-card-header">
-                <div>
-                    <div class="mbsc-bold">UNSERE VISION</div>
-                </div>
-            </mbsc-card-header>
-            <mbsc-card-content class="mbsc-no-padding">
-                <div class="mbsc-btn-group-block">
-                    Wir sind eine Gemeinde, die tagundnacht (an)betet, Menschen findet, fördert und freisetzt, und den Himmel auf die Erde bringt.
-                </div>
-            </mbsc-card-content>
-        </mbsc-card>
-        
-        <mbsc-card collapsible #run2="mobiscroll">
-            <mbsc-card-header class="mbsc-card-header">
-                <div>
-                    <div class="mbsc-bold">WIR GLAUBEN</div>
-                </div>
-            </mbsc-card-header>
-            <mbsc-card-content class="mbsc-no-padding">
-                <div class="mbsc-btn-group-block">
-                    Wir glauben, dass Gott ist.
- Dass er da ist, dass er nah ist, dass er gut ist, dass er erfahrbar ist. Mitten in Berlin oder sonst wo.
- Dass die alte Botschaft der Bibel heute relevant ist und heute erlebbar ist.
- 
- Wir glauben auch, dass Gott heute noch prophetisch spricht, und Er einiges in Berlin vorhat. Über unserer Stadt Berlin gibt es viele prophetische Verheißungen.
- 
- Gott hat gesprochen, dass es eine Stadt sein wird, in der viele Menschen Heilung erfahren werden. Heilung an Leib und Seele.
- 
- Wir glauben an Erweckung und Transformation ganzer Länder! Daran wollen wir als Gemeinde teilhaben, das erwarten wir, danach strecken wir uns aus!
-                </div>
-            </mbsc-card-content>
-        </mbsc-card>
+    
+<!--
+   <div class="example-action-buttons">
+    <button mat-button (click)="accordion.openAll()">Expand All</button>
+    <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+  </div>
+-->
+  <!-- #docregion multi -->
+  <mat-accordion class="example-headers-align" multi>
+  <!-- #enddocregion multi -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Unsere Vision
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <ul>
+          <li>Menschen, die wissen, dass Gott sie leidenschaftlich liebt</li>
+          <li>dass diese Menschen leidenschaftlich Gott lieben</li>
+          <li>dass ein jeder seine Leidenschaften und Begabungen erkennt und trainiert </li>
+        </ul>
+        <p>All das soll finden – f&ouml;rdern – freisetzen ausdr&uuml;cken!</p>
+        <p>Unter “Himmel auf die Erde bringen” verstehen wir, was Jesus in Mt 6,10 sagt: dein Reich komme, dein Wille geschehe, wie im Himmel so auch auf Erden. Gottes Wille ist also: Himmel auf Erden.</p>
+        <p>Jesus erkl&auml;rt, dass sein Reich, die K&ouml;nigsherrschaft Gottes (der Himmel) vor der T&uuml;r steht. Gottes Welt ist zum Greifen nah. Seine L&ouml;sungen und Antworten, seine Heilungskraft, seine Liebe, seine F&auml;higkeit zu befreien. Gott ist die Antwort für alle Probleme dieser Welt, unserer Gesellschaften, unserer Familien und unseres pers&ouml;nlichen Lebens.</p>
+        <p>Gott m&ouml;chte ganze Nationen ver&auml;ndern, sie mit Leidenschaft für seinen Sohn entz&uuml;nden und Segen in alle Lebensbereiche und Sph&auml;ren der Gesellschaft geben.</p>
+        <p>Davon tr&auml;umen wir und daf&uuml;r wollen wir uns von Gott gebrauchen lassen.</p>
+      </ng-template>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Wir glauben
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <p>Wir glauben, dass Gott ist. Dass er da ist, dass er nah ist, dass er gut ist, dass er erfahrbar ist. Mitten in Berlin oder sonst wo.</p>
+        <p>Dass die alte Botschaft der Bibel heute relevant ist und heute erlebbar ist.</p>
+        <p>Wir glauben auch, dass Gott heute noch prophetisch spricht, und Er einiges in Berlin vorhat. Über unserer Stadt Berlin gibt es viele prophetische Verheißungen. Gott hat gesprochen, dass es eine Stadt sein wird, in der viele Menschen Heilung erfahren werden. Heilung an Leib und Seele.</p>
+        <p>Wir glauben an Erweckung und Transformation ganzer Länder!</p>
+        <p> Daran wollen wir als Gemeinde teilhaben, das erwarten wir, danach strecken wir uns aus!</p>
+      </ng-template>
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Gemeindeleitung
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+          <ion-col size="12">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="3">
+                  <img src="../assets/gemeindeleitung/Christophe.jpeg">
+                </ion-col>
+                <ion-col>
+                  <div class="name"><ion-label color="secondary">CHRISTOPHE</ion-label></div>
+                  <div class="function"><ion-label color="secondary">HAUPTPASTOR & ÄLTESTER</ion-label></div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="3">
+                  <img src="../assets/gemeindeleitung/Dunja.jpeg">
+                </ion-col>
+                <ion-col>
+                  <div class="name"><ion-label color="secondary">Dunja</ion-label></div>
+                  <div class="function"><ion-label color="secondary">PASTORIN</ion-label></div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="3">
+                  <img src="../assets/gemeindeleitung/Marc.jpeg">
+                </ion-col>
+                <ion-col>
+                  <div class="name"><ion-label color="secondary">Marc</ion-label></div>
+                  <div class="function"><ion-label color="secondary">PASTOR FÜR FAMILIEN,<br>JUGEND UND KINDER<br> & ÄLTESTER</ion-label></div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+    </mat-expansion-panel>
+  </mat-accordion>
+  
 
-        <mbsc-card collapsible #run3="mobiscroll">
-            <mbsc-card-header class="mbsc-card-header">
-                <div>
-                    <div class="mbsc-bold">GEMEINDELEITUNG</div>
-                </div>
-            </mbsc-card-header>
-            <mbsc-card-content class="mbsc-no-padding">
-                <div class="mbsc-btn-group-block">
-                    
-                    
-                        <ion-grid>
-                          <ion-row>
-                            <ion-col size="3">
-                              <img src="../assets/gemeindeleitung/Christophe.jpeg">
-                            </ion-col>
-                            <ion-col>
-                              <div class="name"><ion-label color="secondary">CHRISTOPHE</ion-label></div>
-                              <div class="function"><ion-label color="secondary">HAUPTPASTOR & ÄLTESTER</ion-label></div>
-                            </ion-col>
-                          </ion-row>
-                          <ion-row>
-                            <ion-col size="3">
-                              <img src="../assets/gemeindeleitung/Dunja.jpeg">
-                            </ion-col>
-                            <ion-col>
-                              <div class="name"><ion-label color="secondary">Dunja</ion-label></div>
-                              <div class="function"><ion-label color="secondary">PASTORIN</ion-label></div>
-                            </ion-col>
-                          </ion-row>
-                          <ion-row>
-                            <ion-col size="3">
-                              <img src="../assets/gemeindeleitung/Marc.jpeg">
-                            </ion-col>
-                            <ion-col>
-                              <div class="name"><ion-label color="secondary">Marc</ion-label></div>
-                              <div class="function"><ion-label color="secondary">PASTOR FÜR FAMILIEN,<br>JUGEND UND KINDER<br> & ÄLTESTER</ion-label></div>
-                            </ion-col>
-                          </ion-row>
-                        </ion-grid>
-                      
-
-                </div>
-            </mbsc-card-content>
-        </mbsc-card>
-
-    </mbsc-page>
 </ion-content>

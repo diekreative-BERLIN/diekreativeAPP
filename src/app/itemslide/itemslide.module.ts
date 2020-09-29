@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DummytabPageRoutingModule } from './dummytab-routing.module';
+import { ItemslidePageRoutingModule } from './itemslide-routing.module';
 
-import { DummytabPage } from './dummytab.page';
+import { ItemslidePage } from './itemslide.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DummytabPageRoutingModule
+    ItemslidePageRoutingModule
   ],
-  declarations: [DummytabPage]
+  declarations: [ItemslidePage]
 })
-export class DummytabPageModule {}
+export class ItemslidePageModule {}

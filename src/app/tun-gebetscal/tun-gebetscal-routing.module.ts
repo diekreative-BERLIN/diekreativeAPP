@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { UeberUnsPage } from './ueber-uns.page';
+import { TunGebetscalPage } from './tun-gebetscal.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: UeberUnsPage
+    component: TunGebetscalPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class UeberUnsPageRoutingModule {}
+export class TunGebetscalPageRoutingModule {}

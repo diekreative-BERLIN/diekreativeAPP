@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MbscFormOptions } from '@mobiscroll/angular';
+import {MatAccordion} from '@angular/material/expansion';
 
 @Component({
   selector: 'app-aboutus',
@@ -7,23 +7,10 @@ import { MbscFormOptions } from '@mobiscroll/angular';
   styleUrls: ['./aboutus.page.scss'],
 })
 export class AboutusPage implements OnInit {
-
   constructor() { }
 
   ngOnInit() {
   }
-
-  @ViewChild('run1')
-    r1: any;
-    @ViewChild('run2')
-    r2: any;
-    @ViewChild('run3')
-    r3: any;
-
-    formSettings: MbscFormOptions = {
-        lang: 'de',
-        theme: 'ios',
-        themeVariant: 'light'
-    };
-
+  
+  @ViewChild(MatAccordion) accordion: MatAccordion;
 }

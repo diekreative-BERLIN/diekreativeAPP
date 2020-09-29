@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { VisionAccordionComponent } from './vision-accordion.component';
+import { ItemslidePage } from './itemslide.page';
 
-describe('VisionAccordionComponent', () => {
-  let component: VisionAccordionComponent;
-  let fixture: ComponentFixture<VisionAccordionComponent>;
+describe('ItemslidePage', () => {
+  let component: ItemslidePage;
+  let fixture: ComponentFixture<ItemslidePage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VisionAccordionComponent ],
+      declarations: [ ItemslidePage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(VisionAccordionComponent);
+    fixture = TestBed.createComponent(ItemslidePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

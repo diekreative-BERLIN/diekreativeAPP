@@ -10,6 +10,7 @@ export class UserstateService {
   hasTuerOeffner = false;
   logintoken = "";
   fullusername = "";
+  loginstring = "";
   constructor(private churchtools:ChurchapiService) {
      
   }
@@ -40,7 +41,7 @@ export class UserstateService {
         this.hasTuerOeffner = true;
         this.churchtools.getLoginToken(personid).then((res)=>{
           console.log(JSON.stringify(res.data));
-          this.logintoken = JSON.parse(res.data).data
+          this.logintoken = JSON.parse(res.data).data;
           console.log("Has Tueroeffner and Logintoken");
         }).catch((err)=>{
           console.log("error on retrieving logintoken");
@@ -52,7 +53,14 @@ export class UserstateService {
       }else {
         this.hasTuerOeffner = false;
       }
-      
+      this.churchtools.getLoginString(personid).then((res)=>{
+        console.log("loginstring=");
+        console.log(JSON.stringify(res.data));
+        this.loginstring = JSON.parse(res.data);
+      }).catch((err)=>{
+        this.loginstring = "";
+      });
+
     }).catch((err)=>{
       this.hasTuerOeffner = false;
       this.logintoken = "";

@@ -113,7 +113,6 @@ close(){
     this.router.navigate(["/tabs/tab1"]);
     this.close();
   }
-
   openWebsite(url){
     this.platform.ready().then(() => {
       this.iab.create(url,'_system');
