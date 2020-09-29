@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Platform } from '@ionic/angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-ctapp',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CtappPage implements OnInit {
 
-  constructor() { }
+  constructor(private iab: InAppBrowser, private platform: Platform) { }
 
   ngOnInit() {
+  }
+
+  openWebsite(url){
+    this.platform.ready().then(() => {
+      this.iab.create(url,'_system');
+
+    });
   }
 
 }

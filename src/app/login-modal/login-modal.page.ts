@@ -26,10 +26,7 @@ export class LoginModalPage implements OnInit {
   }
 
   login(){
-    console.log("login test");
     this.churchapiService.login(this.username,this.password).then((res)=>{
-      console.log("LBUBB");
-      console.log("login: "+JSON.stringify(JSON.parse(res.data)));
 
       this.userService.userLogginSuccessful(JSON.parse(res.data).data.personId);
       this.dismiss();
