@@ -10,8 +10,10 @@ export class ChurchapiService {
 
 
   private REST_API_SERVER = environment.churchtoolsurl+"/api";
-  private DK_API_SERVER = environment.churchtoolsurl
+  private DK_API_SERVER = environment.churchtoolsurl;
   private AJAX_API_SERVER = environment.churchtoolsurl+"/index.php?";
+  private PRAY_API_SERVER = environment.prayerapiurl;
+  private PRAY_API_SERVER_token = environment.prayerapitoken;
 
   private CALENDARROOT = "q=churchcal/ajax&func=";
 
@@ -85,11 +87,26 @@ export class ChurchapiService {
     //return this.httpClient.get<PersonResponse>(this.REST_API_SERVER+'/'+request,{params:params, withCredentials:true});
   }
 
-  public getGebetsschichten(){
-
-    return this.http.get(this.DK_API_SERVER+"/dkApp_watches/v1/watches/scheduled",{},{token:"mwfMtqU24-7Vc8i7sHUFOQ7TbEmY0tE"})
+  public getGebetsschichten(nbEntries){
+    var request = "maxEntries"+'='+nbEntries
+    return this.http.get(this.PRAY_API_SERVER+"/watches/scheduled"+'/?'+request,{},{token:this.PRAY_API_SERVER_token})
   }
 
+  public getFreieSchichten(){
+    return this.http.get(this.PRAY_API_SERVER+"/watches/available",{},{token:this.PRAY_API_SERVER_token})
+  }
+
+  public takeSession(availableID,Personname,Praytype){
+    this.http.post(this.PRAY_API_SERVER+"/watches/available",{"ID":availableID, "Name":Personname, "Type":Praytype},{token:this.PRAY_API_SERVER_token})
+  }
+
+  public getTopicWeek(){
+    return this.http.get(this.PRAY_API_SERVER+"/praytopics/week",{},{token:this.PRAY_API_SERVER_token})
+  }
+
+  public getTopicPersecuted(){
+    return this.http.get(this.PRAY_API_SERVER+"/praytopics/persecuted",{},{token:this.PRAY_API_SERVER_token})
+  }
 
 }
 

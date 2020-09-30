@@ -48,6 +48,10 @@ const routes: Routes = [
   {
     path: 'tun-gebetscal',
     loadChildren: () => import('./tun-gebetscal/tun-gebetscal.module').then( m => m.TunGebetscalPageModule)
+  },
+  {
+    path: 'tun-takewatches',
+    loadChildren: () => import('./tun-takewatches/tun-takewatches.module').then( m => m.TunTakewatchesPageModule)
   }
 
 

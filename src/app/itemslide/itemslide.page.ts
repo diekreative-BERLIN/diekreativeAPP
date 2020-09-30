@@ -10,7 +10,7 @@ import { ChurchapiService } from '../connectors/churchapi.service';
 export class ItemslidePage implements OnInit {
   items:any;
   constructor(public navCtrl: NavController, private churchtools:ChurchapiService) {
-    this.churchtools.getGebetsschichten().then((result)=>{
+    this.churchtools.getGebetsschichten(999).then((result)=>{
       console.log(JSON.stringify(result.data));
       this.items = JSON.parse(result.data);
     });

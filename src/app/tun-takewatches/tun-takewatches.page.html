@@ -1,0 +1,26 @@
+<ion-content>
+
+  <h1 class="ueberuns-text">Freie Gebets-<br>schichten</h1> 
+
+
+ <div class="punkte"> <img src="../assets/svg/punkte_yellow.svg" id="punkte" > </div>
+ <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
+
+ <div class="positionierung">
+
+  <ion-list >
+    
+    <ion-item-sliding *ngFor = "let item of items">
+      <ion-item>{{item.time}}&nbsp;
+      {{item.descr}}
+      </ion-item>
+      
+      <ion-item-options>
+        <button color="danger" (click)="takeItem(item,item.id)"> &Uuml;bernehmen</button>
+      </ion-item-options>
+
+    </ion-item-sliding>
+
+  </ion-list>
+</div>
+</ion-content>

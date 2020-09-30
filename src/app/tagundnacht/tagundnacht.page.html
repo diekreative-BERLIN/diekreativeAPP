@@ -25,7 +25,7 @@ Du bist herzlich eingeladen mitzubeten
 <ion-buttons *ngIf="userState.hasTuerOeffner">
   <ion-grid>
     <ion-row>
-      <ion-button class="fullwidthbutton">Freie Gebetsschichten</ion-button>
+      <ion-button (click)="freieSchichtenActivated()" class="fullwidthbutton">Freie Gebetsschichten</ion-button>
     </ion-row>
   </ion-grid>
 </ion-buttons>
@@ -65,7 +65,7 @@ Du bist herzlich eingeladen mitzubeten
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
-	  	<p>Hier kommt das aktuelle Gebet</p>
+      {{items[0].time}}&nbsp;{{items[0].format}}&nbsp;{{items[0].person}}&nbsp;{{items[0].note}}
       </ng-template>
     </mat-expansion-panel>
 
@@ -76,7 +76,13 @@ Du bist herzlich eingeladen mitzubeten
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
-	  	<p>Hier kommt das n&auml;chste Gebet</p>
+	  	  <ion-list >
+          <ion-item-sliding *ngFor = "let item of items | slice:1">
+            <ion-item>{{item.time}}&nbsp;
+            {{item.format}}&nbsp;{{item.person}}&nbsp;{{item.note}}
+            </ion-item>
+          </ion-item-sliding>
+        </ion-list>
       </ng-template>
     </mat-expansion-panel>
 	
@@ -87,7 +93,7 @@ Du bist herzlich eingeladen mitzubeten
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
-	  	<p>Hier kommt der Wochenschwerpunkt</p>
+        {{WeekTopics}}
       </ng-template>
     </mat-expansion-panel>
 	
@@ -98,7 +104,7 @@ Du bist herzlich eingeladen mitzubeten
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
-	  	<p>Hier kommen die Gebetsanliegen f&uuml;r verfolgte Christen</p>
+	  	  {{PersecutedTopic}}
       </ng-template>
     </mat-expansion-panel>
 	
