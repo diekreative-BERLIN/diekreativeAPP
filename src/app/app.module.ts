@@ -19,10 +19,11 @@ import { UserstateService } from './userstate.service';
 import { PredigtElementComponent } from './predigt-element/predigt-element.component';
 import { HTTP } from '@ionic-native/http/ngx';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UnescapePipe } from './unescape.pipe';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, UnescapePipe],
   entryComponents: [],
   imports: [ 
     FormsModule,  
