@@ -18,42 +18,33 @@ Du bist herzlich eingeladen mitzubeten
 <ion-buttons>
   <ion-grid>
     <ion-row> 
-      <ion-button (click)="GebetskalenderActivated()" class="fullwidthbutton">Gebetskalender</ion-button>
+      <button mat-flat-button color="basic" class="fullwidth" (click)="GebetskalenderActivated()">Gebetskalender</button>
     </ion-row>
   </ion-grid>
 </ion-buttons>
 <ion-buttons *ngIf="userState.hasTuerOeffner">
   <ion-grid>
     <ion-row>
-      <ion-button (click)="freieSchichtenActivated()" class="fullwidthbutton">Freie Gebetsschichten</ion-button>
+      <button mat-flat-button color="basic" class="fullwidth" (click)="freieSchichtenActivated()">Freie Gebetsschichten</button>
     </ion-row>
   </ion-grid>
 </ion-buttons>
 <ion-buttons *ngIf="userState.hasTuerOeffner">
   <ion-grid>
     <ion-row>
-      <ion-button (click)="meineSchichtenActivated()" class="fullwidthbutton">Meine Gebetsschichten</ion-button>
+      <button mat-flat-button color="basic" class="fullwidth" (click)="meineSchichtenActivated()">Meine Gebetsschichten</button>
     </ion-row>
   </ion-grid>
 </ion-buttons>
 <ion-buttons *ngIf="userState.hasTuerOeffner">
   <ion-grid>
     <ion-row>
-      <ion-button (click)="tueroeffner.openFrontDoor()" class="fullwidthbutton">Türöffner vorne</ion-button>
-    </ion-row>
-    <ion-row> 
-      <ion-button (click)="tueroeffner.openSecondDoor()" class="fullwidthbutton">Türöffner hinten</ion-button>
+      <button mat-flat-button color="basic" class="door1" (click)="tueroeffner.openFrontDoor()"><img src="../../assets/icon/door-24px.svg"> Aussen</button>
+      <button mat-flat-button color="basic" class="door2" (click)="tueroeffner.openSecondDoor()"><img src="../../assets/icon/door-24px.svg"> Innen</button>
     </ion-row>
   </ion-grid>
 </ion-buttons>
 
-
-<!--
-   <div class="example-action-buttons">
-    <button mat-button (click)="accordion.openAll()">Expand All</button>
-    <button mat-button (click)="accordion.closeAll()">Collapse All</button>
-  </div>
--->
   <!-- #docregion multi -->
   <mat-accordion class="example-headers-align" multi>
   <!-- #enddocregion multi -->
@@ -65,7 +56,12 @@ Du bist herzlich eingeladen mitzubeten
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
-      {{items[0].time}}&nbsp;{{items[0].format}}&nbsp;{{items[0].person}}&nbsp;{{items[0].note}}
+        <div name="currentprayer">  
+          {{items[0].time}}&nbsp;{{items[0].format}}&nbsp;({{items[0].person}})&nbsp;{{items[0].note}}
+        </div>
+<!--
+      11-12 Uhr&nbsp;Gebetsformat&nbsp;Person&nbsp;Notiz
+-->
       </ng-template>
     </mat-expansion-panel>
 
@@ -76,12 +72,21 @@ Du bist herzlich eingeladen mitzubeten
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
-	  	  <ion-list >
+	  	  <ion-list>
+
           <ion-item-sliding *ngFor = "let item of items | slice:1">
-            <ion-item>{{item.time}}&nbsp;
-            {{item.format}}&nbsp;{{item.person}}&nbsp;{{item.note}}
+            <ion-item class="nextprayer">{{item.time}}&nbsp;
+            {{item.format}}&nbsp;({{item.person}})&nbsp;{{item.note}}
             </ion-item>
           </ion-item-sliding>
+<!--
+                    <ion-item-sliding>
+                      <ion-item class="nextprayer">10-11 Uhr&nbsp;(A&F) Dominik Test
+                      </ion-item>
+                      <ion-item>11-12 Uhr&nbsp;(A&F) Sonstewer Test
+                      </ion-item>
+                    </ion-item-sliding>
+-->
         </ion-list>
       </ng-template>
     </mat-expansion-panel>

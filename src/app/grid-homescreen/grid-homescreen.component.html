@@ -15,8 +15,7 @@
   </ion-row>
   <ion-row>
     <ion-col size-lg>
-      <ion-card id="Tag" [routerLink]="['../../tagundnacht']"> <img class="image" src="assets/Kachel_Startseite_TAGUNDNACHT.jpg"/> <div class="card-title">TAG<br>UND<br>NACHT</div> </ion-card>
-      
+      <ion-card id="Tag" (click)="tagundnachtGoto()"> <img class="image" src="assets/Kachel_Startseite_TAGUNDNACHT.jpg"/> <div class="card-title">TAG<br>UND<br>NACHT</div> </ion-card>
     </ion-col>
     <ion-col size-lg>
       <ion-card id="überuns" [routerLink]="['../../aboutus']"> <img class="image" src="assets/Kachel_Startseite_UEBER-UNS.jpg"/> <div class="card-title"><br>ÜBER<br>UNS</div> </ion-card>

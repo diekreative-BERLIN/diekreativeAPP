@@ -106,6 +106,7 @@ close(){
     this.close();
   }
   tagundnachtActivated(){
+    this.userState.AppPageTUNInit = true;
     this.router.navigate(["/tabs/tagundnacht"]);
     this.close();
   }

@@ -11,6 +11,7 @@ export class UserstateService {
   logintoken = "";
   fullusername = "";
   loginstring = "";
+  AppPageTUNInit = false;
   constructor(private churchtools:ChurchapiService) {
      
   }

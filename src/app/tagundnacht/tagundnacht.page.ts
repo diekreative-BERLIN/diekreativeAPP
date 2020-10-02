@@ -6,12 +6,17 @@ import { Router } from '@angular/router';
 import { ChurchapiService } from '../connectors/churchapi.service';
 
 
+//toto
+import {  AfterViewChecked } from '@angular/core';
+
+
 @Component({
   selector: 'app-tagundnacht',
   templateUrl: './tagundnacht.page.html',
   styleUrls: ['./tagundnacht.page.scss'],
 })
-export class TagundnachtPage implements OnInit {
+export class TagundnachtPage implements OnInit,
+  AfterViewChecked {
   items:any;
   WeekTopics:any;
   PersecutedTopic:any;
@@ -21,6 +26,7 @@ export class TagundnachtPage implements OnInit {
     private router: Router,
     private churchtools:ChurchapiService
   ) {
+    /*
       this.churchtools.getGebetsschichten(5).then((result)=>{
         console.log(JSON.stringify(result.data));
         this.items = JSON.parse(result.data);
@@ -31,10 +37,12 @@ export class TagundnachtPage implements OnInit {
       this.churchtools.getTopicPersecuted().then((result)=>{
         this.PersecutedTopic = result.data;
       })
+      */
       ;
   }
 
-  ngOnInit() {
+  ngOnInit(){
+    
   }
 
   meineSchichtenActivated(){
@@ -51,4 +59,26 @@ export class TagundnachtPage implements OnInit {
   }
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
+
+
+  ngAfterViewChecked(): void {
+    if(this.userState.AppPageTUNInit){
+      console.log("setze ZURUECK");
+      this.userState.AppPageTUNInit = false;
+
+      this.accordion.closeAll();
+      
+      this.churchtools.getGebetsschichten(5).then((result)=>{
+        console.log(JSON.stringify(result.data));
+        this.items = JSON.parse(result.data);
+        })
+      this.churchtools.getTopicWeek().then((result)=>{
+        this.WeekTopics = result.data;
+      })
+      this.churchtools.getTopicPersecuted().then((result)=>{
+        this.PersecutedTopic = result.data;
+      })
+    }    
+  }
+  
 }
