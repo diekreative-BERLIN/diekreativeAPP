@@ -10,13 +10,11 @@ export class UserstateService {
   hasTuerOeffner = false;
   logintoken = "";
   fullusername = "";
-  loginstring = "";
+//  loginstring = "";
   AppPageTUNInit = false;
   AppPageTunTimestamp = 1601000000000;
   //Date.now();
-  constructor(private churchtools:ChurchapiService) {
-     
-  }
+  constructor(private churchtools:ChurchapiService) { }
 
   public userLogginSuccessful(personid){
     this.personid = personid;
@@ -56,13 +54,16 @@ export class UserstateService {
       }else {
         this.hasTuerOeffner = false;
       }
+      /*
       this.churchtools.getLoginString(personid).then((res)=>{
         console.log("loginstring=");
         console.log(JSON.stringify(res.data));
         this.loginstring = JSON.parse(res.data);
       }).catch((err)=>{
         this.loginstring = "";
-      });
+      })
+      */
+      ;
 
     }).catch((err)=>{
       this.hasTuerOeffner = false;

@@ -65,21 +65,23 @@ export class TagundnachtPage implements OnInit,
     if(this.userState.AppPageTUNInit){
       console.log("setze ZURUECK");
       console.log("time stamp old"+this.userState.AppPageTunTimestamp);
-      let diffMin = Math.round((((Date.now()-this.userState.AppPageTunTimestamp) % 86400000) % 3600000) / 60000);
-      console.log("difference in min"+ diffMin); // minutes
-      let diffHour = Math.floor(( (Date.now()-this.userState.AppPageTunTimestamp) % 86400000) / 3600000);
-      console.log("differenz stunde alt - neu: "+ diffHour); // hours
+      let timediff = Date.now()-this.userState.AppPageTunTimestamp;
+      console.log("time difference in millisec"+ timediff);
+      //compute if we have a new hour than the old timestamp
+      let diffInHour = Math.floor(( Date.now() % 86400000) / 3600000) - Math.floor(( this.userState.AppPageTunTimestamp % 86400000) / 3600000);
+      console.log("differenz stunde alt - neu: "+ diffInHour); // hours
 
-      if(diffMin>60 || diffHour>=1){
+      this.userState.AppPageTUNInit = false;
+
+      if(diffInHour>0 || timediff > 3600000){
         this.userState.AppPageTunTimestamp = Date.now();
-        this.userState.AppPageTUNInit = false;
-
+        
         this.accordion.closeAll();
         
         this.churchtools.getGebetsschichten(5).then((result)=>{
           console.log(JSON.stringify(result.data));
           this.items = JSON.parse(result.data);
-          })
+        })
         this.churchtools.getTopicWeek().then((result)=>{
           this.WeekTopics = result.data;
         })

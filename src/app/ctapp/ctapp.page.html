@@ -6,17 +6,15 @@
     </ion-card-header>
     <ion-card-content>
       <ion-card-subtitle>1. ChurchTools App installieren</ion-card-subtitle>
-
-        <a href="https://itunes.apple.com/de/app/id1413263051">
-          <img src="/assets/icon/appstore.png" />
-        </a>
-      
-      <ion-card-subtitle>2. App mit Churchtools verbinden</ion-card-subtitle>
       <!--
-      <a href="churchtools://login?instanceurl=https://diekreative.org/churchtools/&loginstring=EXHk2g2j5Nj391vIiSGmpaYFcJgcFXlptIBjQp7VjYuGrRWYlgHiWVyfJkNr&personid=2">
-      -->
-        <ion-button (click)="openWebsite('churchtools://login?instanceurl=https://diekreative.org/churchtools/&loginstring=EXHk2g2j5Nj391vIiSGmpaYFcJgcFXlptIBjQp7VjYuGrRWYlgHiWVyfJkNr&personid=2')">ChurchTools App verbinden</ion-button>
-      <!-- </a> -->
+      <ion-button (click)="openWebsite('https://itunes.apple.com/de/app/id1413263051')">
+        -->
+        <img src="/assets/icon/appstore.png" (click)="openWebsite('https://itunes.apple.com/de/app/id1413263051')">
+          <!--
+            </ion-button>
+    -->
+      <ion-card-subtitle>2. App mit Churchtools verbinden</ion-card-subtitle>
+      <ion-button (click)="openCtApp()">ChurchTools App verbinden</ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>
