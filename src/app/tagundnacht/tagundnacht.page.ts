@@ -64,21 +64,30 @@ export class TagundnachtPage implements OnInit,
   ngAfterViewChecked(): void {
     if(this.userState.AppPageTUNInit){
       console.log("setze ZURUECK");
-      this.userState.AppPageTUNInit = false;
+      console.log("time stamp old"+this.userState.AppPageTunTimestamp);
+      let diffMin = Math.round((((Date.now()-this.userState.AppPageTunTimestamp) % 86400000) % 3600000) / 60000);
+      console.log("difference in min"+ diffMin); // minutes
+      let diffHour = Math.floor(( (Date.now()-this.userState.AppPageTunTimestamp) % 86400000) / 3600000);
+      console.log("differenz stunde alt - neu: "+ diffHour); // hours
 
-      this.accordion.closeAll();
-      
-      this.churchtools.getGebetsschichten(5).then((result)=>{
-        console.log(JSON.stringify(result.data));
-        this.items = JSON.parse(result.data);
+      if(diffMin>60 || diffHour>=1){
+        this.userState.AppPageTunTimestamp = Date.now();
+        this.userState.AppPageTUNInit = false;
+
+        this.accordion.closeAll();
+        
+        this.churchtools.getGebetsschichten(5).then((result)=>{
+          console.log(JSON.stringify(result.data));
+          this.items = JSON.parse(result.data);
+          })
+        this.churchtools.getTopicWeek().then((result)=>{
+          this.WeekTopics = result.data;
         })
-      this.churchtools.getTopicWeek().then((result)=>{
-        this.WeekTopics = result.data;
-      })
-      this.churchtools.getTopicPersecuted().then((result)=>{
-        this.PersecutedTopic = result.data;
-      })
-    }    
+        this.churchtools.getTopicPersecuted().then((result)=>{
+          this.PersecutedTopic = result.data;
+        })
+      }
+    }  
   }
   
 }

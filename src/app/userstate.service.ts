@@ -12,6 +12,8 @@ export class UserstateService {
   fullusername = "";
   loginstring = "";
   AppPageTUNInit = false;
+  AppPageTunTimestamp = 1601000000000;
+  //Date.now();
   constructor(private churchtools:ChurchapiService) {
      
   }
