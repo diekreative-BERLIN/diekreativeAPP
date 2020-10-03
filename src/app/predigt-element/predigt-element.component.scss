@@ -1,10 +1,6 @@
-h3{
-    color: var(--ion-color-secondary)
 
-}
-
-h2 {
-    color: var(--ion-color-primary)
+.title{
+    text-overflow: ellipsis;
 }
 
 .accordionbutton{
@@ -16,6 +12,27 @@ h2 {
     white-space: normal;
 }
 
-.title{
-    text-overflow: ellipsis;
+.predigttitel{
+    color: #777777;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0px;
+    font-size: 14px;
+}
+.title {
+    color: #1E3653;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0px;
+    font-size: 16px;
+}
+div {
+    color: #777777;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0px;
+    font-size: 14px;
 }

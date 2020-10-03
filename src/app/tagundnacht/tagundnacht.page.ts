@@ -42,7 +42,8 @@ export class TagundnachtPage implements OnInit,
   }
 
   ngOnInit(){
-    
+    this.WeekTopics = "<ul><li>blabla</li></ul>";
+    this.PersecutedTopic = "Gebet f&uuml;r Verfolgte";
   }
 
   meineSchichtenActivated(){

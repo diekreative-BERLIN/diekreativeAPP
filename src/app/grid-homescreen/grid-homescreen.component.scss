@@ -48,7 +48,13 @@ text-transform: uppercase;
     height:162px;
     width: 162px
 }
-
+#lifegroups{
+  background-image: url("/assets/Kachel_Startseite_LIFEGROUP.jpg") no-repeat fixed center;
+  background-size: scale-down;
+  object-fit: cover;
+  height:162px;
+  width: 162px
+}
 ios hydrated {margin: 0px!important;}
 
 

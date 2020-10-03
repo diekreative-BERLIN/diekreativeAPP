@@ -41,8 +41,17 @@ h1.ueberuns-text {
     width: 48px;
     height: 30px;
 }
-
+/*
 .ios.hydrated {
 	font-family: 'Source Sans Pro';
     font-style: bold;
+}
+*/
+.hydrated {
+	visibility: inherit;
+    font-family: 'Source Sans Pro';
+    font-weight: 700;
+    font-style: normal;
+    color: #474747;
+    font-size: 16;
 }

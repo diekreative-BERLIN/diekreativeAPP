@@ -12,9 +12,14 @@
     position: absolute;
     top: 158px;
     left: 26px;
-
+    color: #FFFFFF;
+    font-family: 'Lato bold';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 27px;
 }
 
+/*
 h3{
     color: var(--ion-color-secondary)
 }
@@ -22,7 +27,7 @@ h3{
 h2 {
     color: var(--ion-color-primary)
 }
-
+*/
 .kreuze {
     top: 27px;
     left: 14px;
@@ -64,6 +69,3 @@ h2 {
 .descriptionopen{
     white-space: normal;
 }
-
-
-
