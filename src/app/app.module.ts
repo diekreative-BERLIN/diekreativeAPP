@@ -3,7 +3,7 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FirebaseX } from "@ionic-native/firebase-x/ngx";
@@ -20,6 +20,7 @@ import { PredigtElementComponent } from './predigt-element/predigt-element.compo
 import { HTTP } from '@ionic-native/http/ngx';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UnescapePipe } from './unescape.pipe';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 
 @NgModule({
@@ -40,7 +41,10 @@ BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, Browse
     FeedsService,
     ChurchapiService,
     UserstateService,
-    SocialSharing,InAppBrowser
+    SocialSharing,
+    InAppBrowser,
+    NativeStorage,
+    Platform
   ],
   bootstrap: [AppComponent]
 })
