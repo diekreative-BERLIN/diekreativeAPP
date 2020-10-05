@@ -25,7 +25,18 @@ export class UserstateService {
         this.fullusername = user.fullusername;
         this.loggedin = true;
         this.hasTuerOeffner = user.hasTuerOeffner;
-        this.churchtools.getPersonViaToken(this.personid, this.logintoken).then((res)=>{
+        this.churchtools.loginWithToken(this.personid, this.logintoken).then((res)=>{
+          console.log("Login With token"+JSON.stringify(res));
+        }).catch((err)=>{
+          console.log("Error Login with token"+JSON.stringify(err));
+          this.nativeStorage.remove('currentUser');
+          this.loggedin = false;
+          this.personid = 0;
+          this.hasTuerOeffner = false;
+          this.logintoken = "";
+          this.fullusername = "";
+        })
+        /*this.churchtools.getPersonViaToken(this.personid, this.logintoken).then((res)=>{
           console.log("Persondata with Token:"+JSON.stringify(res));
         }).catch((err)=>{
           console.log("Error on getPerson with Token "+  JSON.stringify(err));
@@ -35,7 +46,7 @@ export class UserstateService {
           this.hasTuerOeffner = false;
           this.logintoken = "";
           this.fullusername = "";
-        })
+        })*/
       })
 
     });

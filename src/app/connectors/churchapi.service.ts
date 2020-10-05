@@ -16,23 +16,22 @@ export class ChurchapiService {
   private PRAY_API_SERVER_token = environment.prayerapitoken;
 
   private CALENDARROOT = "q=churchcal/ajax&func=";
-
+  private LOGINROOT = "q=login/ajax&func="
 
   constructor(private httpClient: HttpClient, private http:HTTP) { 
 
   }
 
   public login(username, password){
-    if(true){
+
       this.http.clearCookies();
       this.http.setServerTrustMode("nocheck");
       return this.http.post(this.REST_API_SERVER+"/login?username="+username+"&password="+password,{},{})
-    }else{
-      var params = new HttpParams()
-      .set('username',username)
-      .set('password',password)
-      //return this.sendRestPostRequest('login',params).toPromise();
-    }
+
+  }
+
+  public loginWithToken(userid, token){
+    return this.http.post(this.AJAX_API_SERVER+this.LOGINROOT+"loginWithToken"+"&q=login/ajax&token="+token+"&id="+userid,{},{});
   }
 
   public getPersonViaToken(userid, token){
