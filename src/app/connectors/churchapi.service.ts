@@ -35,6 +35,10 @@ export class ChurchapiService {
     }
   }
 
+  public getPersonViaToken(userid, token){
+    return this.http.get(this.REST_API_SERVER+"/persons/"+userid,{login_token:token},{})
+  }
+
   public getCalendarEventsByCategory(category){
     return this.callCalendarMethods(category)
   }

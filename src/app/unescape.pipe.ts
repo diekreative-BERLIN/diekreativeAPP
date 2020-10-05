@@ -17,6 +17,8 @@ export class UnescapePipe implements PipeTransform {
    string = string.replace(/\\u00d6/g,"Ö");
    string = string.replace(/\\u00fc/g,"ü");
    string = string.replace(/\\u00dc/g,"Ü");
+   string = string.replace(/\\u00df/g,"ß");
+   string = string.replace(/\\u1e9e/g,"ß");
    string = string.replace(/\\>/g,"\">");
    string = string.replace(/=\\/g,"\"=");
    let txt = document.createElement("textarea");

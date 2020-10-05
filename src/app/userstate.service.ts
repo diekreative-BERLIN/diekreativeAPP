@@ -25,6 +25,17 @@ export class UserstateService {
         this.fullusername = user.fullusername;
         this.loggedin = true;
         this.hasTuerOeffner = user.hasTuerOeffner;
+        this.churchtools.getPersonViaToken(this.personid, this.logintoken).then((res)=>{
+          console.log("Persondata with Token:"+JSON.stringify(res));
+        }).catch((err)=>{
+          console.log("Error on getPerson with Token "+  JSON.stringify(err));
+          this.nativeStorage.remove('currentUser');
+          this.loggedin = false;
+          this.personid = 0;
+          this.hasTuerOeffner = false;
+          this.logintoken = "";
+          this.fullusername = "";
+        })
       })
 
     });
