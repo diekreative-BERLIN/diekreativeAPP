@@ -50,8 +50,27 @@ h1.ueberuns-text {
 .hydrated {
 	visibility: inherit;
     font-family: 'Source Sans Pro';
-    font-weight: 700;
+    font-weight: 400;
     font-style: normal;
     color: #474747;
     font-size: 16;
+}
+
+.swap {
+    background-color: #003D58;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 600;
+    color: #FFFFFF;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+.release {
+    background-color: #777777;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 600;
+    color: #FFFFFF;
+    font-size: 10px;
+    text-transform: uppercase;
 }
