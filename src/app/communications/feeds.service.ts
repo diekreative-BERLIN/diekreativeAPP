@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { NewsRss } from './news-rss';
 import * as xml2js from "xml2js";
 import { HttpClient,  HttpErrorResponse, HttpHeaders } from "@angular/common/http";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,7 @@ import { HttpClient,  HttpErrorResponse, HttpHeaders } from "@angular/common/htt
 export class FeedsService {
   RssData: NewsRss;
 
-  //public PREDIGTEN_URL = 'https://x9upj2z4ji.execute-api.eu-central-1.amazonaws.com/cors/feed/podcast';
-  public PREDIGTEN_URL = 'https://diekreative.org/addons/simplehtmldom/sermonrss_app.php';
+  public PREDIGTEN_URL = environment.predigtenurl;
   constructor(private http: HttpClient) { 
     this.GetRssFeedData(this.PREDIGTEN_URL);
   }
