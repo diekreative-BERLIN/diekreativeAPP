@@ -52,6 +52,14 @@ const routes: Routes = [
   {
     path: 'tun-takewatches',
     loadChildren: () => import('./tun-takewatches/tun-takewatches.module').then( m => m.TunTakewatchesPageModule)
+  },
+  {
+    path: 'tun-swap',
+    loadChildren: () => import('./tun-swap/tun-swap.module').then( m => m.TunSwapPageModule)
+  },
+  {
+    path: 'tun-release',
+    loadChildren: () => import('./tun-release/tun-release.module').then( m => m.TunReleasePageModule)
   }
 
 

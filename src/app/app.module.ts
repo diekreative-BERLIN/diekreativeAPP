@@ -22,13 +22,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UnescapePipe } from './unescape.pipe';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
+//modal pages
+import { TunSwapPageModule } from './tun-swap/tun-swap.module';
+import { TunReleasePageModule } from './tun-release/tun-release.module';
 
 @NgModule({
   declarations: [AppComponent, UnescapePipe],
   entryComponents: [],
   imports: [ 
-    FormsModule,  
-BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, BrowserAnimationsModule],
+    FormsModule, BrowserModule, IonicModule.forRoot(), 
+    AppRoutingModule, HttpClientModule, BrowserAnimationsModule, 
+    TunSwapPageModule, TunReleasePageModule],
   providers: [
     StatusBar,
     SplashScreen,
