@@ -24,6 +24,21 @@ export class ItemslidePage implements OnInit {
     }
   }
 
+  swapItem(item,sessID){
+    console.log('tausche Schicht mit ID='+sessID);
+    
+    //Todo: zeige modal Window wo man den Gebetsschwerpunkt eintragen kann (Praytype). Name muss der Name der eingeloggten Person sein!
+    //this.churchtools.takeSession(availableID,this.userstate.fullusername,Praytype)
+    this.removeItem(item);
+  }
+  releaseItem(item,sessID){
+    console.log('gib Schicht mit ID='+sessID+' frei!');
+    
+    //Todo: zeige modal Window wo man den Gebetsschwerpunkt eintragen kann (Praytype). Name muss der Name der eingeloggten Person sein!
+    //this.churchtools.takeSession(availableID,this.userstate.fullusername,Praytype)
+    this.removeItem(item);
+  }
+
   ngOnInit() {
   }
 
