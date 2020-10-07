@@ -11,12 +11,12 @@
   <ion-list >
     
     <ion-item-sliding *ngFor = "let item of items">
-      <ion-item>{{item.time}}&nbsp;
+      <ion-item><b>{{item.time}}</b>&nbsp;
       {{item.descr}}
       </ion-item>
       
       <ion-item-options>
-        <button color="danger" (click)="takeItem(item,item.id)"> &Uuml;bernehmen</button>
+        <button class="takeover" (click)="takeItem(item,item.id)"> &Uuml;bernehmen</button>
       </ion-item-options>
 
     </ion-item-sliding>
