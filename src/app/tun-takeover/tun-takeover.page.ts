@@ -2,16 +2,14 @@ import { Component, OnInit } from '@angular/core';
 //popover
 import {PopoverController} from '@ionic/angular';
 
-
 @Component({
-  selector: 'app-tun-swap',
-  templateUrl: './tun-swap.page.html',
-  styleUrls: ['./tun-swap.page.scss'],
+  selector: 'app-tun-takeover',
+  templateUrl: './tun-takeover.page.html',
+  styleUrls: ['./tun-takeover.page.scss'],
 })
-export class TunSwapPage implements OnInit {
+export class TunTakeoverPage implements OnInit {
 
   constructor(private popover:PopoverController) { }
-  person;
   typ;
 
   ngOnInit() {
@@ -24,7 +22,7 @@ export class TunSwapPage implements OnInit {
   
   EnterNewPerson()
    {
-     console.log("neue Person eintragen: "+this.person+"  mit Typ:"+this.typ);
+     console.log("neue Person eintragen: (ich)  mit Typ:"+this.typ);
      this.popover.dismiss();
    }
 

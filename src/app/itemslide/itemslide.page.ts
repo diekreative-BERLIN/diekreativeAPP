@@ -37,6 +37,7 @@ export class ItemslidePage implements OnInit {
     console.log('tausche Schicht mit ID='+sessID);
     this.popover.create({component:TunSwapPage,
           cssClass: 'modal_tun_confirm',
+          backdropDismiss:false,
           showBackdrop:false}).then((popoverElement)=>{
             popoverElement.present();
           })
@@ -48,6 +49,7 @@ export class ItemslidePage implements OnInit {
     console.log('gib Schicht mit ID='+sessID+' frei!');
     this.popover.create({component:TunReleasePage,
           cssClass: 'modal_tun_confirm',
+          backdropDismiss:false,
           showBackdrop:false}).then((popoverElement)=>{
             popoverElement.present();
           })

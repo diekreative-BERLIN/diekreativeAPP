@@ -25,6 +25,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 //modal pages
 import { TunSwapPageModule } from './tun-swap/tun-swap.module';
 import { TunReleasePageModule } from './tun-release/tun-release.module';
+import { TunTakeoverPageModule } from './tun-takeover/tun-takeover.module';
 
 @NgModule({
   declarations: [AppComponent, UnescapePipe],
@@ -32,7 +33,7 @@ import { TunReleasePageModule } from './tun-release/tun-release.module';
   imports: [ 
     FormsModule, BrowserModule, IonicModule.forRoot(), 
     AppRoutingModule, HttpClientModule, BrowserAnimationsModule, 
-    TunSwapPageModule, TunReleasePageModule],
+    TunSwapPageModule, TunReleasePageModule, TunTakeoverPageModule],
   providers: [
     StatusBar,
     SplashScreen,

@@ -60,6 +60,10 @@ const routes: Routes = [
   {
     path: 'tun-release',
     loadChildren: () => import('./tun-release/tun-release.module').then( m => m.TunReleasePageModule)
+  },
+  {
+    path: 'tun-takeover',
+    loadChildren: () => import('./tun-takeover/tun-takeover.module').then( m => m.TunTakeoverPageModule)
   }
 
 
