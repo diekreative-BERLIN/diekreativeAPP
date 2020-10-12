@@ -13,19 +13,21 @@ export class TunSwapPage implements OnInit {
   constructor(private popover:PopoverController) { }
   person;
   typ;
+  sessID;
 
   ngOnInit() {
   }
 
   ClosePopover()
-    {
-      this.popover.dismiss();
-    }
+  {
+    this.popover.dismiss("abort");
+  }
   
   EnterNewPerson()
-   {
-     console.log("neue Person eintragen: "+this.person+"  mit Typ:"+this.typ);
-     this.popover.dismiss();
-   }
+  {
+     console.log("neue Person eintragen: "+this.person+"  mit Typ:"+this.typ+" auf SessID "+this.sessID);
+     //fuehre Funktion aus..
+     this.popover.dismiss("success");
+  }
 
 }

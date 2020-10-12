@@ -10,18 +10,21 @@ import {PopoverController} from '@ionic/angular';
 export class TunReleasePage implements OnInit {
 
   constructor(private popover:PopoverController) { }
+  sessID;
 
   ngOnInit() {
   }
 
   ConfirmPopover() {
-    console.log("ok, ausführen");
-    this.popover.dismiss();
+    console.log("ok, ausführen, gib SessionID "+this.sessID+" frei!");
+    //fuehre Freigabebefehl aus
+    //this.churchtools.takeSession(availableID,this.userstate.fullusername,Praytype)
+    this.popover.dismiss("success");
   }
   ClosePopover()
    {
       console.log("abbruch");
-      this.popover.dismiss();
+      this.popover.dismiss("abort");
    }
 
 }

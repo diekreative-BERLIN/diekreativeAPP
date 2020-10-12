@@ -2,18 +2,20 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title>ChurchTools App</ion-card-title>
-      &Uuml;bersicht &uuml;ber Dienste und Gruppen, sicherer Gruppenchat und mehr..
+      Die offizielle Churchtools App gibt Dir eine &Uuml;bersicht &uuml;ber Dienste und Gruppen, erm&ouml;glicht einen sicheren Gruppenchat direkt in der Churchtools App und mehr..
     </ion-card-header>
     <ion-card-content>
       <ion-card-subtitle>1. ChurchTools App installieren</ion-card-subtitle>
-      <!--
-      <ion-button (click)="openWebsite('https://itunes.apple.com/de/app/id1413263051')">
-        -->
+      Hier kannst Du direkt die Churchtools App herunterladen:
+
+      <div *ngIf="AppPlatform === 'android'">
+        <img src="/assets/icon/playstore.png" (click)="openWebsite('https://play.google.com/store/apps/details?id=tools.church.app')">
+      </div>
+      <div *ngIf="AppPlatform  === 'iOS'">
         <img src="/assets/icon/appstore.png" (click)="openWebsite('https://itunes.apple.com/de/app/id1413263051')">
-          <!--
-            </ion-button>
-    -->
-      <ion-card-subtitle>2. App mit Churchtools verbinden</ion-card-subtitle>
+      </div>      
+        <ion-card-subtitle>2. App mit Churchtools verbinden</ion-card-subtitle>
+        Und dann kannst Du mit einem klick auf die folgende Schaltfl&auml;che die Churchtools App direkt mit Deinem Benutzernamen in Churchtools einloggen und loslegen ;-)
       <ion-button (click)="openCtApp()">ChurchTools App verbinden</ion-button>
     </ion-card-content>
   </ion-card>

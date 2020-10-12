@@ -26,9 +26,7 @@ export class TunTakewatchesPage implements OnInit {
     
   }
 
-  showPrayTypeModal(item,availableID){
-
-  }
+//  showPrayTypeModal(item,availableID){ }
 
   removeItem(item){
     for(let i = 0; i < this.items.length; i++) {
@@ -41,14 +39,21 @@ export class TunTakewatchesPage implements OnInit {
   takeItem(item,sessID){
     console.log('uebernimm Schicht mit ID='+sessID);
     this.popover.create({component:TunTakeoverPage,
+          componentProps: {
+            sessID: sessID
+          },
           cssClass: 'modal_tun_confirm',
           backdropDismiss:false,
           showBackdrop:false}).then((popoverElement)=>{
+            popoverElement.onDidDismiss().then((ret)=>{
+              console.log(JSON.parse(JSON.stringify(ret)).data );
+              if(JSON.parse( JSON.stringify(ret) ).data == "success" ) {
+                console.log("Session getauscht -> entfernte Listeneintrag");
+                this.removeItem(item);
+              }
+            });
             popoverElement.present();
           })
-    //Todo: zeige modal Window wo man den Gebetsschwerpunkt eintragen kann (Praytype). Name muss der Name der eingeloggten Person sein!
-    //this.churchtools.takeSession(availableID,this.userstate.fullusername,Praytype)
-    this.removeItem(item);
   }
 
 

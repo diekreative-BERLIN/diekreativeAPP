@@ -36,27 +36,42 @@ export class ItemslidePage implements OnInit {
   swapItem(item,sessID){
     console.log('tausche Schicht mit ID='+sessID);
     this.popover.create({component:TunSwapPage,
+          componentProps: {
+            sessID: sessID
+          },
           cssClass: 'modal_tun_confirm',
           backdropDismiss:false,
           showBackdrop:false}).then((popoverElement)=>{
+            popoverElement.onDidDismiss().then((ret)=>{
+              console.log(JSON.parse(JSON.stringify(ret)).data );
+              if(JSON.parse( JSON.stringify(ret) ).data == "success" ) {
+                console.log("Session getauscht -> entfernte Listeneintrag");
+                this.removeItem(item);
+              }
+            });
             popoverElement.present();
-          })
-    //Todo: zeige modal Window wo man den Gebetsschwerpunkt eintragen kann (Praytype). Name muss der Name der eingeloggten Person sein!
-    //this.churchtools.takeSession(availableID,this.userstate.fullusername,Praytype)
-    this.removeItem(item);
+          })    
   }
+
+
   releaseItem(item,sessID){
     console.log('gib Schicht mit ID='+sessID+' frei!');
     this.popover.create({component:TunReleasePage,
+          componentProps: {
+            sessID: sessID
+          },
           cssClass: 'modal_tun_confirm',
           backdropDismiss:false,
           showBackdrop:false}).then((popoverElement)=>{
+            popoverElement.onDidDismiss().then((ret)=>{
+              console.log(JSON.parse(JSON.stringify(ret)).data );
+              if(JSON.parse( JSON.stringify(ret) ).data == "success" ) {
+                console.log("Session geloescht -> entfernte Listeneintrag");
+                this.removeItem(item);
+              }
+            });
             popoverElement.present();
           })
-
-    //Todo: zeige modal Window wo man den Gebetsschwerpunkt eintragen kann (Praytype). Name muss der Name der eingeloggten Person sein!
-    //this.churchtools.takeSession(availableID,this.userstate.fullusername,Praytype)
-    this.removeItem(item);
   }
 
   ngOnInit() {

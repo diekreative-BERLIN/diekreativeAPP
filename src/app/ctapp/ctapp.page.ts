@@ -12,6 +12,7 @@ import { UserstateService } from '../userstate.service';
 })
 export class CtappPage implements OnInit {
   loginstring = "";
+  AppPlatform = "";
 
   constructor(
     private iab: InAppBrowser,
@@ -20,6 +21,11 @@ export class CtappPage implements OnInit {
     public userState:UserstateService) { }
 
   ngOnInit() {
+    if(this.platform.is('android')) {
+      this.AppPlatform="android";
+    } else {
+      this.AppPlatform="iOS";
+    }
   }
 
   openCtApp(){
