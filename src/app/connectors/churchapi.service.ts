@@ -117,7 +117,6 @@ export class ChurchapiService {
   public swapSession(sessID,startdate,enddate,oldentry,Personname,Praytype){
     /*
     $ID = $data["ID"];
-		//$day = $data["exception_day"];
 		$task = $data["task"];
 		$oldentry = $data["oldentry"];
 		$startdate = $data["startdate"];
@@ -125,7 +124,7 @@ export class ChurchapiService {
 		$newname = $data["replace_person"];
 		$newtype = $data["replace_type"];
     */
-    console.log("post auf ../watches/scheduled ID:"+sessID+" start:"+startdate+" end:"+enddate+" bisher:"+oldentry+" neu: Name:"+Personname+" Type:"+Praytype);
+    console.log("post auf ../watches/scheduled ID:"+sessID+" start:"+startdate+" end:"+enddate+" bisher:"+oldentry+" neu: Name:"+Personname+" Type:"+Praytype+" task:swap");
     this.http.setDataSerializer('json');
     //this.http.setServerTrustMode("nocheck");
     return this.http.post(this.PRAY_API_SERVER+"/watches/scheduled",{
@@ -143,7 +142,28 @@ export class ChurchapiService {
     });
   }
   /////////////////// release session /////
-  public releaseSession(){
+  public releaseSession(sessID,startdate,enddate,oldentry){
+    /*
+	  $ID = $data["ID"];
+		$task = $data["task"];
+		$oldentry = $data["oldentry"];
+		$startdate = $data["startdate"];
+		$enddate   = $data["enddate"];
+    */
+    console.log("post auf ../watches/scheduled ID:"+sessID+" start:"+startdate+" end:"+enddate+" bisher:"+oldentry+" task:release");
+    this.http.setDataSerializer('json');
+    //this.http.setServerTrustMode("nocheck");
+    return this.http.post(this.PRAY_API_SERVER+"/watches/scheduled",{
+      "ID":sessID,
+      "task":'release',
+      "startdate":startdate,
+      "enddate":enddate,
+      "oldentry":oldentry
+    },{token:this.PRAY_API_SERVER_token}).then((res)=>{
+      console.log("response from release session" + JSON.stringify(res));
+    }).catch((err)=>{
+      console.log("error release session " + JSON.stringify(err));
+    });
 
   }
 
