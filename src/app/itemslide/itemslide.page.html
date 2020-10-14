@@ -16,8 +16,8 @@
       </ion-item>
 
       <ion-item-options>
-        <button class="swap" (click)="swapItem(item,item.id)"> Tauschen</button>
-        <button class="release" (click)="releaseItem(item,item.id)"> Freigeben</button>
+        <button class="swap" (click)="swapItem(item,item.id,item.repeat_id,item.start,item.ende,item.format,item.person)"> Tauschen</button>
+        <button class="release" (click)="releaseItem(item,item.id,item.time)"> Freigeben</button>
       </ion-item-options>
 
     </ion-item-sliding>

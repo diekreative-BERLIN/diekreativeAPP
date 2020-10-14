@@ -19,9 +19,7 @@ export class ChurchapiService {
   private CALENDARROOT = "q=churchcal/ajax&func=";
   private LOGINROOT = "q=login/ajax&func="
 
-  constructor(private httpClient: HttpClient, private http:HTTP) { 
-
-  }
+  constructor(private httpClient: HttpClient, private http:HTTP) { }
 
   public login(username, password){
 
@@ -91,18 +89,19 @@ export class ChurchapiService {
     //return this.httpClient.get<PersonResponse>(this.REST_API_SERVER+'/'+request,{params:params, withCredentials:true});
   }
 
+  /////////////////// get next prayer watches /////
   public getGebetsschichten(nbEntries){
     var request = "maxEntries"+'='+nbEntries
     return this.http.get(this.PRAY_API_SERVER+"/watches/scheduled"+'/?'+request,{},{token:this.PRAY_API_SERVER_token})
   }
 
+  /////////////////// Get available watches /////
   public getFreieSchichten(){
     return this.http.get(this.PRAY_API_SERVER+"/watches/available",{},{token:this.PRAY_API_SERVER_token})
   }
 
   /////////////////////// take session //////
   public takeSession(availableID,Personname,Praytype){
-    //let PersonNameShort = Personname.match(/ain/g);
     console.log("post auf ../watches/available ID:"+availableID+" Name:"+Personname+" Type:"+Praytype);
 
     this.http.setDataSerializer('json');
@@ -110,15 +109,39 @@ export class ChurchapiService {
     return this.http.post(this.PRAY_API_SERVER+"/watches/available",{"ID":availableID, "Name":Personname, "Type":Praytype},{token:this.PRAY_API_SERVER_token}).then((res)=>{
       console.log("response from take session" + JSON.stringify(res));
     }).catch((err)=>{
-      console.log(""+JSON.stringify({"ID":availableID, "Name":Personname, "Type":Praytype}));
       console.log("error take session " + JSON.stringify(err));
     });
   }
 
+  /////////////////// swap session with someone else /////
+  public swapSession(sessID,exceptionDay,Personname,Praytype){
+    /*
+    $ID = $data["ID"];
+		$day = $data["exception_day"];
+		$task = $data["task"];
+		$newname = $data["replace_person"];
+    $newtype = $data["replace_type"];
+    */
+    console.log("post auf ../watches/scheduled ID:"+sessID+" exceptionDay:"+exceptionDay+" Name:"+Personname+" Type:"+Praytype);
+    this.http.setDataSerializer('json');
+    //this.http.setServerTrustMode("nocheck");
+    return this.http.post(this.PRAY_API_SERVER+"/watches/scheduled",{"ID":sessID, "exception_day":exceptionDay, "task":'swap', "replace_person":Personname, "replace_type":Praytype},{token:this.PRAY_API_SERVER_token}).then((res)=>{
+      console.log("response from swap session" + JSON.stringify(res));
+    }).catch((err)=>{
+      console.log("error swap session " + JSON.stringify(err));
+    });
+  }
+  /////////////////// release session /////
+  public releaseSession(){
+
+  }
+
+  /////////////////// Week Topic /////
   public getTopicWeek(){
     return this.http.get(this.PRAY_API_SERVER+"/praytopics/week",{},{token:this.PRAY_API_SERVER_token})
   }
 
+  /////////////////// Prayer for Persecuted Topic /////
   public getTopicPersecuted(){
     return this.http.get(this.PRAY_API_SERVER+"/praytopics/persecuted",{},{token:this.PRAY_API_SERVER_token})
   }

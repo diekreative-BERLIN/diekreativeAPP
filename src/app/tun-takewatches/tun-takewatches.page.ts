@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from "@ionic/angular";
 import { ChurchapiService } from '../connectors/churchapi.service';
-import { UserstateService } from '../userstate.service';
 
 //modal popover
 import { PopoverController } from '@ionic/angular';
@@ -17,7 +16,6 @@ export class TunTakewatchesPage implements OnInit {
   constructor(
   public navCtrl: NavController,
   private churchtools:ChurchapiService,
-  private userstate:UserstateService,
   private popover:PopoverController) {
     this.churchtools.getFreieSchichten().then((result)=>{
       console.log(JSON.stringify(result.data));

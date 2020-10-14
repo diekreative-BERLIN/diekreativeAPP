@@ -11,6 +11,7 @@ export class TunReleasePage implements OnInit {
 
   constructor(private popover:PopoverController) { }
   sessID;
+  excDay;
 
   ngOnInit() {
   }

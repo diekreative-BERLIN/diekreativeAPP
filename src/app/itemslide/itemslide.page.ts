@@ -6,6 +6,7 @@ import { ChurchapiService } from '../connectors/churchapi.service';
 import { PopoverController } from '@ionic/angular';
 import { TunSwapPage } from '../tun-swap/tun-swap.page';
 import { TunReleasePage } from '../tun-release/tun-release.page';
+import { start } from 'repl';
 
 @Component({
   selector: 'app-itemslide',
@@ -33,32 +34,44 @@ export class ItemslidePage implements OnInit {
     }
   }
 
-  swapItem(item,sessID){
-    console.log('tausche Schicht mit ID='+sessID);
-    this.popover.create({component:TunSwapPage,
-          componentProps: {
-            sessID: sessID
-          },
-          cssClass: 'modal_tun_confirm',
-          backdropDismiss:false,
-          showBackdrop:false}).then((popoverElement)=>{
-            popoverElement.onDidDismiss().then((ret)=>{
-              console.log(JSON.parse(JSON.stringify(ret)).data );
-              if(JSON.parse( JSON.stringify(ret) ).data == "success" ) {
-                console.log("Session getauscht -> entfernte Listeneintrag");
-                this.removeItem(item);
-              }
-            });
-            popoverElement.present();
-          })    
+  
+  swapItem(item,sessID,repeatID,startdate,enddate,format,person){
+    if(repeatID=undefined) {
+      alert("Die Schicht von "+startdate+" kann nicht mehr freigegeben werden. Sie wurde bereits einmal freigegeben und übernommen bzw. getauscht")
+    } else {
+      console.log('tausche Schicht mit ID='+sessID);
+      this.popover.create({component:TunSwapPage,
+            componentProps: {
+              sessID: sessID,
+              repeatID: repeatID,
+              startdate: startdate,
+              enddate: enddate,
+              oldformat: format,
+              oldperson: person
+            },
+            cssClass: 'modal_tun_confirm',
+            backdropDismiss:false,
+            showBackdrop:false}).then((popoverElement)=>{
+              popoverElement.onDidDismiss().then((ret)=>{
+                console.log(JSON.parse(JSON.stringify(ret)).data );
+                if(JSON.parse( JSON.stringify(ret) ).data == "success" ) {
+                  console.log("Session getauscht -> entfernte Listeneintrag");
+                  this.removeItem(item);
+                }
+              });
+              popoverElement.present();
+            })    
+    }
   }
 
 
-  releaseItem(item,sessID){
+  releaseItem(item,sessID,startdate,enddate){
     console.log('gib Schicht mit ID='+sessID+' frei!');
     this.popover.create({component:TunReleasePage,
           componentProps: {
-            sessID: sessID
+            sessID: sessID,
+            startdate: startdate,
+            enddate: enddate
           },
           cssClass: 'modal_tun_confirm',
           backdropDismiss:false,
