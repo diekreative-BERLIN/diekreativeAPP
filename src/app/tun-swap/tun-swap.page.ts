@@ -40,7 +40,7 @@ export class TunSwapPage implements OnInit {
         alert("bitte noch die Gebetsform angeben. Z.B. A+F für Anbetung und Fürbitte");
      } else {
         //let ret=this.churchtools.swapSession(this.sessID,this.excDay,this.person,this.typ);
-        console.log("Session getauscht. Ret="+JSON.stringify(ret));
+        //console.log("Session getauscht. Ret="+JSON.stringify(ret));
         this.popover.dismiss("success");
      }
   }
