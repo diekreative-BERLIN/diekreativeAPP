@@ -12,6 +12,7 @@ export class UserstateService {
   hasTuerOeffner = false;
   logintoken = "";
   fullusername = "";
+  shortusername = "";
 //  loginstring = "";
   AppPageTUNInit = false;
   AppPageTunTimestamp = 1601000000000;
@@ -23,10 +24,22 @@ export class UserstateService {
         this.personid = user.personid;
         this.logintoken = user.logintoken;
         this.fullusername = user.fullusername;
+        this.shortusername = user.shortusername;
         this.loggedin = true;
         this.hasTuerOeffner = user.hasTuerOeffner;
         this.churchtools.loginWithToken(this.personid, this.logintoken).then((res)=>{
           console.log("Login With token"+JSON.stringify(res));
+          console.log("login status="+ (JSON.parse(res.data)).status)
+          if((JSON.parse(res.data)).status=="fail"){
+            this.nativeStorage.remove('currentUser');
+            this.loggedin = false;
+            this.personid = 0;
+            this.hasTuerOeffner = false;
+            this.logintoken = "";
+            this.fullusername = "";
+            this.shortusername = "";
+            console.log("---> User loged out")
+          }
         }).catch((err)=>{
           console.log("Error Login with token"+JSON.stringify(err));
           this.nativeStorage.remove('currentUser');
@@ -35,7 +48,10 @@ export class UserstateService {
           this.hasTuerOeffner = false;
           this.logintoken = "";
           this.fullusername = "";
+          this.shortusername = "";
+          console.log("---> User loged out")
         })
+
         /*this.churchtools.getPersonViaToken(this.personid, this.logintoken).then((res)=>{
           console.log("Persondata with Token:"+JSON.stringify(res));
         }).catch((err)=>{
@@ -46,6 +62,7 @@ export class UserstateService {
           this.hasTuerOeffner = false;
           this.logintoken = "";
           this.fullusername = "";
+          this.shortusername = "";
         })*/
       })
 
@@ -60,7 +77,10 @@ export class UserstateService {
       this.churchtools.getPersonData(personid).then((res)=>{
         console.log("persondata:" +JSON.stringify(JSON.parse(res.data)));
         this.fullusername = (JSON.parse(res.data)).data.firstName + " " +(JSON.parse(res.data)).data.lastName
-        this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner})
+        var lastname=(JSON.parse(res.data)).data.lastName
+        this.shortusername = (JSON.parse(res.data)).data.firstName + " " +lastname.substr(0,1)+"."
+        console.log("shortname="+this.shortusername)
+        this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner, shortusername:this.shortusername})
   .then(
     () => console.log('Stored item!'),
     error => console.error('Error storing item', error)
@@ -76,7 +96,7 @@ export class UserstateService {
         if( "9" == group?.group.domainIdentifier ) {
           console.log("has Zugang");
           hasZugang = true;
-          this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner})
+          this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner, shortusername:this.shortusername})
   .then(
     () => console.log('Stored item!'),
     error => console.error('Error storing item', error)
@@ -89,7 +109,7 @@ export class UserstateService {
           console.log(JSON.stringify(res.data));
           this.logintoken = JSON.parse(res.data).data;
           console.log("Has Tueroeffner and Logintoken");
-          this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner})
+          this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner, shortusername:this.shortusername})
   .then(
     () => console.log('Stored item!'),
     error => console.error('Error storing item', error)
@@ -120,7 +140,7 @@ export class UserstateService {
       this.logintoken = "";
       console.log("dropped here " + JSON.stringify(err));
     });
-    this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner})
+    this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner, shortusername:this.shortusername})
   .then(
     () => console.log('Stored item!'),
     error => console.error('Error storing item', error)

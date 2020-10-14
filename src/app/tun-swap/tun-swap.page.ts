@@ -26,8 +26,16 @@ export class TunSwapPage implements OnInit {
   EnterNewPerson()
   {
      console.log("neue Person eintragen: "+this.person+"  mit Typ:"+this.typ+" auf SessID "+this.sessID);
-     //fuehre Funktion aus..
-     this.popover.dismiss("success");
+     if(this.person==undefined) {
+        alert("bitte trag den Namen der Person ein, die für Dich die Gebetsschicht übernimmt");
+     }
+     else if(this.typ==undefined) {
+        alert("bitte noch die Gebetsform angeben. Z.B. A+F für Anbetung und Fürbitte");
+     } else {
+        //let ret=this.churchtools.takeSession(this.sessID,this.userState.shortusername,this.typ);
+        //console.log("uebernommen. Ret="+JSON.stringify(ret));
+        this.popover.dismiss("success");
+     }
   }
 
 }

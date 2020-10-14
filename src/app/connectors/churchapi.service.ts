@@ -1,5 +1,6 @@
 import { Injectable, ComponentFactoryResolver } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse, HttpResponseBase, HttpHeaders } from '@angular/common/http';
+
 import { environment } from 'src/environments/environment';
 import { HTTP } from '@ionic-native/http/ngx'
 
@@ -99,8 +100,19 @@ export class ChurchapiService {
     return this.http.get(this.PRAY_API_SERVER+"/watches/available",{},{token:this.PRAY_API_SERVER_token})
   }
 
+  /////////////////////// take session //////
   public takeSession(availableID,Personname,Praytype){
-    this.http.post(this.PRAY_API_SERVER+"/watches/available",{"ID":availableID, "Name":Personname, "Type":Praytype},{token:this.PRAY_API_SERVER_token})
+    //let PersonNameShort = Personname.match(/ain/g);
+    console.log("post auf ../watches/available ID:"+availableID+" Name:"+Personname+" Type:"+Praytype);
+
+    this.http.setDataSerializer('json');
+    //this.http.setServerTrustMode("nocheck");
+    return this.http.post(this.PRAY_API_SERVER+"/watches/available",{"ID":availableID, "Name":Personname, "Type":Praytype},{token:this.PRAY_API_SERVER_token}).then((res)=>{
+      console.log("response from take session" + JSON.stringify(res));
+    }).catch((err)=>{
+      console.log(""+JSON.stringify({"ID":availableID, "Name":Personname, "Type":Praytype}));
+      console.log("error take session " + JSON.stringify(err));
+    });
   }
 
   public getTopicWeek(){

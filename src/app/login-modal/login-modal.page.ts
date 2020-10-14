@@ -27,7 +27,6 @@ export class LoginModalPage implements OnInit {
 
   login(){
     this.churchapiService.login(this.username,this.password).then((res)=>{
-
       this.userService.userLogginSuccessful(JSON.parse(res.data).data.personId);
       this.dismiss();
     }).catch((err)=>{
