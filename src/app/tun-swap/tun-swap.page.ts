@@ -39,8 +39,9 @@ export class TunSwapPage implements OnInit {
      else if(this.typ==undefined) {
         alert("bitte noch die Gebetsform angeben. Z.B. A+F für Anbetung und Fürbitte");
      } else {
-        //let ret=this.churchtools.swapSession(this.sessID,this.excDay,this.person,this.typ);
-        //console.log("Session getauscht. Ret="+JSON.stringify(ret));
+        let oldentry = "("+this.oldformat+") "+this.oldperson;
+        let ret=this.churchtools.swapSession(this.sessID,this.startdate,this.enddate,oldentry,this.person,this.typ);
+        console.log("Session getauscht. Ret="+JSON.stringify(ret));
         this.popover.dismiss("success");
      }
   }
