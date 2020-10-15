@@ -19,7 +19,7 @@ export class ItemslidePage implements OnInit {
     public navCtrl: NavController,
     private popover:PopoverController,
     private churchtools:ChurchapiService) {
-    this.churchtools.getGebetsschichten(999).then((result)=>{
+    this.churchtools.getGebetsschichten(50,1).then((result)=>{
       console.log(JSON.stringify(result.data));
       this.items = JSON.parse(result.data);
     });

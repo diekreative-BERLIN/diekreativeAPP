@@ -79,7 +79,7 @@ export class TagundnachtPage implements OnInit,
         
         this.accordion.closeAll();
         
-        this.churchtools.getGebetsschichten(5).then((result)=>{
+        this.churchtools.getGebetsschichten(5,0).then((result)=>{
           console.log(JSON.stringify(result.data));
           this.items = JSON.parse(result.data);
         })
