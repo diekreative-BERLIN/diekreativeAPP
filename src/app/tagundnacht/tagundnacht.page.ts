@@ -5,8 +5,6 @@ import { MatAccordion } from '@angular/material/expansion';
 import { Router } from '@angular/router';
 import { ChurchapiService } from '../connectors/churchapi.service';
 
-
-//toto
 import {  AfterViewChecked } from '@angular/core';
 
 
@@ -79,7 +77,7 @@ export class TagundnachtPage implements OnInit,
         
         this.accordion.closeAll();
         
-        this.churchtools.getGebetsschichten(5,0).then((result)=>{
+        this.churchtools.getGebetsschichten(5,null).then((result)=>{
           console.log(JSON.stringify(result.data));
           this.items = JSON.parse(result.data);
         })

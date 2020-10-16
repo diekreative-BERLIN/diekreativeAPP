@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from "@ionic/angular";
 import { ChurchapiService } from '../connectors/churchapi.service';
+import { UserstateService } from '../userstate.service';
 
 //modal popover
 import { PopoverController } from '@ionic/angular';
@@ -18,8 +19,10 @@ export class ItemslidePage implements OnInit {
   constructor(
     public navCtrl: NavController,
     private popover:PopoverController,
+    private userstate:UserstateService,
     private churchtools:ChurchapiService) {
-    this.churchtools.getGebetsschichten(50,1).then((result)=>{
+    let userfilter = encodeURI(this.userstate.shortusername);
+    this.churchtools.getGebetsschichten(7300,userfilter).then((result)=>{
       console.log(JSON.stringify(result.data));
       this.items = JSON.parse(result.data);
     });

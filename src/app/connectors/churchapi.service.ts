@@ -4,8 +4,6 @@ import { HttpClient, HttpParams, HttpResponse, HttpResponseBase, HttpHeaders } f
 import { environment } from 'src/environments/environment';
 import { HTTP } from '@ionic-native/http/ngx'
 
-import { UserstateService } from '../userstate.service';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -21,10 +19,7 @@ export class ChurchapiService {
   private CALENDARROOT = "q=churchcal/ajax&func=";
   private LOGINROOT = "q=login/ajax&func="
 
-  constructor(
-    private httpClient: HttpClient,
-    private http:HTTP,
-    public userState:UserstateService) { }
+  constructor(private httpClient: HttpClient, private http:HTTP) { }
 
   public login(username, password){
 
@@ -95,13 +90,18 @@ export class ChurchapiService {
   }
 
   /////////////////// get next prayer watches /////
-  public getGebetsschichten(nbEntries,filterName){
-    if(filterName) {
-      var request = "maxEntries"+'='+nbEntries+'&ctUserName='+'&ctFullNameShort='+this toto
-    } else {
-      var request = "maxEntries"+'='+nbEntries
+  public getGebetsschichten(nbEntries,shortusername){
+    if (shortusername!=null) 
+    {
+      console.log("getGebetsschichten mit nbEntries:"+nbEntries+" UND ctFulluserShort="+shortusername);
+      var request = "maxEntries"+'='+nbEntries+'&ctFulluserShort='+shortusername;
+    } 
+    else
+    {
+      console.log("getGebetsschichten mit nbEntries:"+nbEntries);
+      var request = "maxEntries"+'='+nbEntries;
     }
-    return this.http.get(this.PRAY_API_SERVER+"/watches/scheduled"+'/?'+request,{},{token:this.PRAY_API_SERVER_token})
+    return this.http.get(this.PRAY_API_SERVER+"/watches/scheduled"+'/?'+request,{},{token:this.PRAY_API_SERVER_token});
   }
 
   /////////////////// Get available watches /////
