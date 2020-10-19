@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx'
 
 @Component({
   selector: 'app-tun-gebetscal',
@@ -7,7 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TunGebetscalPage implements OnInit {
 
-  constructor() { }
+  constructor(private iab: InAppBrowser) { }
+
+  openBlank() {
+    this.iab.create('https://diekreative.org/churchtools/?q=churchcal&amp;embedded=true&amp;viewname=calView&amp;category_id=17&amp;title=Gebetskalender&amp;cal4web=true',
+    '_blank', {
+      location:'yes',
+      footer:'yes'
+    });
+  }
+
+  openSystem() {
+    this.iab.create('https://diekreative.org/churchtools/?q=churchcal&amp;embedded=true&amp;viewname=calView&amp;category_id=17&amp;title=Gebetskalender&amp;cal4web=true','_system');
+  }
 
   ngOnInit() {
   }
