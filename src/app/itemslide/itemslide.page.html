@@ -8,6 +8,12 @@
 
  <div class="positionierung">
 
+  <div *ngIf="initializing" class="spinner-container">
+    <center>
+    <ion-spinner></ion-spinner>
+  </center>
+  </div>
+
   <ion-list >
 
     <ion-item-sliding *ngFor = "let item of items">

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx'
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tun-gebetscal',
@@ -8,21 +8,33 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx'
 })
 export class TunGebetscalPage implements OnInit {
 
-  constructor(private iab: InAppBrowser) { }
+  loading;
+  constructor(
+    public loadingController: LoadingController
+  ) { }
 
-  openBlank() {
-    this.iab.create('https://diekreative.org/churchtools/?q=churchcal&amp;embedded=true&amp;viewname=calView&amp;category_id=17&amp;title=Gebetskalender&amp;cal4web=true',
-    '_blank', {
-      location:'yes',
-      footer:'yes'
+  ngOnInit() {
+    this.showLoader();
+  }
+
+  // This will show the loader
+  showLoader() {
+    this.loading = this.loadingController.create({
+      message: 'Gebetskalender wird geladen...',
+      duration: 3000
+    }).then((res) => {
+      res.present();
     });
   }
 
-  openSystem() {
-    this.iab.create('https://diekreative.org/churchtools/?q=churchcal&amp;embedded=true&amp;viewname=calView&amp;category_id=17&amp;title=Gebetskalender&amp;cal4web=true','_system');
-  }
 
-  ngOnInit() {
-  }
+// Hide the loader if already created otherwise return error
+hideLoader() {
+  this.loadingController.dismiss().then((res) => {
+    console.log('Loading dismissed!', res);
+  }).catch((error) => {
+    console.log('error', error);
+  });
 
+  }
 }

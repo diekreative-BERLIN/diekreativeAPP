@@ -7,7 +7,6 @@ import { UserstateService } from '../userstate.service';
 import { PopoverController } from '@ionic/angular';
 import { TunSwapPage } from '../tun-swap/tun-swap.page';
 import { TunReleasePage } from '../tun-release/tun-release.page';
-//import { start } from 'repl';
 
 @Component({
   selector: 'app-itemslide',
@@ -16,6 +15,8 @@ import { TunReleasePage } from '../tun-release/tun-release.page';
 })
 export class ItemslidePage implements OnInit {
   items:any;
+  initializing: any = false;
+
   constructor(
     public navCtrl: NavController,
     private popover:PopoverController,
@@ -25,9 +26,15 @@ export class ItemslidePage implements OnInit {
     this.churchtools.getGebetsschichten(7300,userfilter).then((result)=>{
       console.log(JSON.stringify(result.data));
       this.items = JSON.parse(result.data);
+      this.initializing = false;
     });
     
   }
+
+  ngOnInit() {
+    this.initializing = true;
+  }
+
 
   removeItem(item){
     for(let i = 0; i < this.items.length; i++) {
@@ -97,9 +104,6 @@ export class ItemslidePage implements OnInit {
               popoverElement.present();
             })
     }
-  }
-
-  ngOnInit() {
   }
 
 }
