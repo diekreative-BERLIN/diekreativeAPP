@@ -41,8 +41,8 @@ export class PredigtElementComponent implements OnInit {
     this.playervisible = false;
   }
 
-  shareLink(predigturl,titel){
-    var message = "Hör dir das an!"
+  shareLink(predigturl,titel,excerpt){
+    var message = "Hör dir diese Predigt an!\n\n"+excerpt
     var subject = ""+titel
     var url = ""+predigturl
     var options = {
@@ -52,6 +52,7 @@ export class PredigtElementComponent implements OnInit {
 
     }
     this.socialSharing.shareWithOptions(options);
+//    console.log('share subject='+subject+'  url='+predigturl+'   und msg='+message);
   }
 
 }

@@ -22,7 +22,12 @@
               <ion-icon  name="headset-sharp"></ion-icon>
               <ion-label>ANHÖREN</ion-label>
             </ion-tab-button>
+
+            <!--
             <ion-tab-button (click)="shareLink(predigt.enclosure[0].$.url, predigt.title[0])">
+            -->
+            <ion-tab-button (click)="shareLink(predigt.link[0], predigt.title[0], predigt.description[0])">
+            
               <ion-icon  name="share-sharp"></ion-icon>
               <ion-label>TEILEN</ion-label>
             </ion-tab-button>
