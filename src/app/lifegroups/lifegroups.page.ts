@@ -7,11 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LifegroupsPage implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor() {
   }
 
+  public ngOnInit() {}
+  
 }
 
 

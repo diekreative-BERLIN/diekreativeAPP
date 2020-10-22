@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {MatAccordion} from '@angular/material/expansion';
 
 @Component({
   selector: 'app-credits',
@@ -11,5 +12,7 @@ export class CreditsPage implements OnInit {
 
   ngOnInit() {
   }
+
+  @ViewChild(MatAccordion) accordion: MatAccordion;
 
 }
