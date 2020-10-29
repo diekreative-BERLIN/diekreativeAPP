@@ -31,14 +31,21 @@
           <br>
           <br>
             <ion-label class="subtext">MOTORWERK<br>
-          An der Industriebahn 12, 13088 Berlin</ion-label>
+          An der Industriebahn 12, 13088 Berlin<br><br>
+          Gottesdienst jeweils sonntags um 10:30 Uhr
+        </ion-label>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col class="highlight-box">
         <div class="highlight-text-box">
         <p>Aktuelle Gottesdiensttermine findest du hier:</p>
+        <!--
         <p><a target= "_blank" href="https://diekreative.org/termine/">https://diekreative.org/termine/</a></p>
+        -->
+          <p><a (click)="openWebsite('https://diekreative.org/termineclick')">https://diekreative.org/termine/</a></p>
+
+
       </div>
       </ion-col>
     </ion-row>
