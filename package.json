@@ -27,7 +27,7 @@
     "@capacitor/core": "2.3.0",
     "@capacitor/ios": "^2.3.0",
     "@ionic-native/core": "^5.0.7",
-    "@ionic-native/firebase-x": "^5.27.0",
+    "@ionic-native/firebase-x": "^5.29.0",
     "@ionic-native/http": "^5.28.0",
     "@ionic-native/in-app-browser": "^5.28.0",
     "@ionic-native/media": "^5.27.0",
@@ -107,11 +107,13 @@
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly."
       },
       "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-nativestorage": {}
+      "cordova-plugin-nativestorage": {},
+      "cordova-plugin-firebasex": {}
     },
     "platforms": [
       "android",
-      "browser"
+      "browser",
+      "ios"
     ]
   }
 }
