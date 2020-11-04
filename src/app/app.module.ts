@@ -28,7 +28,7 @@ import { TunReleasePageModule } from './tun-release/tun-release.module';
 import { TunTakeoverPageModule } from './tun-takeover/tun-takeover.module';
 
 @NgModule({
-  declarations: [AppComponent, UnescapePipe],
+  declarations: [AppComponent],
   entryComponents: [],
   imports: [ 
     FormsModule, BrowserModule, IonicModule.forRoot(), 
