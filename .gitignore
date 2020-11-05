@@ -33,3 +33,4 @@ src/environments/environment.prod.ts
 src/environments/environment.ts
 passwords.txt
 GoogleService-Info.plist
+google-services.json
