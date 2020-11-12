@@ -22,16 +22,14 @@ Du bist herzlich eingeladen mitzubeten
     </ion-row>
   </ion-grid>
 </ion-buttons>
-<ion-buttons>
-  <!-- *ngIf="userState.hasTuerOeffner" -->
+<ion-buttons *ngIf="userState.hasTuerOeffner">
   <ion-grid>
     <ion-row>
       <button mat-flat-button color="basic" class="fullwidth" (click)="freieSchichtenActivated()">Freie Gebetsschichten</button>
     </ion-row>
   </ion-grid>
 </ion-buttons>
-<ion-buttons>
-  <!-- *ngIf="userState.hasTuerOeffner" -->
+<ion-buttons *ngIf="userState.hasTuerOeffner">
   <ion-grid>
     <ion-row>
       <button mat-flat-button color="basic" class="fullwidth" (click)="meineSchichtenActivated()">Meine Gebetsschichten</button>

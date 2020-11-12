@@ -44,6 +44,11 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.firebaseX.hasPermission().then((permission)=>{
+        if(!permission){
+          this.firebaseX.grantPermission();
+        }
+      });
       this.firebaseX.getToken()
   .then(token => {
                  console.log(`The token is ${token}`);}) // save the token server-side and use it to push notifications to this device

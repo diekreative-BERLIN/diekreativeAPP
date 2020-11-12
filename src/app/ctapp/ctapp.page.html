@@ -10,19 +10,19 @@
       <p class="text">Hier kannst Du direkt die Churchtools App herunterladen:</p>
       <div *ngIf="AppPlatform === 'android'">
        
-          <img src="/assets/icon/playstore.png" (click)="openWebsite('https://play.google.com/store/apps/details?id=tools.church.app')">
+          <img class="centered" src="/assets/icon/playstore.png" (click)="openWebsite('https://play.google.com/store/apps/details?id=tools.church.app')">
        
       </div>
       <div *ngIf="AppPlatform  === 'iOS'">
         
-          <img src="/assets/icon/appstore.png" (click)="openWebsite('https://itunes.apple.com/de/app/id1413263051')">
+          <img class="centered" src="/assets/icon/appstore.png" (click)="openWebsite('https://itunes.apple.com/de/app/id1413263051')">
         
       </div>
       <br>
         <ion-card-subtitle>2. App mit Churchtools verbinden</ion-card-subtitle>
         <p class="text">Und dann kannst Du mit einem Klick auf die folgende Schaltfl&auml;che die Churchtools App direkt mit Deinem Benutzernamen in Churchtools einloggen und loslegen ;-)</p>
        
-          <ion-button (click)="openCtApp()">ChurchTools App verbinden</ion-button>
+          <ion-button class="centered" (click)="openCtApp()">ChurchTools App verbinden</ion-button>
       
     </ion-card-content>
   </ion-card>
