@@ -50,6 +50,7 @@ export class AppComponent {
         }
       });
       this.firebaseX.getToken()
+    
   .then(token => {
                  console.log(`The token is ${token}`);}) // save the token server-side and use it to push notifications to this device
   .catch(error => alert(`Error getting token ${error}`));
