@@ -5,13 +5,8 @@
     height: 209px; 
 
     position: absolute;
-    /* position: absolute; */
-    /* background: var(--unnamed-color-003d58) 0% 0% no-repeat padding-box; 
-    /*  background: #003D5815 0% 0% no-repeat padding-box; */
-    background: #003D5815  
-    /*border: 1px solid #707070;
-    opacity: 0.15;*/
-    }
+    background: #003D5815;
+}
 
 .h1 {
     position: absolute;
@@ -31,10 +26,8 @@
     color: var(--ion-color-secondary);
 }
 
-   /* .headercaption */
-
-.anfahrt_punkte
-{ position: absolute;
+.anfahrt_punkte {
+    position: absolute;
     top: 40px;
     right: 0px;
     width: 60px;
@@ -43,13 +36,13 @@
     transform:rotate(90deg);
 }
 
-.anfahrt_pfeil
-{ position: absolute;
-top: 500px;
-left: -20px;
-width: 55px;
-height: 143px;
-opacity: 1;
+.anfahrt_pfeil {
+    position: absolute;
+    top: 500px;
+    left: -20px;
+    width: 55px;
+    height: 143px;
+    opacity: 1;
 }
 
 .content_anfahrt{
@@ -69,7 +62,7 @@ opacity: 1;
     opacity: 1;
 }
 
-h4{
+h4 {
     color: var(--ion-color-secondary);
     font-weight: bold;
 }
@@ -82,57 +75,57 @@ h3 {
 .header-1 {
     top: 0px;
     font: Bold var(--unnamed-font-size-27)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-lato);
-letter-spacing: var(--unnamed-character-spacing-2-02);
-color: var(--unnamed-color-003d58);
-text-align: left;
-font: Bold 27px/27px Lato;
-letter-spacing: 2.02px;
-color: #003D58;
-opacity: 1;
+    letter-spacing: var(--unnamed-character-spacing-2-02);
+    color: var(--unnamed-color-003d58);
+    text-align: left;
+    font: Bold 27px/27px Lato;
+    letter-spacing: 2.02px;
+    color: #003D58;
+    opacity: 1;
 }
 
-.header-2{
-color: var(--unnamed-color-777777);
-text-align: left;
-font-family: Lato;
-font-size: 20px;
-letter-spacing: 1.5px;
-color: #777777;
-opacity: 1;
+.header-2 {
+    color: var(--unnamed-color-777777);
+    text-align: left;
+    font-family: Lato;
+    font-size: 20px;
+    letter-spacing: 1.5px;
+    color: #777777;
+    opacity: 1;
 }
 
-.main-grid{
+.main-grid {
     margin-left:17px;
     margin-top: 40px;
 }
 
-.mini-headline{
-font-family: Lato;
-font-size: 16px;
-font-weight: bold;
-color: var(--unnamed-color-1e3653);
-text-align: left;
-font: Lato 16px/20px Lato;
-letter-spacing: 0px;
-color: #1E3653;
-text-transform: uppercase;
-opacity: 1;
+.mini-headline {
+    font-family: Lato;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--unnamed-color-1e3653);
+    text-align: left;
+    font: Lato 16px/20px Lato;
+    letter-spacing: 0px;
+    color: #1E3653;
+    text-transform: uppercase;
+    opacity: 1;
 }
 
-.sub1{
+.sub1 {
     margin-left:19px;
 }
 
-.subtext{
-font-family: Lato;
-font-size: 14px;
-line-height: 18px;
-color: var(--unnamed-color-777777);
-text-align: left;
-font: Lato 14px/18px Lato;
-letter-spacing: 0px;
-color: #777777;
-opacity: 1;
+.subtext {
+    font-family: Lato;
+    font-size: 14px;
+    line-height: 18px;
+    color: var(--unnamed-color-777777);
+    text-align: left;
+    font: Lato 14px/18px Lato;
+    letter-spacing: 0px;
+    color: #777777;
+    opacity: 1;
 } 
 
 .right {
@@ -147,23 +140,32 @@ opacity: 1;
     line-height: 0.77;
 }
 
-.highlight-text-box{
-margin-left:15px;
-/* font-style: italic; */
-font-size: 16px;
-color: var(--unnamed-color-231f20);
-text-align: left;
-/* font: Italic 16px/20px Source Sans Pro; */
-font: 16px/20px Source Sans Pro;
-letter-spacing: 0px;
-color: #231F20;
-opacity: 1;
+.highlight-text-box {
+    margin-left:15px;
+    /* font-style: italic; */
+    font-size: 16px;
+    color: var(--unnamed-color-231f20);
+    text-align: left;
+    /* font: Italic 16px/20px Source Sans Pro; */
+    font: 16px/20px Source Sans Pro;
+    letter-spacing: 0px;
+    color: #231F20;
+    opacity: 1;
 }
 
-.highlight-box{
+.highlight-box {
     margin-top: 15px;
     margin-bottom: 15px;
     border: 1.5px solid var(--unnamed-color-e1a730);
-border: 2px solid #E1A730;
-opacity: 1;
+    border: 2px solid #E1A730;
+    opacity: 1;
+}
+
+/* mat-body p, .mat-body-1 p, .mat-typography p        margin: 0 0 6px; */
+
+.highlight-text-box {
+        margin-top: 8px;
+        margin-right: 0px;
+        margin-bottom: 6px;
+        margin-left: 8px;
 }

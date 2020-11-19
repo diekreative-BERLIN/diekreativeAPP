@@ -8,6 +8,8 @@ ion-card {
     text-align: center;
     margin: 0px;
     border-radius: 0px;
+    -webkit-box-shadow: 0 0px 0px rgb(255, 255, 255);
+    box-shadow: 0 0px 0px rgb(255, 255, 255);
 }
 
 .card-title {

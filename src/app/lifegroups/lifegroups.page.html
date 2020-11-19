@@ -12,7 +12,8 @@
 
 
   <h3 class="lifegroup-text">Finde deine lifeGroup</h3>
-  <p class="lifegroup-text">Hier findest du eine erste Übersicht über unsere lifeGroups. Für weitere Informationen und um an einer lifeGroup teilzunehmen besuche vor oder nach dem Gottesdienst unsere Info. <i>(Die Schaltflächen Info bzw Infos & Anmeldung sind nicht aktiv).</i></p>
+  <p *ngIf="AppPlatform  === 'iOS'" class="lifegroup-text">Hier findest du eine erste Übersicht über unsere lifeGroups. Für weitere Informationen und um an einer lifeGroup teilzunehmen besuche vor oder nach dem Gottesdienst unsere Info. <i>(Die Schaltflächen Info bzw Infos & Anmeldung sind nicht aktiv).</i></p>
+  <p *ngIf="AppPlatform  === 'android'" class="lifegroup-text">Hier findest du eine erste Übersicht über unsere lifeGroups. Für weitere Informationen und um an einer lifeGroup teilzunehmen besuche vor oder nach dem Gottesdienst unsere Info.</p>
   <!-- Show Map -->
   <!--<app-lg-map></app-lg-map> --> 
   
