@@ -3,14 +3,17 @@
 <ion-content>
     <div class="tagundnacht-title" style="background-color: #fff;">
       <ion-label class="header-label" color="light">TAGUNDNACHT</ion-label>
-  
-  
    <div class="punkte"> <img src="../assets/svg/punkte_yellow.svg" id="kreuze" > </div>
-  
-   <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
-
-  
+   <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>  
 </div>
+
+<div *ngIf="!userState.isOnline">
+  <ion-label ><div class="subtitle">
+    Du bist offline. Es können keine Details angezeigt werden!
+    </div></ion-label>
+</div>
+
+<div *ngIf="userState.isOnline">
 <ion-label ><div class="subtitle">
 Wir beten 24 Stunden - 7 Tage - 52 Wochen <br>
 Du bist herzlich eingeladen mitzubeten
@@ -114,6 +117,6 @@ Du bist herzlich eingeladen mitzubeten
     </mat-expansion-panel>
 	
   </mat-accordion>
-
+</div>
 
 </ion-content>

@@ -61,7 +61,7 @@ export class TagundnachtPage implements OnInit,
 
 
   ngAfterViewChecked(): void {
-    if(this.userState.AppPageTUNInit){
+    if(this.userState.AppPageTUNInit && this.userState.isOnline){
       console.log("setze ZURUECK");
       console.log("time stamp old"+this.userState.AppPageTunTimestamp);
       let timediff = Date.now()-this.userState.AppPageTunTimestamp;

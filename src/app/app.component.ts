@@ -7,12 +7,14 @@ import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 
 import { ModalController } from '@ionic/angular';
 import { LoginModalPage } from './login-modal/login-modal.page';
+import { PersondetailModalPage } from './persondetail-modal/persondetail-modal.page';
 import { FeedsService } from './communications/feeds.service';
 import { ChurchapiService } from './connectors/churchapi.service';
 import { UserstateService } from './userstate.service';
 import { Router } from '@angular/router';
 import { HTTP } from '@ionic-native/http/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { ConnectivityService } from './connectivity.service';
 
 
 @Component({
@@ -35,7 +37,8 @@ export class AppComponent {
     public userState: UserstateService,
     private router: Router,
     private http: HTTP,
-    private iab: InAppBrowser
+    private iab: InAppBrowser,
+    private connectivity: ConnectivityService
   ) {
     this.initializeApp();
   }
@@ -51,9 +54,9 @@ export class AppComponent {
       });
       this.firebaseX.getToken()
     
-  .then(token => {
+      .then(token => {
                  console.log(`The token is ${token}`);}) // save the token server-side and use it to push notifications to this device
-  .catch(error => alert(`Error getting token ${error}`));
+      .catch(error => alert(`Error getting token ${error}`));
     });
   }
 
@@ -71,10 +74,31 @@ close(){
   this.menu.close('first');
 }
 
+ngOnInit() {
+  this.connectivity.appIsOnline$.subscribe(online => {
+    console.log(online)
+    if (online) {
+        console.log("App is online");
+        this.userState.isOnline = true;
+    } else {
+        console.log("App is offline")
+        this.userState.isOnline = false;
+    }
+  })
+}
+
+
   async presentModal() {
     const modal = await this.modalController.create({
       component: LoginModalPage,
       cssClass: 'login-modal-class'
+    });
+    return await modal.present();
+  }
+  async loggedpersonActivated() {
+    const modal = await this.modalController.create({
+      component: PersondetailModalPage,
+      cssClass: 'persondetail-modal-class'
     });
     return await modal.present();
   }
@@ -123,9 +147,9 @@ close(){
   openWebsite(url){
     this.platform.ready().then(() => {
       this.iab.create(url,'_system');
-
-  });
+    });
   }
+
 }
 
 /*

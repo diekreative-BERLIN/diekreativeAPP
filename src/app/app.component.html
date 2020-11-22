@@ -42,7 +42,7 @@
     <ion-content  class="diekreativemenu">
       <ion-list >
         <ion-grid *ngIf="userState.loggedin">
-          <ion-row>
+          <ion-row (click)="loggedpersonActivated()">
             <ion-col size="3"><ion-icon id="personlogo" name="person-circle-sharp"></ion-icon></ion-col>
             <ion-col size="9"><div id="username"><ion-label id="fullusername" color="primary">{{userState.fullusername}}</ion-label><br>
               <ion-label id="herzlichwillkommen" color="primary">Hallo, Herzlich Willkommen.</ion-label></div></ion-col>

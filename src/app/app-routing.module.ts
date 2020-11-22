@@ -11,6 +11,10 @@ const routes: Routes = [
     loadChildren: () => import('./login-modal/login-modal.module').then( m => m.LoginModalPageModule)
   },
   {
+    path: 'persondetail-modal',
+    loadChildren: () => import('./persondetail-modal/persondetail-modal.module').then( m => m.PersondetailModalPageModule)
+  },
+  {
     path: 'settings',
     loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
   },
@@ -41,7 +45,8 @@ const routes: Routes = [
   {
     path: 'aboutus',
     loadChildren: () => import('./aboutus/aboutus.module').then( m => m.AboutusPageModule)
-  },  {
+  },
+  {
     path: 'itemslide',
     loadChildren: () => import('./itemslide/itemslide.module').then( m => m.ItemslidePageModule)
   },

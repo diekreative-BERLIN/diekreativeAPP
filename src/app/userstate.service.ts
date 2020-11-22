@@ -17,8 +17,13 @@ export class UserstateService {
   AppPageTUNInit = false;
   AppPageTunTimestamp = 1601000000000;
   //Date.now();
+  isOnline = false;
 
-  constructor(private churchtools:ChurchapiService, private platform :Platform, private nativeStorage: NativeStorage) {
+  constructor(
+    private churchtools:ChurchapiService,
+    private platform :Platform,
+    private nativeStorage: NativeStorage
+  ) {
     platform.ready().then(() => {
       nativeStorage.getItem('currentUser').then((user)=>{
         this.personid = user.personid;
@@ -27,10 +32,22 @@ export class UserstateService {
         this.shortusername = user.shortusername;
         this.loggedin = true;
         this.hasTuerOeffner = user.hasTuerOeffner;
-        this.churchtools.loginWithToken(this.personid, this.logintoken).then((res)=>{
-          console.log("Login With token"+JSON.stringify(res));
-          console.log("login status="+ (JSON.parse(res.data)).status)
-          if((JSON.parse(res.data)).status=="fail"){
+        if (this.isOnline) {
+          this.churchtools.loginWithToken(this.personid, this.logintoken).then((res)=>{
+            console.log("Login With token"+JSON.stringify(res));
+            console.log("login status="+ (JSON.parse(res.data)).status)
+            if((JSON.parse(res.data)).status=="fail"){
+              this.nativeStorage.remove('currentUser');
+              this.loggedin = false;
+              this.personid = 0;
+              this.hasTuerOeffner = false;
+              this.logintoken = "";
+              this.fullusername = "";
+              this.shortusername = "";
+              console.log("---> User loged out")
+            }
+          }).catch((err)=>{
+            console.log("Error Login with token"+JSON.stringify(err));
             this.nativeStorage.remove('currentUser');
             this.loggedin = false;
             this.personid = 0;
@@ -39,18 +56,8 @@ export class UserstateService {
             this.fullusername = "";
             this.shortusername = "";
             console.log("---> User loged out")
-          }
-        }).catch((err)=>{
-          console.log("Error Login with token"+JSON.stringify(err));
-          this.nativeStorage.remove('currentUser');
-          this.loggedin = false;
-          this.personid = 0;
-          this.hasTuerOeffner = false;
-          this.logintoken = "";
-          this.fullusername = "";
-          this.shortusername = "";
-          console.log("---> User loged out")
-        })
+          })
+        }
 
         /*this.churchtools.getPersonViaToken(this.personid, this.logintoken).then((res)=>{
           console.log("Persondata with Token:"+JSON.stringify(res));
@@ -152,7 +159,10 @@ export class UserstateService {
     this.personid = 0;
     this.hasTuerOeffner = false;
     this.logintoken = "";
+    this.fullusername = "";
+    this.shortusername = "";
     this.nativeStorage.remove('currentUser');
+    console.log("user has been logged out");
   }
 }
 
