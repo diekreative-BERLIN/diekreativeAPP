@@ -25,7 +25,9 @@ export class ChurchapiService {
 
       this.http.clearCookies();
       this.http.setServerTrustMode("nocheck");
-      return this.http.post(this.REST_API_SERVER+"/login?username="+username+"&password="+password,{},{})
+      let usernameEncoded = encodeURIComponent(username);
+      let passwordEncoded = encodeURIComponent(password);
+      return this.http.post(this.REST_API_SERVER+"/login?username="+usernameEncoded+"&password="+passwordEncoded,{},{})
 
   }
 
