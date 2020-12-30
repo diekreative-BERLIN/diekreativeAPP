@@ -3,6 +3,8 @@ import { NavController } from "@ionic/angular";
 import { ChurchapiService } from '../connectors/churchapi.service';
 import { UserstateService } from '../userstate.service';
 
+import {IonItemSliding} from '@ionic/angular'
+
 //modal popover
 import { PopoverController } from '@ionic/angular';
 import { TunSwapPage } from '../tun-swap/tun-swap.page';
@@ -44,6 +46,13 @@ export class ItemslidePage implements OnInit {
     }
   }
 
+  //slide with click
+  toggle(item: IonItemSliding) {
+      if (item['el'].classList.contains('item-sliding-active-slide') || item['el'].classList.contains('item-sliding-active-options-end'))
+        item.close();
+      else
+        item.open('end');
+  }
   
   swapItem(item,sessID,repeatID,startdate,enddate,format,person){
     console.log("repeatid="+repeatID);

@@ -10,8 +10,8 @@
 
   <ion-list >
     
-    <ion-item-sliding *ngFor = "let item of items">
-      <ion-item>{{item.time}}&nbsp;
+    <ion-item-sliding #slide *ngFor = "let item of items">
+      <ion-item (click)="toggle(slide)">{{item.time}}&nbsp;
       {{item.descr}}
       </ion-item>
       

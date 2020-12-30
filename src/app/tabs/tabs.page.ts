@@ -29,7 +29,6 @@ export class TabsPage {
   openWebsite(url){
     this.platform.ready().then(() => {
       this.iab.create(url,'_system');
-
     });
   }
 

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from "@ionic/angular";
 import { ChurchapiService } from '../connectors/churchapi.service';
 
+import {IonItemSliding} from '@ionic/angular'
+
 //modal popover
 import { PopoverController } from '@ionic/angular';
 import { TunTakeoverPage } from '../tun-takeover/tun-takeover.page';
@@ -52,6 +54,13 @@ export class TunTakewatchesPage implements OnInit {
           })
   }
 
+  //slide with click
+  toggle(item: IonItemSliding) {
+    if (item['el'].classList.contains('item-sliding-active-slide') || item['el'].classList.contains('item-sliding-active-options-end'))
+      item.close();
+    else
+      item.open('end');
+  }
 
   ngOnInit() {
   }

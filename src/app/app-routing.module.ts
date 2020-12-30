@@ -35,6 +35,10 @@ const routes: Routes = [
     loadChildren: () => import('./lifegroups/lifegroups.module').then( m => m.LifegroupsPageModule)
   },
   {
+    path: 'gottesdienste',
+    loadChildren: () => import('./gottesdienste/gottesdienste.module').then( m => m.GottesdienstePageModule)
+  },
+  {
     path: 'credits',
     loadChildren: () => import('./credits/credits.module').then( m => m.CreditsPageModule)
   },

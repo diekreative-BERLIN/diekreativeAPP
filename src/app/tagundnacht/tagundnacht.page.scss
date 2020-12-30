@@ -48,18 +48,18 @@ h2 {
    /* .headercaption */
 
 .punkte {
-    position: fixed;
-    top: 317px;
-    left: 9px;
+    position: absolute;
+    top: 50px;
+    left: 64px;
     width: 79px;
     height: 79px;
     opacity: 1;
 }
 
 .pfeil {
-    position: fixed;
-    top: 500px;
-    left: 312px;
+    position: absolute;
+    top: 260px;
+    right: 20px;
     width: 33px;
     height: 21px;
     opacity: 1;
@@ -155,6 +155,10 @@ b, strong {
 	font-weight: normal;
 }
 
+.currentprayer {
+    padding-left: 10px;
+}
+
 //nextprayer Aufzaehlung
 ion-item.nextprayer.item {
     color: #777777;
@@ -164,6 +168,21 @@ ion-item.nextprayer.item {
     //font: normal normal normal 14px/18px Source Sans Pro;
     letter-spacing: 0px;
     font-size: 14px;
+}
+
+.nextprayer {
+    --padding-start: 10px;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+}
+
+.prayertopic_week {
+    margin-left: -17px;
+}
+
+.prayertopic_persecuted {
+    padding-left: 10px;
 }
 
 div.mat-expansion-panel-body.ng-tns-c146-2 {

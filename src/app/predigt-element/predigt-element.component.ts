@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NewsRss } from '../communications/news-rss';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Platform } from '@ionic/angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-predigt-element',
@@ -12,7 +14,10 @@ export class PredigtElementComponent implements OnInit {
   fulltext = false;
   playervisible = false;
   @Input() predigt;
-  constructor(private socialSharing: SocialSharing) { }
+  constructor(
+    private socialSharing: SocialSharing,
+    private platform: Platform,
+    private iab: InAppBrowser,) { }
 
   ngOnInit() {}
 
@@ -54,5 +59,22 @@ export class PredigtElementComponent implements OnInit {
     this.socialSharing.shareWithOptions(options);
 //    console.log('share subject='+subject+'  url='+predigturl+'   und msg='+message);
   }
+
+  openSkript(skript){
+    if (skript!='') {
+      this.platform.ready().then(() => {
+        this.iab.create(skript,'_system');
+      });
+    }
+  }
+
+  playYT(YTlink){
+    if (YTlink!='') {
+      this.platform.ready().then(() => {
+        this.iab.create(YTlink,'_system');
+      });
+    }
+  }
+
 
 }

@@ -3,46 +3,31 @@
 
   <ion-row>
     <ion-col size-lg>
-      <ion-card id="predigten" [routerLink]="['../../predigten-audio']"> <img class="image" src="assets/kacheln/Kachel_Startseite_MEDIATHEK.png"/></ion-card>
+      <ion-card [routerLink]="['../../predigten-audio']"> <img class="image" src="assets/kacheln/Kachel_Startseite_MEDIATHEK.png"/></ion-card>
     </ion-col>
     <ion-col size-lg>
-      <ion-card id="lifegroups" [routerLink]="['../../lifegroups']"> <img class="image" src="assets/kacheln/Kachel_Startseite_LIFEGROUPS.png"/></ion-card>
+      <ion-card [routerLink]="['../../lifegroups']"> <img class="image" src="assets/kacheln/Kachel_Startseite_LIFEGROUPS.png"/></ion-card>
     </ion-col>
   
   </ion-row>
   <ion-row>
     <ion-col size-lg>
-      <ion-card id="Tag" (click)="tagundnachtGoto()"> <img class="image" src="assets/kacheln/Kachel_Startseite_TAGUNDNACHT.png"/></ion-card>
+      <ion-card (click)="tagundnachtGoto()"> <img class="image" src="assets/kacheln/Kachel_Startseite_TAGUNDNACHT.png"/></ion-card>
     </ion-col>
     <ion-col size-lg>
-      <ion-card id="überuns" [routerLink]="['../../aboutus']"> <img class="image" src="assets/kacheln/Kachel_Startseite_UEBER-UNS.png"/></ion-card>
+      <ion-card [routerLink]="['../../aboutus']"> <img class="image" src="assets/kacheln/Kachel_Startseite_UEBER-UNS.png"/></ion-card>
     </ion-col>
-     <!--ion-col size="6">
-      <ion-card id="erlebt"> <img src="assets/Kachel_Startseite_ELEBT.jpg"/> <div class="card-title"><br>ER<br>LEBT</div> </ion-card>
-    </ion-col-->
   </ion-row>
-  <!--ion-row>
- 
-    <ion-col size="1">
+
+  <!--
+  <ion-row>
+    <ion-col size-lg>
+      <ion-card [routerLink]="['../../gottesdienste']"> <img class="image" src="assets/kacheln/Kachel_Startseite_GOTTESDIENSTE.png"/></ion-card>
     </ion-col>
-    <ion-col size="5" size-lg>
-      <ion-card id="überuns" > <img src="assets/Kachel_Startseite_GOTTESDIENST.jpg"/> <div class="card-title"> <br>GOTTES<br>DIENST</div> </ion-card>
+    <ion-col size-lg>
+      <ion-card [routerLink]="['../../aboutus']"> <img class="image" src="assets/kacheln/Kachel_Startseite_ERLEBT.png"/></ion-card>
     </ion-col>
-    <ion-col size="1">
-    </ion-col>
-  </ion-row-->
-  <!--ion-row>
-    <ion-col size="5" size-lg>
-      <ion-card id="predigten"> <img src="assets/Kachel_Startseite_KONTAKT.jpg"/> <div class="card-title"><br>KON<br>TAKT</div> </ion-card>
-      
-    </ion-col>
-    <ion-col size="1">
-    </ion-col>
-    <ion-col size="5" size-lg>
-      
-    </ion-col>
-    <ion-col size="1">
-    </ion-col>
-  </ion-row-->
+  </ion-row>
+  -->
 </ion-grid> 
 

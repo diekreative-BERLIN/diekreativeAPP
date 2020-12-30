@@ -10,6 +10,9 @@ import { LifegroupsPage } from './lifegroups.page';
 import { LgMapComponent } from '../lg-map/lg-map.component';
 import { LgListComponent } from '../lg-list/lg-list.component';
 
+//import directive
+import { IframeTrackerDirective} from './lifegroups.directive';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -17,6 +20,6 @@ import { LgListComponent } from '../lg-list/lg-list.component';
     IonicModule,
     LifegroupsPageRoutingModule
   ],
-  declarations: [LifegroupsPage, LgMapComponent, LgListComponent]
+  declarations: [LifegroupsPage, LgMapComponent, LgListComponent, IframeTrackerDirective]
 })
 export class LifegroupsPageModule {}

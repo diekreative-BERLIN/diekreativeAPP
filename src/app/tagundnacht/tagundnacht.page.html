@@ -3,8 +3,8 @@
 <ion-content>
     <div class="tagundnacht-title" style="background-color: #fff;">
       <ion-label class="header-label" color="light">TAGUNDNACHT</ion-label>
-   <div class="punkte"> <img src="../assets/svg/punkte_yellow.svg" id="kreuze" > </div>
-   <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>  
+   <div class="punkte"> <img src="../assets/svg/punkte_yellow.svg"> </div>
+   <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg"> </div>  
 </div>
 
 <div *ngIf="!userState.isOnline">
@@ -59,7 +59,7 @@ Du bist herzlich eingeladen mitzubeten
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
-        <div class="currentprayer">  
+        <div class="currentprayer">
           {{items[0].time}}&nbsp;{{items[0].format}}&nbsp;({{items[0].person}})&nbsp;{{items[0].note}}
 <!--
       11-12 Uhr&nbsp;Gebetsformat&nbsp;Person&nbsp;Notiz
@@ -75,22 +75,21 @@ Du bist herzlich eingeladen mitzubeten
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
-	  	  <ion-list>
 
+        <ion-list>
           <ion-item-sliding *ngFor = "let item of items | slice:1">
             <ion-item class="nextprayer">{{item.time}}&nbsp;
             {{item.format}}&nbsp;({{item.person}})&nbsp;{{item.note}}
             </ion-item>
           </ion-item-sliding>
 <!--
-                    <ion-item-sliding>
-                      <ion-item class="nextprayer">10-11 Uhr&nbsp;(A&F) Dominik Test
-                      </ion-item>
-                      <ion-item class="nextprayer">11-12 Uhr&nbsp;(A&F) Sonstewer Test
-                      </ion-item>
-                    </ion-item-sliding>
+          <ion-item-sliding>
+            <ion-item class="nextprayer">10-11 Uhr&nbsp;(A&F) Person XX Test und hier noch ein langer Kommentar dazu der dann umbrechen sollte.</ion-item>
+            <ion-item class="nextprayer">11-12 Uhr&nbsp;(A&F) Person XY Test und hier noch ein langer Kommentar dazu der dann umbrechen sollte.</ion-item>
+          </ion-item-sliding>
 -->
         </ion-list>
+
       </ng-template>
     </mat-expansion-panel>
 	
@@ -101,7 +100,7 @@ Du bist herzlich eingeladen mitzubeten
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
-        <div [innerHTML]="WeekTopics|unescape"></div>
+        <div class="prayertopic_week" [innerHTML]="WeekTopics|unescape"></div>
       </ng-template>
     </mat-expansion-panel>
 	
@@ -112,7 +111,7 @@ Du bist herzlich eingeladen mitzubeten
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
-       <div [innerHTML]="PersecutedTopic|unescape"></div>
+       <div class="prayertopic_persecuted" [innerHTML]="PersecutedTopic|unescape"></div>
       </ng-template>
     </mat-expansion-panel>
 	
