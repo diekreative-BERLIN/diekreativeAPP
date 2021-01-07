@@ -21,6 +21,15 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UnescapePipe } from './unescape.pipe';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+// add MediaCapture
+import { MediaCapture } from '@ionic-native/media-capture/ngx';
+//File
+import { File } from '@ionic-native/File/ngx';
+//Filetransfer
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+
+//Streaming media (player)
+import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
 
 //modal pages
 import { TunSwapPageModule } from './tun-swap/tun-swap.module';
@@ -49,7 +58,11 @@ import { TunTakeoverPageModule } from './tun-takeover/tun-takeover.module';
     SocialSharing,
     InAppBrowser,
     NativeStorage,
-    Platform
+    Platform,
+    MediaCapture,
+    StreamingMedia,
+    File,
+    FileTransfer
   ],
   bootstrap: [AppComponent]
 })

@@ -1,10 +1,6 @@
 <ion-item>
   
-  <ion-label>
-    
-  
- 
-    
+  <ion-label class="sermons">
     <ion-grid class="sermongrid">
       <ion-row (click)="toggleTab()">
         <ion-col size="11" class="sermoncol">  <div class="predigttitel">{{predigt.pubDate[0] | date:'fullDate':'':'de'}}</div>
@@ -16,11 +12,12 @@
     <div *ngIf="!fulltext">{{predigt.description[0]}}</div>
     <div *ngIf="fulltext" class="descriptionopen">{{predigt.description[0]}}</div>
     <div *ngIf="fulltext">
+      <br>
       <ion-toolbar >
         <ion-buttons>
-            <ion-tab-button (click)="openPlayer()">
+            <ion-tab-button (click)="openPlayer(predigt.enclosure[0].$.url)">
               <ion-icon name="headset-sharp" color="primary"></ion-icon>
-              <ion-label color="primary">ANHÖREN</ion-label>
+              <ion-label class="descr" color="primary">ANHÖREN</ion-label>
             </ion-tab-button>
 
             <!--
@@ -28,28 +25,33 @@
             -->
             <ion-tab-button (click)="shareLink(predigt.link[0], predigt.title[0], predigt.description[0])">
               <ion-icon name="share-sharp" color="primary"></ion-icon>
-              <ion-label color="primary">TEILEN</ion-label>
+              <ion-label class="descr" color="primary">TEILEN</ion-label>
             </ion-tab-button>
-            <!--ion-tab-button>
-              <ion-icon  name="star-sharp"></ion-icon>
-              <ion-label>MERKEN</ion-label>
-            </ion-tab-button-->
-           
+<!--
+            <ion-tab-button (click)="saveSermon(predigt.enclosure[0].$.url)">
+              <ion-icon [name]="!isLocal(predigt.enclosure[0].$.url)? 'cloud-download':'cloud-done'" color="primary"></ion-icon>
+              <ion-label class="descr" color="primary">SPEICHERN</ion-label>
+            </ion-tab-button>
+-->
             <ion-tab-button (click)="openSkript(predigt.skript[0])">
               <ion-icon name="reader-sharp" [color]="predigt.skript!='' ? 'primary' : 'secondary'"></ion-icon>
-              <ion-label [color]="predigt.skript!='' ? 'primary' : 'secondary'">SKRIPT</ion-label>
+              <ion-label class="descr" [color]="predigt.skript!='' ? 'primary' : 'secondary'">SKRIPT</ion-label>
             </ion-tab-button>
 
             <ion-tab-button (click)="playYT(predigt.youtube[0])">
               <ion-icon src="../../assets/icon/youtube.svg" [color]="predigt.youtube!='' ? 'primary' : 'secondary'"></ion-icon>
-              <ion-label [color]="predigt.youtube!='' ? 'primary' : 'secondary'">YOUTUBE</ion-label>
+              <ion-label class="descr" [color]="predigt.youtube!='' ? 'primary' : 'secondary'">YOUTUBE</ion-label>
             </ion-tab-button>
         </ion-buttons>
         </ion-toolbar>
       <div *ngIf="playervisible">
-       <audio  controls class="descriptionopen">
-                <source src={{predigt.enclosure[0].$.url}} type="audio/mpeg">
+        <br>
+       <audio controls class="descriptionopen">
+                <source src={{currentSermonURL}} type="audio/mpeg">
       </audio>
+    <!--    
+    <p>source={{currentSermonURL}}</p>
+    -->
       </div>
     </div>
   </div>

@@ -54,7 +54,7 @@ export class LifegroupsPage implements OnInit {
   }
 
   onIframeClick() {
-    if(this.AppPlatform="iOS") {
+    if(this.AppPlatform=="iOS") {
       //console.log('iframe wurde geklickt!');
       this.showConfirm();
     }

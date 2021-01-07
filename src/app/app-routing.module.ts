@@ -73,7 +73,11 @@ const routes: Routes = [
   {
     path: 'tun-takeover',
     loadChildren: () => import('./tun-takeover/tun-takeover.module').then( m => m.TunTakeoverPageModule)
+  },  {
+    path: 'erlebt',
+    loadChildren: () => import('./erlebt/erlebt.module').then( m => m.ErlebtPageModule)
   }
+
 
 
 

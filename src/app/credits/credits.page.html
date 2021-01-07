@@ -14,14 +14,38 @@
     <!-- #docregion multi -->
     <mat-accordion class="example-headers-align" multi>
       <!-- #enddocregion multi -->
-        <mat-expansion-panel>
+        <mat-expansion-panel hideToggle="true" #history>
           <mat-expansion-panel-header>
             <mat-panel-title>
               History
             </mat-panel-title>
+            <ion-icon *ngIf="!history.expanded" name="chevron-down"></ion-icon>
+            <ion-icon *ngIf="history.expanded" name="close"></ion-icon>
           </mat-expansion-panel-header>
           <ng-template matExpansionPanelContent>
             
+            <ion-row>
+              <ion-col size="3">
+                <div>10.Januar 2021</div>
+              </ion-col>
+              <ion-col>
+                <div class="name"><ion-label color="secondary"><b>offizielles App Release</b></ion-label></div>
+                <div class="function"><ion-label color="secondary">
+                Zu unserem Gebetsgottesdienst wird die App für iOS und Android freigegeben und beworben!
+                </ion-label></div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3">
+                <div>31. Dezember 2020</div>
+              </ion-col>
+              <ion-col>
+                <div class="name"><ion-label color="secondary"><b>erste Version im App Store!</b></ion-label></div>
+                <div class="function"><ion-label color="secondary">
+                Pünktlich zum Jahresende erscheint die erste (Vorab-)Version der App im Apple App Store ;-)  
+                </ion-label></div>
+              </ion-col>
+            </ion-row>
             <ion-row>
               <ion-col size="3">
                 <div>bis Ende Oktober 2020</div>
@@ -89,11 +113,13 @@
           </ng-template>
         </mat-expansion-panel>
 
-        <mat-expansion-panel>
+        <mat-expansion-panel hideToggle="true" #frameworks>
           <mat-expansion-panel-header>
             <mat-panel-title>
               Frameworks
             </mat-panel-title>
+            <ion-icon *ngIf="!frameworks.expanded" name="chevron-down"></ion-icon>
+            <ion-icon *ngIf="frameworks.expanded" name="close"></ion-icon>
           </mat-expansion-panel-header>
           <ng-template matExpansionPanelContent>
             <h3>Diese App wurde mit Hilfe der folgenden Softwarekomponenten (Frameworks) entwickelt</h3>
@@ -127,11 +153,13 @@
           </ng-template>
         </mat-expansion-panel>
 
-        <mat-expansion-panel>
+        <mat-expansion-panel hideToggle="true" #components>
           <mat-expansion-panel-header>
             <mat-panel-title>
               Komponenten
             </mat-panel-title>
+            <ion-icon *ngIf="!components.expanded" name="chevron-down"></ion-icon>
+            <ion-icon *ngIf="components.expanded" name="close"></ion-icon>
           </mat-expansion-panel-header>
           <ng-template matExpansionPanelContent>
             <h3>folgende Komponenten wurden in dieser App verwendet</h3>

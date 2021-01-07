@@ -10,6 +10,9 @@ ion-card {
     border-radius: 0px;
     -webkit-box-shadow: 0 0px 0px rgb(255, 255, 255);
     box-shadow: 0 0px 0px rgb(255, 255, 255);
+
+    padding-inline-start: var(--ion-grid-column-padding-xs, var(--ion-grid-column-padding, 1px));
+    padding-inline-end: var(--ion-grid-column-padding-xs, var(--ion-grid-column-padding, 1px));
 }
 
 .card-title {

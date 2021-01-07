@@ -23,7 +23,7 @@ export class TabsPage {
 
   tagundnachtGoto(){
     this.userState.AppPageTUNInit = true;
-    this.router.navigate(["/tabs/tagundnacht"]);
+    //this.router.navigate(["/tabs/tagundnacht"]);
   }
 
   openWebsite(url){

@@ -14,7 +14,7 @@
   
   </div>
 
-  <ion-list >
+  <ion-list>
 
     <ion-item-sliding #slide *ngFor = "let item of items">
       <ion-item (click)="toggle(slide)">{{item.time}}&nbsp;
@@ -22,12 +22,26 @@
       </ion-item>
 
       <ion-item-options>
-        <button class="swap" (click)="swapItem(item,item.id,item.repeat_id,item.start,item.ende,item.format,item.person)"> Tauschen</button>
-        <button class="release" (click)="releaseItem(item,item.id,item.repeat_id,item.start,item.ende,item.format,item.person)"> Freigeben</button>
+        <button class="swap" (click)="swapItem(item,item.id,item.repeat_id,item.start,item.ende,item.format,item.person)"> tauschen</button>
+        <button class="release" (click)="releaseItem(item,item.id,item.repeat_id,item.start,item.ende,item.format,item.person)"> freigeben</button>
       </ion-item-options>
 
     </ion-item-sliding>
 
   </ion-list>
+
+<!--
+  <ion-list>
+    <ion-item-sliding #slide>
+      <ion-item (click)="toggle(slide)">blabla
+      </ion-item>
+      <ion-item-options>
+        <button class="swap"> tauschen</button>
+        <button class="release"> freigeben</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+-->
+
 </div>
 </ion-content>

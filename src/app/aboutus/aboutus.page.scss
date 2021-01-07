@@ -161,6 +161,13 @@
     flex-basis: 0;
   }
   
+  .mat-expansion-panel-header-title {
+    color: #1E3653;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+  }
   .example-headers-align .mat-expansion-panel-header-description {
     justify-content: space-between;
     align-items: center;
@@ -174,7 +181,7 @@
   .mat-expansion-panel-header {
 	font-family: 'Source Sans Pro';
     font-style: normal;
-    font-weight: 400;
+    font-weight: 700;
     //font: normal normal bold 16px/20px Source Sans Pro;
     letter-spacing: 0px;
     color: #474747;
@@ -187,4 +194,14 @@
     //font: normal normal normal 14px/18px Source Sans Pro;
     letter-spacing: 0px;
     color: #777777;
+}
+//kein Schatten und nur einfache Linie zwischen den Expansion Elementen
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+    box-shadow: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+    border-radius: 0px !important;
+}
+//kein Abstand zwischen den Expansion Elementen
+.mat-expansion-panel-spacing {
+    margin: 0;
 }

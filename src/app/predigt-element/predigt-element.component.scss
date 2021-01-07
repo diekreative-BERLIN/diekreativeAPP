@@ -9,7 +9,9 @@
 }
 
 .descriptionopen{
-    white-space: normal;
+    white-space: pre-line;
+    text-align: justify;
+    width: 100%;
 }
 
 .predigttitel{
@@ -51,11 +53,22 @@ div {
     right: 0px;
 }
 
+.sermons {
+    margin-inline-end: 29px;
+}
+
+.descr {
+    font-size: 8.5px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
 .ion-color-primary {
-	--ion-color-base: #424242 !important;
+    //424242
+    --ion-color-base: #1E3653 !important;
 }
 
 .ion-color-secondary {
-    --ion-color-base: #93939370 !important;
-    
+    //#93939370 
+    --ion-color-base: rgb(153, 153, 153) !important;
 }
+

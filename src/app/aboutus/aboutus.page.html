@@ -26,11 +26,13 @@
   <!-- #docregion multi -->
   <mat-accordion class="example-headers-align" multi>
   <!-- #enddocregion multi -->
-    <mat-expansion-panel>
+    <mat-expansion-panel hideToggle="true" #vision>
       <mat-expansion-panel-header>
         <mat-panel-title>
           Unsere Vision
         </mat-panel-title>
+        <ion-icon *ngIf="!vision.expanded" name="chevron-down"></ion-icon>
+        <ion-icon *ngIf="vision.expanded" name="close"></ion-icon>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
         <ul>
@@ -45,11 +47,13 @@
         <p>Davon tr&auml;umen wir und daf&uuml;r wollen wir uns von Gott gebrauchen lassen.</p>
       </ng-template>
     </mat-expansion-panel>
-    <mat-expansion-panel>
+    <mat-expansion-panel hideToggle="true" #glauben>
       <mat-expansion-panel-header>
         <mat-panel-title>
           Was wir glauben
         </mat-panel-title>
+        <ion-icon *ngIf="!glauben.expanded" name="chevron-down"></ion-icon>
+        <ion-icon *ngIf="glauben.expanded" name="close"></ion-icon>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
         <p>Wir glauben, <b>dass Gott ist.</b> Dass er da ist, dass er nah ist, dass er gut ist, dass er erfahrbar ist. Mitten in Berlin oder sonst wo.</p>
@@ -60,11 +64,13 @@
       </ng-template>
     </mat-expansion-panel>
   
-    <mat-expansion-panel>
+    <mat-expansion-panel hideToggle="true" #GL>
       <mat-expansion-panel-header>
         <mat-panel-title>
           Gemeindeleitung
         </mat-panel-title>
+        <ion-icon *ngIf="!GL.expanded" name="chevron-down"></ion-icon>
+        <ion-icon *ngIf="GL.expanded" name="close"></ion-icon>
       </mat-expansion-panel-header>
           <ion-col size="12">
             <ion-grid>

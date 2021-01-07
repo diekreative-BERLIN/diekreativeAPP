@@ -8,7 +8,8 @@
 
  <div class="positionierung">
 
-  <ion-list >
+  
+  <ion-list>
     
     <ion-item-sliding #slide *ngFor = "let item of items">
       <ion-item (click)="toggle(slide)">{{item.time}}&nbsp;
@@ -16,11 +17,24 @@
       </ion-item>
       
       <ion-item-options>
-        <button class="takeover" (click)="takeItem(item,item.id)"> &Uuml;bernehmen</button>
+        <button class="takeover" (click)="takeItem(item,item.id)"> &uuml;bernehmen</button>
       </ion-item-options>
 
     </ion-item-sliding>
 
   </ion-list>
+
+<!--
+  <ion-list>
+    <ion-item-sliding #slide>
+      <ion-item (click)="toggle(slide)">blabla
+      </ion-item>
+      <ion-item-options>
+        <button class="takeover" (click)="takeItem(item,item.id)"> &uuml;bernehmen</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+-->
+
 </div>
 </ion-content>

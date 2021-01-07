@@ -4,7 +4,6 @@
     <div class="tagundnacht-title" style="background-color: #fff;">
       <ion-label class="header-label" color="light">TAGUNDNACHT</ion-label>
    <div class="punkte"> <img src="../assets/svg/punkte_yellow.svg"> </div>
-   <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg"> </div>  
 </div>
 
 <div *ngIf="!userState.isOnline">
@@ -52,14 +51,17 @@ Du bist herzlich eingeladen mitzubeten
   <mat-accordion class="example-headers-align" multi>
   <!-- #enddocregion multi -->
 	
-	<mat-expansion-panel>
+  <mat-expansion-panel hideToggle="true" #currentprayer>
       <mat-expansion-panel-header>
         <mat-panel-title>
           Aktuelles Gebet
         </mat-panel-title>
+        <ion-icon *ngIf="!currentprayer.expanded" name="chevron-down"></ion-icon>
+        <ion-icon *ngIf="currentprayer.expanded" name="close"></ion-icon>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
         <div class="currentprayer">
+
           {{items[0].time}}&nbsp;{{items[0].format}}&nbsp;({{items[0].person}})&nbsp;{{items[0].note}}
 <!--
       11-12 Uhr&nbsp;Gebetsformat&nbsp;Person&nbsp;Notiz
@@ -68,15 +70,18 @@ Du bist herzlich eingeladen mitzubeten
       </ng-template>
     </mat-expansion-panel>
 
-	<mat-expansion-panel>
+	<mat-expansion-panel hideToggle="true" #nextprayer>
       <mat-expansion-panel-header>
         <mat-panel-title>
           N&auml;chstes Gebet
         </mat-panel-title>
+        <ion-icon *ngIf="!nextprayer.expanded" name="chevron-down"></ion-icon>
+        <ion-icon *ngIf="nextprayer.expanded" name="close"></ion-icon>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
 
         <ion-list>
+
           <ion-item-sliding *ngFor = "let item of items | slice:1">
             <ion-item class="nextprayer">{{item.time}}&nbsp;
             {{item.format}}&nbsp;({{item.person}})&nbsp;{{item.note}}
@@ -93,22 +98,26 @@ Du bist herzlich eingeladen mitzubeten
       </ng-template>
     </mat-expansion-panel>
 	
-	<mat-expansion-panel>
+	<mat-expansion-panel hideToggle="true" #praytopic1>
       <mat-expansion-panel-header>
         <mat-panel-title>
         	Wochenschwerpunkt
         </mat-panel-title>
+        <ion-icon *ngIf="!praytopic1.expanded" name="chevron-down"></ion-icon>
+        <ion-icon *ngIf="praytopic1.expanded" name="close"></ion-icon>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
         <div class="prayertopic_week" [innerHTML]="WeekTopics|unescape"></div>
       </ng-template>
     </mat-expansion-panel>
 	
-	<mat-expansion-panel>
+	<mat-expansion-panel hideToggle="true" #praytopic2>
       <mat-expansion-panel-header>
         <mat-panel-title>
           Gebet f&uuml;r verfolgte Christen
         </mat-panel-title>
+        <ion-icon *ngIf="!praytopic2.expanded" name="chevron-down"></ion-icon>
+        <ion-icon *ngIf="praytopic2.expanded" name="close"></ion-icon>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
        <div class="prayertopic_persecuted" [innerHTML]="PersecutedTopic|unescape"></div>

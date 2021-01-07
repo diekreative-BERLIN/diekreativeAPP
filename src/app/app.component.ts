@@ -117,6 +117,7 @@ ngOnInit() {
   }
 
   mediathekActivated(){
+    this.userState.AppPageMedienInit = true;
     this.router.navigate(["/tabs/predigten-audio"]);
     this.close();
   }
@@ -133,6 +134,10 @@ ngOnInit() {
 
   creditsActivated(){
     this.router.navigate(["/tabs/credits"]);
+    this.close();
+  }
+  aboutUsActivated(){
+    this.router.navigate(["/tabs/aboutus"]);
     this.close();
   }
   tagundnachtActivated(){

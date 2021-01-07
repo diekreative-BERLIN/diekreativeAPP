@@ -20,4 +20,9 @@ export class GridHomescreenComponent implements OnInit {
     this.router.navigate(["/tabs/tagundnacht"]);
   }
 
+  MedienGoto(){
+    this.userState.AppPageMedienInit = true;
+    this.router.navigate(["/tabs/predigten-audio"]);
+  }
+
 }

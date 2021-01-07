@@ -13,8 +13,7 @@ import {  AfterViewChecked } from '@angular/core';
   templateUrl: './tagundnacht.page.html',
   styleUrls: ['./tagundnacht.page.scss'],
 })
-export class TagundnachtPage implements OnInit,
-  AfterViewChecked {
+export class TagundnachtPage implements OnInit, AfterViewChecked {
   items:any;
   WeekTopics:any;
   PersecutedTopic:any;
@@ -45,15 +44,15 @@ export class TagundnachtPage implements OnInit,
   }
 
   meineSchichtenActivated(){
-    this.router.navigate(["/itemslide"]);
+    this.router.navigate(["/tabs/itemslide"]);
     //this.close();
   }
   GebetskalenderActivated(){
-    this.router.navigate(["/tun-gebetscal"]);
+    this.router.navigate(["/tabs/tun-gebetscal"]);
     //this.close();
   }
   freieSchichtenActivated(){
-    this.router.navigate(["/tun-takewatches"]);
+    this.router.navigate(["/tabs/tun-takewatches"]);
     //this.close();
   }
 

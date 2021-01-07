@@ -7,9 +7,8 @@
     
   }
 
-
   ion-menu-button {
-    position: absolute; top: 10px; right: 20px;
+    position: absolute; top: 10px; right: 3px;
   }
 
 .menuheader_gast {
@@ -48,13 +47,16 @@ ion-menu > ion-content > ion-list {
   }
 
 
-
  #logoimage{
      height: 45px;
      width: 133.54px;
      padding: 0px 0px 0px 22px;
  } 
 
+ .item.ios.ion-focusable.hydrated {
+  --inner-border-width: 0px 0px 0px 0px;
+  --padding-start: 9px;
+}
  .socialmediabar{
     position: absolute;
     bottom: 90px;
@@ -67,6 +69,7 @@ ion-menu > ion-content > ion-list {
  .menuicon{
      margin:4%;
      font-size: 22px;
+     --ion-color-base: #777 !important;
  }
  .socialmediaicons{
   margin-top:2%;
@@ -109,3 +112,13 @@ ion-menu > ion-content > ion-list {
   height:49px;
   width:120px;
  }
+
+ .ion-color-primary {
+  //424242
+  --ion-color-base: #777 !important;
+}
+
+a {
+  text-decoration: none;
+  color: #777777;
+}

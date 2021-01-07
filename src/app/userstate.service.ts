@@ -16,6 +16,7 @@ export class UserstateService {
 //  loginstring = "";
   AppPageTUNInit = false;
   AppPageTunTimestamp = 1601000000000;
+  AppPageMedienInit = false;
   //Date.now();
   isOnline = false;
 

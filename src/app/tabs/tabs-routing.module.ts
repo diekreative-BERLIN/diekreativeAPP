@@ -35,6 +35,32 @@ const routes: Routes = [
         path: 'tagundnacht',
         loadChildren: () => import('../tagundnacht/tagundnacht.module').then( m => m.TagundnachtPageModule)
       },
+      
+      {
+        path: 'itemslide',
+        loadChildren: () => import('../itemslide/itemslide.module').then( m => m.ItemslidePageModule)
+      },
+      {
+        path: 'tun-gebetscal',
+        loadChildren: () => import('../tun-gebetscal/tun-gebetscal.module').then( m => m.TunGebetscalPageModule)
+      },
+      {
+        path: 'tun-takewatches',
+        loadChildren: () => import('../tun-takewatches/tun-takewatches.module').then( m => m.TunTakewatchesPageModule)
+      },
+      {
+        path: 'tun-swap',
+        loadChildren: () => import('../tun-swap/tun-swap.module').then( m => m.TunSwapPageModule)
+      },
+      {
+        path: 'tun-release',
+        loadChildren: () => import('../tun-release/tun-release.module').then( m => m.TunReleasePageModule)
+      },
+      {
+        path: 'tun-takeover',
+        loadChildren: () => import('../tun-takeover/tun-takeover.module').then( m => m.TunTakeoverPageModule)
+      },
+
       {
         path: 'lifegroups',
         loadChildren: () => import('../lifegroups/lifegroups.module').then( m => m.LifegroupsPageModule)
@@ -50,6 +76,10 @@ const routes: Routes = [
       {
         path: 'aboutus',
         loadChildren: () => import('../aboutus/aboutus.module').then( m => m.AboutusPageModule)
+      },
+      {
+        path: 'erlebt',
+        loadChildren: () => import('../erlebt/erlebt.module').then( m => m.ErlebtPageModule)
       },
       {
         path: '',
