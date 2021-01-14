@@ -57,7 +57,7 @@ export class ItemslidePage implements OnInit {
   swapItem(item,sessID,repeatID,startdate,enddate,format,person){
     console.log("repeatid="+repeatID);
     if(repeatID=="") {
-      alert("Die Schicht von "+person+" kann nicht mehr getauscht werden. Sie wurde bereits einmal freigegeben und übernommen bzw. getauscht")
+      alert("Die Schicht '"+format+"' kann nicht mehr getauscht werden. Sie wurde bereits einmal freigegeben und übernommen bzw. getauscht")
     } else {
       console.log('tausche Schicht mit ID='+sessID);
       this.popover.create({component:TunSwapPage,
@@ -88,7 +88,7 @@ export class ItemslidePage implements OnInit {
   releaseItem(item,sessID,repeatID,startdate,enddate,format,person){
     console.log("repeatid="+repeatID);
     if(repeatID=="") {
-      alert("Die Schicht von "+person+" kann nicht mehr freigegeben werden. Sie wurde bereits einmal freigegeben und übernommen bzw. getauscht")
+      alert("Die Schicht '"+format+"' kann nicht mehr freigegeben werden. Sie wurde bereits einmal freigegeben und übernommen bzw. getauscht")
     } else {
       console.log('gib Schicht mit ID='+sessID+' frei!');
       this.popover.create({component:TunReleasePage,

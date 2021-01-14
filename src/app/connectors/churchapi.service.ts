@@ -118,7 +118,12 @@ export class ChurchapiService {
     this.http.setDataSerializer('json');
     //this.http.setServerTrustMode("nocheck");
     return this.http.post(this.PRAY_API_SERVER+"/watches/available",{"ID":availableID, "Name":Personname, "Type":Praytype},{token:this.PRAY_API_SERVER_token}).then((res)=>{
-      console.log("response from take session" + JSON.stringify(res));
+      //console.log( '>>'+ JSON.parse(JSON.stringify(res)).data +'<<');
+      if(JSON.parse( JSON.stringify(res) ).data == "\"already_taken\"" ) {
+        console.log('Schicht - bereits uebernommen!');
+        alert('Oops, da war jemand schneller als Du. Die Schicht wurde gerade bereits von jemand anderem übernommen. Danke dennoch für Deine Bereitschaft!');
+      }
+      
     }).catch((err)=>{
       console.log("error take session " + JSON.stringify(err));
     });
