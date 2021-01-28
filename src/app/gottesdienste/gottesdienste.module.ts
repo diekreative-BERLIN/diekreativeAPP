@@ -8,12 +8,16 @@ import { GottesdienstePageRoutingModule } from './gottesdienste-routing.module';
 
 import { GottesdienstePage } from './gottesdienste.page';
 
+import {DemoMaterialModule} from '../material-module';
+
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    GottesdienstePageRoutingModule
+    GottesdienstePageRoutingModule,
+    DemoMaterialModule
   ],
   declarations: [GottesdienstePage]
 })

@@ -25,7 +25,8 @@ export class ItemslidePage implements OnInit {
     private userstate:UserstateService,
     private churchtools:ChurchapiService) {
     let userfilter = encodeURI(this.userstate.shortusername);
-    this.churchtools.getGebetsschichten(7300,userfilter).then((result)=>{
+    let explicitusername = encodeURI(this.userstate.explicitusername);
+    this.churchtools.getGebetsschichten(7300,userfilter,explicitusername).then((result)=>{
       console.log(JSON.stringify(result.data));
       this.items = JSON.parse(result.data);
       this.initializing = false;

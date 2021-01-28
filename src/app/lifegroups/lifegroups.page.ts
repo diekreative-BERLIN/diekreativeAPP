@@ -25,27 +25,21 @@ export class LifegroupsPage implements OnInit {
     }
   }
 
-//subHeader: 'Beware lets confirm'
   showConfirm() {
     this.alertController.create({
-      header: 'lifeGroups in neuem Fenster öffnen?',
-      message: 'Die lifeGroup Seite in der App ist nur eine erste Übersicht und kann nicht zur Anmeldung benutzt werden. Möchtest Du die lifeGroup Übersicht in einem neuen Fenster öffnen um dort eine Teilnahme zu beantragen?',
+      header: 'in Safari öffnen?',
+      message: 'Die lifeGroup Seite in der App ist nur eine erste Übersicht und kann nicht zur Anmeldung benutzt werden. Möchtest Du die lifeGroup Übersicht in einem neuen Fenster im Safari Browser öffnen um dort eine Teilnahme zu beantragen?',
       buttons: [
         {
           text: 'Ja, gerne!',
           handler: () => {
-            
             this.platform.ready().then(() => {
               this.iab.create('https://diekreative.org/churchtools/grouphomepage/t0C8YfViN2HpLvDQDhafN8gYogHeVsLi?embedded=true','_system');
             });
-
           }
         },
         {
-          text: 'Nein Danke.',
-          //handler: () => {
-          //  console.log('close');
-          //}
+          text: 'Nein Danke.'
         }
       ],
     }).then(res => {

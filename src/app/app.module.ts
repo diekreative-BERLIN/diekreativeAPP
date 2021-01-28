@@ -30,19 +30,25 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 
 //Streaming media (player)
 import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
+//Email Composer
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 //modal pages
 import { TunSwapPageModule } from './tun-swap/tun-swap.module';
 import { TunReleasePageModule } from './tun-release/tun-release.module';
 import { TunTakeoverPageModule } from './tun-takeover/tun-takeover.module';
+import { GdCheckinPageModule } from './gd-checkin/gd-checkin.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   entryComponents: [],
   imports: [ 
     FormsModule, BrowserModule, IonicModule.forRoot(), 
     AppRoutingModule, HttpClientModule, BrowserAnimationsModule, 
-    TunSwapPageModule, TunReleasePageModule, TunTakeoverPageModule],
+    TunSwapPageModule, TunReleasePageModule, TunTakeoverPageModule,
+    GdCheckinPageModule],
   providers: [
     StatusBar,
     SplashScreen,
@@ -62,7 +68,8 @@ import { TunTakeoverPageModule } from './tun-takeover/tun-takeover.module';
     MediaCapture,
     StreamingMedia,
     File,
-    FileTransfer
+    FileTransfer,
+    EmailComposer
   ],
   bootstrap: [AppComponent]
 })

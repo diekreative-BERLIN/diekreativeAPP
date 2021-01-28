@@ -8,102 +8,71 @@
     <ion-label class="header-label" color="light">GOTTESDIENSTE</ion-label>   </div>
 
 
+    <div class="kreuze"> <img src="../assets/svg/kreuze_yellow.svg" id="kreuze" > </div>
+    <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
+
     <h1 class="gottesdienst-text">WILLKOMMEN</h1>
     <h2 class="gottesdienst-text">Wir freuen uns auf dich!</h2>
-    <p class="gottesdienst-text">Schau gerne mal bei uns vorbei – vor Ort oder in unserem Live-Stream. Wir feiern Gottesdienst auf Deutsch mit englischer Übersetzung.
-    </p>
-    <br>
-
-<!--
-    <ion-item class="gottesdienst-text">Schau gerne mal bei uns vorbei – vor Ort oder in unserem Live-Stream. Wir feiern Gottesdienst auf Deutsch mit englischer Übersetzung.
-  
+    <p class="gottesdienst-text">Schau gerne mal bei uns vorbei – vor Ort oder in unserem Live-Stream. Wir feiern Gottesdienst auf Deutsch mit englischer Übersetzung.</p>
+   
+    <p class="next-gd">nächster Gottesdienst</p>
+    <!-- div *ngIf="!isGodiToday" -->
+    <div *ngIf="Weekday!=userState.AppPageGodiWeekdayNextEvent">
+      <ion-card class="info-gd">
+        <ion-card-header class="gd-header">
+          <ion-card-title class="gd-date">{{userState.AppPageGodiInfoDate}}, {{userState.AppPageGodiInfo}}</ion-card-title>
+        </ion-card-header>
       
-        <ion-icon name="time-sharp" class="gottesdienst-icon"></ion-icon>  Sonntags 10:30 - 12:30 Uhr Kaffee & Tee ab 10:00 Uhr (English translation available) Kindergottesdienst für Kinder & Jugendliche von 3-12 Jahren, parallel. Check-In ab 10:15 Uhr</ion-item>
-      -->
-
-
-
-    <!--   <div class="godi-icon-with-text">  -->
-    <ion-icon name="time-sharp" class="gottesdienst-icon"></ion-icon> <p class="gottesdienst-icon-text">Sonntags 10:30 - 12:30 Uhr Kaffee & Tee ab 10:00 Uhr (English translation available) 
-      <br><br> Kindergottesdienst für Kinder & Jugendliche von 3-12 Jahren, parallel. Check-In ab 10:15 Uhr</p>
-  
-
-<br> 
-
-      <ion-icon name="location-sharp" class="gottesdienst-icon"></ion-icon> <p class="gottesdienst-icon-text">Motorwerk<br>An der Industriebahn 12<br> 13088 Berlin</p>
-
-
- <div class="kreuze"> <img src="../assets/svg/kreuze_yellow.svg" id="kreuze" > </div>
-
- <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
-
-
-
-
-</div>
- 
-
-
-
-
-<!-- 
-  <ion-label ><div class="subtitle">
-Wir beten 24 Stunden - 7 Tage - 52 Wochen <br>
-Du bist herzlich eingeladen mitzubeten
-</div></ion-label>
-<ion-buttons *ngIf="userState.hasTuerOeffner">
-<ion-grid>
-  <ion-row>
-    <ion-button (click)="tueroeffner.openFrontDoor()" class="fullwidthbutton">Türöffner vorne</ion-button>
-  </ion-row>
-  <ion-row> 
-    <ion-button (click)="tueroeffner.openSecondDoor()" class="fullwidthbutton">Türöffner hinten</ion-button>
-  </ion-row>
-</ion-grid>
-</ion-buttons>
-
-<iframe  src="https://diekreative.org/churchtools/?q=churchcal&amp;embedded=true&amp;viewname=calView&amp;category_id=17&amp;title=Gebetskalender&amp;cal4web=true" width="100%" height="90%" frameborder="0" scrolling="no">Dein Brower unterstützt leider keine iFrames!&nbsp;</iframe>
-
-
-
-
-
-
-
-
-
-    <div class="diekreativeappmain" style="background-color: #fff;">
-    <br>
-  
-    <div class="headerimages"> <img src="../assets/headerimages/Header_Unterseiten_GOTTESDIENST.jpg" > </div>
-  
-    <h1 class="headercaption">GOTTESDIENSTE</h1> 
-  
-   <div class="kreuze"> <img src="../assets/svg/kreuze_yellow.svg" id="kreuze" > </div>
-  
-   <div class="pfeil"> <img src="../assets/svg/pfeil_yellow_1.svg" id="pfeile" > </div>
-  
-  
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-  
-  
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-  
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-  
-  
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-
-</div>
+        <ion-card-content>
+          {{userState.AppPageGodiInfotext}}
+        </ion-card-content>
+      </ion-card>
+  </div>
+<!--
+  <div>
+    Next GoDi Event on Weekday {{userState.AppPageGodiWeekdayNextEvent}}
+  </div>
+  <div *ngIf="Weekday==userState.AppPageGodiWeekdayNextEvent">
+    Heute findet Event statt
+  </div>
+  <div *ngIf="Weekday!=userState.AppPageGodiWeekdayNextEvent">
+    Heute ({{Weekday}}) findet KEIN Event statt
+  </div>
 -->
+  <!-- div *ngIf="isGodiToday" -->
+  <div *ngIf="Weekday==userState.AppPageGodiWeekdayNextEvent">
+    <!-- #docregion multi -->
+    <mat-accordion class="gd-info-now" multi>
+      <!-- #enddocregion multi -->
+      <mat-expansion-panel hideToggle="true" #vision>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            heute, {{userState.AppPageGodiInfo}}
+          </mat-panel-title>
+          <ion-icon *ngIf="!vision.expanded" name="chevron-down"></ion-icon>
+          <ion-icon *ngIf="vision.expanded" name="close"></ion-icon>
+        </mat-expansion-panel-header>
+        <!-- ng-template matExpansionPanelContent -->
+          <ion-buttons>
+            <ion-grid>
+              <ion-row class="godi-info">
+                {{userState.AppPageGodiInfotext}}
+              </ion-row>
+              <ion-row *ngIf="userState.AppPageGodiQRcheckin && userState.AppPageGoDiQRcheckinCode != 'false'">
+                <ion-button (click)="checkin()" class="qr-button">
+                <ion-icon name="qr-code-outline"></ion-icon>
+                &nbsp;&nbsp;
+                <ion-label>Dein QR-Code für Check-in</ion-label>
+              </ion-button>
+              </ion-row>
+            </ion-grid>
+          </ion-buttons>
+        <!-- /ng-template -->
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <br>
+
+</div>
 
 </ion-content>

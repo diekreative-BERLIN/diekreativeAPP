@@ -149,6 +149,14 @@ ngOnInit() {
     this.router.navigate(["/tabs/tab1"]);
     this.close();
   }
+  godiActivated(){
+    this.router.navigate(["/tabs/gottesdienste"]);
+    this.close();
+  }
+  erlebtActivated(){
+    this.router.navigate(["/tabs/erlebt"]);
+    this.close();
+  }
   openWebsite(url){
     this.platform.ready().then(() => {
       this.iab.create(url,'_system');

@@ -52,7 +52,7 @@ export class ChurchapiService {
 
   private callCalendarMethods(category){
     var params = new HttpParams()
-                    .set('category_ids[]',category)
+          .set('category_ids[]',category);
     return this.sendAjaxPostRequest(this.CALENDARROOT, "getCalPerCategory",params)
   }
 
@@ -91,12 +91,22 @@ export class ChurchapiService {
     //return this.httpClient.get<PersonResponse>(this.REST_API_SERVER+'/'+request,{params:params, withCredentials:true});
   }
 
+  //get next sunday services
+  public getNextGoDiEvents(){
+    return this.http.get(this.PRAY_API_SERVER+"/calendar/read",{},{token:this.PRAY_API_SERVER_token});
+  }
+
   /////////////////// get next prayer watches /////
-  public getGebetsschichten(nbEntries,shortusername){
+  public getGebetsschichten(nbEntries,shortusername,explicitusername){
     if (shortusername!=null) 
     {
-      console.log("getGebetsschichten mit nbEntries:"+nbEntries+" UND ctFulluserShort="+shortusername);
-      var request = "maxEntries"+'='+nbEntries+'&ctFulluserShort='+shortusername;
+      if (explicitusername != "") {
+        console.log("getGebetsschichten mit nbEntries:"+nbEntries+" UND ctFulluserShort="+shortusername+" UND explicitusername="+explicitusername);
+        var request = "maxEntries"+'='+nbEntries+'&ctFulluserShort='+shortusername+'&ctExplicitUser='+explicitusername;
+      } else {
+        console.log("getGebetsschichten mit nbEntries:"+nbEntries+" UND ctFulluserShort="+shortusername);
+        var request = "maxEntries"+'='+nbEntries+'&ctFulluserShort='+shortusername;
+      }
     } 
     else
     {
@@ -108,7 +118,7 @@ export class ChurchapiService {
 
   /////////////////// Get available watches /////
   public getFreieSchichten(){
-    return this.http.get(this.PRAY_API_SERVER+"/watches/available",{},{token:this.PRAY_API_SERVER_token})
+    return this.http.get(this.PRAY_API_SERVER+"/watches/available",{},{token:this.PRAY_API_SERVER_token});
   }
 
   /////////////////////// take session //////
@@ -191,6 +201,23 @@ export class ChurchapiService {
   /////////////////// Prayer for Persecuted Topic /////
   public getTopicPersecuted(){
     return this.http.get(this.PRAY_API_SERVER+"/praytopics/persecuted",{},{token:this.PRAY_API_SERVER_token})
+  }
+
+  //getGoDiEventInfo
+  public getGoDiEventDetails(groupid){
+    var request = "groups"+'/'+groupid;
+    return this.http.get(this.REST_API_SERVER+'/'+request,{},{});
+  }
+  //check if Person belongs to group
+  public checkPersonInGroup(personid){
+    var request = "persons/"+personid+"/groups?show_overdue_groups=false&show_inactive_groups=false";
+    return this.http.get(this.REST_API_SERVER+'/'+request,{},{});
+  }
+
+  //get QR Code for Person
+  public getQRCode(personid,groupid){
+    var request = "groups/"+groupid+"/qrcodecheckin/"+personid;
+    return this.http.get(this.REST_API_SERVER+'/'+request,{},{});
   }
 
 }

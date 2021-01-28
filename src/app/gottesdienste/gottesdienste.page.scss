@@ -1,21 +1,10 @@
 
-
-
-
-
-/* von t&n begin */
-
 .gottesdienst-title {
-
     box-shadow: 0px 3px 6px #00000029;
     width:100%; 
     height:209px; 
-    background-image: url('../../assets/headerimages/Header_Unterseiten_GOTTESDIENST.jpg'); 
-
-  /*  background-image: url('../assets/headerimages/Header_Unterseiten_GOTTESDIENST.jpg');*/ 
-   
-  background-size: cover;
-
+    background-image: url('../../assets/headerimages/Header_Unterseiten_GOTTESDIENST.jpg');   
+    background-size: cover;
 }
 
 .header-label{
@@ -29,57 +18,9 @@
     font-size: 27px;
 }
 
-
-
-/*
-.subtitle{
-    font-size: 14px;
-    font-family: Lato;
-    font-weight: normal;
-    line-height: normal;
-    margin-top:41px;
-    margin-bottom:41px;
-    margin-left:45px;
-    margin-right:45px;
-
-color: var(--unnamed-color-777777);
-text-align: left;
-font: Regular 14px/18px Source Sans Pro;
-letter-spacing: 0px;
-color: #777777;
-opacity: 1;
-}
-
-.fullwidthbutton{
-    width:100%;
-    background: var(--unnamed-color-777777) 0% 0% no-repeat padding-box;
-background: #777777 0% 0% no-repeat padding-box;
-border-radius: 3px;
-opacity: 1;
-height: 50px;
-margin-left:20px;
-margin-right:20px;
-margin-bottom:10px;
-}
-
-h3{
-    color: var(--ion-color-secondary)
-}
-
-h2 {
-    color: var(--ion-color-primary)
-}
-/* von t&n end */
-
-
-
-/* von lg-begin */
-
 h1.gottesdienst-text {
-    
     margin-top:21%;
     margin-left: 26%;
-    
     font: Bold var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-lato);
     letter-spacing: var(--unnamed-character-spacing-1-5);
     color: #003D58;
@@ -93,10 +34,8 @@ h1.gottesdienst-text {
 
 
 h2.gottesdienst-text {
-
  /*   margin-top: -10px; */
     padding-left: 26%;
-
     font: Bold var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-lato);
     letter-spacing: var(--unnamed-character-spacing-1-5);
     color: var(--unnamed-color-777777);
@@ -107,23 +46,7 @@ h2.gottesdienst-text {
     opacity: 1;
 }
 
-/*
-h3.gottesdienst-text {
-
-    padding-left: 28%;
-    margin-top:90px;
-    font: Bold var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-lato);
-    letter-spacing: var(--unnamed-character-spacing-1-5);
-    color: var(--unnamed-color-777777);
-    text-align: left;
-    font: Bold 20px/27px Lato;
-    letter-spacing: 1.5px;
-    color: #777777;
-    opacity: 1;
-}   */
-
 p.gottesdienst-text {
-
     padding-left: 26%;
     margin-right: 6%; 
     margin-top: 5%;
@@ -131,7 +54,6 @@ p.gottesdienst-text {
     /*font: Regular var(--unnamed-font-size-14)/var(--unnamed-line-spacing-18) var(--unnamed-font-family-source-sans-pro);
     letter-spacing: var(--unnamed-character-spacing-0); 
     color: var(--unnamed-color-707070); */
-
     text-align: left;
     font-family:Source Sans Pro;
     font-size:15px;
@@ -143,15 +65,15 @@ p.gottesdienst-text {
 }
 
 
-.gottesdienst-icon
-{color:#1E3653;
-margin-left:6%;
-white-space:normal;
-white-space:nowrap;
-margin-bottom: -3px;
-line-height: 0;
-background-position-x: left;
-margin-bottom:0px!important;
+.gottesdienst-icon {
+    color:#1E3653;
+    margin-left:6%;
+    white-space:normal;
+    white-space:nowrap;
+    margin-bottom: -3px;
+    line-height: 0;
+    background-position-x: left;
+    margin-bottom:0px!important;
     padding-bottom:0px!important;
 }
 
@@ -165,7 +87,6 @@ margin-bottom:0px!important;
     /*font: Regular var(--unnamed-font-size-14)/var(--unnamed-line-spacing-18) var(--unnamed-font-family-source-sans-pro);
     letter-spacing: var(--unnamed-character-spacing-0); 
     color: var(--unnamed-color-707070); */
-
     text-align: left;
     font-family:Source Sans Pro;
     font-size:15px;
@@ -177,60 +98,154 @@ margin-bottom:0px!important;
 }
 
 
-
-
-/* von lg-end */
-
 .kreuze {
-    top: 28%;
-right:0%;
-width: 96px;
-height: 96px;
+    top: 28px;
+    right:0px;
+    width: 96px;
+    height: 96px;
     opacity: 1; 
-position: absolute;}
+    position: absolute;
+}
 
-.pfeil
-{position: absolute;
-    top: 46%;
-left: -8.4%;
-width: 94px;
-height: 59px;
+.pfeil {
+    position: absolute;
+    top: 280px;
+    left: -30px;
+    width: 94px;
+    height: 59px;
     /* border: 1.5px solid var(--unnamed-color-e1a730); 
     border: 1.5px;  
     border: 2px solid #E1A730; */
 }
+.next-gd {
+    font-family: "Source Sans Pro";
+    font-style: normal;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #1E3653;
+    font-size: 15px;
+    padding-left: 20px;
+    margin-right: 6%;
+    margin-top: 25px;
+    margin-bottom: 0px !important;
+}
+.info-gd {
+    margin-top: 5px;
+    font-family: "Source Sans Pro";
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0px;
+    color: #777777;
+}
+.gd-header {
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+ion-card-content {
+    font-size: 14px;
+}
+.gd-date {
+    color: #070707;
+    font-size: 16px;
+}
 
-
-
-
-
-/* alter code
-.headerimages{
-    top: 96px;
-    left: -5px;
-    width: 380px;
-    height: 209px; 
-
-    position: absolute;
-    /* position: absolute; */
-    /* background: var(--unnamed-color-003d58) 0% 0% no-repeat padding-box; 
-    /*  background: #003D5815 0% 0% no-repeat padding-box;
-    background: #003D5815  
-    /*border: 1px solid #707070;
-    opacity: 0.15; 
-    }
-
-    h1 {
-        top: 183px;
-
-        font-family:Lato, sans-serif;
-        position: absolute;
-        top: 183px;
-        left: 69px;
-        width: 237px;
-        height: 33px;   
-        font-size: 27px;
-        font-weight:550;   
-    }
-
+//Expansion Panel
+//Material stuff
+.example-action-buttons {
+    padding-bottom: 20px;
+  }
+  
+  .example-headers-align .mat-expansion-panel-header-title,
+  .example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+  }
+  
+  .mat-expansion-panel-header-title {
+    //color: #1E3653;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 700;
+    //font-size: 15px;
+    color: #070707;
+    font-size: 16px;
+  }
+  .example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .example-headers-align .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+  
+//Anpassungen dk App
+  .mat-expansion-panel-header {
+	font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 700;
+    //font: normal normal bold 16px/20px Source Sans Pro;
+    letter-spacing: 0px;
+    color: #474747;
+    //text-transform: uppercase;
+}
+.ng-star-inserted {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    //font: normal normal normal 14px/18px Source Sans Pro;
+    letter-spacing: 0px;
+    color: #777777;
+}
+//kein Schatten und nur einfache Linie zwischen den Expansion Elementen
+/*
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+    box-shadow: none;
+    border-bottom: 0px;
+    border-radius: 0px !important;
+}
 */
+//kein Abstand zwischen den Expansion Elementen
+.mat-expansion-panel-spacing {
+    margin: 0;
+}
+.gd-info-now {
+
+}
+.mat-expansion-panel {
+    margin-left: 17px;
+    margin-right: 17px;
+    border-bottom-left-radius: 8px!important;
+    border-bottom-right-radius: 8px!important;
+    border-top-left-radius: 8px!important;
+    border-top-right-radius: 8px!important;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px 0px;
+    box-sizing: border-box
+}
+
+.qr-button {
+    font-family: Source Sans Pro;
+    font-size: 14px;
+    letter-spacing: 0px;
+    font-weight: 450 !important;
+    color: #707070;
+    line-height: normal;
+}
+
+::ng-deep .mat-expansion-panel-header
+{
+    height: 25px !important;
+    margin-top: 15px;
+    margin-bottom: 0px;
+}
+.mat-expansion-panel-header:not(.mat-expanded) {
+    margin-bottom: 15px;
+}
+
+.godi-info {
+    margin-left: -5px;
+    padding-bottom: 15px;
+}
+mat-expansion-panel,
+mat-expansion-panel * {
+  transition: none !important;
+}

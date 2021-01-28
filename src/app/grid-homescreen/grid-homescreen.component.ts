@@ -25,4 +25,9 @@ export class GridHomescreenComponent implements OnInit {
     this.router.navigate(["/tabs/predigten-audio"]);
   }
 
+  GoDiGoto(){
+    //this.userState.AppPageGodiInit = true;
+    this.router.navigate(["/tabs/gottesdienste"]);
+  }
+
 }

@@ -1,0 +1,10 @@
+<ion-content>
+  
+    <ion-grid>
+      <ion-row><ion-col class="text">Zeige einfach den folgenden QR Code beim checkin vor, und schon bist Du eingecheckt!</ion-col></ion-row>
+      <ion-row><ion-col class="qr">
+        <qrcode [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+      </ion-col></ion-row>
+    </ion-grid> 
+  </ion-content>
+  

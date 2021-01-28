@@ -51,56 +51,53 @@
         <ion-item *ngIf="userState.loggedin" (click)="ctAppActivated()"><ion-icon class="menuicon" color="secondary" src="/assets/icon/CT_Logo.svg"></ion-icon><ion-label>&nbsp;&nbsp;Churchtools App</ion-label></ion-item>
         <ion-item class="login" *ngIf="!userState.loggedin" (click)="presentModal()"><ion-icon class="menuicon" color="secondary" name="key-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Login</ion-label></ion-item>
         <!--ion-item><ion-icon class="menuicon" color="secondary" name="notifications-outline"></ion-icon><ion-label>&nbsp;&nbsp;Mitteilungen</ion-label></ion-item-->
+        <ion-item (click)="creditsActivated()"><ion-icon class="menuicon" color="secondary" name="information-circle-sharp"></ion-icon><ion-label>&nbsp;&nbsp;&uuml;ber diese App</ion-label></ion-item>
+        <ion-item href="mailto:office@diekreative.org"><ion-icon class="menuicon" color="secondary" name="mail-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Kontakt</ion-label></ion-item>
+
         <ion-item (click)="mediathekActivated()"><ion-icon class="menuicon" color="secondary" name="mic-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Mediathek</ion-label></ion-item>
         <ion-item (click)="lifegroupsActivated()"><ion-icon class="menuicon" color="secondary" name="people-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Lifegroups</ion-label></ion-item>
         <ion-item (click)="tagundnachtActivated()"><ion-icon class="menuicon" color="secondary" src="/assets/icon/tagundnacht.svg"></ion-icon><ion-label>&nbsp;&nbsp;Tagundnacht</ion-label></ion-item>
         <ion-item (click)="aboutUsActivated()"><ion-icon class="menuicon" color="secondary" name="fitness"></ion-icon><ion-label>&nbsp;&nbsp;&uuml;ber uns</ion-label></ion-item>
 
-        <!--ion-item><ion-icon class="menuicon" color="secondary" name="share-social-sharp"></ion-icon>&nbsp;&nbsp;ERlebt</ion-item-->
-        <ion-item  href="mailto:office@diekreative.org"><ion-icon class="menuicon" color="secondary" name="mail-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Kontakt</ion-label></ion-item>
-        <!--ion-item target= "_blank" href="https://diekreative.org/impressum/"><ion-icon class="menuicon" color="secondary" name="information-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Impressum</ion-label></ion-item-->
-        <ion-item lines="none" (click)="creditsActivated()"><ion-icon class="menuicon" color="secondary" name="information-circle-sharp"></ion-icon><ion-label>&nbsp;&nbsp;&uuml;ber diese App</ion-label></ion-item>
-
+        <ion-item (click)="godiActivated()"><ion-icon class="menuicon" color="secondary" name="flame"></ion-icon><ion-label>&nbsp;&nbsp;Gottesdienste</ion-label></ion-item>
+        <ion-item lines="none" (click)="erlebtActivated()"><ion-icon class="menuicon" color="secondary" name="share-social-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Erlebt</ion-label></ion-item>
+        <br><br><br><br>
         <!--eingeloggter Status
       <ion-header>
         <ion-toolbar color="primary">
           <ion-button size="large" (click)="presentModal()">  <ion-icon name="person-circle-outline"></ion-icon>  <ion-title> Username</ion-title></ion-button>
         </ion-toolbar>
          </ion-header>
-      <ion-content>
-        <ion-list>
-          <ion-item><ion-icon name="person-circle"></ion-icon>&nbsp;&nbsp;Benutzer</ion-item>
-          <ion-item><ion-icon name="notifications-outline"></ion-icon>&nbsp;&nbsp;Mitteilungen</ion-item>
-          <ion-item><ion-icon name="mic-sharp"></ion-icon>&nbsp;&nbsp;Mediathek</ion-item>
-          <ion-item><ion-icon name="people-sharp"></ion-icon>&nbsp;&nbsp;Lifegroups</ion-item>
-           <ion-item><ion-icon name="share-social-sharp"></ion-icon>&nbsp;&nbsp;ERlebt</ion-item>
-           <ion-item><ion-icon name="mail-sharp"></ion-icon>&nbsp;&nbsp;Kontakt</ion-item>       
+      <ion-content>  
         -->
       </ion-list> 
-      <div class="socialmediabar">
-         
-        <ion-grid>
-          <ion-row class="socialmediaicons"> 
-            <ion-col size="1.4"><a href="#" (click)="openWebsite('https://diekreative.org')"><ion-icon class="menuicon"  color="secondary" name="earth"></ion-icon></a></ion-col>
-            <ion-col size="1.4"><a (click)="openWebsite('https://www.facebook.com/diekreative.org/')" href="#"><ion-icon class="menuicon" src="/assets/icon/F_icon.svg"></ion-icon> </a></ion-col>
-            <ion-col size="1.4"><a (click)="openWebsite('https://www.youtube.com/c/diekreative/featured')" href="#"><ion-icon class="menuicon" color="primary" src="/assets/icon/youtube.svg"></ion-icon></a></ion-col>
-            <ion-col size="1.4"><a (click)="openWebsite('https://www.instagram.com/diekreative_berlin/')" href="#"><ion-icon  class="menuicon" src="/assets/icon/20160929161413!Instagram_logo_2016.svg"></ion-icon></a></ion-col>
-          </ion-row>
-          <ion-row class="minorinfo">
-            <ion-col>
-              <a href="#" (click)="openWebsite('https://diekreative.org/impressum')">Impressum</a>
-            </ion-col>
-            <ion-col></ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
+
     </ion-content>
           
-       
+    <ion-footer>
+      <ion-toolbar>
+         
+          <ion-grid class="menu_footer">
+            <ion-row class="socialmediaicons"> 
+              <ion-col size="2.1"><a href="#" (click)="openWebsite('https://diekreative.org')"><ion-icon class="menuicon"  color="secondary" name="earth"></ion-icon></a></ion-col>
+              <ion-col size="2.1"><a (click)="openWebsite('https://www.facebook.com/diekreative.org/')" href="#"><ion-icon class="menuicon" src="/assets/icon/F_icon.svg"></ion-icon> </a></ion-col>
+              <ion-col size="2.1"><a (click)="openWebsite('https://www.youtube.com/c/diekreative/featured')" href="#"><ion-icon class="menuicon" color="primary" src="/assets/icon/youtube.svg"></ion-icon></a></ion-col>
+              <ion-col size="2.1"><a (click)="openWebsite('https://www.instagram.com/diekreative_berlin/')" href="#"><ion-icon  class="menuicon" src="/assets/icon/20160929161413!Instagram_logo_2016.svg"></ion-icon></a></ion-col>
+            </ion-row>
+            <ion-row class="minorinfo">
+              <ion-col>
+                <a href="#" (click)="openWebsite('https://diekreative.org/impressum')">Impressum</a>
+              </ion-col>
+              <ion-col></ion-col>
+            </ion-row>
+          </ion-grid>
+        
+      </ion-toolbar>
+    </ion-footer>  
  
   </ion-menu>
-  <ion-content forceOverscroll=true scrollY=false>
+  <ion-content forceOverscroll=true scrollY=true>
   <ion-router-outlet id="main"></ion-router-outlet>
 </ion-content>
-  <!--ion-router-outlet id="main"></ion-router-outlet-->
+
 </ion-app>
