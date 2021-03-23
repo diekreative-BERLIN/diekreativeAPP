@@ -10,7 +10,6 @@ import { GottesdienstePage } from './gottesdienste.page';
 
 import {DemoMaterialModule} from '../material-module';
 
-
 @NgModule({
   imports: [
     CommonModule,

@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ChurchapiService } from './connectors/churchapi.service';
 import { FeedsService } from './communications/feeds.service';
+import { EventsService } from './connectors/events.service';
 import { UserstateService } from './userstate.service';
 import { PredigtElementComponent } from './predigt-element/predigt-element.component';
 import { HTTP } from '@ionic-native/http/ngx';
@@ -27,6 +28,8 @@ import { MediaCapture } from '@ionic-native/media-capture/ngx';
 import { File } from '@ionic-native/File/ngx';
 //Filetransfer
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+//File Opener
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 //Streaming media (player)
 import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
@@ -59,7 +62,7 @@ import { GdCheckinPageModule } from './gd-checkin/gd-checkin.module';
     HttpClientModule,
     HTTP,
     FeedsService,
-    ChurchapiService,
+    EventsService,
     UserstateService,
     SocialSharing,
     InAppBrowser,
@@ -69,6 +72,7 @@ import { GdCheckinPageModule } from './gd-checkin/gd-checkin.module';
     StreamingMedia,
     File,
     FileTransfer,
+    FileOpener,
     EmailComposer
   ],
   bootstrap: [AppComponent]

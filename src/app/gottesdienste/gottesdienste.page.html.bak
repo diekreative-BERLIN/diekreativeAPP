@@ -1,0 +1,78 @@
+
+<ion-content>
+
+  <div>
+
+
+  <div class="gottesdienst-title" style="background-color: #fff;">
+    <ion-label class="header-label" color="light">GOTTESDIENSTE</ion-label>   </div>
+
+
+    <div class="kreuze"> <img src="../assets/svg/kreuze_yellow.svg" id="kreuze" > </div>
+    <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
+
+    <h1 class="gottesdienst-text">WILLKOMMEN</h1>
+    <h2 class="gottesdienst-text">Wir freuen uns auf dich!</h2>
+    <p class="gottesdienst-text">Schau gerne mal bei uns vorbei – vor Ort oder in unserem Live-Stream. Wir feiern Gottesdienst auf Deutsch mit englischer Übersetzung.</p>
+   
+    <p class="next-gd">nächster Gottesdienst</p>
+    <!-- div *ngIf="!isGodiToday" -->
+    <div *ngIf="Weekday!=userState.AppPageGodiWeekdayNextEvent">
+      <ion-card class="info-gd" (click)="showGoDiDetails(1)">
+        <ion-card-header class="gd-header">
+          <ion-card-title class="gd-date">{{userState.AppPageGodiInfoDate}}, {{userState.AppPageGodiInfo}}</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+          {{userState.AppPageGodiInfotext}}
+        </ion-card-content>
+      </ion-card>
+  </div>
+<!--
+  <div>
+    Next GoDi Event on Weekday {{userState.AppPageGodiWeekdayNextEvent}}
+  </div>
+  <div *ngIf="Weekday==userState.AppPageGodiWeekdayNextEvent">
+    Heute findet Event statt
+  </div>
+  <div *ngIf="Weekday!=userState.AppPageGodiWeekdayNextEvent">
+    Heute ({{Weekday}}) findet KEIN Event statt
+  </div>
+-->
+  <!-- div *ngIf="isGodiToday" -->
+  <div *ngIf="Weekday==userState.AppPageGodiWeekdayNextEvent">
+    <!-- #docregion multi -->
+    <mat-accordion class="gd-info-now" multi>
+      <!-- #enddocregion multi -->
+      <mat-expansion-panel hideToggle="true" #vision>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            heute, {{userState.AppPageGodiInfo}}
+          </mat-panel-title>
+          <ion-icon *ngIf="!vision.expanded" name="chevron-down"></ion-icon>
+          <ion-icon *ngIf="vision.expanded" name="close"></ion-icon>
+        </mat-expansion-panel-header>
+        <!-- ng-template matExpansionPanelContent -->
+          <ion-buttons>
+            <ion-grid>
+              <ion-row class="godi-info" (click)="showGoDiDetails(0)">
+                {{userState.AppPageGodiInfotext}}
+              </ion-row>
+              <ion-row *ngIf="userState.AppPageGodiQRcheckin && userState.AppPageGoDiQRcheckinCode != 'false'">
+                <ion-button (click)="checkin()" class="qr-button">
+                <ion-icon name="qr-code-outline"></ion-icon>
+                &nbsp;&nbsp;
+                <ion-label>Dein QR-Code für Check-in</ion-label>
+              </ion-button>
+              </ion-row>
+            </ion-grid>
+          </ion-buttons>
+        <!-- /ng-template -->
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <br>
+
+</div>
+
+</ion-content>

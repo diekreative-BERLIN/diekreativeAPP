@@ -11,7 +11,8 @@ export class GridHomescreenComponent implements OnInit {
 
   constructor(
     private userState:UserstateService,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
   ngOnInit() {}
 

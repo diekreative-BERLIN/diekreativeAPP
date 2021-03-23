@@ -22,7 +22,14 @@ export class UserstateService {
 //  loginstring = "";
   AppPageTUNInit = false;
   AppPageTunTimestamp = 1601000000000;
-  AppPageMedienInit = false;  
+  AppPageMedienInit = false;
+  AppPageGodiTimestamp = 1601000000000;
+  AppPageGodiWeekdayNextEvent = -1;
+  AppPageGodiInfoDate = "";
+  AppPageGodiInfo = "";
+  AppPageGodiInfotext = "";
+  AppPageGodiQRcheckin = false;
+  AppPageGoDiQRcheckinCode = "";
   isOnline = false;
 
   constructor(
@@ -82,6 +89,17 @@ export class UserstateService {
         })*/
       })
 
+      nativeStorage.getItem('AppPageStorage').then((AppPg)=>{
+        console.log('platform ready - read native storage AppPage!')
+        this.AppPageGodiTimestamp = AppPg.godi_timestamp;
+        this.AppPageGodiInfoDate = AppPg.godi_infodate;
+        this.AppPageGodiInfo = AppPg.godi_info;
+        this.AppPageGodiInfotext = AppPg.godi_infotext;
+        this.AppPageGodiQRcheckin = AppPg.godi_qrcheckin;
+        this.AppPageGoDiQRcheckinCode = AppPg.godi_qrcheckincode;
+        console.log('timestamp:'+this.AppPageGodiTimestamp+' InfoDate:'+this.AppPageGodiInfoDate+' AppPageGodiInfo:'+this.AppPageGodiInfo+' AppPageGodiInfotext='+this.AppPageGodiInfotext+' AppPageGodiQRcheckin:'+this.AppPageGodiQRcheckin+ ' AppPageGoDiQRcheckinCode:'+this.AppPageGoDiQRcheckinCode);
+      })
+
     });
   }
 
@@ -103,10 +121,8 @@ export class UserstateService {
         this.shortusername = (JSON.parse(res.data)).data.firstName + " " +lastname.substr(0,1)+"."  
         console.log("shortname="+this.shortusername)
         this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner, shortusername:this.shortusername, explicitusername:this.explicitusername})
-  .then(
-    () => console.log('Stored item!'),
-    error => console.error('Error storing item', error)
-  );
+        this.AppPageGodiTimestamp = 12345; //reset timestamp with new login
+        //this.nativeStorage.setItem('AppPageStorage', {godi_timestamp: this.AppPageGodiTimestamp, godi_infodate: this.AppPageGodiInfoDate, godi_info: this.AppPageGodiInfo, godi_infotext: this.AppPageGodiInfotext, godi_qrcheckin: this.AppPageGodiQRcheckin, godi_qrcheckincode: this.AppPageGoDiQRcheckinCode})
       })
       var resultObj = JSON.parse(res.data)
       console.log("Get Group for Loggedin " +JSON.stringify(resultObj));
@@ -119,6 +135,7 @@ export class UserstateService {
           console.log("has Zugang");
           hasZugang = true;
           this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner, shortusername:this.shortusername, explicitusername:this.explicitusername})
+          //this.nativeStorage.setItem('AppPageStorage', {godi_timestamp: this.AppPageGodiTimestamp, godi_infodate: this.AppPageGodiInfoDate, godi_info: this.AppPageGodiInfo, godi_infotext: this.AppPageGodiInfotext, godi_qrcheckin: this.AppPageGodiQRcheckin, godi_qrcheckincode: this.AppPageGoDiQRcheckinCode})
         .then(
     () => console.log('Stored item!'),
     error => console.error('Error storing item', error)
@@ -132,6 +149,7 @@ export class UserstateService {
           this.logintoken = JSON.parse(res.data).data;
           console.log("Has Tueroeffner and Logintoken");
           this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner, shortusername:this.shortusername, explicitusername:this.explicitusername})
+          //this.nativeStorage.setItem('AppPageStorage', {godi_timestamp: this.AppPageGodiTimestamp, godi_infodate: this.AppPageGodiInfoDate, godi_info: this.AppPageGodiInfo, godi_infotext: this.AppPageGodiInfotext, godi_qrcheckin: this.AppPageGodiQRcheckin, godi_qrcheckincode: this.AppPageGoDiQRcheckinCode})
         .then(
     () => console.log('Stored item!'),
     error => console.error('Error storing item', error)
@@ -163,6 +181,7 @@ export class UserstateService {
       console.log("dropped here " + JSON.stringify(err));
     });
     this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner, shortusername:this.shortusername, explicitusername:this.explicitusername})
+    //this.nativeStorage.setItem('AppPageStorage', {godi_timestamp: this.AppPageGodiTimestamp, godi_infodate: this.AppPageGodiInfoDate, godi_info: this.AppPageGodiInfo, godi_infotext: this.AppPageGodiInfotext, godi_qrcheckin: this.AppPageGodiQRcheckin, godi_qrcheckincode: this.AppPageGoDiQRcheckinCode})
   .then(
     () => console.log('Stored item!'),
     error => console.error('Error storing item', error)
@@ -177,8 +196,84 @@ export class UserstateService {
     this.fullusername = "";
     this.shortusername = "";
     this.explicitusername = "";
+    this.AppPageGodiTimestamp = 12345; //reset timestamp with logout
     this.nativeStorage.remove('currentUser');
     console.log("user has been logged out");
+  }
+
+  //save GoDi Info
+  public saveGoDiInfo() {
+    this.nativeStorage.setItem('AppPageStorage', {godi_timestamp: this.AppPageGodiTimestamp, godi_infodate: this.AppPageGodiInfoDate, godi_info: this.AppPageGodiInfo, godi_infotext: this.AppPageGodiInfotext, godi_qrcheckin: this.AppPageGodiQRcheckin, godi_qrcheckincode: this.AppPageGoDiQRcheckinCode}).then(
+      () => console.log('Stored AppPageStorage item: timestamp:'+this.AppPageGodiTimestamp+
+      ' InfoDate:'+this.AppPageGodiInfoDate+' AppPageGodiInfo:'+this.AppPageGodiInfo+' AppPageGodiInfotext='+this.AppPageGodiInfotext+' AppPageGodiQRcheckin:'+this.AppPageGodiQRcheckin+ ' AppPageGoDiQRcheckinCode:'+this.AppPageGoDiQRcheckinCode),
+      error => console.error('Error storing AppPageGodiInfo item', error)
+    );
+  }
+
+  //read GoDi Events within next 7 days
+  public getNextGoDiEvents() {
+
+    this.AppPageGodiWeekdayNextEvent = -1;
+    this.churchtools.getNextGoDiEvents().then((result)=>{
+      //console.log('nextGoDi Services: ' + JSON.stringify(result.data));
+      //let retval = JSON.parse(JSON.stringify(result)).data ;
+      //this.momentjs.tz.setDefault('Europe/Berlin');
+      let i=0;
+      let starttime = this.momentjs( (JSON.parse(result.data)[i].start) * 1000).subtract(1, 'h'); 
+      let infotext =  JSON.parse(result.data)[i].notes ;
+      let infodate = this.momentjs( starttime ).format('DD.MM.YYYY') ;
+      let info = this.momentjs( starttime ).format('HH:mm') + ' Uhr, ' + JSON.parse(result.data)[i].bezeichng ;
+      this.AppPageGodiWeekdayNextEvent = this.momentjs( starttime ).format('d') ;
+console.log('weekday next event = '+this.AppPageGodiWeekdayNextEvent);
+      this.AppPageGodiInfoDate = infodate;
+      this.AppPageGodiInfo = info;
+      this.AppPageGodiInfotext = infotext;
+    });
+    
+  }
+
+  //read details for Event
+  public getGoDiEventDetails() {
+    this.churchtools.getGoDiEventDetails('183').then((result)=>{
+      //console.log("GoDi Event Info:" +JSON.stringify(JSON.parse(result.data)));
+      this.AppPageGodiQRcheckin = (JSON.parse(result.data)).data.settings.qrCodeCheckin;
+      console.log('qr checkin? '+this.AppPageGodiQRcheckin);
+    });
+  }
+
+  //check if person is in Group
+  //not needed - if Person is not in Group, we get an error with getQRCode. That's enough information that we need
+  public checkPersonInGroup() {
+    console.log('check person '+this.personid+' in group?');
+    this.churchtools.checkPersonInGroup(this.personid).then((result)=>{
+      //console.log("check person:" +JSON.stringify(JSON.parse(result.data)));
+      let daten = (JSON.parse(result.data))[0].group.domainIdentifier;
+      console.log( 'daten: '+daten );
+      //let daten = (JSON.parse(result.data));
+
+      //console.log('len=' + (JSON.parse(result.data)).length );
+      //console.log('for in daten..');
+      //for (var data of (JSON.stringify(result.data))) {
+        //console.log('loop: '+data);
+        //group.domainIdentifier
+        //console.log(data);
+      //}
+
+    });
+  }
+
+  //getQRCode for Person
+  public getQRCode() {
+    console.log('in get qr code..');
+    this.churchtools.getQRCode(this.personid,'183').then((result)=>{
+      //console.log('res='+result);
+      console.log('qrcode: '+JSON.parse(JSON.stringify(JSON.parse(result.data))).data.token );
+      
+      this.AppPageGoDiQRcheckinCode = (JSON.parse(result.data)).data.token + '/' + this.personid + '/183';
+    }).catch((err)=>{
+      console.log("Error getting qrcode"+JSON.stringify(err));
+      this.AppPageGoDiQRcheckinCode = "false";
+    })
   }
 
 }
