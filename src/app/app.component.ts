@@ -41,6 +41,15 @@ export class AppComponent {
     private connectivity: ConnectivityService
   ) {
     this.initializeApp();
+    //handle Android Back Button
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      if (this.router.url == "/tabs/itemslide" || this.router.url == "/tabs/tun-gebetscal" || this.router.url == "/tabs/tun-takewatches") {
+        this.router.navigate(["/tabs/tagundnacht"]);
+      } else {
+        //go to home
+        this.router.navigate(["/tabs/tab1"]);
+      }
+    });
   }
 
   initializeApp() {

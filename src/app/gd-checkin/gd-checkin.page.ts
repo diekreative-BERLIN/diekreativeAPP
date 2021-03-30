@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 //import { ChurchapiService } from '../connectors/churchapi.service';
 //popover
 import {PopoverController} from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-gd-checkin',
@@ -13,9 +14,14 @@ export class GdCheckinPage implements OnInit {
   public myAngularxQrCode: string = null;
 
   constructor(
-    private popover:PopoverController
+    private popover:PopoverController,
+    private platform: Platform
     //private churchtools:ChurchapiService
-    ) {  }
+    ) {
+      //this.platform.backButton.subscribeWithPriority(10, () => {
+      //  this.popover.dismiss("abort");
+      //});
+    }
   
   QRcode;
 

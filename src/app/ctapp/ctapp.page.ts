@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { Router } from '@angular/router';
 
 import { ChurchapiService } from '../connectors/churchapi.service';
 import { UserstateService } from '../userstate.service';
@@ -17,8 +18,14 @@ export class CtappPage implements OnInit {
   constructor(
     private iab: InAppBrowser,
     private platform: Platform,
+    private router: Router,
     private churchtools:ChurchapiService,
-    public userState:UserstateService) { }
+    public userState:UserstateService
+    ) {
+      //this.platform.backButton.subscribeWithPriority(10, () => {
+      //  this.router.navigate(["/tabs/tab1"]);
+      //});
+    }
 
   ngOnInit() {
     if(this.platform.is('android')) {

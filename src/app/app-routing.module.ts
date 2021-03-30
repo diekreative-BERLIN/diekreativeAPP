@@ -77,7 +77,11 @@ const routes: Routes = [
   {
     path: 'erlebt',
     loadChildren: () => import('./erlebt/erlebt.module').then( m => m.ErlebtPageModule)
+  },  {
+    path: 'general',
+    loadChildren: () => import('./modals/general/general.module').then( m => m.GeneralPageModule)
   }
+
 
 
 

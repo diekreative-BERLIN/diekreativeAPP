@@ -253,3 +253,35 @@ mat-expansion-panel * {
 .alert-class {
     white-space: pre-wrap;
 }
+/*
+width: 50%;
+display: table;
+margin-left: -1px;
+*/
+.watchLinks {
+    border: 1px solid #ECEEEF;
+}
+/*
+.watchLinksHeader {
+    font-family: Source Sans Pro;
+    font-size: 14px;
+    letter-spacing: 0px;
+    font-weight: 450 !important;
+    color: #707070;
+    line-height: 30px;
+    text-transform: uppercase;
+    padding-left: 10px;
+}
+.help-button {
+    font-family: Source Sans Pro;
+    font-size: 14px;
+    letter-spacing: 0px;
+    font-weight: 450 !important;
+    color: #707070;
+    line-height: normal;
+    //text-align: right;
+}
+*/
+.newRow {
+    padding-top: 10px;
+}

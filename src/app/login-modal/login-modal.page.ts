@@ -10,7 +10,11 @@ import { UserstateService } from '../userstate.service';
 })
 export class LoginModalPage implements OnInit {
 
-  constructor(public modalController:ModalController, public churchapiService:ChurchapiService, private userService: UserstateService) { }
+  constructor(
+    public modalController:ModalController,
+    public churchapiService:ChurchapiService,
+    private userService: UserstateService
+  ) { }
   username;
   password;
 

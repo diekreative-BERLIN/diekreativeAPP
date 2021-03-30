@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tun-gebetscal',
@@ -10,8 +12,14 @@ export class TunGebetscalPage implements OnInit {
 
   loading;
   constructor(
-    public loadingController: LoadingController
-  ) { }
+    private platform: Platform,
+    public loadingController: LoadingController,
+    private router: Router
+  ) {
+    //this.platform.backButton.subscribeWithPriority(10, () => {
+    //  this.router.navigate(["/tabs/tagundnacht"]);
+    //});  
+  }
 
   ngOnInit() {
     this.showLoader();

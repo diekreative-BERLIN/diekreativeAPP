@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NewsRss } from '../communications/news-rss';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 // add File
 import { File, FileEntry } from '@ionic-native/File/ngx';
@@ -31,10 +32,15 @@ export class PredigtElementComponent implements OnInit {
     public userState:UserstateService,
     private socialSharing: SocialSharing,
     private platform: Platform,
+    private router: Router,
     private iab: InAppBrowser,
     private file: File,
     private transfer: FileTransfer
-  ) { }
+  ) {
+    //this.platform.backButton.subscribeWithPriority(10, () => {
+    //  this.router.navigate(["/tabs/tab1"]);
+    //});
+  }
 
   //ngAfterViewChecked(): void {
     //if(this.userState.AppPageMedienInit){

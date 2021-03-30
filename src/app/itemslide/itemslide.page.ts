@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from "@ionic/angular";
 import { ChurchapiService } from '../connectors/churchapi.service';
 import { UserstateService } from '../userstate.service';
+import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 import {IonItemSliding} from '@ionic/angular'
 
@@ -23,7 +25,10 @@ export class ItemslidePage implements OnInit {
     public navCtrl: NavController,
     private popover:PopoverController,
     private userstate:UserstateService,
-    private churchtools:ChurchapiService) {
+    private churchtools:ChurchapiService,
+    private platform: Platform,
+    private router: Router
+  ) {
     let userfilter = encodeURI(this.userstate.shortusername);
     let explicitusername = encodeURI(this.userstate.explicitusername);
     this.churchtools.getGebetsschichten(7300,userfilter,explicitusername).then((result)=>{
@@ -31,7 +36,10 @@ export class ItemslidePage implements OnInit {
       this.items = JSON.parse(result.data);
       this.initializing = false;
     });
-    
+
+    //this.platform.backButton.subscribeWithPriority(10, () => {
+    //  this.router.navigate(["/tabs/tagundnacht"]);
+    //});
   }
 
   ngOnInit() {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 import { AlertController } from '@ionic/angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
@@ -14,8 +15,14 @@ export class LifegroupsPage implements OnInit {
 
   constructor(
     private platform: Platform,
+    private router: Router,
     public alertController: AlertController,
-    private iab: InAppBrowser) { }
+    private iab: InAppBrowser
+  ) {
+    //this.platform.backButton.subscribeWithPriority(10, () => {
+    //  this.router.navigate(["/tabs/tab1"]);
+    //});
+  }
 
   ngOnInit() {
     if(this.platform.is('android')) {

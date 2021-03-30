@@ -1,10 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 
 //modal popover
 import { PopoverController } from '@ionic/angular';
 import { GdCheckinPage } from '../gd-checkin/gd-checkin.page';
+import { GeneralPage } from '../modals/general/general.page';
+
 
 //timezone
 import * as moment from 'moment-timezone';
@@ -35,6 +38,8 @@ export class GottesdienstePage {
   //use of moment.js library
   momentjs: any = moment;
   timeout;
+  modalDataReturned: any
+  fixForCurrentTimeZone = new Date().getTimezoneOffset() / -60;
   //here creating object to access file transfer object.
   private fileTransfer: FileTransferObject; 
   timestampLocal;
@@ -65,7 +70,7 @@ export class GottesdienstePage {
   AppPageGodiInfoDate = "";
   AppPageGodiInfo = "";
   AppPageGodiInfotext = "";
-  AppPageGodiQRcheckin = false;
+  AppPageGodiQRcheckin = true;
   AppPageGoDiQRcheckinCode = "false";
 
   constructor (
@@ -79,6 +84,7 @@ export class GottesdienstePage {
     private transfer: FileTransfer,
     private fileOpener: FileOpener,
     private iab: InAppBrowser,
+    private modalController: ModalController,
     private alertController: AlertController
   ) {
     platform.ready().then(() => {
@@ -109,9 +115,17 @@ export class GottesdienstePage {
           this.AppPageGodiInfoDate = AppPg.godi_infodate;
           this.AppPageGodiInfo = AppPg.godi_info;
           this.AppPageGodiInfotext = AppPg.godi_infotext;
-          this.AppPageGodiQRcheckin = AppPg.godi_qrcheckin;
+
+          //2021-03-31 check if QR checkin is activated for Motorwerk GoDi
+          if (AppPg.godi_qrcheckin  == "false") {
+            console.log('@Init QR Checkin false.. should it not be true? goto check!!');
+            this.getGoDiEventDetails();
+          }
+          //this.AppPageGodiQRcheckin = AppPg.godi_qrcheckin;
+          //this.AppPageGodiQRcheckin = true; //2021-03-29 force true - else we never have checkin.. (need to fix)
+
           this.AppPageGoDiQRcheckinCode = AppPg.godi_qrcheckincode;
-          if (this.AppPageGoDiQRcheckinCode == '') {this.AppPageGoDiQRcheckinCode = "false"}
+          if (this.AppPageGoDiQRcheckinCode == '' || this.isUserLoggedIn == false) {this.AppPageGoDiQRcheckinCode = "false"}
           console.log('infos from AppStorage: timestamp:'+this.AppPageGodiTimestamp+' Startzeit:'+this.AppPageGodiEvntStart+' Ende:'+this.AppPageGodiEvntEnd+' InfoDate:'+this.AppPageGodiInfoDate+' AppPageGodiInfo:'+this.AppPageGodiInfo+' AppPageGodiInfotext='+this.AppPageGodiInfotext+' AppPageGodiQRcheckin:'+this.AppPageGodiQRcheckin+ ' AppPageGoDiQRcheckinCode:'+this.AppPageGoDiQRcheckinCode);
           console.log('now setup things');
           this.setUpThings();
@@ -135,7 +149,11 @@ export class GottesdienstePage {
           this.getQRCode();
         }
       });
-    })
+    });
+
+    //this.platform.backButton.subscribeWithPriority(10, () => {
+    //  this.router.navigate(["/tabs/tab1"]);
+    //});
   }
 
   checkin(){
@@ -166,19 +184,19 @@ export class GottesdienstePage {
   //read GoDi Events within next 7 days
   public getNextGoDiEvents(readNextDay) {
     this.churchtools.getNextGoDiEvents().then((result)=>{
-      console.log('nextGoDi Services: ' + JSON.stringify(result.data));
+      console.log('nextGoDi Services (readNextDay? '+readNextDay+'): ' + JSON.stringify(result.data));
       //let retval = JSON.parse(JSON.stringify(result)).data ;
       //this.momentjs.tz.setDefault('Europe/Berlin');
       let i=0;
-      let starttime = this.momentjs( (JSON.parse(result.data)[i].start) * 1000).subtract(1, 'h');
+      let starttime = this.momentjs( (JSON.parse(result.data)[i].start) * 1000).subtract(this.fixForCurrentTimeZone, 'h');
       //get next Event > consider if result still holds current event - if so, then read next id.
       if (readNextDay>0) {
         if (this.momentjs( starttime ).format('YYMMDD') == this.momentjs( this.timestampLocal ).format('YYMMDD') ) {
           i=1;
-          starttime = this.momentjs( (JSON.parse(result.data)[i].start) * 1000).subtract(1, 'h');
+          starttime = this.momentjs( (JSON.parse(result.data)[i].start) * 1000).subtract(this.fixForCurrentTimeZone, 'h');
         }
       }
-      let endtime = this.momentjs( (JSON.parse(result.data)[i].ende) * 1000).subtract(1, 'h');
+      let endtime = this.momentjs( (JSON.parse(result.data)[i].ende) * 1000).subtract(this.fixForCurrentTimeZone, 'h');
       this.AppPageGodiEvntStart = starttime;
       this.AppPageGodiEvntEnd = endtime;
       let infotext =  JSON.parse(result.data)[i].notes ;
@@ -283,12 +301,21 @@ export class GottesdienstePage {
 
     //1. if current day = day where the upcoming event happens?
     if (this.Weekday == evnt_day) {
+      clearTimeout(this.timeout);
       this.isGodiToday = 1;
+
       if (Hour < (evnt_hour - this.checkinActivateSpan)) {
         this.eventProgressState = -1;
+        this.setTimeout2Actualize((evnt_hour - this.checkinActivateSpan) - Hour);
       } else if ((Hour >= (evnt_hour - this.checkinActivateSpan)) && (Hour < evnt_end)) {
         this.eventProgressState = 0;
-        if (Hour >= evnt_hour) {this.eventProgressState = 1;}
+        if (Hour >= evnt_hour) {
+          this.eventProgressState = 1;
+          this.setTimeout2Actualize(evnt_end - Hour);
+        } else {
+          this.setTimeout2Actualize(evnt_hour - Hour);
+        }
+        
       } else {
         this.eventProgressState = 2;
       }
@@ -298,7 +325,7 @@ export class GottesdienstePage {
     }
 
     console.log('isGodiToday='+this.isGodiToday+' eventProgressState='+this.eventProgressState);
-    if (this.isGodiToday) {
+    if (this.isGodiToday == 1) {
       if (this.eventProgressState == 0 || this.eventProgressState == 1) {
         if (this.AppPageGoDiQRcheckinCode == "false" && this.AppPageGodiQRcheckin) {
           this.getQRCode();
@@ -313,7 +340,7 @@ export class GottesdienstePage {
               this.SkriptLink = (JSON.parse(result.data)).skript; //here we get also the script link
 
               let EventLinkDate = (JSON.parse(result.data)).date;
-              //console.log('Datum für next Link:'+EventLinkDate+' (mit Format='+moment( EventLinkDate, 'DD.MM.YYYY' ).format('YYMMDD')+') GoDi Event='+this.momentjs( this.AppPageGodiEvntStart ).format('YYMMDD'));
+              console.log('Datum für next Link:'+EventLinkDate+' (mit Format='+moment( EventLinkDate, 'DD.MM.YYYY' ).format('YYMMDD')+') GoDi Event='+this.momentjs( this.AppPageGodiEvntStart ).format('YYMMDD'));
               //only show zoom and YT link for the current Event
               if (moment( EventLinkDate, 'DD.MM.YYYY' ).format('YYMMDD') == this.momentjs( this.AppPageGodiEvntStart ).format('YYMMDD')) {
                 this.ZoomLink = (JSON.parse(result.data)).zoom;
@@ -376,10 +403,12 @@ export class GottesdienstePage {
     }
   }
 
-  setTimeout2Actualize() {
-    let timeoutMs = 5000;
+  //set timer - if we do not leave page - auto actualize when event starts or ends
+  setTimeout2Actualize(timeoutHour) {
+    console.log('>timeout: '+timeoutHour);
+    let timeoutMs = (timeoutHour * 3600000) + 1500;
     this.timeout = setTimeout(() => {
-      alert('dsa ist ein timeout nach '+timeoutMs+ 'ms');
+      this.setUpThings();
     }, timeoutMs);
   }
   
@@ -413,12 +442,13 @@ export class GottesdienstePage {
   * detect needed updates when we enter GoDi Page without App restart
   */
   ionViewDidEnter() {
-    console.log('----> ionViewDidEnter: isUserLoggedIn='+this.isUserLoggedIn+' GodiToday?'+this.isGodiToday);
+    console.log('----> ionViewDidEnter: isUserLoggedIn='+this.isUserLoggedIn+' (qrcode: '+this.AppPageGoDiQRcheckinCode+')'+' GodiToday?'+this.isGodiToday);
     this.setTimeStamp();
     console.log('timestamp saved: '+this.momentjs( this.AppPageGodiTimestamp ).format('YYMMDD') +' und jetzt:'+this.momentjs( this.timestampLocal ).format('YYMMDD'));
-    
-    this.setTimeout2Actualize();
-    
+    this.AppPageGoDiQRcheckinCode
+    //2021-03-29 always go through setup things - else some things are not actualized..
+    this.setUpThings();
+    /*
     if (this.momentjs( this.AppPageGodiTimestamp ).format('YYMMDD') != this.momentjs( this.timestampLocal ).format('YYMMDD')) {
       //we have a new day - read new data
       console.log('ivde: timestamp differs -> gotoSetup');
@@ -437,6 +467,7 @@ export class GottesdienstePage {
       });
       
     }
+    */
   }
 
   ionViewWillLeave() {
@@ -457,9 +488,21 @@ export class GottesdienstePage {
     console.log(this.ZoomLink);
     this.openWebsite(this.ZoomLink);
   }
-  launchZoomMeeting2(){
+  async launchZoomMeeting2(){
     //depreceated
     //let url = 'zoomus://zoom.us/join?confno=81114830864&pwd=N2JBaWgyMjhod0YwcUg3K0lqNlRGUT09&zc';
+  
+    const modal = await this.modalController.create({
+      component: GeneralPage,
+      componentProps: {
+        "paramTitle": 'english translation',
+        "paramText": 'english translation is provided within the Zoom App. Please watch the the short screencast below to learn how to switch to the english translation within zoom and then confirm with the Okay button below the screencast.',
+        "paramShowHowto": true
+      }
+   });
+   await modal.present();
+   await modal.onDidDismiss();
+
     console.log("launch Zoom Meeting with:");
     console.log(this.ZoomLink);
     this.openWebsite(this.ZoomLink);
@@ -474,6 +517,31 @@ export class GottesdienstePage {
     this.platform.ready().then(() => {
       this.iab.create(url,'_system');
     });
+  }
+  async openModal(modalTitle, modalText, modalShowZoomHowto) {
+    const modal = await this.modalController.create({
+      component: GeneralPage,
+      componentProps: {
+        "paramTitle": modalTitle,
+        "paramText": modalText,
+        "paramShowHowto": modalShowZoomHowto
+      }
+    });
+
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        this.modalDataReturned = dataReturned.data;
+        //alert('Modal Sent Data :'+ dataReturned);
+      }
+    });
+
+    return await modal.present();
+  }
+  helpZoom() {
+    this.openModal('Gottesdienst per Zoom','zum Mithören vor Ort via Zoom.\n\nZoom hat nur eine geringe zeitliche Verzögerung und eignet sich somit gut zum Mithören des Gottesdienstes vor Ort vom eigenen Smartphone aus.\nFür den Empfang von Bild und Ton muss die kostenlose Zoom App auf dem Smarthpone installiert sein. Zudem empfiehlt sich eine WLAN Verbindung zu nutzen um das Datenvolumen zu schonen.\n\nFür weitere Infos sprich bitte die Info an.\n\n~~~~~ english ~~~~~\nFor english speaking guests we provide a live translation over zoom.\nPlease make sure that you have installed the zoom client on your smartphone (free of charge) and have enough mobile data (or use WiFi) before clicking the "english" button.\nAs soon as zoom starts up, you will be able to choose the english translation channel.\nFeel free to contact our info desk for more information.', false);
+  }
+  helpYT() {
+    this.openModal('YouTube Livestream', 'Öffnet den aktuellen Livestream in YouTube\n\nDas ist der bevorzugte Weg, um von zuhause aus an der aktuellen Veranstaltung teilzunehmen.', false);
   }
 
   //temp

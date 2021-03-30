@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-erlebt',
@@ -12,8 +14,14 @@ export class ErlebtPage {
   isChecked;
 
   constructor(
-    public emailComposer: EmailComposer
-  ) { }
+    public emailComposer: EmailComposer,
+    private platform: Platform,
+    private router: Router
+  ) {
+    //this.platform.backButton.subscribeWithPriority(10, () => {
+    //  this.router.navigate(["/tabs/tab1"]);
+    //});
+  }
 
 
   sendTestimony() {

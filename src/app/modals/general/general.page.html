@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar class="header" color="primary">
+    <ion-title>{{modalTitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="modalText">{{modalText}}</ion-col>
+    </ion-row>
+    <div class="video-container" *ngIf="showZoomHowto">
+      <video src="https://diekreative.org/addons/zoom_english.mp4" poster="/assets/howto_english_zoom.JPG" controls width="100%">How to use zoom english channel</video>
+    </div>
+    <br/>
+    <ion-row>
+      <ion-col class="centered">
+        <ion-button (click)="closeModal()">Okay</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
