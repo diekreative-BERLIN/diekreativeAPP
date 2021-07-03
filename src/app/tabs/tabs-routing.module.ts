@@ -60,7 +60,6 @@ const routes: Routes = [
         path: 'tun-takeover',
         loadChildren: () => import('../tun-takeover/tun-takeover.module').then( m => m.TunTakeoverPageModule)
       },
-
       {
         path: 'lifegroups',
         loadChildren: () => import('../lifegroups/lifegroups.module').then( m => m.LifegroupsPageModule)
@@ -80,6 +79,10 @@ const routes: Routes = [
       {
         path: 'erlebt',
         loadChildren: () => import('../erlebt/erlebt.module').then( m => m.ErlebtPageModule)
+      },
+      {
+        path: 'termine',
+        loadChildren: () => import('../termine/termine.module').then( m => m.TerminePageModule)
       },
       {
         path: '',

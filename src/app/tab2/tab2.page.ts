@@ -26,4 +26,9 @@ export class Tab2Page {
     });
   }
 
+  TermineActivated() {
+    this.router.navigate(["/tabs/termine"]);
+    //this.close();
+  }
+
 }

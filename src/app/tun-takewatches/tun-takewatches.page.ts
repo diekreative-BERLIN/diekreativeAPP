@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from "@ionic/angular";
+import { Router } from '@angular/router';
 import { ChurchapiService } from '../connectors/churchapi.service';
 
 import {IonItemSliding} from '@ionic/angular'
@@ -18,6 +19,7 @@ export class TunTakewatchesPage implements OnInit {
   constructor(
   public navCtrl: NavController,
   private churchtools:ChurchapiService,
+  private router: Router,
   private popover:PopoverController) {
     this.churchtools.getFreieSchichten().then((result)=>{
       console.log(JSON.stringify(result.data));
@@ -63,6 +65,10 @@ export class TunTakewatchesPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+  
+  BackActivated() {
+    this.router.navigate(["/tabs/tagundnacht"]);
   }
 
 }

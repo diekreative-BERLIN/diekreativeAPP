@@ -45,4 +45,9 @@ hideLoader() {
   });
 
   }
+
+  BackActivated() {
+    this.router.navigate(["/tabs/tagundnacht"]);
+  }
+
 }

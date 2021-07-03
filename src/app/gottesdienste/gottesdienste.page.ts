@@ -544,6 +544,15 @@ export class GottesdienstePage {
     this.openModal('YouTube Livestream', 'Öffnet den aktuellen Livestream in YouTube\n\nDas ist der bevorzugte Weg, um von zuhause aus an der aktuellen Veranstaltung teilzunehmen.', false);
   }
 
+  doRefresh(event) {
+    console.log('Refresh...');
+    if (event) {
+      this.ionViewDidEnter();
+      event.target.complete();
+    }
+     
+  }
+
   //temp
   public reset() {
     this.AppPageGodiTimestamp = 12345; //reset

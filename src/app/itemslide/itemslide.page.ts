@@ -123,5 +123,8 @@ export class ItemslidePage implements OnInit {
             })
     }
   }
-
+  
+  BackActivated() {
+    this.router.navigate(["/tabs/tagundnacht"]);
+  }
 }

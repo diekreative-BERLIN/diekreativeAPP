@@ -1,8 +1,17 @@
 
 <ion-content>
 
-  <div>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="100" pullMax="200">
+    <ion-refresher-content 
+      pullingIcon="arrow-down-outline" 
+      pullingText="ziehen zum Aktualisieren" 
+      refreshingSpinner="circular"
+      refreshingText="es wird aktualisiert...">
+    </ion-refresher-content>
+  </ion-refresher>
 
+  
+  <div>
 
   <div class="gottesdienst-title" style="background-color: #fff;">
     <ion-label class="header-label" color="light">GOTTESDIENSTE</ion-label>   </div>
@@ -26,18 +35,6 @@
           {{AppPageGodiInfotext}}
         </ion-card-content>
       </ion-card>
-  </div>
-
-  <div *ngIf="isGodiToday && eventProgressState < 0">
-    <ion-card class="info-gd" (click)="showGoDiDetails(1)">
-      <ion-card-header class="gd-header">
-        <ion-card-title class="gd-date">heute, {{AppPageGodiInfo}}</ion-card-title>
-      </ion-card-header>
-    
-      <ion-card-content>
-        {{AppPageGodiInfotext}}
-      </ion-card-content>
-    </ion-card>
   </div>
 
   <div *ngIf="isGodiToday && eventProgressState < 0">

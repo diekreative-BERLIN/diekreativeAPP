@@ -45,6 +45,10 @@ export class AppComponent {
     this.platform.backButton.subscribeWithPriority(10, () => {
       if (this.router.url == "/tabs/itemslide" || this.router.url == "/tabs/tun-gebetscal" || this.router.url == "/tabs/tun-takewatches") {
         this.router.navigate(["/tabs/tagundnacht"]);
+      } else if (this.router.url == '/tabs/tab1') {
+        this.router.navigate(["/tabs/termine"]);
+      } else if (this.router.url == '/tabs/tab2') {
+        navigator['app'].exitApp();
       } else {
         //go to home
         this.router.navigate(["/tabs/tab1"]);
@@ -67,7 +71,6 @@ export class AppComponent {
         .catch(error => alert(`Error getting token ${error}`));
       });
 
-      
   }
 
   openFirst() {

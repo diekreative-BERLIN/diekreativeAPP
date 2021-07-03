@@ -34,16 +34,27 @@
       </ion-col>
     </ion-row>
 
-
+<!--
     <ion-row class="rowfullwidth">
         <ion-col class="highlight-box">
           <div class="highlight-text-box">
-          <p>Aktuelle Gottesdiensttermine findest du hier:</p>
-            <p><a (click)="openWebsite('https://diekreative.org/termine')">https://diekreative.org/termine/</a></p>
+          <p>Aktuelle Gottesdiensttermine findest du hier:</p> -->
+            <!-- <p><a (click)="openWebsite('https://diekreative.org/termine')">https://diekreative.org/termine/</a></p> -->
+         <!--   <p><a (click)="TermineActivated()">https://diekreative.org/termine/</a></p>
         </div>
         </ion-col>
     </ion-row>
+-->
 
+<ion-row class="rowfullwidth">
+  <ion-col class="highlight-box">
+    <div class="highlight-text-box">
+<ion-buttons>
+      <button mat-flat-button color="basic" class="fullwidth" (click)="TermineActivated()">Termine in der &Uuml;bersicht</button>
+</ion-buttons>
+</div>
+</ion-col>
+</ion-row>
 
     <ion-row class="rowfullwidth">
       <ion-col class="col_txt_right">
