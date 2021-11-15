@@ -59,6 +59,8 @@ export class GottesdienstePage {
   YTLink;
   SkriptLink;
   familyQRdata = [];
+  groupid;
+  tempdata;
 
   fakeNow;
   isFakeNow = false;
@@ -107,6 +109,8 @@ export class GottesdienstePage {
         this.isUserLoggedIn = true;
       });
 
+      this.groupid = 183; //currently we preset groups to GoDi im MW
+
       this.nativeStorage.getItem("AppPageStorage").then((AppPg) => {
         if (AppPg) {
           console.log('CHECK: app storage read OKAY');
@@ -140,7 +144,7 @@ export class GottesdienstePage {
           this.getGoDiEventDetails();
           if(this.AppPageGodiQRcheckin) {
             //this.getQRCodesForFamily();
-            this.getQRCode();
+            this.getQRCode(this.personid, this.groupid, true);
           }
         }
       }, (error) => {
@@ -151,7 +155,7 @@ export class GottesdienstePage {
         this.getGoDiEventDetails();
         if(this.AppPageGodiQRcheckin) {
           //this.getQRCodesForFamily();
-          this.getQRCode();
+          this.getQRCode(this.personid, this.groupid, true);
         }
       });
     });
@@ -251,18 +255,28 @@ export class GottesdienstePage {
   }
 
   //getQRCode for Person
-  public getQRCode() {
-    console.log('in get qr code..');
-    this.churchtools.getQRCode(this.personid,'183').then((result)=>{
+  public getQRCode(personID, groupID, saveInfo?) {
+    console.log('in get qr code.. for person '+personID);
+    this.churchtools.getQRCode(personID, groupID).then((result)=>{
       //console.log('res='+result);
       console.log('qrcode: '+JSON.parse(JSON.stringify(JSON.parse(result.data))).data.token );
       
-      this.AppPageGoDiQRcheckinCode = (JSON.parse(result.data)).data.token + '/' + this.personid + '/183';
-      //qr code mit dazu sichern
-      this.saveGoDiInfo();
+      if (saveInfo) {
+        console.log('save info für QR Code ist aktiv. Also save!')
+        this.AppPageGoDiQRcheckinCode = (JSON.parse(result.data)).data.token + '/' + personID + '/' + groupID;
+        //qr code mit dazu sichern
+        this.saveGoDiInfo();
+      }
+      this.tempdata = (JSON.parse(result.data)).data.token + '/' + personID + '/' + groupID;
+
     }).catch((err)=>{
+
       console.log("Error getting qrcode"+JSON.stringify(err));
-      this.AppPageGoDiQRcheckinCode = "false";
+      if (saveInfo) {
+        this.AppPageGoDiQRcheckinCode = "false";
+      }
+      this.tempdata = '';
+
     })
   }
 
@@ -271,13 +285,14 @@ export class GottesdienstePage {
     console.log('get qr code for whole family..');
     this.familyQRdata = [];
     //console.log(this.familyQRdata);
-    let zeile = [{"name":"","qrcode":"","validity":"", "is3gok":false}];
+    let zeile = [{"personid":"","name":"","qrcode":"","validity":"", "is3gok":false}];
     let ablauf = this.momentjs('2021-11-13T09:50:00Z').subtract(this.fixForCurrentTimeZone, 'h');
     //console.log('ablaufdatum = ' + ablauf.format('DD.MM.YYYY HH:mm'));
     //console.log('ohne format='+ablauf);
 
+    zeile[0].personid=this.personid;
     zeile[0].name=this.userState.fullusername;
-    zeile[0].qrcode="OoXFNCDUXk/"+this.personid+"/183";
+    zeile[0].qrcode=this.AppPageGoDiQRcheckinCode;
     zeile[0]['validity'] = ablauf;
     this.familyQRdata.push(zeile[0]);
 
@@ -290,12 +305,26 @@ export class GottesdienstePage {
         //console.log(daten.data[i])
         //alert(daten.data[i].relative.title)
 
-        let zeile = [{"name":"","qrcode":"","3g_until":"", "is3gok":false}];
-        zeile[0].name=daten.data[i].relative.title;
-        zeile[0].qrcode="OoXFNCDUXk/"+daten.data[i].relative.domainIdentifier+"/183";
-        zeile[0]['validity'] = ablauf;
+        //only add if not yet in list
+        let doAdd = true;
+        for(let zeile of this.familyQRdata){  
+          if (zeile.personid == daten.data[i].relative.domainIdentifier) {doAdd = false}
+        }
 
-        this.familyQRdata.push(zeile[0]);
+        if (doAdd) {
+          let zeile = [{"personid":"","name":"","qrcode":"","3g_until":"", "is3gok":false}];
+          zeile[0].personid=daten.data[i].relative.domainIdentifier;
+          zeile[0].name=daten.data[i].relative.title;
+          //zeile[0].qrcode="OoXFNCDUXk/"+daten.data[i].relative.domainIdentifier+"/183";
+          this.getQRCode(daten.data[i].relative.domainIdentifier,this.groupid);
+          if (this.tempdata != '') {
+            zeile[0].qrcode=this.tempdata;
+            //+"/"+daten.data[i].relative.domainIdentifier+'/'+this.groupid;
+            zeile[0]['validity'] = ablauf;
+
+            this.familyQRdata.push(zeile[0]);
+          }
+        }
      }
      
 //console.log('now familyQRData:'+this.familyQRdata);
@@ -391,7 +420,7 @@ export class GottesdienstePage {
       if (this.eventProgressState == 0 || this.eventProgressState == 1) {
         if (this.AppPageGoDiQRcheckinCode == "false" && this.AppPageGodiQRcheckin) {
           //this.getQRCodesForFamily();
-          this.getQRCode();
+          this.getQRCode(this.personid, this.groupid, true);
         }
         if (this.eventProgressState == 1) {
 
@@ -526,7 +555,7 @@ export class GottesdienstePage {
         this.personid = user.personid;
         console.log('Yes - logged in!! personID='+this.personid);
         this.isUserLoggedIn = true;
-        this.getQRCode();
+        this.getQRCode(this.personid, this.groupid);
       });
       
     }

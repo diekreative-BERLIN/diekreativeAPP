@@ -51,8 +51,9 @@ export class GdCheckinPage implements OnInit {
     //validity
     console.log('in ng oninit bei QR display. code:');
     //console.log(this.items);
+    console.log('id | name | qrcode | vlidity | is3gok ');
     for(let zeile of this.QRFamilyData){  
-      console.log(zeile.name + "|" + zeile.qrcode + "|" + zeile.validity + "|" + zeile.is3gok);
+      console.log(zeile.personid + "|" + zeile.name + "|" + zeile.qrcode + "|" + zeile.validity + "|" + zeile.is3gok);
     }
   }
 
