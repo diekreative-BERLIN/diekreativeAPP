@@ -1,7 +1,5 @@
 .text {
     position: relative;
-    //top: 35px;
-    top: 10px;
     color: #777777;
     font-family: 'Lato bold';
     text-align: center;
@@ -13,9 +11,32 @@
     text-align: center;
 }
 
-ion-grid.qrcheckin.md.hydrated {
+//ion-grid.qrcheckin.md.hydrated
+.status3g_true {
     background-color: #03fd039e;
 }
-.qr_content {
-    background-color: red;
+.status3g_false {
+    background-color: white;
 }
+
+.nav_fwd {
+    text-align: right;
+}
+.checkin_name {
+    text-align: center;
+    font-family: "Lato";
+    font-weight: 400;
+    font-size: 14px;
+}
+
+/*
+.nav-button {
+	font-size: 12px;
+	height: 20px;
+}
+
+.nav-button.md.button.button-solid.ion-activatable.ion-focusable.hydrated {
+	font-size: 12px;
+	height: 20px;
+}
+*/

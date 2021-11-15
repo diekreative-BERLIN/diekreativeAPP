@@ -220,6 +220,12 @@ export class ChurchapiService {
     return this.http.get(this.REST_API_SERVER+'/'+request,{},{});
   }
 
+  //get Relationships for Person
+  public getRelationships(personid){
+    var request = "persons/"+personid+"/relationships";
+    return this.http.get(this.REST_API_SERVER+'/'+request,{},{});
+  }
+
 }
 
 export interface Gebetstermin{
