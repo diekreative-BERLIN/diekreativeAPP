@@ -60,7 +60,6 @@ export class GottesdienstePage {
   SkriptLink;
   familyQRdata = [];
   groupid;
-  tempdata;
 
   fakeNow;
   isFakeNow = false;
@@ -144,7 +143,7 @@ export class GottesdienstePage {
           this.getGoDiEventDetails();
           if(this.AppPageGodiQRcheckin) {
             //this.getQRCodesForFamily();
-            this.getQRCode(this.personid, this.groupid, true);
+            this.getQRCode(this.personid, this.groupid);
           }
         }
       }, (error) => {
@@ -155,7 +154,7 @@ export class GottesdienstePage {
         this.getGoDiEventDetails();
         if(this.AppPageGodiQRcheckin) {
           //this.getQRCodesForFamily();
-          this.getQRCode(this.personid, this.groupid, true);
+          this.getQRCode(this.personid, this.groupid);
         }
       });
     });
@@ -169,7 +168,8 @@ export class GottesdienstePage {
     this.popover.create({component:GdCheckinPage,
       componentProps: {
         QRcode: this.AppPageGoDiQRcheckinCode,
-        QRFamilyData: this.familyQRdata
+        QRFamilyData: this.familyQRdata,
+        QRGroupID: this.groupid
       },
       cssClass: 'modal_qr_popover',
       backdropDismiss:true,
@@ -255,28 +255,17 @@ export class GottesdienstePage {
   }
 
   //getQRCode for Person
-  public getQRCode(personID, groupID, saveInfo?) {
+  public getQRCode(personID, groupID) {
     console.log('in get qr code.. for person '+personID);
     this.churchtools.getQRCode(personID, groupID).then((result)=>{
       //console.log('res='+result);
       console.log('qrcode: '+JSON.parse(JSON.stringify(JSON.parse(result.data))).data.token );
-      
-      if (saveInfo) {
-        console.log('save info für QR Code ist aktiv. Also save!')
         this.AppPageGoDiQRcheckinCode = (JSON.parse(result.data)).data.token + '/' + personID + '/' + groupID;
         //qr code mit dazu sichern
         this.saveGoDiInfo();
-      }
-      this.tempdata = (JSON.parse(result.data)).data.token + '/' + personID + '/' + groupID;
-
     }).catch((err)=>{
-
       console.log("Error getting qrcode"+JSON.stringify(err));
-      if (saveInfo) {
         this.AppPageGoDiQRcheckinCode = "false";
-      }
-      this.tempdata = '';
-
     })
   }
 
@@ -286,64 +275,46 @@ export class GottesdienstePage {
     this.familyQRdata = [];
     //console.log(this.familyQRdata);
     let zeile = [{"personid":"","name":"","qrcode":"","validity":"", "is3gok":false}];
-    let ablauf = this.momentjs('2021-11-13T09:50:00Z').subtract(this.fixForCurrentTimeZone, 'h');
+    //let ablauf = this.momentjs('2021-11-13T09:50:00Z').subtract(this.fixForCurrentTimeZone, 'h');
     //console.log('ablaufdatum = ' + ablauf.format('DD.MM.YYYY HH:mm'));
     //console.log('ohne format='+ablauf);
 
+    //1. add current person to array
     zeile[0].personid=this.personid;
     zeile[0].name=this.userState.fullusername;
-    zeile[0].qrcode=this.AppPageGoDiQRcheckinCode;
-    zeile[0]['validity'] = ablauf;
-    this.familyQRdata.push(zeile[0]);
+    //zeile[0].qrcode=this.AppPageGoDiQRcheckinCode;
+    this.churchtools.getQRCode(this.personid, this.groupid).then((result)=>{
+      let tempdata = JSON.parse(JSON.stringify(JSON.parse(result.data))).data.token;
+      //console.log('2) qrcode wert: ' + tempdata );
+      zeile[0].qrcode=tempdata;
+      this.familyQRdata.push(zeile[0]);
+    })
 
+    //2. add relatives to array
     ​this.churchtools.getRelationships(this.personid).then((result)=>{
       //console.log('relationships: '+JSON.stringify(result));
       //console.log('einzeln A: '+JSON.stringify(JSON.parse(result.data)) );
 
       let daten = (JSON.parse(result.data));
       for (var i=0; i < daten.data.length; i++) {
-        //console.log(daten.data[i])
-        //alert(daten.data[i].relative.title)
 
-        //only add if not yet in list
-        let doAdd = true;
-        for(let zeile of this.familyQRdata){  
-          if (zeile.personid == daten.data[i].relative.domainIdentifier) {doAdd = false}
-        }
-
-        if (doAdd) {
           let zeile = [{"personid":"","name":"","qrcode":"","3g_until":"", "is3gok":false}];
           zeile[0].personid=daten.data[i].relative.domainIdentifier;
           zeile[0].name=daten.data[i].relative.title;
-          //zeile[0].qrcode="OoXFNCDUXk/"+daten.data[i].relative.domainIdentifier+"/183";
-          this.getQRCode(daten.data[i].relative.domainIdentifier,this.groupid);
-          if (this.tempdata != '') {
-            zeile[0].qrcode=this.tempdata;
-            //+"/"+daten.data[i].relative.domainIdentifier+'/'+this.groupid;
-            zeile[0]['validity'] = ablauf;
-
+          //get QRCode for person
+          //console.log('now go to get qrcode for '+daten.data[i].relative.domainIdentifier);
+          this.churchtools.getQRCode(daten.data[i].relative.domainIdentifier, this.groupid).then((result)=>{
+            let tempdata = JSON.parse(JSON.stringify(JSON.parse(result.data))).data.token;
+            console.log('2) qrcode wert: ' + tempdata );
+            zeile[0].qrcode=tempdata;
+//            this.churchtools
+            //zeile[0]['validity'] = ablauf;
             this.familyQRdata.push(zeile[0]);
-          }
-        }
+          })
      }
      
-//console.log('now familyQRData:'+this.familyQRdata);
-     
     })
 
-    /*
-    this.churchtools.getQRCode(this.personid,'183').then((result)=>{
-      //console.log('res='+result);
-      console.log('qrcode: '+JSON.parse(JSON.stringify(JSON.parse(result.data))).data.token );
-      
-      this.AppPageGoDiQRcheckinCode = (JSON.parse(result.data)).data.token + '/' + this.personid + '/183';
-      //qr code mit dazu sichern
-      this.saveGoDiInfo();
-    }).catch((err)=>{
-      console.log("Error getting qrcode"+JSON.stringify(err));
-      this.AppPageGoDiQRcheckinCode = "false";
-    })
-    */
   }
 
   /**
@@ -413,14 +384,17 @@ export class GottesdienstePage {
     //temp
     if (this.AppPageGodiQRcheckin) {
       this.getQRCodesForFamily();
+      //console.log('now familyQRData:');
+      //console.log(this.familyQRdata);
     }
+    
 
     console.log('isGodiToday='+this.isGodiToday+' eventProgressState='+this.eventProgressState);
     if (this.isGodiToday == 1) {
       if (this.eventProgressState == 0 || this.eventProgressState == 1) {
         if (this.AppPageGoDiQRcheckinCode == "false" && this.AppPageGodiQRcheckin) {
           //this.getQRCodesForFamily();
-          this.getQRCode(this.personid, this.groupid, true);
+          this.getQRCode(this.personid, this.groupid);
         }
         if (this.eventProgressState == 1) {
 

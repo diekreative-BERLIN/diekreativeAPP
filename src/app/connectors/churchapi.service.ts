@@ -4,6 +4,8 @@ import { HttpClient, HttpParams, HttpResponse, HttpResponseBase, HttpHeaders } f
 import { environment } from 'src/environments/environment';
 import { HTTP } from '@ionic-native/http/ngx'
 
+import {Md5} from 'ts-md5/dist/md5';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -224,6 +226,13 @@ export class ChurchapiService {
   public getRelationships(personid){
     var request = "persons/"+personid+"/relationships";
     return this.http.get(this.REST_API_SERVER+'/'+request,{},{});
+  }
+
+  /////////////////// Get check validity /////
+  public getCheckValidity(personid){
+    //todo
+    Md5.hashStr(personid);
+    //return this.http.get(this.PRAY_API_SERVER+"/watches/available",{},{token:this.PRAY_API_SERVER_token});
   }
 
 }

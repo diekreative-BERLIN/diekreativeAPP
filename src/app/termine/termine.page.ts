@@ -25,16 +25,18 @@ export class TerminePage implements OnInit {
     public loadingController: LoadingController,
     private router: Router,
     private sanitizer: DomSanitizer
-  ) {
+    ) {
     //this.platform.backButton.subscribeWithPriority(10, () => {
     //  this.router.navigate(["/tabs/tagundnacht"]);
-    //});  
+    //});
   }
 
   ngOnInit() {
     this.showLoader();
     this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl("https://diekreative.org/events_4_app?reload=0");
   }
+
+
 
   // This will show the loader
   showLoader() {
@@ -62,6 +64,7 @@ hideLoader() {
   }
 
   openWebsite(url){
+    //console.log('open website url:'+url);
     this.platform.ready().then(() => {
       this.iab.create(url,'_system');
     });

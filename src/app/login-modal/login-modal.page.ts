@@ -34,7 +34,8 @@ export class LoginModalPage implements OnInit {
       this.userService.userLogginSuccessful(JSON.parse(res.data).data.personId);
       this.dismiss();
     }).catch((err)=>{
-      console.log("error here: "+JSON.stringify(err))
+      console.log("error here: "+JSON.stringify(err));
+      alert('Logindaten sind ungültig. Benutzername oder Passwort stimmen nicht oder Zugang gesperrt.')
     })
   }
 }
