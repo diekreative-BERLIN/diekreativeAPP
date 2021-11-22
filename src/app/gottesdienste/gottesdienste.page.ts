@@ -298,7 +298,7 @@ export class GottesdienstePage {
       let daten = (JSON.parse(result.data));
       for (var i=0; i < daten.data.length; i++) {
 
-          let zeile = [{"personid":"","name":"","qrcode":"","3g_until":"", "is3gok":false}];
+          let zeile = [{"personid":"","name":"","qrcode":"","validity":"", "is3gok":false}];
           zeile[0].personid=daten.data[i].relative.domainIdentifier;
           zeile[0].name=daten.data[i].relative.title;
           //get QRCode for person

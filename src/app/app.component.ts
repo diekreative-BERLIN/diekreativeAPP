@@ -135,6 +135,11 @@ ngOnInit() {
     this.close();
   }
 
+  termineActivated(){
+    this.router.navigate(["/tabs/termine"]);
+    this.close();
+  }
+
   lifegroupsActivated(){
     this.router.navigate(["/tabs/lifegroups"]);
     this.close();

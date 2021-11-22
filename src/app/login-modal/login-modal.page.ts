@@ -35,7 +35,7 @@ export class LoginModalPage implements OnInit {
       this.dismiss();
     }).catch((err)=>{
       console.log("error here: "+JSON.stringify(err));
-      alert('Logindaten sind ungültig. Benutzername oder Passwort stimmen nicht oder Zugang gesperrt.')
+      alert('Logindaten sind ungültig. Benutzername oder Passwort stimmen nicht oder Zugang gesperrt.\n\nBitte prüfe auch ob Wlan oder mobile Daten aktiviert sind, da ein Login bei fehlender Verbindung nicht möglich ist.')
     })
   }
 }
