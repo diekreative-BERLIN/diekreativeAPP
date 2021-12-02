@@ -5,7 +5,8 @@
       <ion-row>
         <ion-icon *ngIf="fst!=true" (click)="nav_back()" name="caret-back-outline"></ion-icon>
         <ion-col class="checkin_name">{{ person.name }}</ion-col>
-        <ion-icon *ngIf="lst!=true" (click)="nav_fwd()" name="caret-forward-outline"></ion-icon>
+        <!-- ion-icon *ngIf="lst!=true" (click)="nav_fwd()" name="caret-forward-outline"></ion-icon -->
+        <ion-icon (click)="nav_fwd()" name="caret-forward-outline"></ion-icon>
       </ion-row>
       <ion-grid class='status3g_{{person.is3gok}}'>
         <ion-row><ion-col class="text">Zeige einfach den folgenden QR Code beim checkin vor, und schon bist Du eingecheckt!</ion-col></ion-row>
@@ -13,7 +14,23 @@
           <qrcode [qrdata]='person.qrcode' [width]="251" [errorCorrectionLevel]="'M'"></qrcode>
         </ion-col></ion-row>
       </ion-grid> 
-  </ion-content>
+    </ion-content>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-content>
+      <ion-row>
+        <ion-icon (click)="nav_back()" name="caret-back-outline"></ion-icon>
+        <ion-col class="checkin_name">weitere Familienmitglieder ?</ion-col>
+      </ion-row>
+      <ion-grid class='status3g_false'>
+        <ion-row><ion-col class="text2">wenn weitere Familienmitglieder zur aktuellen Gruppe hinzugefügt wurden, dann kannst Du sie hier neu einlesen</ion-col></ion-row>
+        <ion-row><ion-col class="refresh">
+          <ion-icon (click)="refresh_family()" name="refresh-circle"></ion-icon>
+        </ion-col></ion-row>
+        <ion-row><ion-col class="text3">Deine Familienmitglieder müssen in Churchtools in Beziehung zu Dir stehen und auch Teil in dieser Veranstaltungsgruppe sein. Der checkin hilft Dir gerne weiter.</ion-col></ion-row>
+      </ion-grid> 
+    </ion-content>
     </ion-slide>
   </ion-slides>
 
