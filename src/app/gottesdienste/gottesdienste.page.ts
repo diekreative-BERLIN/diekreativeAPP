@@ -110,6 +110,7 @@ export class GottesdienstePage {
 
       //this.groupid = 183; //currently we preset groups to 'GoDi im MW'
 
+      //AppPageGoDi Storage read
       this.nativeStorage.getItem("AppPageStorage").then((AppPg) => {
         if (AppPg) {
           console.log('CHECK: app storage read OKAY');
@@ -123,20 +124,20 @@ export class GottesdienstePage {
           this.AppPageGodiInfotext = AppPg.godi_infotext;
 
           console.log("-> godi qrcheckin: "+AppPg.godi_qrcheckin);
-          console.log("qrcode="+AppPg.godi_qrcheckincode);
+          //console.log("qrcode="+AppPg.godi_qrcheckincode);
 
           //2021-03-31 check if QR checkin is activated for Motorwerk GoDi
           if (AppPg.godi_qrcheckin  == "false") {
             console.log('@Init QR Checkin false.. should it not be true? goto check!!');
             this.getGoDiEventDetails();
           }
-          //this.AppPageGodiQRcheckin = AppPg.godi_qrcheckin;
-          //this.AppPageGodiQRcheckin = true; //2021-03-29 force true - else we never have checkin.. (need to fix)
 
+          /*
           this.AppPageGoDiQRcheckinCode = AppPg.godi_qrcheckincode;
           this.familyQRdata = AppPg.godi_qrcheckincode; //also store here because we need this info if we do checkin()
           if (this.AppPageGoDiQRcheckinCode == '' || this.isUserLoggedIn == false) {this.AppPageGoDiQRcheckinCode = "false"}
-          console.log('infos from AppStorage: timestamp:'+this.AppPageGodiTimestamp+' Startzeit:'+this.AppPageGodiEvntStart+' Ende:'+this.AppPageGodiEvntEnd+' InfoDate:'+this.AppPageGodiInfoDate+' AppPageGodiInfo:'+this.AppPageGodiInfo+' AppPageGodiInfotext='+this.AppPageGodiInfotext+' AppPageGodiQRcheckin:'+this.AppPageGodiQRcheckin+ ' AppPageGoDiQRcheckinCode:'+this.AppPageGoDiQRcheckinCode);
+          */
+          console.log('infos from AppStorage: timestamp:'+this.AppPageGodiTimestamp+' Startzeit:'+this.AppPageGodiEvntStart+' Ende:'+this.AppPageGodiEvntEnd+' InfoDate:'+this.AppPageGodiInfoDate+' AppPageGodiInfo:'+this.AppPageGodiInfo+' AppPageGodiInfotext='+this.AppPageGodiInfotext+' AppPageGodiQRcheckin:'+this.AppPageGodiQRcheckin);
           console.log('now setup things');
           this.setUpThings();
         } else {
@@ -145,10 +146,12 @@ export class GottesdienstePage {
           this.AppPageGodiTimestamp = this.timestampLocal;
           this.getNextGoDiEvents(0);
           this.getGoDiEventDetails();
+          /*
           if(this.AppPageGodiQRcheckin) {
             this.getQRCodesForFamily(2);
             //this.getQRCode(this.personid, this.groupid);
           }
+          */
         }
       }, (error) => {
         console.log('CHECK: app storage read ERROR');
@@ -156,6 +159,32 @@ export class GottesdienstePage {
         this.AppPageGodiTimestamp = this.timestampLocal;
         this.getNextGoDiEvents(0);
         this.getGoDiEventDetails();
+        /*
+        if(this.AppPageGodiQRcheckin) {
+          this.getQRCodesForFamily(3);
+          //this.getQRCode(this.personid, this.groupid);
+        }
+        */
+      });
+    
+      //GodiCheckin Storage
+      this.nativeStorage.getItem('CheckinDataStorage').then((GodiCheck)=>{
+        if (GodiCheck) {
+          console.log('CHECK: app storage GoDiCheck read OKAY');
+          console.log("qrcode="+GodiCheck.godi_qrcheckincode);
+          this.AppPageGoDiQRcheckinCode = GodiCheck.godi_qrcheckincode;
+          this.familyQRdata = GodiCheck.godi_qrcheckincode; //also store here because we need this info if we do checkin()
+          if (this.AppPageGoDiQRcheckinCode == '' || this.isUserLoggedIn == false) {this.AppPageGoDiQRcheckinCode = "false"}
+          console.log('infos from GodiCheck: AppPageGodiQRcheckin:'+this.AppPageGodiQRcheckin+ ' AppPageGoDiQRcheckinCode:'+this.AppPageGoDiQRcheckinCode);
+        } else {
+          console.log('CHECK: app storage GoDiCheck read NOT POSSIBLE');
+          if(this.AppPageGodiQRcheckin) {
+            this.getQRCodesForFamily(2);
+            //this.getQRCode(this.personid, this.groupid);
+          }
+        }
+      }, (error) => {
+        console.log('CHECK: app storage GoDiCheck read ERROR');
         if(this.AppPageGodiQRcheckin) {
           this.getQRCodesForFamily(3);
           //this.getQRCode(this.personid, this.groupid);
@@ -163,12 +192,12 @@ export class GottesdienstePage {
       });
     });
 
-    //this.platform.backButton.subscribeWithPriority(10, () => {
-    //  this.router.navigate(["/tabs/tab1"]);
-    //});
-  }
+      //this.platform.backButton.subscribeWithPriority(10, () => {
+      //  this.router.navigate(["/tabs/tab1"]);
+      //});
+    }
 
-  /*
+  
   //detect doublicated values - taken from https://stackoverflow.com/questions/59562502/how-to-find-duplicates-from-list-of-array-in-angular-6-using-some
   uniqueData(array, key) {
     // create new objects for use
@@ -185,7 +214,7 @@ export class GottesdienstePage {
     });
     return uniqueArray;
   }
-*/
+
 
   /*
   * checkin button clicked -> prepare infos and then show QR code(s)
@@ -193,8 +222,8 @@ export class GottesdienstePage {
 async checkin(){
 
     //1. Daten bereinigen
-    //var daten = this.uniqueData(this.familyQRdata, 'personid');
-    var daten = this.familyQRdata;
+    var daten = this.uniqueData(this.familyQRdata, 'personid');
+    //var daten = this.familyQRdata;
     //2. Ablaufdaten auslesen und Gueltigkeit bestimmen
     this.momentjs.tz.setDefault('Europe/Berlin');
     let timestampLocal = this.momentjs().format("X");
@@ -205,7 +234,7 @@ async checkin(){
     
     console.log('id | name | qrcode | validity | is3gok ');
     for(let zeile of daten){  
-      //console.log(zeile.personid + "|" + zeile.name + "|" + zeile.qrcode + "|" + zeile.validity + "|" + zeile.is3gok);
+      console.log(zeile.personid + "|" + zeile.name + "|" + zeile.qrcode + "|" + zeile.validity + "|" + zeile.is3gok);
 
       is3gok = false;
       if (timestampLocal < zeile.validity && zeile.validity != 'Invalid date') {
@@ -237,12 +266,12 @@ async checkin(){
 
     if (saveUpdatedCodes) {
       this.familyQRdata = checkinQRitems;
-      this.saveGoDiInfo();
+      this.saveCheckinCodes();
     }
     
     //zum testen.. checkinQRitems = [{"name":"Marc","qrcode":"abc", "is3gok":true}];
-    //console.log('nun:');
-    //console.log(checkinQRitems);
+    console.log('nun haben wir folgende Werte:');
+    console.log(checkinQRitems);
 
     //nun checkin Codes anzeigen
     //QRcode: this.AppPageGoDiQRcheckinCode,
@@ -270,11 +299,17 @@ async checkin(){
 
   //save GoDi Info
   public saveGoDiInfo() {
-    console.log('>>>>>> SAVE!!! saveGoDiInfo: godi_timestamp: '+this.AppPageGodiTimestamp+', godi_start:'+this.AppPageGodiEvntStart+', godi_end:'+ this.AppPageGodiEvntEnd + ', godi_infodate: '+this.AppPageGodiInfoDate+', godi_info: '+this.AppPageGodiInfo+', godi_infotext: '+this.AppPageGodiInfotext+', godi_qrcheckin: '+this.AppPageGodiQRcheckin+', godi_qrcheckincode: '+this.familyQRdata);
-    //AppPageGoDiQRcheckinCode
-    this.nativeStorage.setItem('AppPageStorage', {godi_timestamp: this.AppPageGodiTimestamp, godi_start: this.AppPageGodiEvntStart, godi_end: this.AppPageGodiEvntEnd, godi_infodate: this.AppPageGodiInfoDate, godi_info: this.AppPageGodiInfo, godi_infotext: this.AppPageGodiInfotext, godi_qrcheckin: this.AppPageGodiQRcheckin, godi_qrcheckincode: this.familyQRdata}).then(
+    console.log('>>>>>> SAVE!!! saveGoDiInfo: godi_timestamp: '+this.AppPageGodiTimestamp+', godi_start:'+this.AppPageGodiEvntStart+', godi_end:'+ this.AppPageGodiEvntEnd + ', godi_infodate: '+this.AppPageGodiInfoDate+', godi_info: '+this.AppPageGodiInfo+', godi_infotext: '+this.AppPageGodiInfotext+', godi_qrcheckin: '+this.AppPageGodiQRcheckin);
+    this.nativeStorage.setItem('AppPageStorage', {godi_timestamp: this.AppPageGodiTimestamp, godi_start: this.AppPageGodiEvntStart, godi_end: this.AppPageGodiEvntEnd, godi_infodate: this.AppPageGodiInfoDate, godi_info: this.AppPageGodiInfo, godi_infotext: this.AppPageGodiInfotext, godi_qrcheckin: this.AppPageGodiQRcheckin}).then(
       () => console.log('Stored AppPageStorage item!'),
       error => console.error('Error storing AppPageStorage item', error)
+    );
+  }
+  public saveCheckinCodes() {
+    console.log('>>>>>> SAVE!!! : godi_qrcheckincode: '+this.familyQRdata);
+    this.nativeStorage.setItem('CheckinDataStorage', {godi_qrcheckincode: this.familyQRdata}).then(
+      () => console.log('Stored CheckinDataStorage item!'),
+      error => console.error('Error storing CheckinDataStorage item', error)
     );
   }
 
@@ -429,7 +464,7 @@ async checkin(){
       }
     }
 
-    this.saveGoDiInfo();
+    this.saveCheckinCodes();
 
   }
 
@@ -500,12 +535,12 @@ async checkin(){
     //temp
     /*
     if (this.AppPageGodiQRcheckin) {
-      this.getQRCodesForFamily();
+      this.getQRCodesForFamily(7);
       //console.log('now familyQRData:');
       //console.log(this.familyQRdata);
     }
     */
-    
+
 
     console.log('isGodiToday='+this.isGodiToday+' eventProgressState='+this.eventProgressState);
     if (this.isGodiToday == 1) {
@@ -741,14 +776,18 @@ async checkin(){
   public reset() {
     this.AppPageGodiTimestamp = 12345; //reset
     this.nativeStorage.remove('AppPageStorage');
+    this.nativeStorage.remove('CheckinDataStorage');
     console.log('made a reset');
   }
     //temp
     public check() {
       this.nativeStorage.getItem('AppPageStorage').then((AppPg)=>{
         console.log('Check Infos from AppStorage: timestamp:'+AppPg.godi_timestamp+' InfoDate:'+AppPg.godi_infodate+
-        ' AppPageGodiInfo:'+AppPg.godi_info+' AppPageGodiInfotext='+AppPg.godi_infotext+' AppPageGodiQRcheckin:'+AppPg.godi_qrcheckin+ ' AppPageGoDiQRcheckinCode:');
-        console.log(AppPg.godi_qrcheckincode);
+        ' AppPageGodiInfo:'+AppPg.godi_info+' AppPageGodiInfotext='+AppPg.godi_infotext+', AppPageGodiQRcheckin='+AppPg.godi_qrcheckin);
+      });
+      this.nativeStorage.getItem('CheckinDataStorage').then((GodiCheck)=>{
+        console.log('GoDi Checkin Infos: AppPageGoDiQRcheckinCode:');
+        console.log(GodiCheck.godi_qrcheckincode);
       });
     }
     //temp

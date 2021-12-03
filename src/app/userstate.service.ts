@@ -178,6 +178,7 @@ export class UserstateService {
     this.shortusername = "";
     this.explicitusername = "";
     this.nativeStorage.remove('currentUser');
+    this.nativeStorage.remove('CheckinDataStorage');
     console.log("user has been logged out");
   }
 
