@@ -101,11 +101,7 @@ export class PredigtElementComponent implements OnInit {
   }
 
   toggleTab(){
-    if(this.fulltext){
-      this.fulltext=false;
-    }else{
-      this.fulltext=true;
-    }
+    this.fulltext = !this.fulltext;
   }
 
 
