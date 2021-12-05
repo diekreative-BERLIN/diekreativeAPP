@@ -1,133 +1,89 @@
 
-
 ion-grid {
   margin: 2%;
-}
-
-#erlebt{
-    background-image: url("/assets/Kachel_Startseite_ELEBT.jpg") no-repeat fixed center;
-    background-size: scale-down;
-    object-fit: cover;
-    height:162px;
-    width: 162px
 }
 
 ion-card {
     position: relative;
     text-align: center;
     margin: 0px;
-
     border-radius: 0px;
-  
-  }
+    -webkit-box-shadow: 0 0px 0px rgb(255, 255, 255);
+    box-shadow: 0 0px 0px rgb(255, 255, 255);
 
-  .image{
+    padding-inline-start: var(--ion-grid-column-padding-xs, var(--ion-grid-column-padding, 1px));
+    padding-inline-end: var(--ion-grid-column-padding-xs, var(--ion-grid-column-padding, 1px));
+}
+
+.card-title {
+  position: absolute; 
+  top: 36%;
+  font-size: 2.0em;
+  width: 100%;
+  font-weight: bold;
+  color: #fff;
+  font: Bold 27px/27px var(--unnamed-font-family-lato);
+  text-align: left;
+  font: Bold 27px/27px Lato;
+  letter-spacing: 2.02px;
+  text-transform: uppercase;
+}
+.card-title {
+  font-size: 2.0em;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  color: white;
+  font-weight: bold;
+  font: Bold 27px/27px Lato;
+  letter-spacing: 2.02px;
+  font: var(--unnamed-font-family-lato);
+  text-align: left;
+  font-family: var(--unnamed-font-family-lato);
+  text-align: initial;
+  line-height: 27px;
+  padding-left: 17px;  
+}
+.card-title {
+  position: absolute;
+  top: 36%;
+  font-size: 2.0em;
+  width: 100%;
+  font-weight: bold;
+  color: #fff;
+}
+.card-title {
+  position: absolute;
+  top: 36%;
+  font-size: 2.0em;
+  width: 100%;
+  font-weight: bold;
+  color: #fff;
+}
+.card-subtitle {
+  font-size: 2.0em;
+  position: absolute;
+  top: 52%;
+  width: 100%;
+  color: white;
+  font-weight: bold;
+  font: Bold 27px/27px Lato;
+  letter-spacing: 2.02px;
+  font: Bold 27px/27px var(--unnamed-font-family-lato);
+  text-align: left;
+  font-family: var(--unnamed-font-family-lato);
+}
+.card-subtitle {
+  font-size: 2.0em;
+  position: absolute;
+  top: 52%;
+  width: 100%;
+  color: white;
+  font-weight: bold;
+}
+
+.image{
     position:center;
-  }
-
-  .card-title {
-    position: absolute; 
-    top: 36%;
-    font-size: 2.0em;
-    width: 100%;
-    font-weight: bold;
-    color: #fff;
-    font: Bold 27px/27px var(--unnamed-font-family-lato);
-    text-align: left;
-    font: Bold 27px/27px Lato;
-letter-spacing: 2.02px;
-text-transform: uppercase;
-
-    
-  }
-
-  #predigten{
-    background-image: url("/assets/Kachel_Startseite_MEDIATHEK.jpg") no-repeat fixed center;
-    background-size: scale-down;
-    object-fit: cover;
-    height:162px;
-    width: 162px
 }
 
 ios hydrated {margin: 0px!important;}
-
-
-  .card-title {
-    font-size: 2.0em;
-    position: absolute;
-    top: 100%;
-    width: 100%;
-    color: white;
-    font-weight: bold;
-    font: Bold 27px/27px Lato;
-    letter-spacing: 2.02px;
-    font: var(--unnamed-font-family-lato);
-    text-align: left;
-    font-family: var(--unnamed-font-family-lato);
-    text-align: initial;
-    line-height: 27px;
-    padding-left: 17px;
-    
-    
-  ;
-    
-  
-  }
-
-  #überuns{
-    background-image: url("/assets/Kachel_Startseite_UEBER-UNS.jpg") no-repeat fixed center;
-    background-size: scale-down;
-    object-fit: cover;
-    height:162px;
-    width: 162px
-}
-
-  .card-title {
-    position: absolute;
-    top: 36%;
-    font-size: 2.0em;
-    width: 100%;
-    font-weight: bold;
-    color: #fff;
-    
-  }
-
-  .card-subtitle {
-    font-size: 2.0em;
-    position: absolute;
-    top: 52%;
-    width: 100%;
-    color: white;
-    font-weight: bold;
-    font: Bold 27px/27px Lato;
-    letter-spacing: 2.02px;
-    font: Bold 27px/27px var(--unnamed-font-family-lato);
-    text-align: left;
-    font-family: var(--unnamed-font-family-lato);
-  }
-  #Tag{
-    background-image: url("/assets/Kachel-Startseite_TAGUNDNACHT.jpg") no-repeat fixed center;
-    background-size: scale-down;
-    object-fit: cover;
-    height:162px;
-    width: 162px
-}
-
-
-  .card-title {
-    position: absolute;
-    top: 36%;
-    font-size: 2.0em;
-    width: 100%;
-    font-weight: bold;
-    color: #fff;
-  }
-
-  .card-subtitle {
-    font-size: 2.0em;
-    position: absolute;
-    top: 52%;
-    width: 100%;
-    color: white;
-    font-weight: bold;
-  }

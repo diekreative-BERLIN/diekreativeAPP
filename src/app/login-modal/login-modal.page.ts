@@ -10,7 +10,11 @@ import { UserstateService } from '../userstate.service';
 })
 export class LoginModalPage implements OnInit {
 
-  constructor(public modalController:ModalController, public churchapiService:ChurchapiService, private userService: UserstateService) { }
+  constructor(
+    public modalController:ModalController,
+    public churchapiService:ChurchapiService,
+    private userService: UserstateService
+  ) { }
   username;
   password;
 
@@ -26,15 +30,12 @@ export class LoginModalPage implements OnInit {
   }
 
   login(){
-    console.log("login test");
     this.churchapiService.login(this.username,this.password).then((res)=>{
-      console.log("LBUBB");
-      console.log("login: "+JSON.stringify(JSON.parse(res.data)));
-
       this.userService.userLogginSuccessful(JSON.parse(res.data).data.personId);
       this.dismiss();
     }).catch((err)=>{
-      console.log("error here: "+JSON.stringify(err))
+      console.log("error here: "+JSON.stringify(err));
+      alert('Logindaten sind ungültig. Benutzername oder Passwort stimmen nicht oder Zugang gesperrt.\n\nBitte prüfe auch ob Wlan oder mobile Daten aktiviert sind, da ein Login bei fehlender Verbindung nicht möglich ist.')
     })
   }
 }

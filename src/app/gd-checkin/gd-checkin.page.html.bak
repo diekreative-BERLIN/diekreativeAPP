@@ -1,0 +1,51 @@
+
+<ion-slides pager="false" [options]="slideOpts" (ionSlideDidChange)="slideChanged()">
+  <ion-slide>
+    
+    <ion-content>
+      <ion-row>
+      <!-- ion-col class="nav_back">
+        <ion-button (click)="nav_back()" class="nav-button">
+          <ion-icon (click)="nav_back()" name="caret-back-outline"></ion-icon>
+        </ion-button>
+        </ion-col -->
+      <ion-col class="checkin_name">NameDerPersonZumEinchecken</ion-col>
+      <!-- ion-col class="nav_fwd">
+        <ion-button (click)="nav_fwd()" class="nav-button" -->
+          <ion-icon (click)="nav_fwd()" name="caret-forward-outline"></ion-icon>
+        <!-- /ion-button>
+      </ion-col -->
+    </ion-row>
+    <ion-grid class="qrcheckin_ok">
+          <ion-row><ion-col class="text">Zeige einfach den folgenden QR Code beim checkin vor, und schon bist Du eingecheckt!</ion-col></ion-row>
+          <ion-row><ion-col class="qr">
+            <qrcode [qrdata]="myAngularxQrCode" [width]="251" [errorCorrectionLevel]="'M'"></qrcode>
+          </ion-col></ion-row>
+        </ion-grid> 
+      </ion-content>
+      
+    
+  </ion-slide>
+  <ion-slide>
+    
+    <ion-content>
+      <ion-row>
+          <ion-icon (click)="nav_back()" name="caret-back-outline"></ion-icon>
+      <ion-col class="checkin_name">Ehepartner oder Kind..</ion-col>
+          <ion-icon (click)="nav_fwd()" name="caret-forward-outline"></ion-icon>
+    </ion-row>
+    <ion-grid class="qrcheckin">
+          <ion-row><ion-col class="text">Zeige einfach den folgenden QR Code beim checkin vor, und schon bist Du eingecheckt!</ion-col></ion-row>
+          <ion-row><ion-col class="qr">
+            <qrcode [qrdata]="myAngularxQrCode" [width]="251" [errorCorrectionLevel]="'M'"></qrcode>
+          </ion-col></ion-row>
+        </ion-grid> 
+      </ion-content>
+
+  </ion-slide>
+  <ion-slide>
+    <h1>Slide 3</h1>
+  </ion-slide>
+</ion-slides>
+
+

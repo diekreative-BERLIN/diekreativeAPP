@@ -12,15 +12,11 @@
     position: absolute;
     top: 158px;
     left: 26px;
-
-}
-
-h3{
-    color: var(--ion-color-secondary)
-}
-
-h2 {
-    color: var(--ion-color-primary)
+    color: #FFFFFF;
+    font-family: 'Lato bold';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 27px;
 }
 
 .kreuze {
@@ -35,7 +31,7 @@ h2 {
 
 .pfeil {
     position: absolute;
-    top: 152px;
+    top: 139px;
     right: 72px;
     width: 67.45px;
     height: 59px;
@@ -45,25 +41,6 @@ h2 {
     border: 2px solid #E1A730; */
 }
 
-.pfeil-blau {
-    position: absolute;
-    top: 332px;
-    left: 50px;
-    width: 33px;
-    height: auto;
-    pointer-events: none;
-    // top: 448px;
-    // left: 325px;
-    // width: 94px;
-    // height: 59px;
-    /* border: 1.5px solid var(--unnamed-color-e1a730); 
-    border: 1.5px;  
-    border: 2px solid #E1A730; */
-}
-
 .descriptionopen{
     white-space: normal;
 }
-
-
-

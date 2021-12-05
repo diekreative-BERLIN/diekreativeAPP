@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MbscFormOptions } from '@mobiscroll/angular';
+import {MatAccordion} from '@angular/material/expansion';
+import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-aboutus',
@@ -7,23 +9,17 @@ import { MbscFormOptions } from '@mobiscroll/angular';
   styleUrls: ['./aboutus.page.scss'],
 })
 export class AboutusPage implements OnInit {
-
-  constructor() { }
+  constructor(
+    private platform: Platform,
+    private router: Router
+  ) {
+    //this.platform.backButton.subscribeWithPriority(10, () => {
+    //  this.router.navigate(["/tabs/tab1"]);
+    //});
+  }
 
   ngOnInit() {
   }
-
-  @ViewChild('run1')
-    r1: any;
-    @ViewChild('run2')
-    r2: any;
-    @ViewChild('run3')
-    r3: any;
-
-    formSettings: MbscFormOptions = {
-        lang: 'de',
-        theme: 'ios',
-        themeVariant: 'light'
-    };
-
+  
+  @ViewChild(MatAccordion) accordion: MatAccordion;
 }

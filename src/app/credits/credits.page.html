@@ -1,11 +1,242 @@
 <ion-content>
+  <div class="description">
+  <h3>diekreative App - V1.06</h3>
+  <div>
+    schön dass Du unsere App installiert hast!<br>
+    Diese App ist direkt aus unserer Mitte heraus geboren.<br>
+    <b>von der Community für die Community!</b><br>
+  </div>
+  <p></p>
+  <div>
+    Hier findest Du die Geschichte dieser App sowie den technischen Hintergrund über die verwendeten Komponenten.
+  </div>
+</div>
+    <!-- #docregion multi -->
+    <mat-accordion class="example-headers-align" multi>
+      <!-- #enddocregion multi -->
+        <mat-expansion-panel hideToggle="true" #history>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              History
+            </mat-panel-title>
+            <ion-icon *ngIf="!history.expanded" name="chevron-down"></ion-icon>
+            <ion-icon *ngIf="history.expanded" name="close"></ion-icon>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
 
-  <ion-card>
-    <img src="../assets/IMG_22611.gif">
-    <ion-card-header>
-      <ion-card-subtitle>Gussow, 2020 </ion-card-subtitle>
-      <ion-card-title color="secondary">Vielen lieben Dank an unsere Helfer!</ion-card-title>
-    </ion-card-header>
-  </ion-card>
-<ion-label></ion-label>
+            <ion-row>
+              <ion-col size="3">
+                <div>November 2022</div>
+              </ion-col>
+              <ion-col>
+                <div class="name"><ion-label color="secondary"><b>V1.06</b></ion-label></div>
+                <div class="function"><ion-label color="secondary">
+                  Ein Update war schon länger fällig. Nun ist es endlich da. Neu hinzugekommen ist die Terminübersicht und die Möglichkeit, auch Familienmitglieder über den QR Code zum Gottesdienst einzuchecken. Auf jeder Seite wo aktuelle Informationen angezeigt werden, kann die Anzeige mit swipe-down aktualisiert werden. Zudem gab es einige Fehlerbehebungen und optimierungen.
+                </ion-label></div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3">
+                <div>1. April 2021</div>
+              </ion-col>
+              <ion-col>
+                <div class="name"><ion-label color="secondary"><b>V1.05</b></ion-label></div>
+                <div class="function"><ion-label color="secondary">
+                kein Aprilscherz! Es gibt endlich wieder mal ein größeres Update. Die App läuft nun auch auf iPad und für Android Nutzer wird nun der Zurück-Button ausgewertet (extra für Basti ;-) ) Wenn es für den Gottesdienst ein Predigtskript gibt, kann dies direkt in der App unter "Gottesdienste" angezeigt werden. Ebenso kann man von dort aus direkt den YouTube Livestream starten bzw. den Gottesdienst über die Zoom App mithören (sinvoll für Gottesdienstbesucher vor Ort, die darüber den Ton besser hören können bzw. der englisch-Übersetzung lauschen können).
+                </ion-label></div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3">
+                <div>10.Januar 2021</div>
+              </ion-col>
+              <ion-col>
+                <div class="name"><ion-label color="secondary"><b>offizielles App Release</b></ion-label></div>
+                <div class="function"><ion-label color="secondary">
+                Zu unserem Gebetsgottesdienst wird die App für iOS und Android freigegeben und beworben!
+                </ion-label></div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3">
+                <div>31. Dezember 2020</div>
+              </ion-col>
+              <ion-col>
+                <div class="name"><ion-label color="secondary"><b>erste Version im App Store!</b></ion-label></div>
+                <div class="function"><ion-label color="secondary">
+                Pünktlich zum Jahresende erscheint die erste (Vorab-)Version der App im Apple App Store ;-)  
+                </ion-label></div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3">
+                <div>bis Ende Oktober 2020</div>
+              </ion-col>
+              <ion-col>
+                <div class="name"><ion-label color="secondary"><b>steter Tropfen..</b></ion-label></div>
+                <div class="function"><ion-label color="secondary">
+                  Es wird nach aussen hin etwas ruhig um die App. Im Hintergrund läuft aber ganz viel. Login zu Churchtools, Türöffner, Freigeben und Übernehmen von Gebetsschichten.. all das funktioniert nun! Die App steht nun wrklich kurz vor dem ersten Release!
+                </ion-label></div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3">
+                <div>19. August 2020</div>
+              </ion-col>
+              <ion-col>
+                <div class="name"><ion-label color="secondary"><b>App Release Party</b></ion-label></div>
+                <div class="function"><ion-label color="secondary">
+                  Mittlerweile steht die alpha Version der App. Das muss im Kleingarten von <b>Anja</b> gefeiert werden! Und die App wird natürlich live präsentiert. Und letzte Aufgaben werden verteilt. Es gibt doch noch ein paar Schönheitskorrekturen und die Anbindung an Türöffner, Gebetskalender etc. muss noch realisiert werden.
+                </ion-label></div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3">
+                <div>31. Juli- 4. August 2020</div>
+              </ion-col>
+              <ion-col>
+                <div class="name"><ion-label color="secondary"><b>App Hackaton</b></ion-label></div>
+                <div class="function"><ion-label color="secondary">
+                  Mitten in der Sommerpause "verschanzen" wir uns im schönen Gussow, im Gästehaus der Stadtmission und begeben uns an die Arbeit. Es waren arbeitsreiche Tage, die viel Spaß und Freude gemacht haben. Und das Ergebnis lässt sich sehen. Auch wenn wir leider am letzten Tag die App noch nicht auf unsere Smartphones installieren konnten. Das Designen und Programmieren einer App nimmt mehr Zeit in Anspruch als manch einer denken würde.
+                  <img src="../assets/IMG_22611.gif">
+                  Danke an alle Mitstreiter! Ihr seid mit Abstand die besten! ;-)
+                </ion-label></div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3">
+                <div>25. April 2020</div>
+              </ion-col>
+              <ion-col>
+                <div class="name"><ion-label color="secondary"><b>App Kickoff Meeting</b></ion-label></div>
+                <div class="function"><ion-label color="secondary"><b>Es geht los!</b> Es haben sich genügend verrückte Leute aus unserer Gemeinde gefunden, die sich 4 Stunden lang in unser Zoom Kickoff Meeting einklinken und ihre Ideen und Fähigkeiten mit einbringen. Erste Teams werden gebildet und erste Wünsche für die App formuliert. Und es wird bereits jetzt festgelegt, dass wir in der Sommerpause einen <b>App-Hackaton</b> organisieren wollen, wo wir die App gemeinsam entwickeln!</ion-label></div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3">
+                <div>Februar 2020</div>
+              </ion-col>
+              <ion-col>
+                <div class="name"><ion-label color="secondary"><b>Projektteam wird geboren</b></ion-label></div>
+                <div class="function"><ion-label color="secondary"><b>Andrea</b> hört von unserer Idee und bringt einen Entwickler ins Spiel - <b>Christian</b> - und erklärt sich zudem spontan dazu bereit ein Teil der Kosten für die App zu sponsern, da sie an unser Projekt glaubt!<br>
+                  So treffen wir uns zu dritt (Marc, Mirine, Christian), mitten in der COVID Lockdown Phase per Zoom und werden uns schnell einig, dass die App aus unserer Mitte heraus geboren werden soll. D.h. wir wollen die App nicht outsourcen sondern komplett selbst gestalten und entwickeln!</ion-label></div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3">
+                <div>Januar 2020</div>
+              </ion-col>
+              <ion-col>
+                <div class="name"><ion-label color="secondary"><b>erste Idee</b></ion-label></div>
+                <div class="function"><ion-label color="secondary"><b>Marc:</b> Wir als Gemeinde möchten das Potenzial der Menschen finden, fördern und freisetzen. Als ehemaliger IT-ler kam mir die Frage auf, ob wir nicht auch im Bereich der IT in der Christenheit kreativ sein könnten und als Pionier vorangehen könnten.  Es gab ein erstes Treffen und Gedankenaustausch mit <b>Mirine</b>. Viele gute Ideen kamen zusammen, doch wie setzen wir die um? Eine Entwicklungsfirma beauftragen? Selber in die Materie eintauchen?..</ion-label></div>
+              </ion-col>
+            </ion-row>
+
+          </ng-template>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel hideToggle="true" #frameworks>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Frameworks
+            </mat-panel-title>
+            <ion-icon *ngIf="!frameworks.expanded" name="chevron-down"></ion-icon>
+            <ion-icon *ngIf="frameworks.expanded" name="close"></ion-icon>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            <h3>Diese App wurde mit Hilfe der folgenden Softwarekomponenten (Frameworks) entwickelt</h3>
+            <ion-row>
+              <ion-col size="2">
+                <img src="../../assets/icon/Ionic_Logo.svg">
+              </ion-col>
+              <ion-col>
+                <div class="name"><ion-label color="secondary"><b>Ionic</b></ion-label></div>
+                <div class="function"><ion-label color="secondary">Open-Source-Webframework zur Erstellung von Hybrid-Apps.<br>Das Layout der App wurde mithilfe von html und css Befehlen in Ionic programmiert.</ion-label></div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="2">
+                <img src="../../assets/icon/Angular_full_color_logo.svg">
+              </ion-col>
+              <ion-col>
+                <div class="name"><ion-label color="secondary"><b>Angular</b></ion-label></div>
+                <div class="function"><ion-label color="secondary">TypeScript-basiertes Front-End-Webapplikationsframework.<br>Die Funktionen der App sind mit Angular/TypeScript programmiert.</ion-label></div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="2">
+                <img src="../../assets/icon/apache-cordova.png">
+              </ion-col>
+              <ion-col>
+                <div class="name"><ion-label color="secondary"><b>Cordova</b></ion-label></div>
+                <div class="function"><ion-label color="secondary">Framework zur Erstellung hybrider Applikationen für mobile Endgeräte.<br>Mit Hilfe von Cordova wurde die App für iOS und Android kompiliert.</ion-label></div>
+              </ion-col>
+            </ion-row>
+          </ng-template>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel hideToggle="true" #components>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Komponenten
+            </mat-panel-title>
+            <ion-icon *ngIf="!components.expanded" name="chevron-down"></ion-icon>
+            <ion-icon *ngIf="components.expanded" name="close"></ion-icon>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            <h3>folgende Komponenten wurden in dieser App verwendet</h3>
+            
+            <ion-row>
+              <ion-col size="5">
+                @angular/cdk<br>
+                @angular/common<br>
+                @angular/core<br>
+                @angular/forms<br>
+                @angular/platform-browser<br>
+                @angular/router<br>
+              </ion-col>
+              <ion-col>
+                Framework für Mobile & desktop<br>
+                (siehe https://angular.io/)
+              </ion-col>
+            </ion-row>
+            <hr>
+            <ion-row>
+              <ion-col size="5">
+                @angular/material
+              </ion-col>
+              <ion-col>
+                Material Design Komponenten für Angular<br>
+                (siehe https://material.angular.io/)
+              </ion-col>
+            </ion-row>
+            <hr>
+            <ion-row>
+              <ion-col size="5">
+                @ionic-native/firebase
+              </ion-col>
+              <ion-col>
+                Google Firebase wird für Push-Benachrichtigungen verwendet<br>
+                (siehe https://firebase.google.com/)
+              </ion-col>
+            </ion-row>
+            <hr>
+            <ion-row>
+              <ion-col size="7">
+                @ionic-native/http<br>
+                @ionic-native/in-app-browser<br>
+                @ionic-native/native-storage<br>
+                @ionic-native/social-sharing<br>
+                @ionic-native/splash-screen<br>
+                @ionic-native/status-bar
+              </ion-col>
+              <ion-col>
+                Ionic (siehe https://ionicframework.com/docs/v3/native/)
+              </ion-col>
+            </ion-row>
+          </ng-template>
+        </mat-expansion-panel>
+
+    </mat-accordion>
+
 </ion-content>

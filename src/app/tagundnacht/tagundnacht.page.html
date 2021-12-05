@@ -3,30 +3,128 @@
 <ion-content>
     <div class="tagundnacht-title" style="background-color: #fff;">
       <ion-label class="header-label" color="light">TAGUNDNACHT</ion-label>
-  
-  
-   <div class="punkte"> <img src="../assets/svg/punkte_yellow.svg" id="kreuze" > </div>
-  
-   <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
-
-  
+   <div class="punkte"> <img src="../assets/svg/punkte_yellow.svg"> </div>
 </div>
+
+<div *ngIf="!userState.isOnline">
+  <ion-label ><div class="subtitle">
+    Du bist offline. Es können keine Details angezeigt werden!
+    </div></ion-label>
+</div>
+
+<div *ngIf="userState.isOnline">
 <ion-label ><div class="subtitle">
 Wir beten 24 Stunden - 7 Tage - 52 Wochen <br>
 Du bist herzlich eingeladen mitzubeten
 </div></ion-label>
+<ion-buttons>
+  <ion-grid>
+    <ion-row> 
+      <button mat-flat-button color="basic" class="fullwidth" (click)="GebetskalenderActivated()">Gebetskalender</button>
+    </ion-row>
+  </ion-grid>
+</ion-buttons>
 <ion-buttons *ngIf="userState.hasTuerOeffner">
   <ion-grid>
     <ion-row>
-      <ion-button (click)="tueroeffner.openFrontDoor()" class="fullwidthbutton">Türöffner vorne</ion-button>
+      <button mat-flat-button color="basic" class="fullwidth" (click)="freieSchichtenActivated()">Freie Gebetsschichten</button>
     </ion-row>
-    <ion-row> 
-      <ion-button (click)="tueroeffner.openSecondDoor()" class="fullwidthbutton">Türöffner hinten</ion-button>
+  </ion-grid>
+</ion-buttons>
+<ion-buttons *ngIf="userState.hasTuerOeffner">
+  <ion-grid>
+    <ion-row>
+      <button mat-flat-button color="basic" class="fullwidth" (click)="meineSchichtenActivated()">Meine Gebetsschichten</button>
+    </ion-row>
+  </ion-grid>
+</ion-buttons>
+<ion-buttons *ngIf="userState.hasTuerOeffner">
+  <ion-grid>
+    <ion-row>
+      <button mat-flat-button color="basic" class="door1" (click)="tueroeffner.openFrontDoor()"><img src="../../assets/icon/door-24px.svg">  Aussen</button>
+      <button mat-flat-button color="basic" class="door2" (click)="tueroeffner.openSecondDoor()"><img src="../../assets/icon/door-24px.svg">  Innen</button>
     </ion-row>
   </ion-grid>
 </ion-buttons>
 
-<iframe  src="https://diekreative.org/churchtools/?q=churchcal&amp;embedded=true&amp;viewname=calView&amp;category_id=17&amp;title=Gebetskalender&amp;cal4web=true" width="100%" height="90%" frameborder="0" scrolling="no">Dein Brower unterstützt leider keine iFrames!&nbsp;</iframe>
+  <!-- #docregion multi -->
+  <mat-accordion class="example-headers-align" multi>
+  <!-- #enddocregion multi -->
+	
+  <mat-expansion-panel hideToggle="true" #currentprayer>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Aktuelles Gebet
+        </mat-panel-title>
+        <ion-icon *ngIf="!currentprayer.expanded" name="chevron-down"></ion-icon>
+        <ion-icon *ngIf="currentprayer.expanded" name="close"></ion-icon>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <div class="currentprayer">
 
+          {{items[0].time}}&nbsp;{{items[0].format}}&nbsp;({{items[0].person}})&nbsp;{{items[0].note}}
+<!--
+      11-12 Uhr&nbsp;Gebetsformat&nbsp;Person&nbsp;Notiz
+-->
+      </div>
+      </ng-template>
+    </mat-expansion-panel>
+
+	<mat-expansion-panel hideToggle="true" #nextprayer>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          N&auml;chstes Gebet
+        </mat-panel-title>
+        <ion-icon *ngIf="!nextprayer.expanded" name="chevron-down"></ion-icon>
+        <ion-icon *ngIf="nextprayer.expanded" name="close"></ion-icon>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+
+        <ion-list>
+
+          <ion-item-sliding *ngFor = "let item of items | slice:1">
+            <ion-item class="nextprayer">{{item.time}}&nbsp;
+            {{item.format}}&nbsp;({{item.person}})&nbsp;{{item.note}}
+            </ion-item>
+          </ion-item-sliding>
+<!--
+          <ion-item-sliding>
+            <ion-item class="nextprayer">10-11 Uhr&nbsp;(A&F) Person XX Test und hier noch ein langer Kommentar dazu der dann umbrechen sollte.</ion-item>
+            <ion-item class="nextprayer">11-12 Uhr&nbsp;(A&F) Person XY Test und hier noch ein langer Kommentar dazu der dann umbrechen sollte.</ion-item>
+          </ion-item-sliding>
+-->
+        </ion-list>
+
+      </ng-template>
+    </mat-expansion-panel>
+	
+	<mat-expansion-panel hideToggle="true" #praytopic1>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+        	Wochenschwerpunkt
+        </mat-panel-title>
+        <ion-icon *ngIf="!praytopic1.expanded" name="chevron-down"></ion-icon>
+        <ion-icon *ngIf="praytopic1.expanded" name="close"></ion-icon>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <div class="prayertopic_week" [innerHTML]="WeekTopics|unescape"></div>
+      </ng-template>
+    </mat-expansion-panel>
+	
+	<mat-expansion-panel hideToggle="true" #praytopic2>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Gebet f&uuml;r verfolgte Christen
+        </mat-panel-title>
+        <ion-icon *ngIf="!praytopic2.expanded" name="chevron-down"></ion-icon>
+        <ion-icon *ngIf="praytopic2.expanded" name="close"></ion-icon>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+       <div class="prayertopic_persecuted" [innerHTML]="PersecutedTopic|unescape"></div>
+      </ng-template>
+    </mat-expansion-panel>
+	
+  </mat-accordion>
+</div>
 
 </ion-content>

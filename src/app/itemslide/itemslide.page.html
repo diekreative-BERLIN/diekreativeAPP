@@ -1,0 +1,48 @@
+<ion-content>
+
+  <h1 class="ueberuns-text">Meine Gebets-<br>schichten</h1> 
+
+ <!-- div class="back"><a (click)="BackActivated()"><ion-icon name="return-up-back-outline"></ion-icon></a></div -->
+
+ <div class="punkte"> <img src="../assets/svg/punkte_yellow.svg" id="punkte" > </div>
+ <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
+
+ <div class="positionierung">
+
+  <div *ngIf="initializing" class="spinner-container">
+    
+    <ion-spinner></ion-spinner>
+  
+  </div>
+
+  <ion-list>
+
+    <ion-item-sliding #slide *ngFor = "let item of items">
+      <ion-item (click)="toggle(slide)">{{item.time}}&nbsp;
+      {{item.format}}&nbsp;({{item.person}})
+      </ion-item>
+
+      <ion-item-options>
+        <button class="swap" (click)="swapItem(item,item.id,item.repeat_id,item.start,item.ende,item.format,item.person)"> tauschen</button>
+        <button class="release" (click)="releaseItem(item,item.id,item.repeat_id,item.start,item.ende,item.format,item.person)"> freigeben</button>
+      </ion-item-options>
+
+    </ion-item-sliding>
+
+  </ion-list>
+
+<!--
+  <ion-list>
+    <ion-item-sliding #slide>
+      <ion-item (click)="toggle(slide)">blabla
+      </ion-item>
+      <ion-item-options>
+        <button class="swap"> tauschen</button>
+        <button class="release"> freigeben</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+-->
+
+</div>
+</ion-content>

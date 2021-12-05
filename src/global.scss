@@ -37,6 +37,24 @@
     display: flex !important;
     }
 
+.modal_tun_confirm {
+      --width: 250px;
+      //--height: 434px;
+      //--background: #231F20CC;
+      // --height: 100%;
+      // --border-radius: 0;
+     // --min-height: 100%;
+
+  background: rgba(133, 120, 120, 0.342);
+
+  //box-shadow: -8px 0 16px rgba(0, 0, 0, 0.12);
+}
+
+.modal_qr_popover {
+  --width: 270px;
+  background: rgba(133, 120, 120, 0.342);
+}
+
 body { 
   text-align: left;
   letter-spacing: 0px;
@@ -53,51 +71,5 @@ h1, h2, h3, h4, h5 {
   text-align: left;
   font: Bold 27px/27px Lato;
   text-decoration-color: #E1A730;
-}
-/*
-load mobiscroll extension for acdordion
-*/
-@import "~@mobiscroll/angular/dist/css/mobiscroll.scss";
-/*
-..and overwrite settings (by M.Andersohn)
-*/
-.mbsc-mobiscroll.mbsc-card.mbsc-form {
-	box-shadow: 0 0 0;
-}
-.mbsc-card {
-	margin: 0;
-}
-.mbsc-card-header {
-	padding: 0.5em;
-}
-
-.mbsc-ios.mbsc-card.mbsc-form {
-	margin: 0 0 0;
-  border-radius: 0;
-  box-shadow: 0 0 3px #00000029;
-}
-
-.mbsc-form, .mbsc-control-w, .mbsc-btn, .mbsc-segmented {
-	font-size: 16px;
-	font-family: Source Sans Pro;
-}
-.mbsc-bold {
-  font-weight: bold;
-  color: #474747;
-}
-.mbsc-ios .mbsc-btn-group-block {
-  margin: 0.5em 1em;
-  font-size: 14px;
-  font-family: Source Sans Pro;
-  color: #777777;
-}
-.mbsc-ios .mbsc-collapsible .mbsc-collapsible-header {
-	padding-right: 3em;
-	padding-left: 25px;
-}
-.mbsc-card-content.mbsc-no-padding {
-	padding: 0;
-  padding-left: 45px;
-  padding-right: 32px;
 }
 

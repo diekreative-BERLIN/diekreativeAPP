@@ -7,18 +7,16 @@ import { UserstateService } from './userstate.service';
   providedIn: 'root'
 })
 export class TueroeffnerService {
-
   constructor(private http: HTTP, private userstate:UserstateService) {
-
-
   }
+
+  private PRAY_API_SERVER_token = environment.prayerapitoken;
 
   public openFrontDoor(){
     console.log("open Frontdoor");
-    this.http.post(environment.tueroeffnerurl,{"usertoken":this.userstate.logintoken, "userid":""+this.userstate.personid,"doorid":"1"},{
-      'Content-Type': 'application/json',
-      'withCredentials': 'false'
-  }).then((res)=>{
+    this.http.setDataSerializer('json');
+    this.http.setServerTrustMode("nocheck");
+    return this.http.post(environment.tueroeffnerurl,{"usertoken":this.userstate.logintoken, "userid":""+this.userstate.personid,"doorid":"1"},{token:this.PRAY_API_SERVER_token}).then((res)=>{
       console.log("response frontdoor" + JSON.stringify(res));
     }).catch((err)=>{
       console.log(""+JSON.stringify({"usertoken":this.userstate.logintoken, "userid":""+this.userstate.personid,"doorid":"1"}));
@@ -28,13 +26,13 @@ export class TueroeffnerService {
 
   public openSecondDoor(){
     console.log("open Second Door");
-    return this.http.post(environment.tueroeffnerurl,{"usertoken":this.userstate.logintoken, "userid":""+this.userstate.personid,"doorid":"2"},{}).then((res)=>{
+    this.http.setDataSerializer('json');
+    this.http.setServerTrustMode("nocheck");
+    return this.http.post(environment.tueroeffnerurl,{"usertoken":this.userstate.logintoken, "userid":""+this.userstate.personid,"doorid":"2"},{token:this.PRAY_API_SERVER_token}).then((res)=>{
       console.log("response second door " + JSON.stringify(res));
     }).catch((err)=>{
       console.log("error second door " + JSON.stringify(err));
     });
   }
   
-
-
 }

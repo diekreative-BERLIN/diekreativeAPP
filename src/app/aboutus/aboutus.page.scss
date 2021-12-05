@@ -12,15 +12,17 @@
         position: absolute;
         top: 158px;
         left: 26px;
-    
+        color: #FFFFFF;
+        font-family: 'Lato bold';
+        font-weight: 400;
+        font-style: normal;
+        font-size: 27px;
     }
 
  
     h1.ueberuns-text {
-
         margin-top: 43px;
         margin-left: 119px;
-        
         margin-bottom: 0px;
         font: Bold var(--unnamed-font-size-27)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-lato);
         letter-spacing: var(--unnamed-character-spacing-2-02);
@@ -30,13 +32,11 @@
         letter-spacing: 2.02px;
         color: #003D58;
         opacity: 1;
-    
     }
     
     h2.ueberuns-text {
         margin-top:0px;
         margin-left: 119px;
-        
         font: Bold var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-lato);
         letter-spacing: var(--unnamed-character-spacing-1-5);
         color: var(--unnamed-color-777777);
@@ -49,8 +49,6 @@
     }
     
     h3.ueberuns-text {
-    
- 
         font: Bold var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-lato);
         letter-spacing: var(--unnamed-character-spacing-1-5);
         color: var(--unnamed-color-777777);
@@ -59,11 +57,9 @@
         letter-spacing: 1.5px;
         color: #777777;
         opacity: 1;
-    
     }
     
     p.ueberuns-text {
-    
         margin-left: 30px;
         margin-right: 86px;
         margin-top: 45px;
@@ -76,8 +72,8 @@
         letter-spacing: 0px;
         color: #707070;
         opacity: 1;
-    
     }
+
     .pfeil-blau {
         position: fixed;
         top: 332px;
@@ -99,10 +95,11 @@
     width: 75px;
     height: 75px;
     opacity: 1; 
-position: absolute;}
+    position: absolute;
+}
 
-.pfeil
-{position: absolute;
+.pfeil {
+    position: absolute;
     top: 351px;
     left: 318px;
     width: 79px;
@@ -111,6 +108,7 @@ position: absolute;}
     border: 1.5px;  
     border: 2px solid #E1A730; */
 }
+
 #werwirsind{
     margin-top:46px;
     margin-left:45px;
@@ -121,13 +119,12 @@ position: absolute;}
 #label{
     font-size: 14px;
    letter-spacing: var(--unnamed-character-spacing-0);
-color: var(--unnamed-color-777777);
-text-align: left;
-font: SemiBold 14px/18px Source Sans Pro;
-font-weight: 600;
-letter-spacing: 0px;
-color: #777777;
-
+    color: var(--unnamed-color-777777);
+    text-align: left;
+    font: SemiBold 14px/18px Source Sans Pro;
+    font-weight: 600;
+    letter-spacing: 0px;
+    color: #777777;
 }
 
 #text{
@@ -136,4 +133,75 @@ color: #777777;
     line-height: normal;
     white-space: normal;
     
+}
+
+.function-r {
+    text-align: right;
+}
+
+.name {
+    font-weight: 600;
+}
+.name-r {
+    text-align: right;
+    //font: SemiBold 14px Source Sans Pro;
+    font-weight: 600;
+}
+
+
+//import Material theme
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+//Material stuff
+.example-action-buttons {
+    padding-bottom: 20px;
+  }
+  
+  .example-headers-align .mat-expansion-panel-header-title,
+  .example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+  }
+  
+  .mat-expansion-panel-header-title {
+    color: #1E3653;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .example-headers-align .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+  
+//Anpassungen dk App
+  .mat-expansion-panel-header {
+	font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 700;
+    //font: normal normal bold 16px/20px Source Sans Pro;
+    letter-spacing: 0px;
+    color: #474747;
+    text-transform: uppercase;
+}
+.ng-star-inserted {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    //font: normal normal normal 14px/18px Source Sans Pro;
+    letter-spacing: 0px;
+    color: #777777;
+}
+//kein Schatten und nur einfache Linie zwischen den Expansion Elementen
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+    box-shadow: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+    border-radius: 0px !important;
+}
+//kein Abstand zwischen den Expansion Elementen
+.mat-expansion-panel-spacing {
+    margin: 0;
 }

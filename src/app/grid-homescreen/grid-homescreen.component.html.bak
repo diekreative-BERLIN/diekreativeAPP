@@ -1,0 +1,32 @@
+
+ <ion-grid>
+
+  <ion-row>
+    <ion-col size-lg>
+      <ion-card (click)="MedienGoto()"> <img class="image" src="assets/kacheln/Kachel_Startseite_MEDIATHEK.png"/></ion-card>
+    </ion-col>
+    <ion-col size-lg>
+      <ion-card [routerLink]="['../../lifegroups']"> <img class="image" src="assets/kacheln/Kachel_Startseite_LIFEGROUPS.png"/></ion-card>
+    </ion-col>
+  
+  </ion-row>
+  <ion-row>
+    <ion-col size-lg>
+      <ion-card (click)="tagundnachtGoto()"> <img class="image" src="assets/kacheln/Kachel_Startseite_TAGUNDNACHT.png"/></ion-card>
+    </ion-col>
+    <ion-col size-lg>
+      <ion-card [routerLink]="['../../aboutus']"> <img class="image" src="assets/kacheln/Kachel_Startseite_UEBER-UNS.png"/></ion-card>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size-lg>
+      <ion-card (click)="GoDiGoto()"> <img class="image" src="assets/kacheln/Kachel_Startseite_GOTTESDIENSTE.png"/></ion-card>
+    </ion-col>
+    <ion-col size-lg>
+      <ion-card [routerLink]="['../../erlebt']"> <img class="image" src="assets/kacheln/Kachel_Startseite_ERLEBT.png"/></ion-card>
+    </ion-col>
+  </ion-row>
+
+</ion-grid> 
+

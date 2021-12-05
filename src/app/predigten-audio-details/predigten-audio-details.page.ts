@@ -18,7 +18,6 @@ export class PredigtenAudioDetailsPage implements OnInit {
   }
 
   ngOnInit() {
-    
   }
 
 }

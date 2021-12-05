@@ -1,6 +1,6 @@
 <ion-content>
     <div class="ueber-uns-title">
-        <ion-label class="header-label" color="light"><h1>ÜBER UNS</h1></ion-label>
+        <ion-label class="header-label">ÜBER UNS</ion-label>
       </div>
   
     <h1 class="ueberuns-text">diekreative</h1> 
@@ -16,85 +16,148 @@
   
    <div class="kreuze"> <img src="../assets/svg/kreuze_blue.svg" id="kreuze" > </div>
    <div class="pfeil"> <img src="../assets/svg/pfeil_yellow_2.svg" id="pfeile" > </div>
-    <mbsc-page>
-        <mbsc-card collapsible #run1="mobiscroll">
-            <mbsc-card-header class="mbsc-card-header">
-                <div>
-                    <div class="mbsc-bold">UNSERE VISION</div>
-                </div>
-            </mbsc-card-header>
-            <mbsc-card-content class="mbsc-no-padding">
-                <div class="mbsc-btn-group-block">
-                    Wir sind eine Gemeinde, die tagundnacht (an)betet, Menschen findet, fördert und freisetzt, und den Himmel auf die Erde bringt.
-                </div>
-            </mbsc-card-content>
-        </mbsc-card>
-        
-        <mbsc-card collapsible #run2="mobiscroll">
-            <mbsc-card-header class="mbsc-card-header">
-                <div>
-                    <div class="mbsc-bold">WIR GLAUBEN</div>
-                </div>
-            </mbsc-card-header>
-            <mbsc-card-content class="mbsc-no-padding">
-                <div class="mbsc-btn-group-block">
-                    Wir glauben, dass Gott ist.
- Dass er da ist, dass er nah ist, dass er gut ist, dass er erfahrbar ist. Mitten in Berlin oder sonst wo.
- Dass die alte Botschaft der Bibel heute relevant ist und heute erlebbar ist.
- 
- Wir glauben auch, dass Gott heute noch prophetisch spricht, und Er einiges in Berlin vorhat. Über unserer Stadt Berlin gibt es viele prophetische Verheißungen.
- 
- Gott hat gesprochen, dass es eine Stadt sein wird, in der viele Menschen Heilung erfahren werden. Heilung an Leib und Seele.
- 
- Wir glauben an Erweckung und Transformation ganzer Länder! Daran wollen wir als Gemeinde teilhaben, das erwarten wir, danach strecken wir uns aus!
-                </div>
-            </mbsc-card-content>
-        </mbsc-card>
+    
+<!--
+   <div class="example-action-buttons">
+    <button mat-button (click)="accordion.openAll()">Expand All</button>
+    <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+  </div>
+-->
+  <!-- #docregion multi -->
+  <mat-accordion class="example-headers-align" multi>
+  <!-- #enddocregion multi -->
+    <mat-expansion-panel hideToggle="true" #vision>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Unsere Vision
+        </mat-panel-title>
+        <ion-icon *ngIf="!vision.expanded" name="chevron-down"></ion-icon>
+        <ion-icon *ngIf="vision.expanded" name="close"></ion-icon>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <ul>
+          <li>Menschen, die wissen, dass Gott sie leidenschaftlich liebt</li>
+          <li>und dass sie ihrerseits Gott leidenschaftlich lieben</li>
+          <li>und ein jeder seine Leidenschaften und Begabungen erkennt und trainiert </li>
+        </ul>
+        <p>All das soll finden – f&ouml;rdern – freisetzen ausdr&uuml;cken!</p>
+        <p>Unter “Himmel auf die Erde bringen” verstehen wir, was Jesus in Mt 6,10 sagt: dein Reich komme, dein Wille geschehe, wie im Himmel so auch auf Erden. Gottes Wille ist also: Himmel auf Erden.</p>
+        <p>Jesus erkl&auml;rt, dass sein Reich, die K&ouml;nigsherrschaft Gottes (der Himmel) vor der T&uuml;r steht. Gottes Welt ist zum Greifen nah. Seine L&ouml;sungen und Antworten, seine Heilungskraft, seine Liebe, seine F&auml;higkeit zu befreien. Gott ist die Antwort für alle Probleme dieser Welt, unserer Gesellschaften, unserer Familien und unseres pers&ouml;nlichen Lebens.</p>
+        <p>Gott m&ouml;chte ganze Nationen ver&auml;ndern, sie mit Leidenschaft für seinen Sohn entz&uuml;nden und Segen in alle Lebensbereiche und Sph&auml;ren der Gesellschaft geben.</p>
+        <p>Davon tr&auml;umen wir und daf&uuml;r wollen wir uns von Gott gebrauchen lassen.</p>
+      </ng-template>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle="true" #glauben>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Was wir glauben
+        </mat-panel-title>
+        <ion-icon *ngIf="!glauben.expanded" name="chevron-down"></ion-icon>
+        <ion-icon *ngIf="glauben.expanded" name="close"></ion-icon>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+        <p>Wir glauben, <b>dass Gott ist.</b> Dass er da ist, dass er nah ist, dass er gut ist, dass er erfahrbar ist. Mitten in Berlin oder sonst wo.</p>
+        <p>Dass die alte Botschaft der Bibel heute relevant ist und heute erlebbar ist.</p>
+        <p>Wir glauben auch, dass Gott heute noch prophetisch spricht, und Er einiges in Berlin vorhat. Über unserer Stadt Berlin gibt es viele prophetische Verheißungen. Gott hat gesprochen, dass es eine Stadt sein wird, in der viele Menschen Heilung erfahren werden. Heilung an Leib und Seele.</p>
+        <p>Wir glauben an Erweckung und Transformation ganzer Länder!</p>
+        <p> Daran wollen wir als Gemeinde teilhaben, das erwarten wir, danach strecken wir uns aus!</p>
+      </ng-template>
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel hideToggle="true" #GL>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Gemeindeleitung
+        </mat-panel-title>
+        <ion-icon *ngIf="!GL.expanded" name="chevron-down"></ion-icon>
+        <ion-icon *ngIf="GL.expanded" name="close"></ion-icon>
+      </mat-expansion-panel-header>
+          <ion-col size="12">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="3">
+                  <img src="../assets/gemeindeleitung/Christophe.jpeg">
+                </ion-col>
+                <ion-col>
+                  <div class="name"><ion-label color="secondary">Christophe</ion-label></div>
+                  <div class="function"><ion-label color="secondary">Ältester und Gesamtverantwortlicher. Er ist mit Miriam verheiratet. Gemeinsam haben sie drei Kinder.</ion-label></div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                
+                <ion-col>
+                  <div class="name-r"><ion-label color="secondary">Dunja</ion-label></div>
+                  <div class="function-r"><ion-label color="secondary">Pastorin mit den Schwerpunkten lifeGroups und Mission. Sie ist mit Tom verheiratet.</ion-label></div>
+                </ion-col>
+                <ion-col size="3">
+                  <img src="../assets/gemeindeleitung/Dunja.jpeg">
+                </ion-col>
 
-        <mbsc-card collapsible #run3="mobiscroll">
-            <mbsc-card-header class="mbsc-card-header">
-                <div>
-                    <div class="mbsc-bold">GEMEINDELEITUNG</div>
-                </div>
-            </mbsc-card-header>
-            <mbsc-card-content class="mbsc-no-padding">
-                <div class="mbsc-btn-group-block">
-                    
-                    
-                        <ion-grid>
-                          <ion-row>
-                            <ion-col size="3">
-                              <img src="../assets/gemeindeleitung/Christophe.jpeg">
-                            </ion-col>
-                            <ion-col>
-                              <div class="name"><ion-label color="secondary">CHRISTOPHE</ion-label></div>
-                              <div class="function"><ion-label color="secondary">HAUPTPASTOR & ÄLTESTER</ion-label></div>
-                            </ion-col>
-                          </ion-row>
-                          <ion-row>
-                            <ion-col size="3">
-                              <img src="../assets/gemeindeleitung/Dunja.jpeg">
-                            </ion-col>
-                            <ion-col>
-                              <div class="name"><ion-label color="secondary">Dunja</ion-label></div>
-                              <div class="function"><ion-label color="secondary">PASTORIN</ion-label></div>
-                            </ion-col>
-                          </ion-row>
-                          <ion-row>
-                            <ion-col size="3">
-                              <img src="../assets/gemeindeleitung/Marc.jpeg">
-                            </ion-col>
-                            <ion-col>
-                              <div class="name"><ion-label color="secondary">Marc</ion-label></div>
-                              <div class="function"><ion-label color="secondary">PASTOR FÜR FAMILIEN,<br>JUGEND UND KINDER<br> & ÄLTESTER</ion-label></div>
-                            </ion-col>
-                          </ion-row>
-                        </ion-grid>
-                      
+              </ion-row>
+              <ion-row>
+                <ion-col size="3">
+                  <img src="../assets/gemeindeleitung/Marc.jpeg">
+                </ion-col>
+                <ion-col>
+                  <div class="name"><ion-label color="secondary">Marc</ion-label></div>
+                  <div class="function"><ion-label color="secondary">Ältester und Pastor für Familie, Kinder, Jugend und Senioren. Marc ist IT-Spezialist und mit Steffi verheiratet.</ion-label></div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+               
+                <ion-col>
+                  <div class="name-r"><ion-label color="secondary">Matthias</ion-label></div>
+                  <div class="function-r"><ion-label color="secondary">Leiter des Bereichs Administration und Personal. Er überblickt zusammen mit Rike pastoral den Bereich "Ehrenamtliche Mitarbeiterschaft".</ion-label></div>
+                </ion-col>
+                <ion-col size="3">
+                  <img src="../assets/gemeindeleitung/Matthias.jpg">
+                </ion-col>
 
-                </div>
-            </mbsc-card-content>
-        </mbsc-card>
+              </ion-row>
+              <ion-row>
+                <ion-col size="3">
+                  <img src="../assets/gemeindeleitung/Ulrike.jpg">
+                </ion-col>
+                <ion-col>
+                  <div class="name"><ion-label color="secondary">Rike</ion-label></div>
+                  <div class="function"><ion-label color="secondary">Verheiratet mit Matthias. Gemeinsam haben sie vier Kinder. Sie leiten unsere Ehearbeit "Gute Beziehungen".</ion-label></div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                
+                <ion-col>
+                  <div class="name-r"><ion-label color="secondary">Karsten</ion-label></div>
+                  <div class="function-r"><ion-label color="secondary">Leiter der Lobpreis-, Multimedia- und Öffentlichkeitsarbeit. Er ist mit Marisa verheiratet. Sie haben drei kleine Kinder.</ion-label></div>
+                </ion-col>
+                <ion-col size="3">
+                  <img src="../assets/gemeindeleitung/Karsten.jpg">
+                </ion-col>
 
-    </mbsc-page>
+              </ion-row>
+              <ion-row>
+                <ion-col size="3">
+                  <img src="../assets/gemeindeleitung/Marisa.jpg">
+                </ion-col>
+                <ion-col>
+                  <div class="name"><ion-label color="secondary">Marisa</ion-label></div>
+                  <div class="function"><ion-label color="secondary">Verheiratet mit Karsten. Sie ist Erziehungswissenschaftlerin im Bereich Kita-Qualität und Familienförderung. Diese besondere Kompetenz bringt sie in die Gemeinde ein.</ion-label></div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                
+                <ion-col>
+                  <div class="name-r"><ion-label color="secondary">Jutta</ion-label></div>
+                  <div class="function-r"><ion-label color="secondary">Leiterin der Diakonie und des Alpha-Kurses. Sie ist außerdem unterstützend bei der lifeGroup-Koordination tätig. Jutta hat vier erwachsene Kinder.</ion-label></div>
+                </ion-col>
+                <ion-col size="3">
+                  <img src="../assets/gemeindeleitung/Jutta.jpg">
+                </ion-col>
+                
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+    </mat-expansion-panel>
+  </mat-accordion>
+  
+
 </ion-content>

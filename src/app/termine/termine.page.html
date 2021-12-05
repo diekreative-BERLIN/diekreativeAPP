@@ -1,0 +1,35 @@
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="100" pullMax="200">
+    <ion-refresher-content 
+      pullingIcon="arrow-down-outline" 
+      pullingText="ziehen zum Aktualisieren" 
+      refreshingSpinner="circular"
+      refreshingText="es wird aktualisiert...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <h1 class="ueberuns-text">Termine</h1> 
+
+  
+ <!-- div class="back"><a (click)="BackActivated()"><ion-icon name="return-up-back-outline"></ion-icon></a></div -->
+
+ <div class="punkte"> <img src="../assets/svg/punkte_yellow.svg" id="punkte" > </div>
+ <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
+
+ <div class="positionierung">
+
+  <!--
+      <iframe src="https://diekreative.org/events_4_app?reload=0"
+      width="100%" height="20000px" frameborder="0" scrolling="no" ng-onload="hideLoader()">Dein Brower unterstützt leider keine iFrames!&nbsp;</iframe>
+ -->
+ <iframe id="iframe" class="iframe"
+ sandbox="allow-scripts allow-top-navigation allow-pointer-lock allow-same-origin allow-popups allow-forms"
+ [src]="browser.secUrl"
+ width="100%" height="20000px" frameborder="0" scrolling="no" ng-onload="hideLoader()">
+</iframe>     
+
+      
+
+</div>
+</ion-content>

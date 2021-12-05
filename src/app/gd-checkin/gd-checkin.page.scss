@@ -1,0 +1,68 @@
+.text {
+    position: relative;
+    color: #777777;
+    font-family: 'Lato bold';
+    text-align: center;
+    font-style: bold;
+    font-size: 20px;
+}
+
+.qr {
+    text-align: center;
+}
+
+//ion-grid.qrcheckin.md.hydrated
+.status3g_true {
+    background-color: #03fd039e;
+}
+.status3g_false {
+    background-color: white;
+}
+
+.nav_fwd {
+    text-align: right;
+}
+.checkin_name {
+    text-align: center;
+    font-family: "Lato";
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.refresh {
+    font-size: 134px;
+    color: #5aa402;
+    //top: 30px;
+}
+
+.text2 {
+    position: relative;
+    color: #777777;
+    font-family: 'Lato bold';
+    text-align: center;
+    font-style: bold;
+    font-size: 18px;
+}
+
+.text3 {
+    position: relative;
+    color: #777777;
+    font-family: 'Lato bold';
+    text-align: center;
+    font-style: bold;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+
+/*
+.nav-button {
+	font-size: 12px;
+	height: 20px;
+}
+
+.nav-button.md.button.button-solid.ion-activatable.ion-focusable.hydrated {
+	font-size: 12px;
+	height: 20px;
+}
+*/

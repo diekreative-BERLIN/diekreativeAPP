@@ -28,16 +28,37 @@ const routes: Routes = [
         loadChildren: () => import('../predigten-audio-details/predigten-audio-details.module').then( m => m.PredigtenAudioDetailsPageModule)
       },
       {
-        path: 'ueber-uns',
-        loadChildren: () => import('../ueber-uns/ueber-uns.module').then( m => m.UeberUnsPageModule)
-      },
-      {
         path: 'gottesdienste',
         loadChildren: () => import('../gottesdienste/gottesdienste.module').then( m => m.GottesdienstePageModule)
       },
       {
         path: 'tagundnacht',
         loadChildren: () => import('../tagundnacht/tagundnacht.module').then( m => m.TagundnachtPageModule)
+      },
+      
+      {
+        path: 'itemslide',
+        loadChildren: () => import('../itemslide/itemslide.module').then( m => m.ItemslidePageModule)
+      },
+      {
+        path: 'tun-gebetscal',
+        loadChildren: () => import('../tun-gebetscal/tun-gebetscal.module').then( m => m.TunGebetscalPageModule)
+      },
+      {
+        path: 'tun-takewatches',
+        loadChildren: () => import('../tun-takewatches/tun-takewatches.module').then( m => m.TunTakewatchesPageModule)
+      },
+      {
+        path: 'tun-swap',
+        loadChildren: () => import('../tun-swap/tun-swap.module').then( m => m.TunSwapPageModule)
+      },
+      {
+        path: 'tun-release',
+        loadChildren: () => import('../tun-release/tun-release.module').then( m => m.TunReleasePageModule)
+      },
+      {
+        path: 'tun-takeover',
+        loadChildren: () => import('../tun-takeover/tun-takeover.module').then( m => m.TunTakeoverPageModule)
       },
       {
         path: 'lifegroups',
@@ -52,12 +73,16 @@ const routes: Routes = [
         loadChildren: () => import('../ctapp/ctapp.module').then( m => m.CtappPageModule)
       },
       {
-        path: 'dummytab',
-        loadChildren: () => import('../dummytab/dummytab.module').then( m => m.DummytabPageModule)
-      },
-      {
         path: 'aboutus',
         loadChildren: () => import('../aboutus/aboutus.module').then( m => m.AboutusPageModule)
+      },
+      {
+        path: 'erlebt',
+        loadChildren: () => import('../erlebt/erlebt.module').then( m => m.ErlebtPageModule)
+      },
+      {
+        path: 'termine',
+        loadChildren: () => import('../termine/termine.module').then( m => m.TerminePageModule)
       },
       {
         path: '',

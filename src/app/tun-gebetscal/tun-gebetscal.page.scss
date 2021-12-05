@@ -1,0 +1,55 @@
+
+
+
+h1.ueberuns-text {
+    margin-top: 72px;
+    margin-left: 104px;
+    //margin-bottom: 0px;
+    //font: Bold var(--unnamed-font-size-27)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-lato);
+    //letter-spacing: var(--unnamed-character-spacing-2-02);
+    //color: var(--unnamed-color-003d58);
+    text-align: left;
+    font-family: 'Lato bold';
+    font: Bold 27px/27px Lato;
+    letter-spacing: 2.02px;
+    text-transform: uppercase;
+    color: #003D58;
+    opacity: 1;
+
+}
+
+.back {
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    color: #003e588a;
+}
+
+.positionierung {
+    position: absolute;
+    top: 230px;
+    width: 100%;
+}
+
+.punkte {
+    position: absolute;
+    stroke-width: 0.1px;
+    top: -5px;
+    right: 27px;
+    width: 66px;
+    height: 66px;
+    opacity: 1; 
+}
+
+.pfeil {
+    position: absolute;
+    top: 110px;
+    left: 31px;
+    width: 48px;
+    height: 30px;
+}
+
+.ios.hydrated {
+	font-family: 'Source Sans Pro';
+    font-style: bold;
+}

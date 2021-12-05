@@ -1,7 +1,10 @@
 import { Injectable, ComponentFactoryResolver } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse, HttpResponseBase, HttpHeaders } from '@angular/common/http';
+
 import { environment } from 'src/environments/environment';
 import { HTTP } from '@ionic-native/http/ngx'
+
+import {Md5} from 'ts-md5/dist/md5';
 
 @Injectable({
   providedIn: 'root'
@@ -10,26 +13,32 @@ export class ChurchapiService {
 
 
   private REST_API_SERVER = environment.churchtoolsurl+"/api";
+  private DK_API_SERVER = environment.churchtoolsurl;
   private AJAX_API_SERVER = environment.churchtoolsurl+"/index.php?";
+  private PRAY_API_SERVER = environment.prayerapiurl;
+  private PRAY_API_SERVER_token = environment.prayerapitoken;
 
   private CALENDARROOT = "q=churchcal/ajax&func=";
+  private LOGINROOT = "q=login/ajax&func="
 
+  constructor(private httpClient: HttpClient, private http:HTTP) { }
 
-  constructor(private httpClient: HttpClient, private http:HTTP) { 
+  public login(username, password){
+
+      this.http.clearCookies();
+      this.http.setServerTrustMode("nocheck");
+      let usernameEncoded = encodeURIComponent(username);
+      let passwordEncoded = encodeURIComponent(password);
+      return this.http.post(this.REST_API_SERVER+"/login?username="+usernameEncoded+"&password="+passwordEncoded,{},{})
 
   }
 
-  public login(username, password){
-    if(true){
-      this.http.clearCookies();
-      this.http.setServerTrustMode("nocheck");
-      return this.http.post(this.REST_API_SERVER+"/login?username="+username+"&password="+password,{},{})
-    }else{
-      var params = new HttpParams()
-      .set('username',username)
-      .set('password',password)
-      //return this.sendRestPostRequest('login',params).toPromise();
-    }
+  public loginWithToken(userid, token){
+    return this.http.post(this.AJAX_API_SERVER+this.LOGINROOT+"loginWithToken"+"&q=login/ajax&token="+token+"&id="+userid,{},{});
+  }
+
+  public getPersonViaToken(userid, token){
+    return this.http.get(this.REST_API_SERVER+"/persons/"+userid,{login_token:token},{})
   }
 
   public getCalendarEventsByCategory(category){
@@ -45,7 +54,7 @@ export class ChurchapiService {
 
   private callCalendarMethods(category){
     var params = new HttpParams()
-                    .set('category_ids[]',category)
+          .set('category_ids[]',category);
     return this.sendAjaxPostRequest(this.CALENDARROOT, "getCalPerCategory",params)
   }
 
@@ -71,6 +80,11 @@ export class ChurchapiService {
     //return this.httpClient.get(this.REST_API_SERVER+'/'+request,{params:params, withCredentials:true});
   }
 
+  public getLoginString(personid){
+    var request = "persons"+'/'+personid+'/loginstring'
+    //var params = new HttpParams()
+    return this.http.get(this.REST_API_SERVER+'/'+request,{},{});
+  }
   
   public getPersonData(personid){
     var request = "persons"+'/'+personid
@@ -79,7 +93,155 @@ export class ChurchapiService {
     //return this.httpClient.get<PersonResponse>(this.REST_API_SERVER+'/'+request,{params:params, withCredentials:true});
   }
 
+  //get next sunday services
+  public getNextGoDiEvents(){
+    return this.http.get(this.PRAY_API_SERVER+"/calendar/read",{},{token:this.PRAY_API_SERVER_token});
+  }
 
+  /////////////////// get next prayer watches /////
+  public getGebetsschichten(nbEntries,shortusername,explicitusername){
+    if (shortusername!=null) 
+    {
+      if (explicitusername != "") {
+        console.log("getGebetsschichten mit nbEntries:"+nbEntries+" UND ctFulluserShort="+shortusername+" UND explicitusername="+explicitusername);
+        var request = "maxEntries"+'='+nbEntries+'&ctFulluserShort='+shortusername+'&ctExplicitUser='+explicitusername;
+      } else {
+        console.log("getGebetsschichten mit nbEntries:"+nbEntries+" UND ctFulluserShort="+shortusername);
+        var request = "maxEntries"+'='+nbEntries+'&ctFulluserShort='+shortusername;
+      }
+    } 
+    else
+    {
+      console.log("getGebetsschichten mit nbEntries:"+nbEntries);
+      var request = "maxEntries"+'='+nbEntries;
+    }
+    return this.http.get(this.PRAY_API_SERVER+"/watches/scheduled"+'/?'+request,{},{token:this.PRAY_API_SERVER_token});
+  }
+
+  /////////////////// Get available watches /////
+  public getFreieSchichten(){
+    return this.http.get(this.PRAY_API_SERVER+"/watches/available",{},{token:this.PRAY_API_SERVER_token});
+  }
+
+  /////////////////////// take session //////
+  public takeSession(availableID,Personname,Praytype){
+    console.log("post auf ../watches/available ID:"+availableID+" Name:"+Personname+" Type:"+Praytype);
+
+    this.http.setDataSerializer('json');
+    //this.http.setServerTrustMode("nocheck");
+    return this.http.post(this.PRAY_API_SERVER+"/watches/available",{"ID":availableID, "Name":Personname, "Type":Praytype},{token:this.PRAY_API_SERVER_token}).then((res)=>{
+      //console.log( '>>'+ JSON.parse(JSON.stringify(res)).data +'<<');
+      if(JSON.parse( JSON.stringify(res) ).data == "\"already_taken\"" ) {
+        console.log('Schicht - bereits uebernommen!');
+        alert('Oops, da war jemand schneller als Du. Die Schicht wurde gerade bereits von jemand anderem übernommen. Danke dennoch für Deine Bereitschaft!');
+      }
+      
+    }).catch((err)=>{
+      console.log("error take session " + JSON.stringify(err));
+    });
+  }
+
+  /////////////////// swap session with someone else /////
+  public swapSession(sessID,startdate,enddate,oldentry,Personname,Praytype){
+    /*
+    $ID = $data["ID"];
+		$task = $data["task"];
+		$oldentry = $data["oldentry"];
+		$startdate = $data["startdate"];
+		$enddate   = $data["enddate"];
+		$newname = $data["replace_person"];
+		$newtype = $data["replace_type"];
+    */
+    console.log("post auf ../watches/scheduled ID:"+sessID+" start:"+startdate+" end:"+enddate+" bisher:"+oldentry+" neu: Name:"+Personname+" Type:"+Praytype+" task:swap");
+    this.http.setDataSerializer('json');
+    //this.http.setServerTrustMode("nocheck");
+    return this.http.post(this.PRAY_API_SERVER+"/watches/scheduled",{
+      "ID":sessID,
+      "task":'swap',
+      "startdate":startdate,
+      "enddate":enddate,
+      "oldentry":oldentry,
+      "replace_person":Personname,
+      "replace_type":Praytype
+    },{token:this.PRAY_API_SERVER_token}).then((res)=>{
+      console.log("response from swap session" + JSON.stringify(res));
+    }).catch((err)=>{
+      console.log("error swap session " + JSON.stringify(err));
+    });
+  }
+  /////////////////// release session /////
+  public releaseSession(sessID,startdate,enddate,oldentry){
+    /*
+	  $ID = $data["ID"];
+		$task = $data["task"];
+		$oldentry = $data["oldentry"];
+		$startdate = $data["startdate"];
+		$enddate   = $data["enddate"];
+    */
+    console.log("post auf ../watches/scheduled ID:"+sessID+" start:"+startdate+" end:"+enddate+" bisher:"+oldentry+" task:release");
+    this.http.setDataSerializer('json');
+    //this.http.setServerTrustMode("nocheck");
+    return this.http.post(this.PRAY_API_SERVER+"/watches/scheduled",{
+      "ID":sessID,
+      "task":'release',
+      "startdate":startdate,
+      "enddate":enddate,
+      "oldentry":oldentry
+    },{token:this.PRAY_API_SERVER_token}).then((res)=>{
+      console.log("response from release session" + JSON.stringify(res));
+    }).catch((err)=>{
+      console.log("error release session " + JSON.stringify(err));
+    });
+
+  }
+
+  /////////////////// Week Topic /////
+  public getTopicWeek(){
+    return this.http.get(this.PRAY_API_SERVER+"/praytopics/week",{},{token:this.PRAY_API_SERVER_token})
+  }
+
+  /////////////////// Prayer for Persecuted Topic /////
+  public getTopicPersecuted(){
+    return this.http.get(this.PRAY_API_SERVER+"/praytopics/persecuted",{},{token:this.PRAY_API_SERVER_token})
+  }
+
+  //getGoDiEventInfo
+  public getGoDiEventDetails(groupid){
+    var request = "groups"+'/'+groupid;
+    return this.http.get(this.REST_API_SERVER+'/'+request,{},{});
+  }
+  //check if Person belongs to group
+  public checkPersonInGroup(personid){
+    var request = "persons/"+personid+"/groups?show_overdue_groups=false&show_inactive_groups=false";
+    return this.http.get(this.REST_API_SERVER+'/'+request,{},{});
+  }
+
+  //get QR Code for Person
+  public getQRCode(personid,groupid){
+    var request = "groups/"+groupid+"/qrcodecheckin/"+personid;
+    return this.http.get(this.REST_API_SERVER+'/'+request,{},{});
+  }
+
+  //get Relationships for Person
+  public getRelationships(personid){
+    var request = "persons/"+personid+"/relationships";
+    return this.http.get(this.REST_API_SERVER+'/'+request,{},{});
+  }
+
+  /////////////////// Get validity of certificate /////
+  public getCheckValidity(personid){
+    var request = "personHash"+'='+Md5.hashStr(personid);
+    //return "get "+this.PRAY_API_SERVER+"/checkin/validity"+'/?'+request;
+    return this.http.get(this.PRAY_API_SERVER+"/checkin/validity"+'/?'+request,{},{token:this.PRAY_API_SERVER_token});
+  }
+
+}
+
+export interface Gebetstermin{
+    time: Date,
+    format: String,
+    person: String,
+    note: String
 }
 
 export interface LoginResponse{ 

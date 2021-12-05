@@ -1,22 +1,24 @@
 
 .tagundnacht-title {
-
     box-shadow: 0px 3px 6px #00000029;
     width:100%; 
     height:209px; 
     background-image: url('../../assets/headerimages/Header_Unterseiten_TAGUNDNACHT.jpg'); 
     background-size: cover;
-
 }
 
 .header-label{
     position: absolute;
     top: 158px;
     left: 26px;
-
+    color: #FFFFFF;
+    font-family: 'Lato bold';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 27px;
 }
 
-.subtitle{
+.subtitle {
     font-size: 14px;
     font-family: Lato;
     font-weight: normal;
@@ -26,27 +28,15 @@
     margin-left:45px;
     margin-right:45px;
 
-color: var(--unnamed-color-777777);
-text-align: left;
-font: Regular 14px/18px Source Sans Pro;
-letter-spacing: 0px;
-color: #777777;
-opacity: 1;
+    color: var(--unnamed-color-777777);
+    text-align: left;
+    font: Regular 14px/18px Source Sans Pro;
+    letter-spacing: 0px;
+    color: #777777;
+    opacity: 1;
 }
 
-.fullwidthbutton{
-    width:100%;
-    background: var(--unnamed-color-777777) 0% 0% no-repeat padding-box;
-background: #777777 0% 0% no-repeat padding-box;
-border-radius: 3px;
-opacity: 1;
-height: 50px;
-margin-left:20px;
-margin-right:20px;
-margin-bottom:10px;
-}
-
-h3{
+h3 {
     color: var(--ion-color-secondary)
 }
 
@@ -57,25 +47,181 @@ h2 {
 
    /* .headercaption */
 
-.punkte
-{ position: fixed;
-    top: 317px;
-    left: 9px;
+.punkte {
+    position: absolute;
+    top: 50px;
+    left: 64px;
     width: 79px;
     height: 79px;
-    opacity: 1;}
+    opacity: 1;
+}
 
-.pfeil
-{ position: fixed;
-top: 500px;
-left: 312px;
-width: 33px;
-height: 21px;
-opacity: 1;}
-
-ion-button{
+ion-button {
     color:#ffffff;
     font-weight: bold;
 }
 
+//import Material theme
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+//Material stuff
+.example-action-buttons {
+    padding-bottom: 20px;
+  }
+  
+  .example-headers-align .mat-expansion-panel-header-title,
+  .example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+  }
+  
+  .mat-expansion-panel-header-title {
+    color: #1E3653;
+  }
+  .example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .example-headers-align .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+  //Anpassungen dk App
+  .mat-expansion-panel-header {
+	font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 700;
+    //font: normal normal bold 16px/20px Source Sans Pro;
+    letter-spacing: 0px;
+    color: #474747;
+    text-transform: uppercase;
+}
 
+div.ng-star-inserted {
+    color: #777777;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    //font: normal normal normal 14px/18px Source Sans Pro;
+    letter-spacing: 0px;
+    font-size: 14px;
+}
+
+div.currentprayer.ng-star-inserted {
+    color: #777777;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    //font: normal normal normal 14px/18px Source Sans Pro;
+    letter-spacing: 0px;
+    font-size: 14px;
+}
+
+.mat-expansion-panel-content {
+	font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    //font: normal normal normal 14px/18px Source Sans Pro;
+    letter-spacing: 0px;
+    //color: #777777;
+    color: red;
+}
+
+.md.hydrated {
+	font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    //font: normal normal normal 14px/18px Source Sans Pro;
+    letter-spacing: 0px;
+    //color: #777777;
+    font-size: 14px;
+}
+/*
+div.item-native {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    //font: normal normal normal 14px/18px Source Sans Pro;
+    letter-spacing: 0px;
+    color: #777777;
+    font-size: 14px;
+}
+*/
+
+//kein Schatten und nur einfache Linie zwischen den Expansion Elementen
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+    box-shadow: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+    border-radius: 0px !important;
+}
+//kein Abstand zwischen den Expansion Elementen
+.mat-expansion-panel-spacing {
+    margin: 0;
+}
+
+b, strong {
+	font-weight: normal;
+}
+
+.currentprayer {
+    padding-left: 0px;
+}
+
+//nextprayer Aufzaehlung
+ion-item.nextprayer.item {
+    color: #777777;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    //font: normal normal normal 14px/18px Source Sans Pro;
+    letter-spacing: 0px;
+    font-size: 14px;
+}
+
+.nextprayer {
+    --padding-start: 0px;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+}
+
+.prayertopic_week {
+    margin-left: -26px;
+}
+
+.prayertopic_persecuted {
+    padding-left: 0px;
+}
+
+div.mat-expansion-panel-body.ng-tns-c146-2 {
+    padding: 0 5px 16px;
+    padding-left: 5px;
+}
+
+.mat-focus-indicator.fullwidth.mat-flat-button.mat-button-base.mat-basic {
+    width: 100%;
+    padding: 5px;
+    background-color: #777777;
+    color: #FFFFFF;
+    font-family: 'Source Sans Pro';
+    font-weight: bold;
+    font-size: 16px;
+}
+.mat-focus-indicator.door1.mat-flat-button.mat-button-base.mat-basic {
+    width: 48%;
+    padding: 5px;
+    background-color: #777777;
+    color: #FFFFFF;
+    font-family: 'Source Sans Pro';
+    font-weight: bold;
+    font-size: 16px;
+}
+.mat-focus-indicator.door2.mat-flat-button.mat-button-base.mat-basic {
+    width: 48%;
+    padding: 5px;
+    position: fixed;
+    right: 5px;
+    background-color: #777777;
+    color: #FFFFFF;
+    font-family: 'Source Sans Pro';
+    font-weight: bold;
+    font-size: 16px;
+}

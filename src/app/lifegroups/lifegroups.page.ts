@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
+
+import { AlertController } from '@ionic/angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-lifegroups',
@@ -6,12 +11,56 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./lifegroups.page.scss'],
 })
 export class LifegroupsPage implements OnInit {
+  AppPlatform = "";
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(
+    private platform: Platform,
+    private router: Router,
+    public alertController: AlertController,
+    private iab: InAppBrowser
+  ) {
+    //this.platform.backButton.subscribeWithPriority(10, () => {
+    //  this.router.navigate(["/tabs/tab1"]);
+    //});
   }
 
+  ngOnInit() {
+    if(this.platform.is('android')) {
+      this.AppPlatform="android";
+    } else {
+      this.AppPlatform="iOS";
+    }
+  }
+
+  showConfirm() {
+    this.alertController.create({
+      header: 'in Safari öffnen?',
+      message: 'Die lifeGroup Seite in der App ist nur eine erste Übersicht und kann nicht zur Anmeldung benutzt werden. Möchtest Du die lifeGroup Übersicht in einem neuen Fenster im Safari Browser öffnen um dort eine Teilnahme zu beantragen?',
+      buttons: [
+        {
+          text: 'Ja, gerne!',
+          handler: () => {
+            this.platform.ready().then(() => {
+              this.iab.create('https://diekreative.org/churchtools/grouphomepage/t0C8YfViN2HpLvDQDhafN8gYogHeVsLi?embedded=true','_system');
+            });
+          }
+        },
+        {
+          text: 'Nein Danke.'
+        }
+      ],
+    }).then(res => {
+      res.present();
+    });
+  }
+
+  onIframeClick() {
+    if(this.AppPlatform=="iOS") {
+      //console.log('iframe wurde geklickt!');
+      this.showConfirm();
+    }
+  }
+  
 }
 
 

@@ -1,114 +1,225 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title></ion-title>
-  </ion-toolbar>
-</ion-header> -->
 
 <ion-content>
 
-  <div>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="100" pullMax="200">
+    <ion-refresher-content 
+      pullingIcon="arrow-down-outline" 
+      pullingText="ziehen zum Aktualisieren" 
+      refreshingSpinner="circular"
+      refreshingText="es wird aktualisiert...">
+    </ion-refresher-content>
+  </ion-refresher>
 
+  
+  <div>
 
   <div class="gottesdienst-title" style="background-color: #fff;">
     <ion-label class="header-label" color="light">GOTTESDIENSTE</ion-label>   </div>
 
 
+    <div class="kreuze"> <img src="../assets/svg/kreuze_yellow.svg" id="kreuze" > </div>
+    <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
+
     <h1 class="gottesdienst-text">WILLKOMMEN</h1>
     <h2 class="gottesdienst-text">Wir freuen uns auf dich!</h2>
-    <p class="gottesdienst-text">Schau gerne mal bei uns vorbei – vor Ort oder in unserem Live-Stream. Wir feiern Gottesdienst auf Deutsch mit englischer Übersetzung.
-    </p>
-    <br>
+    <p class="gottesdienst-text">Schau gerne mal bei uns vorbei – vor Ort oder in unserem Live-Stream. Wir feiern Gottesdienst auf Deutsch mit englischer Übersetzung.</p>
+   
+    <p class="next-gd">nächster Gottesdienst</p>
+    <div *ngIf="!isGodiToday || eventProgressState == 2">
+      <ion-card class="info-gd" (click)="showGoDiDetails(1)">
+        <ion-card-header class="gd-header">
+          <ion-card-title class="gd-date">{{AppPageGodiInfoDate}}, {{AppPageGodiInfo}}</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+          {{AppPageGodiInfotext}}
+        </ion-card-content>
+      </ion-card>
+  </div>
+
+  <div *ngIf="isGodiToday && eventProgressState < 0">
+    <ion-card class="info-gd" (click)="showGoDiDetails(1)">
+      <ion-card-header class="gd-header">
+        <ion-card-title class="gd-date">heute, {{AppPageGodiInfo}}</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content>
+        {{AppPageGodiInfotext}}
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="isGodiToday && (eventProgressState == 0 || eventProgressState == 1) || 1">
+    <!-- #docregion multi -->
+    <mat-accordion class="gd-info-now" multi>
+      <!-- #enddocregion multi -->
+      <mat-expansion-panel hideToggle="true" #vision>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            heute, {{AppPageGodiInfo}}
+          </mat-panel-title>
+          <ion-icon *ngIf="!vision.expanded" name="chevron-down"></ion-icon>
+          <ion-icon *ngIf="vision.expanded" name="close"></ion-icon>
+        </mat-expansion-panel-header>
+        <!-- ng-template matExpansionPanelContent -->
+          <ion-buttons>
+            <ion-grid>
+              <ion-row class="godi-info" (click)="showGoDiDetails(0)">
+                {{AppPageGodiInfotext}}
+              </ion-row>
+              <ion-row *ngIf="(AppPageGodiQRcheckin && AppPageGoDiQRcheckinCode != 'false') || 1">
+                <ion-button (click)="checkin()" class="qr-button">
+                  <ion-icon name="qr-code-outline"></ion-icon>
+                  &nbsp;&nbsp;
+                  <ion-label>Dein QR-Code für Check-in</ion-label>
+                </ion-button>
+              </ion-row>
+              <ion-row class="newRow" *ngIf="eventProgressState == 1 && SkriptAvailable==1">
+                <ion-button (click)="showSkript()" class="qr-button">
+                  <ion-icon name="reader-outline"></ion-icon>
+                  &nbsp;&nbsp;
+                  <ion-label>Predigtskript</ion-label>
+                </ion-button>
+              </ion-row>
+              <br/>
+              <ion-row>
+
+                <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && ZoomAvailable>0">
+                  <ion-button (click)="helpZoom()" class="qr-button">
+                    <ion-label>vor Ort&nbsp;&nbsp;</ion-label>
+                    <ion-icon name="help-circle-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+                <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && YTAvailable>0">
+                  <ion-button (click)="helpYT()" class="qr-button">
+                    <ion-label>livestream&nbsp;&nbsp;</ion-label>
+                    <ion-icon name="help-circle-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+
+              </ion-row>
+              <ion-row>
+                <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && ZoomAvailable>0">
+                <ion-button (click)="launchZoomMeeting1()" class="qr-button">
+                  <ion-icon name="headset-outline"></ion-icon>
+                  &nbsp;&nbsp;
+                  <ion-label>Original</ion-label>
+                </ion-button>
+                
+                <ion-button (click)="launchZoomMeeting2()" class="qr-button">
+                  <ion-icon name="headset-outline"></ion-icon>
+                  &nbsp;&nbsp;
+                  <ion-label>english</ion-label>
+                </ion-button>
+              </ion-col>
+              <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && YTAvailable>0">
+                <ion-button (click)="launchYTlive()" class="qr-button">
+                  <ion-icon name="logo-youtube"></ion-icon>
+                  &nbsp;&nbsp;
+                  <ion-label>Youtube</ion-label>
+                </ion-button>
+              </ion-col>
+              </ion-row>
+
+            </ion-grid>
+          </ion-buttons>
+        <!-- /ng-template -->
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <!--
+  <div>
+    <mat-accordion class="gd-info-now" multi>
+      <mat-expansion-panel hideToggle="true" #vision>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            heute, {{AppPageGodiInfo}}
+          </mat-panel-title>
+          <ion-icon *ngIf="!vision.expanded" name="chevron-down"></ion-icon>
+          <ion-icon *ngIf="vision.expanded" name="close"></ion-icon>
+        </mat-expansion-panel-header>
+          <ion-buttons>
+            <ion-grid>
+              <ion-row class="godi-info" (click)="showGoDiDetails(0)">
+                {{AppPageGodiInfotext}}
+              </ion-row>
+              <ion-row>
+                <ion-button (click)="checkin()" class="qr-button">
+                  <ion-icon name="qr-code-outline"></ion-icon>
+                  &nbsp;&nbsp;
+                  <ion-label>Dein QR-Code für Check-in</ion-label>
+                </ion-button>
+              </ion-row>
+              <ion-row class="newRow">
+                <ion-button (click)="showSkript()" class="qr-button">
+                  <ion-icon name="reader-outline"></ion-icon>
+                  &nbsp;&nbsp;
+                  <ion-label>Predigtskript</ion-label>
+                </ion-button>
+              </ion-row>
+              <br/>
+              <ion-row>
+                <ion-col class="watchLinks">
+                  <ion-label class="watchLinksHeader">vor Ort&nbsp;&nbsp;</ion-label>
+                  <ion-button (click)="helpZoom()" class="help-button">
+                    <ion-icon name="help-circle-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+                <ion-col class="watchLinks">
+                  <ion-label class="watchLinksHeader">livestream&nbsp;&nbsp;</ion-label>
+                  <ion-button (click)="helpYT()" class="help-button">
+                    <ion-icon name="help-circle-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="watchLinks">
+                <ion-button (click)="launchZoomMeeting1()" class="qr-button">
+                  <ion-icon name="headset-outline"></ion-icon>
+                  &nbsp;&nbsp;
+                  <ion-label>Original</ion-label>
+                </ion-button>
+                
+                <ion-button (click)="launchZoomMeeting2()" class="qr-button">
+                  <ion-icon name="headset-outline"></ion-icon>
+                  &nbsp;&nbsp;
+                  <ion-label>english</ion-label>
+                </ion-button>
+              </ion-col>
+              <ion-col class="watchLinks">
+                <ion-button (click)="launchYTlive()" class="qr-button">
+                  <ion-icon name="logo-youtube"></ion-icon>
+                  &nbsp;&nbsp;
+                  <ion-label>Youtube</ion-label>
+                </ion-button>
+              </ion-col>
+              </ion-row>
+
+            </ion-grid>
+          </ion-buttons>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+-->
+
+
+  <br>
+
+</div>
 
 <!--
-    <ion-item class="gottesdienst-text">Schau gerne mal bei uns vorbei – vor Ort oder in unserem Live-Stream. Wir feiern Gottesdienst auf Deutsch mit englischer Übersetzung.
-  
-      
-        <ion-icon name="time-sharp" class="gottesdienst-icon"></ion-icon>  Sonntags 10:30 - 12:30 Uhr Kaffee & Tee ab 10:00 Uhr (English translation available) Kindergottesdienst für Kinder & Jugendliche von 3-12 Jahren, parallel. Check-In ab 10:15 Uhr</ion-item>
-      -->
-
-
-
-    <!--   <div class="godi-icon-with-text">  -->
-    <ion-icon name="time-sharp" class="gottesdienst-icon"></ion-icon> <p class="gottesdienst-icon-text">Sonntags 10:30 - 12:30 Uhr Kaffee & Tee ab 10:00 Uhr (English translation available) 
-      <br><br> Kindergottesdienst für Kinder & Jugendliche von 3-12 Jahren, parallel. Check-In ab 10:15 Uhr</p>
-  
-
-<br> 
-
-      <ion-icon name="location-sharp" class="gottesdienst-icon"></ion-icon> <p class="gottesdienst-icon-text">Motorwerk<br>An der Industriebahn 12<br> 13088 Berlin</p>
-
-
- <div class="kreuze"> <img src="../assets/svg/kreuze_yellow.svg" id="kreuze" > </div>
-
- <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
-
-
-
-
-</div>
- 
-
-
-
-
-<!-- 
-  <ion-label ><div class="subtitle">
-Wir beten 24 Stunden - 7 Tage - 52 Wochen <br>
-Du bist herzlich eingeladen mitzubeten
-</div></ion-label>
-<ion-buttons *ngIf="userState.hasTuerOeffner">
-<ion-grid>
-  <ion-row>
-    <ion-button (click)="tueroeffner.openFrontDoor()" class="fullwidthbutton">Türöffner vorne</ion-button>
-  </ion-row>
-  <ion-row> 
-    <ion-button (click)="tueroeffner.openSecondDoor()" class="fullwidthbutton">Türöffner hinten</ion-button>
-  </ion-row>
-</ion-grid>
+<ion-item>
+  <ion-label>Timestamp</ion-label>
+  <ion-input type="text" [(ngModel)]="fakeNow" text-right id="input" ></ion-input>
+</ion-item>
+<ion-buttons>
+    <ion-button (click)="check()">CHECK</ion-button>
+    <ion-button (click)="reset()">RESET</ion-button>
+    <ion-button (click)="fakeTimestamp()">newTimestamp</ion-button>
+    <ion-button (click)="setFakeNow()">set Fake Now</ion-button>
 </ion-buttons>
-
-<iframe  src="https://diekreative.org/churchtools/?q=churchcal&amp;embedded=true&amp;viewname=calView&amp;category_id=17&amp;title=Gebetskalender&amp;cal4web=true" width="100%" height="90%" frameborder="0" scrolling="no">Dein Brower unterstützt leider keine iFrames!&nbsp;</iframe>
-
-
-
-
-
-
-
-
-
-    <div class="diekreativeappmain" style="background-color: #fff;">
-    <br>
-  
-    <div class="headerimages"> <img src="../assets/headerimages/Header_Unterseiten_GOTTESDIENST.jpg" > </div>
-  
-    <h1 class="headercaption">GOTTESDIENSTE</h1> 
-  
-   <div class="kreuze"> <img src="../assets/svg/kreuze_yellow.svg" id="kreuze" > </div>
-  
-   <div class="pfeil"> <img src="../assets/svg/pfeil_yellow_1.svg" id="pfeile" > </div>
-  
-  
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-  
-  
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-  
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-  
-  
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-   <br><br><br><br><br><br>
-
-</div>
 -->
+
 
 </ion-content>

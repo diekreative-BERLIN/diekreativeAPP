@@ -18,48 +18,62 @@
           <br>
        </ion-col>
      </ion-row>
-    <ion-row>
-      <ion-col class="left">
-        <a target= "_blank" href="https://www.google.com/maps/place/Motorwerk/@52.5633559,13.4592242,17z/data=!4m5!3m4!1s0x47a84dbe7226dc47:0x376e04be31aef322!8m2!3d52.5633559!4d13.4614129"> <img src="../assets/kacheln/Motorwerk.png" id="MOTORWERK" style="width:162px;height:162px;"></a>
 
-      </ion-col>
-      <ion-col class="right">
-        <br>
-          <ion-label class="mini-headline">GOTTESDIENST</ion-label>
-          <br>
-          <!--ion-label class="subtext">Sonntags: 10:30 Uhr</ion-label-->
-          <br>
-          <br>
-            <ion-label class="subtext">MOTORWERK<br>
-          An der Industriebahn 12, 13088 Berlin</ion-label>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="highlight-box">
-        <div class="highlight-text-box">
-        <p>Aktuelle Gottesdiensttermine findest du hier:</p>
-        <p><a target= "_blank" href="https://diekreative.org/termine/">https://diekreative.org/termine/</a></p>
-      </div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="left">
-        <br>
-        <ion-label class="mini-headline">GEBETSHAUS</ion-label>
-        <br>
-        <ion-label class="subtext">24/7 im Jahr</ion-label>
-        <br>
-        <br>
-        <ion-label class="subtext">Gebetshaus<br> 
-        Schivelbeiner Str. 7<br>
-        10439 Berlin</ion-label>
+    <ion-row class="rowfullwidth">
+      <ion-col class="col_img_left">
+        <a target= "_blank" href="https://www.google.com/maps/place/Motorwerk/@52.5633559,13.4592242,17z/data=!4m5!3m4!1s0x47a84dbe7226dc47:0x376e04be31aef322!8m2!3d52.5633559!4d13.4614129"> <img src="../assets/kacheln/Motorwerk.png" id="MOTORWERK" style="width:162px;height:162px;"></a>
       </ion-col>
       <ion-col>
-        <a target= "_blank" href="https://www.google.com/maps/place/Schivelbeiner+Str.+7,+10439+Berlin/@52.5512437,13.4095687,17z/data=!3m1!4b1!4m5!3m4!1s0x47a85205b82cf0d1:0x516f8cd22df7eede!8m2!3d52.5512405!4d13.4117574"> <img src="../assets/kacheln/Schivelbeiner.png" id="TAGUNDNACHT" style="width:162px;height:162px;"></a>
-
+        <ion-label class="mini-headline">GOTTESDIENST</ion-label>
+        <br>
+        <br>
+        <ion-label class="subtext">MOTORWERK<br>
+        An der Industriebahn 12, 13088 Berlin<br><br>
+        Gottesdienst jeweils sonntags um 10:30 Uhr
+        </ion-label>
       </ion-col>
     </ion-row>
+
+<!--
+    <ion-row class="rowfullwidth">
+        <ion-col class="highlight-box">
+          <div class="highlight-text-box">
+          <p>Aktuelle Gottesdiensttermine findest du hier:</p> -->
+            <!-- <p><a (click)="openWebsite('https://diekreative.org/termine')">https://diekreative.org/termine/</a></p> -->
+         <!--   <p><a (click)="TermineActivated()">https://diekreative.org/termine/</a></p>
+        </div>
+        </ion-col>
+    </ion-row>
+-->
+<!--
+<ion-row class="rowfullwidth">
+  <ion-col class="highlight-box">
+    <div class="highlight-text-box">
+<ion-buttons>
+      <button mat-flat-button color="basic" class="fullwidth" (click)="TermineActivated()">Termine in der &Uuml;bersicht</button>
+</ion-buttons>
+</div>
+</ion-col>
+</ion-row>
+-->
+<ion-row class="gap">
+</ion-row>
+
+    <ion-row class="rowfullwidth">
+      <ion-col class="col_txt_right">
+        <ion-label class="mini-headline">GEBETSHAUS</ion-label>
+        <br>
+        <br>
+        <ion-label class="subtext">GEBETSHAUS<br> 
+        Schivelbeiner Str. 7<br>
+        10439 Berlin<br><br>
+        24/7 im Jahr</ion-label>
+      </ion-col>
+      <ion-col class="col_img_right">
+        <a target= "_blank" href="https://www.google.com/maps/place/Schivelbeiner+Str.+7,+10439+Berlin/@52.5512437,13.4095687,17z/data=!3m1!4b1!4m5!3m4!1s0x47a85205b82cf0d1:0x516f8cd22df7eede!8m2!3d52.5512405!4d13.4117574"> <img src="../assets/kacheln/Schivelbeiner.png" id="TAGUNDNACHT" style="width:162px;height:162px;"></a>
+      </ion-col>
+    </ion-row>
+
   </ion-grid> 
 
-  <!--<app-explore-container name="Tab 2 page"></app-explore-container>-->
 </ion-content>

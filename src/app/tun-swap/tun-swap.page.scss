@@ -1,0 +1,43 @@
+.top {
+    font-size: 27px;
+    position: fixed;
+    right: 100px;
+    //float: right;
+}
+.face {
+    position: relative;
+    //top: 50px;
+    top: 10px;
+    text-align: center;
+}
+.question {
+    position: relative;
+    //top: 35px;
+    top: 5px;
+    color: #777777;
+    font-family: 'Lato bold';
+    text-align: center;
+    font-style: bold;
+    font-size: 20px;
+}
+.action {
+    font-size: 33px;
+    position: relative;
+    //top: 50px;
+    top: 5px;
+}
+.doit {
+    font-family: "Source Sans Pro";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+.center {
+    text-align: center;
+}
