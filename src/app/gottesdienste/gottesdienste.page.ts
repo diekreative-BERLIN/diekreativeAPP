@@ -180,14 +180,12 @@ export class GottesdienstePage {
           console.log('CHECK: app storage GoDiCheck read NOT POSSIBLE');
           if(this.AppPageGodiQRcheckin) {
             this.getQRCodesForFamily(2);
-            //this.getQRCode(this.personid, this.groupid);
           }
         }
       }, (error) => {
         console.log('CHECK: app storage GoDiCheck read ERROR');
         if(this.AppPageGodiQRcheckin) {
           this.getQRCodesForFamily(3);
-          //this.getQRCode(this.personid, this.groupid);
         }
       });
     });
@@ -232,9 +230,9 @@ async checkin(){
     let checkinQRitems = [];
     let saveUpdatedCodes = false;
     
-    console.log('id | name | qrcode | validity | is3gok ');
+    //console.log('id | name | qrcode | validity | is3gok ');
     for(let zeile of daten){  
-      console.log(zeile.personid + "|" + zeile.name + "|" + zeile.qrcode + "|" + zeile.validity + "|" + zeile.is3gok);
+      //console.log(zeile.personid + "|" + zeile.name + "|" + zeile.qrcode + "|" + zeile.validity + "|" + zeile.is3gok);
 
       is3gok = false;
       if (timestampLocal < zeile.validity && zeile.validity != 'Invalid date') {
@@ -243,15 +241,18 @@ async checkin(){
 
       } else {
 
-        //get validity from db and compare wit timestamp !!with async/await!!
-        await this.churchtools.getCheckValidity(zeile.personid).then((result)=>{
-          ablauf = this.momentjs(JSON.stringify(JSON.parse(result.data)), "YYYYMMDD H:mm:ss").format("X");
-          
-          if (timestampLocal < ablauf && zeile.validity != 'Invalid date') {
-            is3gok = true;
-            saveUpdatedCodes = true;
-          }
-        });
+        //query new validity (but only if we're online)
+        if (this.userState.isOnline) {
+          //get validity from db and compare wit timestamp !!with async/await!!
+          await this.churchtools.getCheckValidity(zeile.personid).then((result)=>{
+            ablauf = this.momentjs(JSON.stringify(JSON.parse(result.data)), "YYYYMMDD H:mm:ss").format("X");
+            
+            if (timestampLocal < ablauf && zeile.validity != 'Invalid date') {
+              is3gok = true;
+              saveUpdatedCodes = true;
+            }
+          });
+        }
 
       }
 
@@ -270,8 +271,8 @@ async checkin(){
     }
     
     //zum testen.. checkinQRitems = [{"name":"Marc","qrcode":"abc", "is3gok":true}];
-    console.log('nun haben wir folgende Werte:');
-    console.log(checkinQRitems);
+    //console.log('nun haben wir folgende Werte:');
+    //console.log(checkinQRitems);
 
     //nun checkin Codes anzeigen
     //QRcode: this.AppPageGoDiQRcheckinCode,
