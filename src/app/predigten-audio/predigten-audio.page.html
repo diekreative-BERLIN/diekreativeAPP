@@ -1,18 +1,29 @@
-
-
 <ion-content>
   <div class="predigt-title">
     <ion-label class="header-label">PREDIGTEN</ion-label>
-    <div class="kreuze"> <img src="../assets/svg/kreuze_blue.svg" id="kreuze" > </div>
-    <div class="pfeil"> <img src="../assets/svg/pfeil_yellow_2.svg" id="pfeile" > </div>
+    <div class="kreuze">
+      <img src="../assets/svg/kreuze_blue.svg" id="kreuze" />
+    </div>
+    <div class="pfeil">
+      <img src="../assets/svg/pfeil_yellow_2.svg" id="pfeile" />
+    </div>
   </div>
 
+  <ion-item>
+    <!-- <ion-item slot="start">
+      No. of Episodes:
+    <ion-select interface="popover"></ion-select>
+  </ion-item> -->
+    <ion-icon slot="end" name="search-outline"></ion-icon>
+    <ion-icon slot="end" name="funnel-outline">
+      <ion-select interface="popover"></ion-select>
+    </ion-icon>
+    <ion-icon slot="end" name="swap-vertical-outline"></ion-icon>
+  </ion-item>
 
   <ion-list>
-
-   <div *ngFor="let predigt of predigten"> 
-      <app-predigt-element [predigt]=predigt></app-predigt-element>
-  </div>
-
+    <div *ngFor="let predigt of predigten">
+      <app-predigt-element [predigt]="predigt"></app-predigt-element>
+    </div>
   </ion-list>
 </ion-content>
