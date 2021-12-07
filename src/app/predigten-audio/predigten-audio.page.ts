@@ -10,6 +10,7 @@ import { NewsRss } from "../communications/news-rss";
 export class PredigtenAudioPage implements OnInit {
   rssData: NewsRss;
   predigten;
+  reversedRssData = false;
   constructor(private feedservice: FeedsService) {}
 
   ngOnInit() {
@@ -20,5 +21,10 @@ export class PredigtenAudioPage implements OnInit {
     this.rssData = this.feedservice.RssData;
     this.predigten = this.rssData.rss.channel[0].item;
     console.log(JSON.stringify(this.rssData));
+  }
+
+  reverseRssData() {
+    this.predigten.reverse();
+    this.reversedRssData = !this.reversedRssData;
   }
 }
