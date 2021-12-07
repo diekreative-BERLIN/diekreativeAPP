@@ -230,9 +230,9 @@ async checkin(){
     let checkinQRitems = [];
     let saveUpdatedCodes = false;
     
-    //console.log('id | name | qrcode | validity | is3gok ');
+    console.log('id | name | qrcode | validity | is3gok ');
     for(let zeile of daten){  
-      //console.log(zeile.personid + "|" + zeile.name + "|" + zeile.qrcode + "|" + zeile.validity + "|" + zeile.is3gok);
+      console.log(zeile.personid + "|" + zeile.name + "|" + zeile.qrcode + "|" + zeile.validity + "|" + zeile.is3gok);
 
       is3gok = false;
       if (timestampLocal < zeile.validity && zeile.validity != 'Invalid date') {
@@ -271,11 +271,9 @@ async checkin(){
     }
     
     //zum testen.. checkinQRitems = [{"name":"Marc","qrcode":"abc", "is3gok":true}];
-    //console.log('nun haben wir folgende Werte:');
-    //console.log(checkinQRitems);
+    console.log('nun haben wir folgende Werte:');
+    console.log(checkinQRitems);
 
-    //nun checkin Codes anzeigen
-    //QRcode: this.AppPageGoDiQRcheckinCode,
 
     await this.popover.create({component:GdCheckinPage,
       componentProps: {
@@ -406,13 +404,15 @@ async checkin(){
     //console.log('ablaufdatum = ' + ablauf.format('DD.MM.YYYY HH:mm'));
     //console.log('ohne format='+ablauf);
 
+  console.log('lies für person id '+this.personid);
+
     //1. add current person to array
     zeile[0].personid=this.personid;
     zeile[0].name=this.userState.fullusername;
     //zeile[0].qrcode=this.AppPageGoDiQRcheckinCode;
     await this.churchtools.getQRCode(this.personid, this.groupid).then((result)=>{
       let tempdata = JSON.parse(JSON.stringify(JSON.parse(result.data))).data.token;
-      //console.log('2) qrcode wert: ' + tempdata );
+      console.log('2) qrcode wert: ' + tempdata );
       zeile[0].qrcode=tempdata;
       tempFamilyData.push(zeile[0]);
     }).catch((err)=>{
@@ -436,22 +436,29 @@ async checkin(){
      }
     })
 
-    //console.log("beim auslesen direkt:");
-    //console.log(tempFamilyData);
+    console.log("beim auslesen direkt:");
+    console.log(tempFamilyData);
+    console.log('tempFamilyData length='+tempFamilyData.length);
 
     //3. add QR code where info is missing
     for (var i=0; i < tempFamilyData.length; i++) {
+      console.log('qrcode? "'+tempFamilyData[i].qrcode+'" personid='+tempFamilyData[i].personid+' groupid='+this.groupid);
       if (tempFamilyData[i].qrcode == '') {
+        console.log('okay emtpy code -> query!');
+
         await this.churchtools.getQRCode(tempFamilyData[i].personid, this.groupid).then((result)=>{
           let tempdata = JSON.parse(JSON.stringify(JSON.parse(result.data))).data.token;
-          //console.log('2) qrcode wert: ' + tempdata );
-          tempFamilyData[i].qrcode = tempdata;
+          console.log('4missing) qrcode wert: ' + tempdata );
+          tempFamilyData[i].qrcode = tempdata
+        }).catch((err)=>{
+          console.log("4)Error getting qrcode"+JSON.stringify(err));
         })
+
       }
     }
 
-    //console.log("mit QR Code bei Relatives ergänzt:");
-    //console.log(tempFamilyData);
+    console.log("mit QR Code bei Relatives ergänzt:");
+    console.log(tempFamilyData);
 
     //4. loop through current tempFamilyData and get validity for entries which have a valid qrcode
     for (var i=0; i < tempFamilyData.length; i++) {

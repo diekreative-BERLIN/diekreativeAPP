@@ -26,6 +26,15 @@ export class PredigtenAudioPage implements OnInit {
     console.log(JSON.stringify(this.rssData));
   }
 
+  doRefresh(event) {
+    if (event) {
+      this.getRssData();
+      
+      event.target.complete();
+    }
+     
+  }
+
   
 
 

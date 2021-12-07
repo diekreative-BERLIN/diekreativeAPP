@@ -46,8 +46,7 @@ export class AppComponent {
       if (this.router.url == "/tabs/itemslide" || this.router.url == "/tabs/tun-gebetscal" || this.router.url == "/tabs/tun-takewatches") {
         this.router.navigate(["/tabs/tagundnacht"]);
       } else if (this.router.url == '/tabs/tab1') {
-        this.router.navigate(["/tabs/termine"]);
-      } else if (this.router.url == '/tabs/tab2') {
+        //exit app
         navigator['app'].exitApp();
       } else {
         //go to home
