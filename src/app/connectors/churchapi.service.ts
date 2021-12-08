@@ -227,7 +227,7 @@ export class ChurchapiService {
 
   /////////////////// Get validity of certificate /////
   public getCheckValidity(personid){
-    var request = "personHash"+'='+Md5.hashStr(personid);
+    var request = "personHash"+'='+Md5.hashStr( Number(personid) ); //personID has to be an integer
     //return "get "+this.PRAY_API_SERVER+"/checkin/validity"+'/?'+request;
     return this.http.get(this.PRAY_API_SERVER+"/checkin/validity"+'/?'+request,{},{token:this.PRAY_API_SERVER_token});
   }
