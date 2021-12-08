@@ -220,7 +220,8 @@ export class GottesdienstePage {
 async checkin(){
 
     //1. Daten bereinigen
-    var daten = this.uniqueData(this.familyQRdata, 'personid');
+    //var daten = this.uniqueData(this.familyQRdata, 'personid');
+    var daten = this.familyQRdata;
     //var daten = this.familyQRdata;
     //2. Ablaufdaten auslesen und Gueltigkeit bestimmen
     this.momentjs.tz.setDefault('Europe/Berlin');
@@ -230,13 +231,15 @@ async checkin(){
     let checkinQRitems = [];
     let saveUpdatedCodes = false;
     
-    console.log('id | name | qrcode | validity | is3gok ');
+    //console.log('id | name | qrcode | validity | is3gok ');
     for(let zeile of daten){  
-      console.log(zeile.personid + "|" + zeile.name + "|" + zeile.qrcode + "|" + zeile.validity + "|" + zeile.is3gok);
+      //console.log(zeile.personid + "|" + zeile.name + "|" + zeile.qrcode + "|" + zeile.validity);
+      ablauf = this.momentjs(zeile.validity).format("X");
 
       is3gok = false;
-      if (timestampLocal < zeile.validity && zeile.validity != 'Invalid date') {
+      if (timestampLocal < ablauf && ablauf != 'Invalid date') {
 
+        //console.log('validity ist okay ('+timestampLocal+' < '+zeile.validity+' ('+this.momentjs(zeile.validity).format("X")+'))');
         is3gok = true;
 
       } else {
@@ -247,7 +250,8 @@ async checkin(){
           await this.churchtools.getCheckValidity(zeile.personid).then((result)=>{
             ablauf = this.momentjs(JSON.stringify(JSON.parse(result.data)), "YYYYMMDD H:mm:ss").format("X");
             
-            if (timestampLocal < ablauf && zeile.validity != 'Invalid date') {
+            //console.log('validity neu ausgelesen: '+ablauf);
+            if (timestampLocal < ablauf && ablauf != 'Invalid date') {
               is3gok = true;
               saveUpdatedCodes = true;
             }
@@ -393,7 +397,7 @@ async checkin(){
   */
 
   //getQRCodes for Person and his/her relatives
-  public async getQRCodesForFamily(number) {
+  public async getQRCodesForFamily_old(number) {
     console.log('get qr code for whole family..'+number);
     this.familyQRdata = [];
     let tempFamilyData = [];
@@ -473,6 +477,25 @@ async checkin(){
     }
 
     this.saveCheckinCodes();
+
+  }
+
+  //getQRCodes for Person and his/her relatives through our own API function -> delivers complete data including qrcode and validity
+  public async getQRCodesForFamily(number) {
+    console.log('get qr code for whole family..'+number);
+    this.familyQRdata = [];
+
+    await this.churchtools.getFamilyQRcodes(this.personid, this.groupid).then((result)=>{
+      console.log(result);
+      let tempdata = JSON.parse(JSON.stringify(JSON.parse(result.data)));
+      this.familyQRdata = tempdata;
+
+      this.saveCheckinCodes();
+
+    }).catch((err)=>{
+      console.log("Error getting FamilyQRcode"+JSON.stringify(err));
+      this.AppPageGoDiQRcheckinCode = "false";
+    })
 
   }
 
