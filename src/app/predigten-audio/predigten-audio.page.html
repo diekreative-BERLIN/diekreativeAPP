@@ -1,4 +1,14 @@
 <ion-content>
+  
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="100" pullMax="200">
+    <ion-refresher-content 
+      pullingIcon="arrow-down-outline" 
+      pullingText="ziehen zum Aktualisieren" 
+      refreshingSpinner="circular"
+      refreshingText="es wird aktualisiert...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <div class="predigt-title">
     <ion-label class="header-label">PREDIGTEN</ion-label>
     <div class="kreuze">

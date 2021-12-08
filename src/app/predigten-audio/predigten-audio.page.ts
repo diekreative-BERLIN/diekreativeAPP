@@ -27,4 +27,16 @@ export class PredigtenAudioPage implements OnInit {
     this.predigten.reverse();
     this.reversedRssData = !this.reversedRssData;
   }
+  doRefresh(event) {
+    if (event) {
+      this.getRssData();
+      
+      event.target.complete();
+    }
+     
+  }
+
+  
+
+
 }

@@ -24,13 +24,11 @@ export class ChurchapiService {
   constructor(private httpClient: HttpClient, private http:HTTP) { }
 
   public login(username, password){
-
       this.http.clearCookies();
       this.http.setServerTrustMode("nocheck");
       let usernameEncoded = encodeURIComponent(username);
       let passwordEncoded = encodeURIComponent(password);
       return this.http.post(this.REST_API_SERVER+"/login?username="+usernameEncoded+"&password="+passwordEncoded,{},{})
-
   }
 
   public loginWithToken(userid, token){
@@ -62,11 +60,10 @@ export class ChurchapiService {
     return this.httpClient.post(this.AJAX_API_SERVER+requestroot+func,{},{params});
   }
 
-  private sendRestPostRequest(request:string,params:HttpParams){
-    
-  console.log(this.REST_API_SERVER+'/'+request+" "+params)
-  return this.httpClient.post<LoginResponse>(this.REST_API_SERVER+'/'+request,{},{params:params, withCredentials:true, observe: 'response' as 'response'});
-  //return this.httpClient.post("http://ec2-18-184-42-189.eu-central-1.compute.amazonaws.com/api/login?username=admin&password=admin",{});
+  private sendRestPostRequest(request:string,params:HttpParams){  
+    console.log(this.REST_API_SERVER+'/'+request+" "+params)
+    return this.httpClient.post<LoginResponse>(this.REST_API_SERVER+'/'+request,{},{params:params, withCredentials:true, observe: 'response' as 'response'});
+    //return this.httpClient.post("http://ec2-18-184-42-189.eu-central-1.compute.amazonaws.com/api/login?username=admin&password=admin",{});
   }
 
   private sendRestGetRequest(request:string,params:HttpParams){
@@ -230,7 +227,7 @@ export class ChurchapiService {
 
   /////////////////// Get validity of certificate /////
   public getCheckValidity(personid){
-    var request = "personHash"+'='+Md5.hashStr(personid);
+    var request = "personHash"+'='+Md5.hashStr( Number(personid) ); //personID has to be an integer
     //return "get "+this.PRAY_API_SERVER+"/checkin/validity"+'/?'+request;
     return this.http.get(this.PRAY_API_SERVER+"/checkin/validity"+'/?'+request,{},{token:this.PRAY_API_SERVER_token});
   }
