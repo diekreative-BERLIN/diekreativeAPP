@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform, MenuController } from '@ionic/angular';
+import { Platform, MenuController, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { HTTP } from '@ionic-native/http/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ConnectivityService } from './connectivity.service';
+//import {NotificationsService} from "../services/notifications.service";
 
 
 @Component({
@@ -38,7 +39,8 @@ export class AppComponent {
     private router: Router,
     private http: HTTP,
     private iab: InAppBrowser,
-    private connectivity: ConnectivityService
+    private connectivity: ConnectivityService,
+    private toastController: ToastController
   ) {
     this.initializeApp();
     //handle Android Back Button
@@ -97,8 +99,27 @@ ngOnInit() {
         this.userState.isOnline = false;
     }
   })
+
+  this.firebaseX.getBadgeNumber().then(badge => {
+    console.log('###aktueller badge='+badge);
+  });
+  
+  this.firebaseX.onMessageReceived().subscribe(data => {
+    console.log(`FCM message: ${data}`)
+  });
+  
+  this.presentToast("blablabla");
 }
 
+private async presentToast(message) {
+  const toast = await this.toastController.create({
+    message,
+    duration: 3000,
+    animated: true,
+    position: 'bottom'
+  });
+  toast.present();
+}
 
   async presentModal() {
     const modal = await this.modalController.create({
