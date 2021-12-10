@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform, MenuController, ToastController } from '@ionic/angular';
+import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
@@ -15,7 +15,6 @@ import { Router } from '@angular/router';
 import { HTTP } from '@ionic-native/http/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ConnectivityService } from './connectivity.service';
-//import {NotificationsService} from "../services/notifications.service";
 
 
 @Component({
@@ -25,12 +24,10 @@ import { ConnectivityService } from './connectivity.service';
 })
 export class AppComponent {
   login = false;
-
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private firebaseX: FirebaseX,
     private menu: MenuController,
     public modalController: ModalController,
     private feeds: FeedsService,
@@ -40,7 +37,7 @@ export class AppComponent {
     private http: HTTP,
     private iab: InAppBrowser,
     private connectivity: ConnectivityService,
-    private toastController: ToastController
+    private firebaseX: FirebaseX
   ) {
     this.initializeApp();
     //handle Android Back Button
@@ -58,19 +55,23 @@ export class AppComponent {
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-      this.firebaseX.hasPermission().then((permission)=>{
-        if(!permission){
-          this.firebaseX.grantPermission();
-        }
-      });
-      this.firebaseX.getToken()
-        .then(token => {
-        console.log(`The token is ${token}`);}) // save the token server-side and use it to push notifications to this device
+    this.platform.ready().then(
+      () => {
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+        
+        this.firebaseX.hasPermission().then((permission)=>{
+          if(!permission){
+            this.firebaseX.grantPermission();
+          }
+        });
+        this.firebaseX.getToken().then(token => {
+            console.log(`The token is ${token}`);
+        }) // save the token server-side and use it to push notifications to this device
         .catch(error => alert(`Error getting token ${error}`));
-      });
+        
+        }
+      );
 
   }
 
@@ -100,26 +101,8 @@ ngOnInit() {
     }
   })
 
-  this.firebaseX.getBadgeNumber().then(badge => {
-    console.log('###aktueller badge='+badge);
-  });
-  
-  this.firebaseX.onMessageReceived().subscribe(data => {
-    console.log(`FCM message: ${data}`)
-  });
-  
-  this.presentToast("blablabla");
 }
 
-private async presentToast(message) {
-  const toast = await this.toastController.create({
-    message,
-    duration: 3000,
-    animated: true,
-    position: 'bottom'
-  });
-  toast.present();
-}
 
   async presentModal() {
     const modal = await this.modalController.create({

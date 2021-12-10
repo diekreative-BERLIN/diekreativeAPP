@@ -11,12 +11,38 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 })
 export class GridHomescreenComponent implements OnInit {
 
+  firebasePlugin;
+
   constructor(
     private userState:UserstateService,
     private router: Router,
     private iab: InAppBrowser,
     private platform: Platform
-  ) { }
+  ) {
+    platform.ready().then(() => {
+      this.firebasePlugin = (<any>window).FirebasePlugin;
+      this.firebasePlugin.onMessageReceived(this.onMessageReceived.bind(this));
+    });
+  }
+
+  /*
+  getToken() {
+    this.firebasePlugin.getToken(token => {
+      alert('token='+token);
+    })
+  }
+  */
+
+  //handle push messages in foreground
+  onMessageReceived(message){
+    //alert('Message received '+ JSON.stringify(message));
+    console.log(message.aps.alert.title);
+    console.log("body:");
+    console.log(message.aps.alert.body);
+    alert(message.aps.alert.title+'\n\n'+message.aps.alert.body);
+    //remove all message badges
+    this.firebasePlugin.setBadgeNumber(0);
+  }
 
   ngOnInit() {}
 

@@ -49,7 +49,7 @@
     </ion-card>
   </div>
 
-  <div *ngIf="isGodiToday && (eventProgressState == 0 || eventProgressState == 1) || 1">
+  <div *ngIf="isGodiToday && (eventProgressState == 0 || eventProgressState == 1)">
     <!-- #docregion multi -->
     <mat-accordion class="gd-info-now" multi>
       <!-- #enddocregion multi -->
@@ -67,7 +67,7 @@
               <ion-row class="godi-info" (click)="showGoDiDetails(0)">
                 {{AppPageGodiInfotext}}
               </ion-row>
-              <ion-row *ngIf="(AppPageGodiQRcheckin && AppPageGoDiQRcheckinCode != 'false') || 1">
+              <ion-row *ngIf="(AppPageGodiQRcheckin && AppPageGoDiQRcheckinCode != 'false')">
                 <ion-button (click)="checkin()" class="qr-button">
                   <ion-icon name="qr-code-outline"></ion-icon>
                   &nbsp;&nbsp;
@@ -208,7 +208,7 @@
 
 </div>
 
-
+<!--
 <ion-item>
   <ion-label>Timestamp</ion-label>
   <ion-input type="text" [(ngModel)]="fakeNow" text-right id="input" ></ion-input>
@@ -219,7 +219,7 @@
     <ion-button (click)="fakeTimestamp()">newTimestamp</ion-button>
     <ion-button (click)="setFakeNow()">set Fake Now</ion-button>
 </ion-buttons>
-
+-->
 
 
 </ion-content>
