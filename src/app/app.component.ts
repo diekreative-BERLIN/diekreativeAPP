@@ -16,6 +16,8 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ConnectivityService } from './connectivity.service';
 
+import { AlertController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-root',
@@ -24,6 +26,8 @@ import { ConnectivityService } from './connectivity.service';
 })
 export class AppComponent {
   login = false;
+  firebasePlugin;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -37,7 +41,8 @@ export class AppComponent {
     private http: HTTP,
     private iab: InAppBrowser,
     private connectivity: ConnectivityService,
-    private firebaseX: FirebaseX
+    private firebaseX: FirebaseX,
+    public alertController: AlertController
   ) {
     this.initializeApp();
     //handle Android Back Button
@@ -70,9 +75,34 @@ export class AppComponent {
         }) // save the token server-side and use it to push notifications to this device
         .catch(error => alert(`Error getting token ${error}`));
         
+        this.firebasePlugin = (<any>window).FirebasePlugin;
+        this.firebasePlugin.onMessageReceived(this.onMessageReceived.bind(this));
+
+        //delete pending badge numbers on iOS
+        if(!this.platform.is('android')) {
+          this.firebasePlugin.getBadgeNumber(function(n) {
+            if (n>0) {this.firebasePlugin.setBadgeNumber(0);}
+          });
+        }
+        
         }
       );
 
+  }
+
+  //handle push messages in foreground
+  onMessageReceived(message){
+
+    this.alertController.create({
+      header: message.aps.alert.title,
+      message: message.aps.alert.body,
+      buttons: ['OK']
+    }).then(res => {
+      res.present();
+    });
+
+    //remove all message badges
+    this.firebasePlugin.setBadgeNumber(0);
   }
 
   openFirst() {

@@ -94,6 +94,7 @@ export class TagundnachtPage implements OnInit, AfterViewChecked {
     if (event) {
       this.userState.AppPageTUNInit = true;
       this.ngAfterViewChecked();
+      event.target.complete();
     }
      
   }
