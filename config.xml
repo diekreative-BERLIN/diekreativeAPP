@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="org.diekreative.APPdk" version="0.1.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="org.diekreative.APPdk" version="0.1.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>diekreative APP</name>
     <description>dieKreative APP</description>
     <author email="media@diekreative.org" href="https://diekreative.org/">diekreative</author>

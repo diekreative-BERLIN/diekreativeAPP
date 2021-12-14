@@ -10,13 +10,13 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   styleUrls: ['./grid-homescreen.component.scss'],
 })
 export class GridHomescreenComponent implements OnInit {
-
   constructor(
     private userState:UserstateService,
     private router: Router,
     private iab: InAppBrowser,
     private platform: Platform
-  ) { }
+  ) {  }
+
 
   ngOnInit() {}
 

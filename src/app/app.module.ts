@@ -74,6 +74,7 @@ import { GdCheckinPageModule } from './gd-checkin/gd-checkin.module';
     FileTransfer,
     FileOpener,
     EmailComposer
+    //LocalNotifications
   ],
   bootstrap: [AppComponent]
 })

@@ -14,6 +14,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 })
 export class TerminePage implements OnInit {
   loading;
+  iframeLink;
   browser: any = {
     secUrl: '' // Security link
   };
@@ -33,7 +34,12 @@ export class TerminePage implements OnInit {
 
   ngOnInit() {
     this.showLoader();
-    this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl("https://diekreative.org/events_4_app?reload=0");
+    if(this.platform.is('android')) {
+      this.iframeLink="https://diekreative.org/events_4_app"
+    } else {
+      this.iframeLink="https://diekreative.org/events_4_ios"
+    }
+    this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframeLink+"?reload=0");
   }
 
 
@@ -73,7 +79,7 @@ hideLoader() {
   doRefresh(event) {
     if (event) {
       //this.refresher = (new Date()).getTime() + Math.floor(Math.random() * 1000000);
-      this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl("https://diekreative.org/events_4_app?reload=" + (new Date()).getTime() + Math.floor(Math.random() * 1000000) );
+      this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframeLink+"?reload=" + (new Date()).getTime() + Math.floor(Math.random() * 1000000) );
 
       event.target.complete();
     }

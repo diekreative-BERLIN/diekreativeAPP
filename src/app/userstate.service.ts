@@ -103,68 +103,68 @@ export class UserstateService {
         this.shortusername = (JSON.parse(res.data)).data.firstName + " " +lastname.substr(0,1)+"."  
         console.log("shortname="+this.shortusername)
         this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner, shortusername:this.shortusername, explicitusername:this.explicitusername})
-  .then(
-    () => console.log('Stored item!'),
-    error => console.error('Error storing item', error)
-  );
-      })
-      var resultObj = JSON.parse(res.data)
-      console.log("Get Group for Loggedin " +JSON.stringify(resultObj));
-      
-      var hasZugang = false; 
-      resultObj.data.forEach((group)=>{
-        console.log("Elements " + group.group.domainIdentifier)
-        console.log("In for Each with :" + JSON.stringify(group));
-        if( "9" == group?.group.domainIdentifier ) {
-          console.log("has Zugang");
-          hasZugang = true;
-          this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner, shortusername:this.shortusername, explicitusername:this.explicitusername})
+      .then(
+        () => console.log('Stored item currentUser(a)!'),
+        error => console.error('Error storing item', error)
+      );
+    })
+    var resultObj = JSON.parse(res.data)
+    //console.log("Get Group for Loggedin " +JSON.stringify(resultObj));
+    
+    var hasZugang = false; 
+    resultObj.data.forEach((group)=>{
+      //console.log("Elements " + group.group.domainIdentifier)
+      //console.log("In for Each with :" + JSON.stringify(group));
+      if( "9" == group?.group.domainIdentifier ) {
+        console.log("has Zugang");
+        hasZugang = true;
+        this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner, shortusername:this.shortusername, explicitusername:this.explicitusername})
         .then(
-    () => console.log('Stored item!'),
-    error => console.error('Error storing item', error)
-  );
-        }
-      })
-      if(hasZugang){
-        this.hasTuerOeffner = true;
-        this.churchtools.getLoginToken(personid).then((res)=>{
-          console.log(JSON.stringify(res.data));
-          this.logintoken = JSON.parse(res.data).data;
-          console.log("Has Tueroeffner and Logintoken");
-          this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner, shortusername:this.shortusername, explicitusername:this.explicitusername})
-        .then(
-    () => console.log('Stored item!'),
-    error => console.error('Error storing item', error)
-  );
-        }).catch((err)=>{
-          console.log("error on retrieving logintoken");
-          this.loggedin = false;
-          this.personid = 0;
-          this.hasTuerOeffner = false;
-          this.logintoken = "";
-        });
-      }else {
-        this.hasTuerOeffner = false;
+          () => console.log('Stored item currentUser(b)!'),
+          error => console.error('Error storing item', error)
+        );
       }
-      /*
-      this.churchtools.getLoginString(personid).then((res)=>{
-        console.log("loginstring=");
-        console.log(JSON.stringify(res.data));
-        this.loginstring = JSON.parse(res.data);
-      }).catch((err)=>{
-        this.loginstring = "";
-      })
-      */
-      ;
-
+    })
+    if(hasZugang){
+      this.hasTuerOeffner = true;
+    } else {
+      this.hasTuerOeffner = false;
+    }
+    this.churchtools.getLoginToken(personid).then((res)=>{
+      console.log(JSON.stringify(res.data));
+      this.logintoken = JSON.parse(res.data).data;
+      console.log("has Logintoken");
+      this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner, shortusername:this.shortusername, explicitusername:this.explicitusername})
+      .then(
+        () => console.log('Stored item currentUser(c)!'),
+        error => console.error('Error storing item', error)
+      );
     }).catch((err)=>{
+      console.log("error on retrieving logintoken");
+      this.loggedin = false;
+      this.personid = 0;
       this.hasTuerOeffner = false;
       this.logintoken = "";
-      console.log("dropped here " + JSON.stringify(err));
     });
-    this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner, shortusername:this.shortusername, explicitusername:this.explicitusername})
+    /*
+    this.churchtools.getLoginString(personid).then((res)=>{
+      console.log("loginstring=");
+      console.log(JSON.stringify(res.data));
+      this.loginstring = JSON.parse(res.data);
+    }).catch((err)=>{
+      this.loginstring = "";
+    })
+    */
+    ;
+
+  }).catch((err)=>{
+    this.hasTuerOeffner = false;
+    this.logintoken = "";
+    console.log("dropped here " + JSON.stringify(err));
+  });
+  this.nativeStorage.setItem('currentUser', {personid: this.personid, logintoken: this.logintoken, fullusername: this.fullusername, hasTuerOeffner:this.hasTuerOeffner, shortusername:this.shortusername, explicitusername:this.explicitusername})
   .then(
-    () => console.log('Stored item!'),
+    () => console.log('Stored item currentUser(d)!'),
     error => console.error('Error storing item', error)
   );
   }
