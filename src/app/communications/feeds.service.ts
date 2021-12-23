@@ -11,6 +11,7 @@ export class FeedsService {
   RssData: NewsRss;
 
   public PREDIGTEN_URL = environment.predigtenurl;
+  
   constructor(private http: HttpClient) { 
     this.GetRssFeedData(this.PREDIGTEN_URL);
   }

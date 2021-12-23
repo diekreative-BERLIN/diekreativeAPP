@@ -94,6 +94,7 @@ export class AppComponent {
   onMessageReceived(message){
 
     this.alertController.create({
+      cssClass: 'push-message',
       header: message.aps.alert.title,
       message: message.aps.alert.body,
       buttons: ['OK']

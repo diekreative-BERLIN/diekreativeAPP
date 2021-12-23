@@ -23,11 +23,15 @@ export class PredigtenAudioPage implements OnInit {
   getRssData() {
     this.rssData = this.feedservice.RssData;
     this.predigten = this.rssData.rss.channel[0].item
-    console.log(JSON.stringify(this.rssData));
+    //console.log(JSON.stringify(this.rssData));
   }
 
   doRefresh(event) {
     if (event) {
+      console.log('re-read feeds');
+      this.predigten = [];
+      
+      this.feedservice.GetRssFeedData(this.feedservice.PREDIGTEN_URL);
       this.getRssData();
       
       event.target.complete();
