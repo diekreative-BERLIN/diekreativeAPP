@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { rawListeners } from 'process';
 import { FeedsService } from '../communications/feeds.service';
 import { NewsRss } from '../communications/news-rss';
 
@@ -9,6 +10,7 @@ import { NewsRss } from '../communications/news-rss';
   styleUrls: ['./predigten-audio.page.scss'],
 })
 export class PredigtenAudioPage implements OnInit {
+  isViewCompact=true;
   rssData:NewsRss;
   predigten;
   constructor(private feedservice:FeedsService) { 
@@ -26,20 +28,33 @@ export class PredigtenAudioPage implements OnInit {
     //console.log(JSON.stringify(this.rssData));
   }
 
-  doRefresh(event) {
+  async doRefresh(event) {
     if (event) {
       console.log('re-read feeds');
       this.predigten = [];
+      this.isViewCompact = true;
       
-      this.feedservice.GetRssFeedData(this.feedservice.PREDIGTEN_URL);
-      this.getRssData();
+      await this.feedservice.GetRssFeedData(this.feedservice.PREDIGTEN_URL,'').then((res)=>{
+        //console.log("Feed gelesen"+JSON.stringify(res));
+        //console.log('=> set rss Data from feed');
+        this.rssData = this.feedservice.RssData;
+        this.predigten = this.rssData.rss.channel[0].item;
+      });
       
       event.target.complete();
     }
      
   }
 
-  
+  public async getMoreSermons() {
+    this.isViewCompact = false;
 
+    await this.feedservice.GetRssFeedData(this.feedservice.PREDIGTEN_URL,'more').then((res)=>{
+      //console.log("Feed gelesen"+JSON.stringify(res));
+      //console.log('=> set rss Data from feed');
+      this.rssData = this.feedservice.RssData;
+      this.predigten = this.predigten.concat(this.rssData.rss.channel[0].item);
+    });
+  }
 
 }

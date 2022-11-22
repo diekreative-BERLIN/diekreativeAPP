@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 
 import { DomSanitizer } from "@angular/platform-browser";
 
-
 @Component({
   selector: 'app-termine',
   templateUrl: './termine.page.html',
@@ -18,7 +17,7 @@ export class TerminePage implements OnInit {
   browser: any = {
     secUrl: '' // Security link
   };
-
+  isIOS = false;
 
   constructor(
     private platform: Platform,
@@ -38,8 +37,11 @@ export class TerminePage implements OnInit {
       this.iframeLink="https://diekreative.org/events_4_app"
     } else {
       this.iframeLink="https://diekreative.org/events_4_ios"
+      this.isIOS = true;
     }
-    this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframeLink+"?reload=0");
+
+    //this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframeLink+"?reload=0");
+    this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframeLink+"?reload=" + (new Date()).getTime() + Math.floor(Math.random() * 1000000) );
   }
 
 
@@ -69,6 +71,7 @@ hideLoader() {
     this.router.navigate(["/tabs/tab2"]);
   }
 
+
   openWebsite(url){
     //console.log('open website url:'+url);
     this.platform.ready().then(() => {
@@ -84,6 +87,10 @@ hideLoader() {
       event.target.complete();
     }
      
+  }
+
+  TerminHomeActivated() {
+    this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframeLink+"?reload=" + (new Date()).getTime() + Math.floor(Math.random() * 1000000) );
   }
 
 }

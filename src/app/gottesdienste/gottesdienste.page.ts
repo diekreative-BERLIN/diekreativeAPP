@@ -73,7 +73,10 @@ export class GottesdienstePage {
   AppPageGodiInfoDate = "";
   AppPageGodiInfo = "";
   AppPageGodiInfotext = "";
-  AppPageGodiQRcheckin = true;
+  //nov '22 -> no more qr checkin needed -> deactivated!
+  //AppPageGodiQRcheckin = true;
+  AppPageGodiQRcheckin = false;
+
   AppPageGoDiQRcheckinCode = "false";
 
   constructor (
@@ -359,8 +362,10 @@ async checkin(){
   //read details for Event - especially if event has qr checkin code activated
   public getGoDiEventDetails() {
     this.churchtools.getGoDiEventDetails(this.groupid).then((result)=>{
-      //console.log("GoDi Event Info:" +JSON.stringify(JSON.parse(result.data)));
-      this.AppPageGodiQRcheckin = (JSON.parse(result.data)).data.settings.qrCodeCheckin;
+      console.log("GoDi Event Info:" +JSON.stringify(JSON.parse(result.data)));
+      //nov '22 - no more needed!
+      //this.AppPageGodiQRcheckin = (JSON.parse(result.data)).data.settings.qrCodeCheckin;
+      this.AppPageGodiQRcheckin = false;
       //console.log('qr checkin? '+this.AppPageGodiQRcheckin);
     });
   }
@@ -673,7 +678,7 @@ async checkin(){
   showGoDiDetails(infoQR) {
     //replace('\n\r', '<br/>').replace('\n', '<br/>').replace('\r', '<br/>')
     let message = this.AppPageGodiInfotext;
-    if (infoQR) {
+    if (infoQR && this.AppPageGodiQRcheckin) {
       message = message+'\n\nQR Checkin steht ab '+this.momentjs( this.AppPageGodiEvntStart ).subtract(this.checkinActivateSpan, 'hours').format('DD.MM. HH:mm')+' Uhr zur Verfügung';
     }
     alert(message);

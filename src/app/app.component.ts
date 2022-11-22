@@ -158,6 +158,11 @@ ngOnInit() {
     });
   }
   
+  settingsActivated(){
+    this.router.navigate(["/tabs/settings"]);
+    this.close();
+  }
+
   ctAppActivated(){
     this.router.navigate(["/tabs/ctapp"]);
     this.close();

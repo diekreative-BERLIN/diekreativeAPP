@@ -22,5 +22,7 @@
       <app-predigt-element [predigt]=predigt></app-predigt-element>
   </div>
 
+  <ion-button *ngIf="isViewCompact" class="centered" (click)="getMoreSermons()">mehr</ion-button>
+
   </ion-list>
 </ion-content>

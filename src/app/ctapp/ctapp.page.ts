@@ -43,7 +43,9 @@ export class CtappPage implements OnInit {
       this.loginstring = (JSON.parse(res.data)).loginString;
       console.log("nun, loginstr="+this.loginstring);
 
-      let url = "churchtools://login?instanceurl=https://diekreative.org/churchtools/&loginstring="+this.loginstring+"&personid="+personid;
+      //let url = "churchtools://login?instanceurl=https://diekreative.org/churchtools/&loginstring="+this.loginstring+"&personid="+personid;
+      let url = "churchtools://login?instanceurl="+this.churchtools.DK_API_SERVER+"/&loginstring="+this.loginstring+"&personid="+personid;
+      
       console.log("CT App oeffnen mit:");
       console.log(url);
 

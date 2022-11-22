@@ -1,3 +1,4 @@
+
 import { Injectable, ComponentFactoryResolver } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse, HttpResponseBase, HttpHeaders } from '@angular/common/http';
 
@@ -12,9 +13,13 @@ import {Md5} from 'ts-md5/dist/md5';
 export class ChurchapiService {
 
 
-  private REST_API_SERVER = environment.churchtoolsurl+"/api";
-  private DK_API_SERVER = environment.churchtoolsurl;
-  private AJAX_API_SERVER = environment.churchtoolsurl+"/index.php?";
+  //private REST_API_SERVER = environment.churchtoolsurl+"/api";
+  //private DK_API_SERVER = environment.churchtoolsurl;
+  //private AJAX_API_SERVER = environment.churchtoolsurl+"/index.php?";
+  private REST_API_SERVER = "init";
+  public DK_API_SERVER = "init";
+  private AJAX_API_SERVER = "init";
+
   private PRAY_API_SERVER = environment.prayerapiurl;
   private PRAY_API_SERVER_token = environment.prayerapitoken;
 
@@ -23,19 +28,47 @@ export class ChurchapiService {
 
   constructor(private httpClient: HttpClient, private http:HTTP) { }
 
-  public login(username, password){
+  private async setAPIurl() {
+    console.log('## get API Urls');
+    await this.http.get(this.PRAY_API_SERVER+"/interfaces/ctaddress",{},{token:this.PRAY_API_SERVER_token}).then((res)=>{
+      //console.log(res);
+      let ctadr = JSON.parse(res.data);
+      console.log( '>>'+ ctadr +'<<');
+      // set new addresses
+      this.REST_API_SERVER = ctadr+"/api";
+      this.DK_API_SERVER = ctadr;
+      this.AJAX_API_SERVER = ctadr+"/index.php?";
+    }).catch((err)=>{
+      console.log("error setCtUrl " + JSON.stringify(err));
+    });
+  }
+
+  public async login(username, password){
+    console.log('#inCTAPI-login');
+    if (this.REST_API_SERVER == 'init') {
+      await this.setAPIurl();
+    }
       this.http.clearCookies();
       this.http.setServerTrustMode("nocheck");
       let usernameEncoded = encodeURIComponent(username);
       let passwordEncoded = encodeURIComponent(password);
-      return this.http.post(this.REST_API_SERVER+"/login?username="+usernameEncoded+"&password="+passwordEncoded,{},{})
+      return await this.http.post(this.REST_API_SERVER+"/login?username="+usernameEncoded+"&password="+passwordEncoded,{},{})
   }
 
-  public loginWithToken(userid, token){
-    return this.http.post(this.AJAX_API_SERVER+this.LOGINROOT+"loginWithToken"+"&q=login/ajax&token="+token+"&id="+userid,{},{});
+  public async loginWithToken(userid, token){
+    console.log('#inCTAPI-loginWithToken');
+    if (this.REST_API_SERVER == 'init') {
+      await this.setAPIurl();
+    }
+    this.http.clearCookies();
+    this.http.setServerTrustMode("nocheck");
+    return await this.http.post(this.AJAX_API_SERVER+this.LOGINROOT+"loginWithToken"+"&q=login/ajax&token="+token+"&id="+userid,{},{});
   }
 
-  public getPersonViaToken(userid, token){
+  public async getPersonViaToken(userid, token){
+    if (this.REST_API_SERVER == 'init') {
+      await this.setAPIurl();
+    }
     return this.http.get(this.REST_API_SERVER+"/persons/"+userid,{login_token:token},{})
   }
 
@@ -43,7 +76,10 @@ export class ChurchapiService {
     return this.callCalendarMethods(category)
   }
 
-  public getGroupsForLoggedInPerson(personid){
+  public async getGroupsForLoggedInPerson(personid){
+    if (this.REST_API_SERVER == 'init') {
+      await this.setAPIurl();
+    }
     var request = "persons"+'/'+personid+'/groups'
     //var params = new HttpParams()
     return this.http.get(this.REST_API_SERVER+'/'+request,{},{})
@@ -70,20 +106,29 @@ export class ChurchapiService {
     return this.httpClient.get(this.REST_API_SERVER+'/'+request,{params:params, withCredentials:true});
   }
 
-  public getLoginToken(personid){
+  public async getLoginToken(personid){
+    if (this.REST_API_SERVER == 'init') {
+      await this.setAPIurl();
+    }
     var request = "persons"+'/'+personid+'/logintoken'
     //var params = new HttpParams()
     return this.http.get(this.REST_API_SERVER+'/'+request,{},{});
     //return this.httpClient.get(this.REST_API_SERVER+'/'+request,{params:params, withCredentials:true});
   }
 
-  public getLoginString(personid){
+  public async getLoginString(personid){
+    if (this.REST_API_SERVER == 'init') {
+      await this.setAPIurl();
+    }
     var request = "persons"+'/'+personid+'/loginstring'
     //var params = new HttpParams()
     return this.http.get(this.REST_API_SERVER+'/'+request,{},{});
   }
   
-  public getPersonData(personid){
+  public async getPersonData(personid){
+    if (this.REST_API_SERVER == 'init') {
+      await this.setAPIurl();
+    }
     var request = "persons"+'/'+personid
     var params = new HttpParams()
     return this.http.get(this.REST_API_SERVER+'/'+request,{},{})
@@ -203,7 +248,10 @@ export class ChurchapiService {
   }
 
   //getGoDiEventInfo
-  public getGoDiEventDetails(groupid){
+  public async getGoDiEventDetails(groupid){
+    if (this.REST_API_SERVER == 'init') {
+      await this.setAPIurl();
+    }
     var request = "groups"+'/'+groupid;
     return this.http.get(this.REST_API_SERVER+'/'+request,{},{});
   }
