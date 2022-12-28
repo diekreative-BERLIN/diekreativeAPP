@@ -4,6 +4,11 @@ import { Router } from '@angular/router';
 
 import { AlertController } from '@ionic/angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
+
+//
+//import { NavController } from 'ionic-angular';
+import { DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lifegroups',
@@ -12,12 +17,16 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 })
 export class LifegroupsPage implements OnInit {
   AppPlatform = "";
+  url;
+  clickCount = 0;
 
   constructor(
     private platform: Platform,
     private router: Router,
     public alertController: AlertController,
-    private iab: InAppBrowser
+    private iab: InAppBrowser,
+    private safariViewController: SafariViewController,
+    private sanitizer: DomSanitizer
   ) {
     //this.platform.backButton.subscribeWithPriority(10, () => {
     //  this.router.navigate(["/tabs/tab1"]);
@@ -30,6 +39,7 @@ export class LifegroupsPage implements OnInit {
     } else {
       this.AppPlatform="iOS";
     }
+    this.url = this.iframeUrl();
   }
 
   showConfirm() {
@@ -41,7 +51,7 @@ export class LifegroupsPage implements OnInit {
           text: 'Ja, gerne!',
           handler: () => {
             this.platform.ready().then(() => {
-              this.iab.create('https://diekreative.org/churchtools/grouphomepage/t0C8YfViN2HpLvDQDhafN8gYogHeVsLi?embedded=true','_system');
+              this.iab.create('https://diekreative.church.tools/grouphomepage/t0C8YfViN2HpLvDQDhafN8gYogHeVsLi?embedded=true','_system');
             });
           }
         },
@@ -56,9 +66,52 @@ export class LifegroupsPage implements OnInit {
 
   onIframeClick() {
     if(this.AppPlatform=="iOS") {
-      //console.log('iframe wurde geklickt!');
-      this.showConfirm();
+      this.clickCount = this.clickCount+1;
+      console.log('click count @ onIfrClick: '+this.clickCount);
+      if (this.clickCount==1) {
+        console.log('iframe wurde geklickt!');
+        //this.showConfirm();
+        this.openSafari();
+      }
     }
+  }
+
+  openSafari() {
+    this.safariViewController.isAvailable()
+    .then((available: boolean) => {
+        if (available) {
+          this.safariViewController.show({
+            url: 'https://diekreative.church.tools/grouphomepage/t0C8YfViN2HpLvDQDhafN8gYogHeVsLi?embedded=true',
+            hidden: false,
+            animated: true,
+            transition: 'curl',
+            enterReaderModeIfAvailable: true,
+            tintColor: '#ff0000'
+          })
+          .subscribe((result: any) => {
+              if(result.event === 'opened') console.log('Opened');
+              else if(result.event === 'loaded') console.log('Loaded');
+              else if(result.event === 'closed') {
+                console.log('Closed');
+                this.safariViewController.hide();
+                this.clickCount = -1;
+                console.log('click count when close: '+this.clickCount);
+              }
+            },
+            (error: any) => console.error(error)
+          );
+
+        } else {
+          // use fallback browser, example InAppBrowser
+        }
+      }
+    );
+
+  }
+
+  iframeUrl(){
+    let url = "https://diekreative.church.tools/grouphomepage/t0C8YfViN2HpLvDQDhafN8gYogHeVsLi?embedded=true";
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
   
 }

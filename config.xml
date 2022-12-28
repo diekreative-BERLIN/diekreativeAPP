@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="org.diekreative.APPdk" version="0.1.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="org.diekreative.APPdk" version="0.1.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>diekreative APP</name>
     <description>dieKreative APP</description>
     <author email="media@diekreative.org" href="https://diekreative.org/">diekreative</author>
@@ -24,7 +24,7 @@
     <preference name="WKWebViewOnly" value="true" />
     <preference name="orientation" value="portrait" />
     <platform name="android">
-        <preference name="android-targetSdkVersion" value="29" />
+        <preference name="android-targetSdkVersion" value="31" />
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
             <application android:networkSecurityConfig="@xml/network_security_config" />
         </edit-config>

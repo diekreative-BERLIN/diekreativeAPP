@@ -85,6 +85,14 @@ const routes: Routes = [
         loadChildren: () => import('../termine/termine.module').then( m => m.TerminePageModule)
       },
       {
+        path: 'audienz',
+        loadChildren: () => import('../audienz/audienz.module').then( m => m.AudienzPageModule)
+      },
+      {
+        path: 'akademie',
+        loadChildren: () => import('../akademie/akademie.module').then( m => m.AkademiePageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'

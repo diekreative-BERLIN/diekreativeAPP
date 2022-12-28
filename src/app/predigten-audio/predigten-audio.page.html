@@ -1,6 +1,14 @@
-
-
 <ion-content>
+  
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="100" pullMax="200">
+    <ion-refresher-content 
+      pullingIcon="arrow-down-outline" 
+      pullingText="ziehen zum Aktualisieren" 
+      refreshingSpinner="circular"
+      refreshingText="es wird aktualisiert...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <div class="predigt-title">
     <ion-label class="header-label">PREDIGTEN</ion-label>
     <div class="kreuze"> <img src="../assets/svg/kreuze_blue.svg" id="kreuze" > </div>
@@ -13,6 +21,8 @@
    <div *ngFor="let predigt of predigten"> 
       <app-predigt-element [predigt]=predigt></app-predigt-element>
   </div>
+
+  <ion-button *ngIf="isViewCompact" class="centered" (click)="getMoreSermons()">mehr</ion-button>
 
   </ion-list>
 </ion-content>

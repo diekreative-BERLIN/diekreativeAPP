@@ -73,3 +73,23 @@ h1, h2, h3, h4, h5 {
   text-decoration-color: #E1A730;
 }
 
+
+//push notification display
+.push-message {
+  .alert-title {
+      font-size: 16;
+      background-image: url('/assets/chatbox-ellipses-outline.svg');
+      background-repeat: no-repeat;
+      padding-left: 39px;
+  }
+  .alert-message {
+    text-align: left;
+  }
+  
+}
+
+//because of (iphone) nodge
+ion-app {
+  margin-top: env(safe-area-inset-top);
+  //margin-bottom: env(safe-area-inset-bottom);
+}

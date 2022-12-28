@@ -1,37 +1,22 @@
 
  <ion-grid>
 
+  <!--
+  <ion-list *ngFor="let entry of form">
+    <ion-item>
+      <ion-label>{{entry.id}}</ion-label>
+    </ion-item>
+  </ion-list>
+  -->
+
   <ion-row>
-    <ion-col sizeLg="4" sizeMd="4" sizeXs="6">
-      <ion-card (click)="MedienGoto()"> <img class="image" src="assets/kacheln/Kachel_Startseite_MEDIATHEK.png"/></ion-card>
-    </ion-col>
 
-    <ion-col sizeLg="4" sizeMd="4" sizeXs="6">
-      <ion-card (click)="TermineGoto()"> <img class="image" src="assets/kacheln/Kachel_Startseite_TERMINE7.png"/></ion-card>
-    </ion-col>
+    <ng-container *ngFor="let entry of form">
+      <ion-col *ngIf="entry.isChecked" sizeLg="4" sizeMd="4" sizeXs="6">
+        <ion-card (click)="handleClick(entry.id)"> <img class="image" src="assets/kacheln/Kachel_Startseite_{{entry.id}}.png"/></ion-card>
+      </ion-col>
+  </ng-container>
 
-    <ion-col sizeLg="4" sizeMd="4" sizeXs="6">
-      <ion-card (click)="tagundnachtGoto()"> <img class="image" src="assets/kacheln/Kachel_Startseite_TAGUNDNACHT.png"/></ion-card>
-    </ion-col>
-    <ion-col sizeLg="4" sizeMd="4" sizeXs="6">
-      <ion-card (click)="GoDiGoto()"> <img class="image" src="assets/kacheln/Kachel_Startseite_GOTTESDIENSTE.png"/></ion-card>
-    </ion-col>
-
-    <ion-col sizeLg="4" sizeMd="4" sizeXs="6">
-      <ion-card [routerLink]="['../../lifegroups']"> <img class="image" src="assets/kacheln/Kachel_Startseite_LIFEGROUPS.png"/></ion-card>
-    </ion-col>
-
-    <ion-col sizeLg="4" sizeMd="4" sizeXs="6">
-      <ion-card [routerLink]="['../../aboutus']"> <img class="image" src="assets/kacheln/Kachel_Startseite_UEBER-UNS.png"/></ion-card>
-    </ion-col>
-
-    <ion-col sizeLg="4" sizeMd="4" sizeXs="6">
-      <ion-card (click)="openWebsite('https://diekreative.org/geben#formular')"> <img class="image" src="assets/kacheln/Kachel_Startseite_GEBEN.png"/></ion-card>
-    </ion-col>
-
-    <ion-col sizeLg="4" sizeMd="4" sizeXs="6">
-      <ion-card [routerLink]="['../../erlebt']"> <img class="image" src="assets/kacheln/Kachel_Startseite_ERLEBT.png"/></ion-card>
-    </ion-col>
   </ion-row>
 
 </ion-grid> 

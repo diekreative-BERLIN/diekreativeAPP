@@ -21,7 +21,7 @@ import { Platform } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 //File transfer
 import { File, FileEntry } from '@ionic-native/File/ngx';
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { FileTransfer, FileTransferObject } from '@awesome-cordova-plugins/file-transfer/ngx';
 //File Opener
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 //In App Browser
@@ -73,7 +73,10 @@ export class GottesdienstePage {
   AppPageGodiInfoDate = "";
   AppPageGodiInfo = "";
   AppPageGodiInfotext = "";
-  AppPageGodiQRcheckin = true;
+  //nov '22 -> no more qr checkin needed -> deactivated!
+  //AppPageGodiQRcheckin = true;
+  AppPageGodiQRcheckin = false;
+
   AppPageGoDiQRcheckinCode = "false";
 
   constructor (
@@ -91,7 +94,7 @@ export class GottesdienstePage {
     private alertController: AlertController,
     public userState: UserstateService
   ) {
-    platform.ready().then(() => {
+    platform.ready().then(async () => {
 
       console.log('platform is ready -> we are at START..');
       let path = this.file.dataDirectory;
@@ -111,7 +114,7 @@ export class GottesdienstePage {
       //this.groupid = 183; //currently we preset groups to 'GoDi im MW'
 
       //AppPageGoDi Storage read
-      this.nativeStorage.getItem("AppPageStorage").then((AppPg) => {
+      await this.nativeStorage.getItem("AppPageStorage").then((AppPg) => {
         if (AppPg) {
           console.log('CHECK: app storage read OKAY');
           this.AppPageGodiTimestamp = AppPg.godi_timestamp;
@@ -166,7 +169,20 @@ export class GottesdienstePage {
         }
         */
       });
-    
+      console.log('is user loged in: '+this.isUserLoggedIn);
+      if (this.isUserLoggedIn) {
+        this.readFromCheckinData();
+      }
+
+    });
+
+      //this.platform.backButton.subscribeWithPriority(10, () => {
+      //  this.router.navigate(["/tabs/tab1"]);
+      //});
+    }
+
+
+    private readFromCheckinData() {
       //GodiCheckin Storage
       this.nativeStorage.getItem('CheckinDataStorage').then((GodiCheck)=>{
         if (GodiCheck) {
@@ -180,21 +196,14 @@ export class GottesdienstePage {
           console.log('CHECK: app storage GoDiCheck read NOT POSSIBLE');
           if(this.AppPageGodiQRcheckin) {
             this.getQRCodesForFamily(2);
-            //this.getQRCode(this.personid, this.groupid);
           }
         }
       }, (error) => {
         console.log('CHECK: app storage GoDiCheck read ERROR');
         if(this.AppPageGodiQRcheckin) {
           this.getQRCodesForFamily(3);
-          //this.getQRCode(this.personid, this.groupid);
         }
       });
-    });
-
-      //this.platform.backButton.subscribeWithPriority(10, () => {
-      //  this.router.navigate(["/tabs/tab1"]);
-      //});
     }
 
   
@@ -222,7 +231,8 @@ export class GottesdienstePage {
 async checkin(){
 
     //1. Daten bereinigen
-    var daten = this.uniqueData(this.familyQRdata, 'personid');
+    //var daten = this.uniqueData(this.familyQRdata, 'personid');
+    var daten = this.familyQRdata;
     //var daten = this.familyQRdata;
     //2. Ablaufdaten auslesen und Gueltigkeit bestimmen
     this.momentjs.tz.setDefault('Europe/Berlin');
@@ -234,24 +244,30 @@ async checkin(){
     
     console.log('id | name | qrcode | validity | is3gok ');
     for(let zeile of daten){  
-      console.log(zeile.personid + "|" + zeile.name + "|" + zeile.qrcode + "|" + zeile.validity + "|" + zeile.is3gok);
+      console.log(zeile.personid + "|" + zeile.name + "|" + zeile.qrcode + "|" + zeile.validity);
+      ablauf = this.momentjs(zeile.validity).format("X");
 
       is3gok = false;
-      if (timestampLocal < zeile.validity && zeile.validity != 'Invalid date') {
+      if (timestampLocal < ablauf && ablauf != 'Invalid date') {
 
+        //console.log('validity ist okay ('+timestampLocal+' < '+zeile.validity+' ('+this.momentjs(zeile.validity).format("X")+'))');
         is3gok = true;
 
       } else {
 
-        //get validity from db and compare wit timestamp !!with async/await!!
-        await this.churchtools.getCheckValidity(zeile.personid).then((result)=>{
-          ablauf = this.momentjs(JSON.stringify(JSON.parse(result.data)), "YYYYMMDD H:mm:ss").format("X");
-          
-          if (timestampLocal < ablauf && zeile.validity != 'Invalid date') {
-            is3gok = true;
-            saveUpdatedCodes = true;
-          }
-        });
+        //query new validity (but only if we're online)
+        if (this.userState.isOnline) {
+          //get validity from db and compare wit timestamp !!with async/await!!
+          await this.churchtools.getCheckValidity(zeile.personid).then((result)=>{
+            ablauf = this.momentjs(JSON.stringify(JSON.parse(result.data)), "YYYYMMDD H:mm:ss").format("X");
+            
+            //console.log('validity neu ausgelesen: '+ablauf);
+            if (timestampLocal < ablauf && ablauf != 'Invalid date') {
+              is3gok = true;
+              saveUpdatedCodes = true;
+            }
+          });
+        }
 
       }
 
@@ -273,8 +289,6 @@ async checkin(){
     console.log('nun haben wir folgende Werte:');
     console.log(checkinQRitems);
 
-    //nun checkin Codes anzeigen
-    //QRcode: this.AppPageGoDiQRcheckinCode,
 
     await this.popover.create({component:GdCheckinPage,
       componentProps: {
@@ -336,7 +350,6 @@ async checkin(){
       let info = this.momentjs( starttime ).format('HH:mm') + ' Uhr, ' + JSON.parse(result.data)[i].bezeichng ;
       //this.AppPageGodiWeekdayNextEvent = this.momentjs( starttime ).format('d') ;
   console.log('weekday next event = '+this.momentjs( starttime ).format('d')+' Date: '+info+ '  (start:'+starttime+' , end:'+endtime+')');
-      //toto
       this.AppPageGodiInfoDate = infodate;
       this.AppPageGodiInfo = info;
       this.AppPageGodiInfotext = infotext;
@@ -349,8 +362,10 @@ async checkin(){
   //read details for Event - especially if event has qr checkin code activated
   public getGoDiEventDetails() {
     this.churchtools.getGoDiEventDetails(this.groupid).then((result)=>{
-      //console.log("GoDi Event Info:" +JSON.stringify(JSON.parse(result.data)));
-      this.AppPageGodiQRcheckin = (JSON.parse(result.data)).data.settings.qrCodeCheckin;
+      console.log("GoDi Event Info:" +JSON.stringify(JSON.parse(result.data)));
+      //nov '22 - no more needed!
+      //this.AppPageGodiQRcheckin = (JSON.parse(result.data)).data.settings.qrCodeCheckin;
+      this.AppPageGodiQRcheckin = false;
       //console.log('qr checkin? '+this.AppPageGodiQRcheckin);
     });
   }
@@ -394,7 +409,7 @@ async checkin(){
   */
 
   //getQRCodes for Person and his/her relatives
-  public async getQRCodesForFamily(number) {
+  public async getQRCodesForFamily_old(number) {
     console.log('get qr code for whole family..'+number);
     this.familyQRdata = [];
     let tempFamilyData = [];
@@ -405,13 +420,15 @@ async checkin(){
     //console.log('ablaufdatum = ' + ablauf.format('DD.MM.YYYY HH:mm'));
     //console.log('ohne format='+ablauf);
 
+  console.log('lies für person id '+this.personid);
+
     //1. add current person to array
     zeile[0].personid=this.personid;
     zeile[0].name=this.userState.fullusername;
     //zeile[0].qrcode=this.AppPageGoDiQRcheckinCode;
     await this.churchtools.getQRCode(this.personid, this.groupid).then((result)=>{
       let tempdata = JSON.parse(JSON.stringify(JSON.parse(result.data))).data.token;
-      //console.log('2) qrcode wert: ' + tempdata );
+      console.log('2) qrcode wert: ' + tempdata );
       zeile[0].qrcode=tempdata;
       tempFamilyData.push(zeile[0]);
     }).catch((err)=>{
@@ -435,22 +452,29 @@ async checkin(){
      }
     })
 
-    //console.log("beim auslesen direkt:");
-    //console.log(tempFamilyData);
+    console.log("beim auslesen direkt:");
+    console.log(tempFamilyData);
+    console.log('tempFamilyData length='+tempFamilyData.length);
 
     //3. add QR code where info is missing
     for (var i=0; i < tempFamilyData.length; i++) {
+      console.log('qrcode? "'+tempFamilyData[i].qrcode+'" personid='+tempFamilyData[i].personid+' groupid='+this.groupid);
       if (tempFamilyData[i].qrcode == '') {
+        console.log('okay emtpy code -> query!');
+
         await this.churchtools.getQRCode(tempFamilyData[i].personid, this.groupid).then((result)=>{
           let tempdata = JSON.parse(JSON.stringify(JSON.parse(result.data))).data.token;
-          //console.log('2) qrcode wert: ' + tempdata );
-          tempFamilyData[i].qrcode = tempdata;
+          console.log('4missing) qrcode wert: ' + tempdata );
+          tempFamilyData[i].qrcode = tempdata
+        }).catch((err)=>{
+          console.log("4)Error getting qrcode"+JSON.stringify(err));
         })
+
       }
     }
 
-    //console.log("mit QR Code bei Relatives ergänzt:");
-    //console.log(tempFamilyData);
+    console.log("mit QR Code bei Relatives ergänzt:");
+    console.log(tempFamilyData);
 
     //4. loop through current tempFamilyData and get validity for entries which have a valid qrcode
     for (var i=0; i < tempFamilyData.length; i++) {
@@ -465,6 +489,25 @@ async checkin(){
     }
 
     this.saveCheckinCodes();
+
+  }
+
+  //getQRCodes for Person and his/her relatives through our own API function -> delivers complete data including qrcode and validity
+  public async getQRCodesForFamily(number) {
+    console.log('get qr code for whole family..'+number+' (personID '+this.personid+', groupID '+this.groupid+')');
+    this.familyQRdata = [];
+
+    await this.churchtools.getFamilyQRcodes(this.personid, this.groupid).then((result)=>{
+      console.log(result);
+      let tempdata = JSON.parse(JSON.stringify(JSON.parse(result.data)));
+      this.familyQRdata = tempdata;
+
+      this.saveCheckinCodes();
+
+    }).catch((err)=>{
+      console.log("Error getting FamilyQRcode"+JSON.stringify(err));
+      this.AppPageGoDiQRcheckinCode = "false";
+    })
 
   }
 
@@ -635,7 +678,7 @@ async checkin(){
   showGoDiDetails(infoQR) {
     //replace('\n\r', '<br/>').replace('\n', '<br/>').replace('\r', '<br/>')
     let message = this.AppPageGodiInfotext;
-    if (infoQR) {
+    if (infoQR && this.AppPageGodiQRcheckin) {
       message = message+'\n\nQR Checkin steht ab '+this.momentjs( this.AppPageGodiEvntStart ).subtract(this.checkinActivateSpan, 'hours').format('DD.MM. HH:mm')+' Uhr zur Verfügung';
     }
     alert(message);
@@ -662,6 +705,18 @@ async checkin(){
   */
   ionViewDidEnter() {
     console.log('----> ionViewDidEnter: isUserLoggedIn='+this.isUserLoggedIn+' (qrcode: '+this.AppPageGoDiQRcheckinCode+')'+' GodiToday?'+this.isGodiToday);
+    //if we were already on godi page and then have logged in, then we need to set the corresponding infos
+    if (!this.isUserLoggedIn) {
+      this.nativeStorage.getItem('currentUser').then((user)=>{
+        this.personid = user.personid;
+        console.log('personID='+this.personid);
+        this.isUserLoggedIn = true;
+      });
+      if (this.isUserLoggedIn) {
+        this.readFromCheckinData();
+      }
+    }
+
     this.setTimeStamp();
     console.log('timestamp saved: '+this.momentjs( this.AppPageGodiTimestamp ).format('YYMMDD') +' und jetzt:'+this.momentjs( this.timestampLocal ).format('YYMMDD'));
     //this.AppPageGoDiQRcheckinCode
@@ -786,8 +841,12 @@ async checkin(){
         ' AppPageGodiInfo:'+AppPg.godi_info+' AppPageGodiInfotext='+AppPg.godi_infotext+', AppPageGodiQRcheckin='+AppPg.godi_qrcheckin);
       });
       this.nativeStorage.getItem('CheckinDataStorage').then((GodiCheck)=>{
-        console.log('GoDi Checkin Infos: AppPageGoDiQRcheckinCode:');
-        console.log(GodiCheck.godi_qrcheckincode);
+        console.log('GoDi Checkin Infos:');
+        console.log(GodiCheck);
+      });
+      this.nativeStorage.getItem('currentUser').then((currentUser)=>{
+        console.log('currentUser Infos:');
+        console.log(currentUser);
       });
     }
     //temp

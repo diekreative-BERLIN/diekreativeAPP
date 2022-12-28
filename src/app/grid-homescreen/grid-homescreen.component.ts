@@ -10,33 +10,19 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   styleUrls: ['./grid-homescreen.component.scss'],
 })
 export class GridHomescreenComponent implements OnInit {
+  form:any = [];
 
   constructor(
     private userState:UserstateService,
     private router: Router,
     private iab: InAppBrowser,
     private platform: Platform
-  ) { }
+  ) {  }
 
-  ngOnInit() {}
 
-  tagundnachtGoto(){
-    this.userState.AppPageTUNInit = true;
-    this.router.navigate(["/tabs/tagundnacht"]);
-  }
-
-  MedienGoto(){
-    this.userState.AppPageMedienInit = true;
-    this.router.navigate(["/tabs/predigten-audio"]);
-  }
-
-  GoDiGoto(){
-    //this.userState.AppPageGodiInit = true;
-    this.router.navigate(["/tabs/gottesdienste"]);
-  }
-
-  TermineGoto() {
-    this.router.navigate(["/tabs/termine"]);
+  ngOnInit() {
+    console.log('grid-homescreen.component.ts - ngoninit - set form');
+    this.userState.homescreen.subscribe((form)=>{this.form=form});
   }
 
   openWebsite(url){
@@ -45,4 +31,44 @@ export class GridHomescreenComponent implements OnInit {
     });
   }
 
+  handleClick(button) {
+    switch (button) {
+      case 'Mediathek':
+        this.userState.AppPageMedienInit = true;
+        this.router.navigate(["/tabs/predigten-audio"]);
+        break;
+      case 'Termine':
+        this.router.navigate(["/tabs/termine"]);
+        break;
+      case 'Tagundnacht':
+        this.userState.AppPageTUNInit = true;
+        this.router.navigate(["/tabs/tagundnacht"]);
+        break;
+      case 'Gottesdienste':
+        //this.userState.AppPageGodiInit = true;
+        this.router.navigate(["/tabs/gottesdienste"]);
+        break;
+      case 'LifeGroups':
+        this.router.navigate(["/tabs/lifegroups"]);
+        break;
+      case 'Ueberuns':
+        this.router.navigate(["/tabs/aboutus"]);
+        break;
+      case 'Geben':
+        this.openWebsite('https://diekreative.org/geben#formular');
+        break;
+      case 'Erlebt':
+        this.router.navigate(["/tabs/erlebt"]);
+        break;
+      case 'Akademie':
+        this.router.navigate(["/tabs/akademie"]);
+        break;
+      case 'Audienz':
+        this.router.navigate(["/tabs/audienz"]);
+        break;
+    }
+  }
+
+ 
+  
 }

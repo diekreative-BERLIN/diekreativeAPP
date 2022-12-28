@@ -27,12 +27,20 @@
               <ion-icon name="share-sharp" color="primary"></ion-icon>
               <ion-label class="descr" color="primary">TEILEN</ion-label>
             </ion-tab-button>
-<!--
-            <ion-tab-button (click)="saveSermon(predigt.enclosure[0].$.url)">
-              <ion-icon [name]="!isLocal(predigt.enclosure[0].$.url)? 'cloud-download':'cloud-done'" color="primary"></ion-icon>
-              <ion-label class="descr" color="primary">SPEICHERN</ion-label>
-            </ion-tab-button>
--->
+<!--  save local -->
+<div *ngIf="!isLocal(predigt.enclosure[0].$.url); else conditionFalse">
+	<ion-tab-button (click)="saveSermon(predigt.enclosure[0].$.url)">
+    <ion-icon name="cloud-download" color="primary"></ion-icon>
+    <ion-label class="descr" color="primary">SPEICHERN</ion-label>
+  </ion-tab-button>
+</div>
+<ng-template #conditionFalse>
+	<ion-tab-button (click)="freeUpSermon(predigt.enclosure[0].$.url)">
+    <ion-icon name="cloud-done" color="primary"></ion-icon>
+    <ion-label class="descr" color="primary">GESPEICHERT</ion-label>
+  </ion-tab-button>
+</ng-template>
+<!--  save local -->
             <ion-tab-button (click)="openSkript(predigt.skript[0])">
               <ion-icon name="reader-sharp" [color]="predigt.skript!='' ? 'primary' : 'secondary'"></ion-icon>
               <ion-label class="descr" [color]="predigt.skript!='' ? 'primary' : 'secondary'">SKRIPT</ion-label>

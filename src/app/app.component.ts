@@ -16,6 +16,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ConnectivityService } from './connectivity.service';
 
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -24,12 +25,12 @@ import { ConnectivityService } from './connectivity.service';
 })
 export class AppComponent {
   login = false;
+  firebasePlugin;
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private firebaseX: FirebaseX,
     private menu: MenuController,
     public modalController: ModalController,
     private feeds: FeedsService,
@@ -38,7 +39,9 @@ export class AppComponent {
     private router: Router,
     private http: HTTP,
     private iab: InAppBrowser,
-    private connectivity: ConnectivityService
+    private connectivity: ConnectivityService,
+    private firebaseX: FirebaseX,
+    public alertController: AlertController
   ) {
     this.initializeApp();
     //handle Android Back Button
@@ -46,8 +49,7 @@ export class AppComponent {
       if (this.router.url == "/tabs/itemslide" || this.router.url == "/tabs/tun-gebetscal" || this.router.url == "/tabs/tun-takewatches") {
         this.router.navigate(["/tabs/tagundnacht"]);
       } else if (this.router.url == '/tabs/tab1') {
-        this.router.navigate(["/tabs/termine"]);
-      } else if (this.router.url == '/tabs/tab2') {
+        //exit app
         navigator['app'].exitApp();
       } else {
         //go to home
@@ -57,20 +59,50 @@ export class AppComponent {
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-      this.firebaseX.hasPermission().then((permission)=>{
-        if(!permission){
-          this.firebaseX.grantPermission();
-        }
-      });
-      this.firebaseX.getToken()
-        .then(token => {
-        console.log(`The token is ${token}`);}) // save the token server-side and use it to push notifications to this device
+    this.platform.ready().then(
+      () => {
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+        
+        this.firebaseX.hasPermission().then((permission)=>{
+          if(!permission){
+            this.firebaseX.grantPermission();
+          }
+        });
+        this.firebaseX.getToken().then(token => {
+            console.log(`The token is ${token}`);
+        }) // save the token server-side and use it to push notifications to this device
         .catch(error => alert(`Error getting token ${error}`));
-      });
+        
+        this.firebasePlugin = (<any>window).FirebasePlugin;
+        this.firebasePlugin.onMessageReceived(this.onMessageReceived.bind(this));
 
+        //delete pending badge numbers on iOS
+        if(!this.platform.is('android')) {
+          this.firebasePlugin.getBadgeNumber(function(n) {
+            if (n>0) {this.firebasePlugin.setBadgeNumber(0);}
+          });
+        }
+        
+        }
+      );
+
+  }
+
+  //handle push messages in foreground
+  onMessageReceived(message){
+
+    this.alertController.create({
+      cssClass: 'push-message',
+      header: message.aps.alert.title,
+      message: message.aps.alert.body,
+      buttons: ['OK']
+    }).then(res => {
+      res.present();
+    });
+
+    //remove all message badges
+    this.firebasePlugin.setBadgeNumber(0);
   }
 
   openFirst() {
@@ -98,6 +130,7 @@ ngOnInit() {
         this.userState.isOnline = false;
     }
   })
+
 }
 
 
@@ -124,6 +157,11 @@ ngOnInit() {
     });
   }
   
+  settingsActivated(){
+    this.router.navigate(["/tabs/settings"]);
+    this.close();
+  }
+
   ctAppActivated(){
     this.router.navigate(["/tabs/ctapp"]);
     this.close();
@@ -182,6 +220,8 @@ ngOnInit() {
   }
 
 }
+
+
 
 /*
 <ion-item (click)="presentModal()"><ion-icon class="menuicon" color="secondary" name="key-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Login</ion-label></ion-item>

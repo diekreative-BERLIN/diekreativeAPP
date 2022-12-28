@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NewsRss } from '../communications/news-rss';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Platform } from '@ionic/angular';
@@ -6,10 +6,11 @@ import { Router } from '@angular/router';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 // add File
 import { File, FileEntry } from '@ionic-native/File/ngx';
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { FileTransfer, FileTransferObject } from '@awesome-cordova-plugins/file-transfer/ngx';
 
 import { UserstateService } from '../userstate.service';
-//import {  AfterViewChecked } from '@angular/core';
+//import { runInThisContext } from 'vm';
+import { WebView } from '@awesome-cordova-plugins/ionic-webview/ngx';
 
 const MEDIA_FOLDER_NAME = 'temp_files';
 
@@ -18,12 +19,12 @@ const MEDIA_FOLDER_NAME = 'temp_files';
   templateUrl: './predigt-element.component.html',
   styleUrls: ['./predigt-element.component.scss'],
 })
-export class PredigtElementComponent implements OnInit {
+export class PredigtElementComponent {
   rssData:NewsRss;
   fulltext = false;
   playervisible = false;
   @Input() predigt;
-  localFiles = [];
+  //localFiles = [];
   currentSermonURL: any;
   //here creating object to access file transfer object.  
   private fileTransfer: FileTransferObject; 
@@ -35,7 +36,8 @@ export class PredigtElementComponent implements OnInit {
     private router: Router,
     private iab: InAppBrowser,
     private file: File,
-    private transfer: FileTransfer
+    private transfer: FileTransfer,
+    private webview: WebView
   ) {
     //this.platform.backButton.subscribeWithPriority(10, () => {
     //  this.router.navigate(["/tabs/tab1"]);
@@ -48,46 +50,30 @@ export class PredigtElementComponent implements OnInit {
     //}
   //}
 
-  //with initialization check if DIR exists and then load files. If not, create DIR.
-  ngOnInit() {
-    //console.log('ngInit predigt.element. AppPageMedienInit='+this.userState.AppPageMedienInit);
-    this.platform.ready().then(() => {
-      if(this.userState.AppPageMedienInit){
-        this.userState.AppPageMedienInit = false;
-        console.log('Page is now ready. reset AppMageMedienInit');
-        let path = this.file.dataDirectory;
-        this.file.checkDir(path, MEDIA_FOLDER_NAME).then(
-          () => {
-            this.loadFiles();
-          },
-          err => {
-            this.file.createDir(path, MEDIA_FOLDER_NAME, false);
-          }
-        );
-      }
-    });
-  }
 
-  //read files in local storage
-  loadFiles() {
-    this.file.listDir(this.file.dataDirectory, MEDIA_FOLDER_NAME).then(
-      res => {
-        this.localFiles = res;
-        console.log('local files='+JSON.stringify(this.localFiles));
-      },
-      err => console.log('error loading files: ', err)
-    );
-  }
-
-  isLocal(mp3file) {
-   // this.localFiles.find();
-   //let fileName = '/' + MEDIA_FOLDER_NAME + '/' + mp3file.substr(mp3file.lastIndexOf('/') + 1);
-   //console.log('check if file '+fileName+' is local');
+  isLocal(mp3file,getpath=false) {
 
    let fileName = mp3file.substr(mp3file.lastIndexOf('/') + 1);
+   /*
    console.log('check if file '+fileName+' is local');
+   console.log('finde in ');
+   console.log(this.userState.SermonLocalFiles);
+   */
+   let res = this.userState.SermonLocalFiles.find(e => e.name === fileName);
 
-   return this.localFiles.find(e => e.name === fileName);
+    if (res !== undefined) {
+      //console.log(res.isFile);
+      if (getpath) {
+        return this.file.dataDirectory + MEDIA_FOLDER_NAME + res.fullPath;
+        //nativeURL;
+      } else {
+        return res.isFile;
+      }
+    } else {
+      //console.log('not found');
+      return false;
+    }
+
   }
 
 
@@ -101,36 +87,32 @@ export class PredigtElementComponent implements OnInit {
   }
 
   toggleTab(){
-    this.fulltext = !this.fulltext;
+    if(this.fulltext){
+      this.fulltext=false;
+    }else{
+      this.fulltext=true;
+    }
   }
-
-
-
-//  {"isFile":true,"isDirectory":false,"name":"20201220_von_guten_maechten.mp3","fullPath":"/temp_files/20201220_von_guten_maechten.mp3","filesystem":"<FileSystem: library-nosync>","nativeURL":"file:///Users/marc/Library/Developer/CoreSimulator/Devices/A8AD7578-C472-4367-9830-2817C7DD1A8C/data/Containers/Data/Application/8F85850F-B8E6-4625-978C-5ECD3903D42F/Library/NoCloud/temp_files/20201220_von_guten_maechten.mp3"}
-//2021-01-04 18:39:21.529492+0100 diekreative APP[17219:6452015] Login With token{"status":200,"data":"{\"status\":\"success\",\"data\":\"Already logged in\"}","headers":{"content-type":"application/json","access-control-allow-origin":"http://localhost:8100","pragma":"no-cache","content-security-policy":"default-src 'self'; script-src 'self' js.stripe.com 'unsafe-eval' ; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src * data: blob *.church.tools; child-src * data; connect-src *; object-src 'self' www.youtube.com","x-powered-by":"PHP/7.3.25","age":"0","server":"Apache","access-control-allow-methods":"POST, GET, OPTIONS, PUT, DELETE","content-encoding":"gzip","expires":"Thu, 19 Nov 1981 08:52:00 GMT","access-control-allow-headers":"Content-Type, csrf-token","via":"1.1 varnish (Varnish/6.5)","cache-control":"no-store, no-cache, must-revalidate","date":"Mon, 04 Jan 2021 17:39:21 GMT","access-control-allow-credentials":"true","content-length":"66","accept-ranges":"bytes","vary":"Accept-Encoding","x-varnish":"907510684"},"url":"https://diekreative.org/churchtools/index.php?q=login/ajax&func=loginWithToken&q=login/ajax&token=nHh0hf3qDmkR7gerTiTFOrwkOWiDsOja6FiAC88w4625xSu8jWeJwSDRWiHikhqVI0NmG8DMQPBDyd4zqkNJC5KSBkOTmVWmYo3oLKC3wSBqGpe1Yjp9aPVXZ2YlazVqrGW4a26X7F5guj3kdjI1kc7IETNRLJdRHx5x6yPxCjdCgjzMqb76uvgkaELopGdbowfOhTy4JNdUajytsWe6AlrVQxKVSuh4vNG6avDDVVo6pHs1X6bIzYhjmKXeGTjQ&id=2"}
-//2021-01-04 18:39:21.530248+0100 diekreative APP[17219:6452015] login status=success
-//console.log("Login With token"+JSON.stringify(res));
-//console.log("login status="+ (JSON.parse(res.data)).status)
-// if((JSON.parse(res.data)).status=="fail")..
 
 
   openPlayer(sermonURL){
     this.playervisible = true;
-    let fileresult = this.isLocal(sermonURL);
+    let fileresult = this.isLocal(sermonURL,true);
     if(fileresult) {
-      console.log('currentSermonURL aus isLocal auslesen:'+JSON.stringify(fileresult));
-      console.log('Test1:');
-      //console.log( JSON.parse(fileresult.fullPath) );
-      console.log('Test2:');
-      //console.log( JSON.parse(fileresult).fullPath );
-      console.log('Test3:');
-      console.log( JSON.parse(JSON.stringify(fileresult)).fullPath );
+      console.log('currentSermonURL aus isLocal auslesen:'+fileresult);
+
+      
+      //this.currentSermonURL = "file:///Users/marc/Library/Developer/CoreSimulator/Devices/43A15CDA-6549-4C50-8BB9-5282AAD8F975/data/Containers/Data/Application/4DA84282-1F05-4C93-BAFB-56C1F2199354/Library/NoCloud/temp_files/20221204_vorbereitet_ewigkeit.mp3";
+      //this.currentSermonURL = "file://Users/marc/Library/Developer/CoreSimulator/Devices/43A15CDA-6549-4C50-8BB9-5282AAD8F975/data/Containers/Data/Application/4DA84282-1F05-4C93-BAFB-56C1F2199354/Library/NoCloud/temp_files/20221204_vorbereitet_ewigkeit.mp3";
+      //this.currentSermonURL = "/Users/marc/Library/Developer/CoreSimulator/Devices/43A15CDA-6549-4C50-8BB9-5282AAD8F975/data/Containers/Data/Application/4DA84282-1F05-4C93-BAFB-56C1F2199354/Library/NoCloud/temp_files/20221204_vorbereitet_ewigkeit.mp3";
+      //this.currentSermonURL = "/temp_files/20221204_vorbereitet_ewigkeit.mp3";
 
 
-
-      this.currentSermonURL = JSON.parse(JSON.stringify(fileresult)).fullPath;
+      this.currentSermonURL = this.webview.convertFileSrc("file:///Users/marc/Library/Developer/CoreSimulator/Devices/43A15CDA-6549-4C50-8BB9-5282AAD8F975/data/Containers/Data/Application/4DA84282-1F05-4C93-BAFB-56C1F2199354/Library/NoCloud/temp_files/20221204_vorbereitet_ewigkeit.mp3");
+      console.log('converted: '+this.currentSermonURL);
+      //this.currentSermonURL = fileresult;
     } else {
-      console.log('currentSermonURL aus original URL');
+      console.log('currentSermonURL aus original URL: '+sermonURL);
       this.currentSermonURL = sermonURL;
     }
   }
@@ -187,7 +169,10 @@ export class PredigtElementComponent implements OnInit {
         //here logging our error its easier to find out what type of error occured.  
         console.log('download failed: ' + error);  
     });  
-  } 
+  }
+  freeUpSermon(mp3name) {
+    console.log('remove '+mp3name);
+  }
 
 
 }

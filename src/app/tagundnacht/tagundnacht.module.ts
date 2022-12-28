@@ -9,7 +9,8 @@ import { TagundnachtPageRoutingModule } from './tagundnacht-routing.module';
 import { TagundnachtPage } from './tagundnacht.page';
 
 import {DemoMaterialModule} from '../material-module';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+//import {MatCommonModule} from '@angular/material/core';
+//import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatNativeDateModule} from '@angular/material/core';
 import { UnescapePipe } from '../unescape.pipe';
 @NgModule({
@@ -17,9 +18,10 @@ import { UnescapePipe } from '../unescape.pipe';
     CommonModule,
     FormsModule,
     IonicModule,
-    DemoMaterialModule,
     MatNativeDateModule,
-    TagundnachtPageRoutingModule
+    TagundnachtPageRoutingModule,
+    DemoMaterialModule
+    //MatCommonModule
   ],
   declarations: [TagundnachtPage, UnescapePipe]
 })

@@ -48,8 +48,17 @@
               <ion-label id="herzlichwillkommen" color="primary">Hallo, Herzlich Willkommen.</ion-label></div></ion-col>
           </ion-row>
         </ion-grid>
-        <ion-item *ngIf="userState.loggedin" (click)="ctAppActivated()"><ion-icon class="menuicon" color="secondary" src="/assets/icon/CT_Logo.svg"></ion-icon><ion-label>&nbsp;&nbsp;Churchtools App</ion-label></ion-item>
+
         <ion-item class="login" *ngIf="!userState.loggedin" (click)="presentModal()"><ion-icon class="menuicon" color="secondary" name="key-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Login</ion-label></ion-item>
+        
+        <ion-item (click)="settingsActivated()"><ion-icon class="menuicon" color="secondary" name="settings"></ion-icon><ion-label>&nbsp;&nbsp;Einstellungen</ion-label></ion-item>
+        
+        <!--<ion-tab-button tab="settings">
+      <ion-icon name="settings"></ion-icon>
+      <ion-label>Einstellungen</ion-label>
+    </ion-tab-button> -->
+    
+        <ion-item *ngIf="userState.loggedin" (click)="ctAppActivated()"><ion-icon class="menuicon" color="secondary" src="/assets/icon/CT_Logo.svg"></ion-icon><ion-label>&nbsp;&nbsp;Churchtools App</ion-label></ion-item>        
         <!--ion-item><ion-icon class="menuicon" color="secondary" name="notifications-outline"></ion-icon><ion-label>&nbsp;&nbsp;Mitteilungen</ion-label></ion-item-->
         <ion-item (click)="creditsActivated()"><ion-icon class="menuicon" color="secondary" name="information-circle-sharp"></ion-icon><ion-label>&nbsp;&nbsp;&uuml;ber diese App</ion-label></ion-item>
         <ion-item href="mailto:office@diekreative.org"><ion-icon class="menuicon" color="secondary" name="mail-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Kontakt</ion-label></ion-item>

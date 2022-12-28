@@ -27,7 +27,7 @@ import { MediaCapture } from '@ionic-native/media-capture/ngx';
 //File
 import { File } from '@ionic-native/File/ngx';
 //Filetransfer
-import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { FileTransfer } from '@awesome-cordova-plugins/file-transfer/ngx';
 //File Opener
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 
@@ -41,6 +41,11 @@ import { TunSwapPageModule } from './tun-swap/tun-swap.module';
 import { TunReleasePageModule } from './tun-release/tun-release.module';
 import { TunTakeoverPageModule } from './tun-takeover/tun-takeover.module';
 import { GdCheckinPageModule } from './gd-checkin/gd-checkin.module';
+
+//Safari View Controller for iOS
+import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
+import { WebView } from '@awesome-cordova-plugins/ionic-webview/ngx';
+
 
 @NgModule({
   declarations: [
@@ -73,7 +78,10 @@ import { GdCheckinPageModule } from './gd-checkin/gd-checkin.module';
     File,
     FileTransfer,
     FileOpener,
-    EmailComposer
+    EmailComposer,
+    SafariViewController,
+    WebView
+    //LocalNotifications
   ],
   bootstrap: [AppComponent]
 })

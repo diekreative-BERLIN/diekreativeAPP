@@ -1,6 +1,16 @@
 
 
 <ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="100" pullMax="200">
+    <ion-refresher-content 
+      pullingIcon="arrow-down-outline" 
+      pullingText="ziehen zum Aktualisieren" 
+      refreshingSpinner="circular"
+      refreshingText="es wird aktualisiert...">
+    </ion-refresher-content>
+  </ion-refresher>
+  
     <div class="tagundnacht-title" style="background-color: #fff;">
       <ion-label class="header-label" color="light">TAGUNDNACHT</ion-label>
    <div class="punkte"> <img src="../assets/svg/punkte_yellow.svg"> </div>
@@ -21,6 +31,7 @@ Du bist herzlich eingeladen mitzubeten
   <ion-grid>
     <ion-row> 
       <button mat-flat-button color="basic" class="fullwidth" (click)="GebetskalenderActivated()">Gebetskalender</button>
+      <button mat-raised-button class="fullwidth">Basic</button>
     </ion-row>
   </ion-grid>
 </ion-buttons>

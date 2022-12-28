@@ -3,7 +3,6 @@ import { LoginModalPage } from '../login-modal/login-modal.page';
 import { ModalController } from '@ionic/angular';
 import { HttpClient } from "@angular/common/http";
 
-
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -11,15 +10,10 @@ import { HttpClient } from "@angular/common/http";
 })
 export class Tab1Page {
 
-  hero = "Testhero";
-
-
-// Play audio
-//
-
-
-  constructor(public modalController: ModalController, private http: HttpClient) {
-  }
+  constructor(
+    public modalController: ModalController,
+    private http: HttpClient
+  ) { }
   
   public async presentModal() {
     const modal = await this.modalController.create({
