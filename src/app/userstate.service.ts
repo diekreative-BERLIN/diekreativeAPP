@@ -25,7 +25,8 @@ export class UserstateService {
   AppPageTunTimestamp = 1601000000000;
   AppPageMedienInit = false;  
   isOnline = false;
-  SermonLocalFiles = [];
+  //SermonLocalFiles = [];
+  SermonLocalFiles: Array<{title: string, pubDate: Date, basedate: string, description: string, url: string, skript: string, youtube: string, savedlocal: Date}> = [];
 
   private homescreen_default = [
     { id: 'Mediathek',     val: 'Mediathek',     isChecked: true },
@@ -35,8 +36,7 @@ export class UserstateService {
     { id: 'LifeGroups',    val: 'LifeGroups',    isChecked: true },
     { id: 'Ueberuns',      val: 'Über uns',      isChecked: true },
     { id: 'Geben',         val: 'Geben',         isChecked: true },
-    { id: 'Erlebt',        val: 'Erlebt',        isChecked: true },
-    { id: 'Audienz',       val: 'Audienz',       isChecked: true }
+    { id: 'Erlebt',        val: 'Erlebt',        isChecked: true }
   ];
   //{ id: 'Akademie',      val: 'Akademie',      isChecked: true },
   //{ id: 'Audienz',       val: 'Audienz',       isChecked: true }
@@ -107,17 +107,18 @@ export class UserstateService {
 
       //Settings auslesen
       nativeStorage.getItem('settings')
-      .then(
-        res => {
-          console.log('habe aus native storage settings gelesen:');
-          console.log(JSON.stringify(res.settings));
-          this.homescreen.next(res.settings);
-        },
-        err => {
-          console.log('settings nicht in item Storage vorhanden!');
-        }
-      )  
-    });
+        .then(
+          res => {
+            console.log('habe aus native storage settings gelesen:');
+            console.log(JSON.stringify(res.settings));
+            this.homescreen.next(res.settings);
+          },
+          err => {
+            console.log('settings nicht in item Storage vorhanden!');
+          }
+        )
+      });
+
   }
 
   public userLogginSuccessful(personid){
@@ -220,6 +221,63 @@ export class UserstateService {
     //this.homescreen.next(JSON.parse(JSON.stringify(this.homescreen_default)));
     this.homescreen.next(this.homescreen_default);
     this.nativeStorage.remove('settings');
+  }
+
+  public async getLocalSermons() {
+    //localSermons auslesen
+    await this.nativeStorage.getItem('localSermons').then((localSermons)=>{
+     console.log('local Sermons aus nativeStorage');
+     console.log(localSermons);
+     //return localSermons.sermon;
+     //this.SermonLocalFiles.push(localSermons);
+
+     console.log('now SermonLocalFiles=');
+     console.log(this.SermonLocalFiles);
+   });
+ }
+
+ //add a new sermon to the local db
+ public addLocalSermon(predigt) {
+  console.log('in userstate - addLocalSermon:');
+  console.log(predigt);
+
+  const data: Array<{title: string, pubDate: Date, basedate: string, description: string, url: string, skript: string, youtube: string, savedlocal: Date}> = [{
+    title: predigt.title[0],
+    pubDate: new Date(predigt.pubDate[0]),
+    basedate: predigt.basedate[0],
+    description: predigt.description[0],
+    url: predigt.enclosure[0].$.url,
+    skript: predigt.skript[0],
+    youtube: predigt.youtube[0],
+    savedlocal: new Date()
+  }];
+
+  console.log('add... data line=');
+  console.log(data);
+
+  this.SermonLocalFiles.push(data[0]);
+
+  //and now sort
+  this.SermonLocalFiles.sort( (b, a)=> parseInt(a.basedate,6) - parseInt(b.basedate,6) );
+  console.log('-sorted-');
+  console.log(this.SermonLocalFiles);
+
+}
+
+ //save localSermons in nativeStorage when leaving Mediathek 
+ public saveLocalSermons() {
+    console.log('in userstate - saveLocalSermons: (with stringify:)');
+    console.log(JSON.stringify(this.SermonLocalFiles));
+
+    //console.log('but now only safe simple value');
+    //this.nativeStorage.setItem('localSermons', {property: "Wert"} )
+
+    this.nativeStorage.setItem('localSermons', JSON.stringify(this.SermonLocalFiles) )
+      .then(
+        () => console.log('Stored item localSermons!'),
+        error => console.error('Error storing localSermons', error)
+    );
+    
   }
 
 

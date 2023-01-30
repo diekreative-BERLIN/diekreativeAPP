@@ -13,6 +13,7 @@
     <allow-intent href="geo:*" />
     <allow-intent href="churchtools://*" />
     <allow-intent href="zoomus://*" />
+    <allow-intent href="ionic://localhost/*" />
     <preference name="ScrollEnabled" value="false" />
     <preference name="android-minSdkVersion" value="19" />
     <preference name="BackupWebStorage" value="none" />

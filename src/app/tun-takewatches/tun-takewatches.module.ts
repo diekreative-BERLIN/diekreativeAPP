@@ -8,12 +8,15 @@ import { TunTakewatchesPageRoutingModule } from './tun-takewatches-routing.modul
 
 import { TunTakewatchesPage } from './tun-takewatches.page';
 
+import {DemoMaterialModule} from '../material-module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TunTakewatchesPageRoutingModule
+    TunTakewatchesPageRoutingModule,
+    DemoMaterialModule
   ],
   declarations: [TunTakewatchesPage]
 })

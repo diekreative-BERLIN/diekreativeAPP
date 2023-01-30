@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { ModalController } from '@ionic/angular';
 import { LoginModalPage } from './login-modal/login-modal.page';
 import { PersondetailModalPage } from './persondetail-modal/persondetail-modal.page';
@@ -39,6 +40,7 @@ export class AppComponent {
     private router: Router,
     private http: HTTP,
     private iab: InAppBrowser,
+    public emailComposer: EmailComposer,
     private connectivity: ConnectivityService,
     private firebaseX: FirebaseX,
     public alertController: AlertController
@@ -184,7 +186,16 @@ ngOnInit() {
   }
 
   mailDieKreative(){
-    this.router.navigateByUrl("mailto:office@diekreative.org");
+    //this.router.navigateByUrl("mailto:office@diekreative.org");
+    let email = {
+      to: 'office@diekreative.org',
+      subject: 'Kontakt zu diekreative',
+      isHtml: false
+    };
+
+    // Send a text message using default options
+    this.emailComposer.open(email);
+    
     this.close();
   }
 

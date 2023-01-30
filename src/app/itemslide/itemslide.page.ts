@@ -20,6 +20,8 @@ import { TunReleasePage } from '../tun-release/tun-release.page';
 export class ItemslidePage implements OnInit {
   items:any;
   initializing: any = false;
+  userfilter;
+  explicitusername;
 
   constructor(
     public navCtrl: NavController,
@@ -29,9 +31,10 @@ export class ItemslidePage implements OnInit {
     private platform: Platform,
     private router: Router
   ) {
-    let userfilter = encodeURI(this.userstate.shortusername);
-    let explicitusername = encodeURI(this.userstate.explicitusername);
-    this.churchtools.getGebetsschichten(7300,userfilter,explicitusername).then((result)=>{
+    this.userfilter = encodeURI(this.userstate.shortusername);
+    this.explicitusername = encodeURI(this.userstate.explicitusername);
+    this.churchtools.getGebetsschichten(7300,this.userfilter,this.explicitusername).then((result)=>{
+      console.log('in Constructor Übersicht eigene Gebetsschichten');
       console.log(JSON.stringify(result.data));
       this.items = JSON.parse(result.data);
       this.initializing = false;
@@ -44,6 +47,21 @@ export class ItemslidePage implements OnInit {
 
   ngOnInit() {
     this.initializing = true;
+    //console.log('itemslide - onInit');
+  }
+
+  async doRefresh(event) {
+    if (event) {
+      console.log('re-read Gebetsschichten');
+      
+      this.churchtools.getGebetsschichten(7300,this.userfilter,this.explicitusername).then((result)=>{
+        console.log('Reload Übersicht eigene Gebetsschichten');
+        console.log(JSON.stringify(result.data));
+        this.items = JSON.parse(result.data);
+        this.initializing = false;
+      });
+      event.target.complete();
+    }
   }
 
 

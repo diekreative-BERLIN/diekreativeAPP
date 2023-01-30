@@ -1,5 +1,4 @@
 <ion-content>
-  <div>
   <div style="width:100%; height:209px; background-image: url(../../assets/headerimages/Header_Unterseiten_LIFEGROUP.jpg); background-size: cover;">
     <h1 class="lifegroup-title">LIFEGROUPS</h1>
   </div>
@@ -11,13 +10,19 @@
   <div class="pfeil-blau"><img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
 
 
-  <h3 class="lifegroup-text">Finde deine lifeGroup</h3>
-  <p *ngIf="AppPlatform  === 'iOS'" class="lifegroup-text">Hier findest du eine erste Übersicht über unsere lifeGroups. Für weitere Informationen und um an einer lifeGroup teilzunehmen besuche vor oder nach dem Gottesdienst unsere Info. <i>(Die Schaltflächen Info bzw Infos & Anmeldung sind nicht aktiv).</i></p>
-  <p *ngIf="AppPlatform  === 'android'" class="lifegroup-text">Hier findest du eine erste Übersicht über unsere lifeGroups. Für weitere Informationen und um an einer lifeGroup teilzunehmen besuche vor oder nach dem Gottesdienst unsere Info.</p>
- 
+  <div *ngIf="!userState.isOnline">
+    <ion-label><div class="subtitle">
+    Du bist offline. Es können keine Details angezeigt werden!
+    </div></ion-label>
   </div>
+  
+  <div *ngIf="userState.isOnline">
+    <h3 class="lifegroup-text">Finde deine lifeGroup</h3>
+    <p *ngIf="AppPlatform  === 'iOS'" class="lifegroup-text">Hier findest du eine erste Übersicht über unsere lifeGroups. Für weitere Informationen und um an einer lifeGroup teilzunehmen besuche vor oder nach dem Gottesdienst unsere Info. <i>(Die Schaltflächen Info bzw Infos & Anmeldung sind nicht aktiv).</i></p>
+    <p *ngIf="AppPlatform  === 'android'" class="lifegroup-text">Hier findest du eine erste Übersicht über unsere lifeGroups. Für weitere Informationen und um an einer lifeGroup teilzunehmen besuche vor oder nach dem Gottesdienst unsere Info.</p>
 
-  <iframe appIframeTracker (iframeClick)="onIframeClick()" width="100%" style="border-width:0px" height="900px" [src]="url"></iframe>
-  <!-- sandbox="allow-top-navigation-by-user-activation" -->
+    <iframe appIframeTracker (iframeClick)="onIframeClick()" width="100%" style="border-width:0px" height="900px" [src]="url"></iframe>
+    <!-- sandbox="allow-top-navigation-by-user-activation" -->
+  </div>
   
 </ion-content>

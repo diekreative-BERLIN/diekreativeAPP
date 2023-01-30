@@ -93,7 +93,11 @@ const routes: Routes = [
   {
     path: 'akademie',
     loadChildren: () => import('./akademie/akademie.module').then( m => m.AkademiePageModule)
+  },  {
+    path: 'sermonplayer',
+    loadChildren: () => import('./sermonplayer/sermonplayer.module').then( m => m.SermonplayerPageModule)
   }
+
 
 
 ];

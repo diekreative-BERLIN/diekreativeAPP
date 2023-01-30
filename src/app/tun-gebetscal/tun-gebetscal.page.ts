@@ -22,7 +22,7 @@ export class TunGebetscalPage implements OnInit {
   }
 
   ngOnInit() {
-    this.showLoader();
+      this.showLoader();
   }
 
   // This will show the loader

@@ -13,62 +13,52 @@
     <div *ngIf="fulltext" class="descriptionopen">{{predigt.description[0]}}</div>
     <div *ngIf="fulltext">
       <br>
-      <ion-toolbar >
-        <ion-buttons>
-            <ion-tab-button (click)="openPlayer(predigt.enclosure[0].$.url)">
+      <ion-toolbar>
+        <ion-buttons [class]="first_set_local_or_online(predigt.enclosure[0].$.url) ? 'toolbar-active' : 'toolbar-inactive'">
+            <ion-tab-button (click)="openPlayer(predigt.title[0],predigt.enclosure[0].$.url)" [disabled]="local_or_online ? 'false' : 'true'">
               <ion-icon name="headset-sharp" color="primary"></ion-icon>
               <ion-label class="descr" color="primary">ANHÖREN</ion-label>
             </ion-tab-button>
 
-            <!--
-            <ion-tab-button (click)="shareLink(predigt.enclosure[0].$.url, predigt.title[0])">
-            -->
-            <ion-tab-button (click)="shareLink(predigt.link[0], predigt.title[0], predigt.description[0])">
+            <ion-tab-button (click)="shareLink(predigt.link[0], predigt.title[0], predigt.description[0])" [disabled]="local_or_online ? 'false' : 'true'">
               <ion-icon name="share-sharp" color="primary"></ion-icon>
               <ion-label class="descr" color="primary">TEILEN</ion-label>
             </ion-tab-button>
-<!--  save local -->
-<div *ngIf="!isLocal(predigt.enclosure[0].$.url); else conditionFalse">
-	<ion-tab-button (click)="saveSermon(predigt.enclosure[0].$.url)">
-    <ion-icon name="cloud-download" color="primary"></ion-icon>
-    <ion-label class="descr" color="primary">SPEICHERN</ion-label>
-  </ion-tab-button>
-</div>
-<ng-template #conditionFalse>
-	<ion-tab-button (click)="freeUpSermon(predigt.enclosure[0].$.url)">
-    <ion-icon name="cloud-done" color="primary"></ion-icon>
-    <ion-label class="descr" color="primary">GESPEICHERT</ion-label>
-  </ion-tab-button>
-</ng-template>
-<!--  save local -->
-            <ion-tab-button (click)="openSkript(predigt.skript[0])">
+
+            <!--  save local -->
+            <ion-tab-button *ngIf="!sermonlocal" (click)="saveSermon(predigt.enclosure[0].$.url)" [disabled]="local_or_online ? 'false' : 'true'">
+              <ion-icon name="cloud-download" color="primary"></ion-icon>
+              <ion-label class="descr" color="primary">SPEICHERN</ion-label>
+            </ion-tab-button>
+            <ion-tab-button *ngIf="sermonlocal" (click)="freeUpSermon(predigt.enclosure[0].$.url)" [disabled]="local_or_online ? 'false' : 'true'">
+              <ion-icon name="cloud-done" color="primary"></ion-icon>
+              <ion-label class="descr" color="primary">GESPEICHERT</ion-label>
+            </ion-tab-button>
+            <!--  save local -->
+
+            <ion-tab-button (click)="openSkript(predigt.skript[0])" [disabled]="local_or_online ? 'false' : 'true'">
               <ion-icon name="reader-sharp" [color]="predigt.skript!='' ? 'primary' : 'secondary'"></ion-icon>
               <ion-label class="descr" [color]="predigt.skript!='' ? 'primary' : 'secondary'">SKRIPT</ion-label>
             </ion-tab-button>
 
-            <ion-tab-button (click)="playYT(predigt.youtube[0])">
+            <ion-tab-button (click)="playYT(predigt.youtube[0])" [disabled]="local_or_online ? 'false' : 'true'">
               <ion-icon src="../../assets/icon/youtube.svg" [color]="predigt.youtube!='' ? 'primary' : 'secondary'"></ion-icon>
               <ion-label class="descr" [color]="predigt.youtube!='' ? 'primary' : 'secondary'">YOUTUBE</ion-label>
             </ion-tab-button>
         </ion-buttons>
-        </ion-toolbar>
-      <div *ngIf="playervisible">
-        <br>
-       <audio controls class="descriptionopen">
-                <source src={{currentSermonURL}} type="audio/mpeg">
-      </audio>
-    <!--    
-    <p>source={{currentSermonURL}}</p>
-    -->
+      </ion-toolbar>
+      
+
+      <!-- download progress bar -->
+      <div class="progress-outer" *ngIf="progress>=0 && progress<100">
+        <div class="progress-inner" [style.width]="progress + '%'">
+            {{progress}}%
+        </div>
       </div>
+
     </div>
+
   </div>
   </ion-label>
-
-  <!--div>
-    <h3>{{predigt.pubDate[0] | date:'fullDate':'':'de'}}</h3>
-    <h2>{{predigt.title[0]}}</h2>
-    <h3>{{predigt.description[0]}}</h3>
-  </div-->
 
 </ion-item>

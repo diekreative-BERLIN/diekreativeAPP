@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
+import { UserstateService } from '../userstate.service';
 
 //
 //import { NavController } from 'ionic-angular';
@@ -26,7 +27,8 @@ export class LifegroupsPage implements OnInit {
     public alertController: AlertController,
     private iab: InAppBrowser,
     private safariViewController: SafariViewController,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public userState:UserstateService
   ) {
     //this.platform.backButton.subscribeWithPriority(10, () => {
     //  this.router.navigate(["/tabs/tab1"]);

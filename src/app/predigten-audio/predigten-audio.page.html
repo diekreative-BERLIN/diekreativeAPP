@@ -3,17 +3,22 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="100" pullMax="200">
     <ion-refresher-content 
       pullingIcon="arrow-down-outline" 
-      pullingText="ziehen zum Aktualisieren" 
+      [pullingText]="userState.isOnline ? 'ziehen zum Aktualisieren' : 'Aktualisierung geht nur online'" 
       refreshingSpinner="circular"
-      refreshingText="es wird aktualisiert...">
+      [refreshingText]="userState.isOnline ? 'es wird aktualisiert...' : 'Aktualisierung geht nur online'">
     </ion-refresher-content>
   </ion-refresher>
+<!-- es wird aktualisiert... -->
 
   <div class="predigt-title">
     <ion-label class="header-label">PREDIGTEN</ion-label>
     <div class="kreuze"> <img src="../assets/svg/kreuze_blue.svg" id="kreuze" > </div>
     <div class="pfeil"> <img src="../assets/svg/pfeil_yellow_2.svg" id="pfeile" > </div>
   </div>
+  
+  <ion-button class="centered" (click)="test_add2arr()">test_add2arr</ion-button>
+  <ion-button class="centered" (click)="readLocalFiles()">lies local Sermon aus Array</ion-button>
+  <ion-button class="centered" (click)="getLocalSermons()">lies local Sermon DB</ion-button>
 
 
   <ion-list>
@@ -22,7 +27,7 @@
       <app-predigt-element [predigt]=predigt></app-predigt-element>
   </div>
 
-  <ion-button *ngIf="isViewCompact" class="centered" (click)="getMoreSermons()">mehr</ion-button>
+  <ion-button *ngIf="isViewCompact && userState.isOnline && !currentListWasSetByLocalDb" class="centered" (click)="getMoreSermons()">mehr</ion-button>
 
   </ion-list>
 </ion-content>

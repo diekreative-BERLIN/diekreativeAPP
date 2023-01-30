@@ -8,12 +8,15 @@ import { ItemslidePageRoutingModule } from './itemslide-routing.module';
 
 import { ItemslidePage } from './itemslide.page';
 
+import {DemoMaterialModule} from '../material-module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ItemslidePageRoutingModule
+    ItemslidePageRoutingModule,
+    DemoMaterialModule
   ],
   declarations: [ItemslidePage]
 })

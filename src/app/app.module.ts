@@ -22,17 +22,12 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UnescapePipe } from './unescape.pipe';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-// add MediaCapture
-import { MediaCapture } from '@ionic-native/media-capture/ngx';
 //File
 import { File } from '@ionic-native/File/ngx';
 //Filetransfer
 import { FileTransfer } from '@awesome-cordova-plugins/file-transfer/ngx';
 //File Opener
 import { FileOpener } from '@ionic-native/file-opener/ngx';
-
-//Streaming media (player)
-import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
 //Email Composer
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
@@ -45,6 +40,8 @@ import { GdCheckinPageModule } from './gd-checkin/gd-checkin.module';
 //Safari View Controller for iOS
 import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
 import { WebView } from '@awesome-cordova-plugins/ionic-webview/ngx';
+//Media Player
+import { Media } from '@ionic-native/media/ngx';
 
 
 @NgModule({
@@ -73,14 +70,13 @@ import { WebView } from '@awesome-cordova-plugins/ionic-webview/ngx';
     InAppBrowser,
     NativeStorage,
     Platform,
-    MediaCapture,
-    StreamingMedia,
     File,
     FileTransfer,
     FileOpener,
     EmailComposer,
     SafariViewController,
-    WebView
+    WebView,
+    Media
     //LocalNotifications
   ],
   bootstrap: [AppComponent]

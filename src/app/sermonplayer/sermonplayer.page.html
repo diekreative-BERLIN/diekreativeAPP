@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{sermonTitle}}</ion-title>
+    <ion-icon class="right" (click)="ClosePopover()" src="../../assets/icon/close-circle-sharp.svg"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-range min="0" max="{{duration}}" [(ngModel)]="position" color="darkColor">
+  </ion-range>
+  <div class="rangePlaytime">
+    <ion-label class="startTime" color="darkColor">{{ display_position }}</ion-label>
+    <ion-label class="endTime" color="darkColor" *ngIf="duration == -1">--:--</ion-label>
+    <ion-label class="endTime" color="darkColor" *ngIf="duration != -1">{{ display_duration }}</ion-label>
+  </div>
+
+<ion-grid>
+  <ion-row justify-content-center align-items-center style="height: 100%">
+    <ion-col>
+      <div class="flexRow">
+
+        <div>
+          <ion-button fill="clear" color="darkColor" (click)="controlSeconds('back')">
+            <ion-icon name="play-back-outline"></ion-icon>
+          </ion-button>
+        </div>
+        
+
+        <div>
+          <ion-button class="play_pause_btn" (click)="play()" color="darkColor" *ngIf="!is_playing" justify-content-center
+            [disabled]="!is_ready" align-items-center>
+            <ion-icon name="play" class="darkColor"></ion-icon>
+          </ion-button>
+
+          <ion-button class="play_pause_btn" (click)="pause()" color="darkColor" *ngIf="is_playing" justify-content-center
+            [disabled]="!is_ready" align-items-center>
+            <ion-icon name="pause" class="darkColor"></ion-icon>
+          </ion-button>
+        </div>
+
+        <div>
+          <ion-button fill="clear" color="darkColor" (click)="controlSeconds('forward')">
+            <ion-icon name="play-forward-outline" class="Iconsize_For_Rev"></ion-icon>
+          </ion-button>
+        </div>
+
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+</ion-content>

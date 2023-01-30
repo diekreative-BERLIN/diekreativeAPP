@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from "@ionic/angular";
 import { Router } from '@angular/router';
 import { ChurchapiService } from '../connectors/churchapi.service';
@@ -14,18 +14,21 @@ import { TunTakeoverPage } from '../tun-takeover/tun-takeover.page';
   templateUrl: './tun-takewatches.page.html',
   styleUrls: ['./tun-takewatches.page.scss'],
 })
-export class TunTakewatchesPage implements OnInit {
+export class TunTakewatchesPage {
   items:any;
   constructor(
-  public navCtrl: NavController,
-  private churchtools:ChurchapiService,
-  private router: Router,
-  private popover:PopoverController) {
+    public navCtrl: NavController,
+    private churchtools:ChurchapiService,
+    private router: Router,
+    private popover:PopoverController
+  ) {  }
+
+  ionViewWillEnter(){
+    //console.log('about to enter Takewatches');
     this.churchtools.getFreieSchichten().then((result)=>{
       console.log(JSON.stringify(result.data));
       this.items = JSON.parse(result.data);
     });
-    
   }
 
   removeItem(item){
@@ -64,7 +67,17 @@ export class TunTakewatchesPage implements OnInit {
       item.open('end');
   }
 
-  ngOnInit() {
+  async doRefresh(event) {
+    if (event) {
+      console.log('re-read freie Schichten');
+      
+      this.churchtools.getFreieSchichten().then((result)=>{
+        //console.log(JSON.stringify(result.data));
+        this.items = JSON.parse(result.data);
+      });
+
+      event.target.complete();
+    }
   }
   
   BackActivated() {

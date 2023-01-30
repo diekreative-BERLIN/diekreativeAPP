@@ -8,12 +8,15 @@ import { TunGebetscalPageRoutingModule } from './tun-gebetscal-routing.module';
 
 import { TunGebetscalPage } from './tun-gebetscal.page';
 
+import {DemoMaterialModule} from '../material-module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TunGebetscalPageRoutingModule
+    TunGebetscalPageRoutingModule,
+    DemoMaterialModule
   ],
   declarations: [TunGebetscalPage]
 })

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { DomSanitizer } from "@angular/platform-browser";
 
 import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
+import { UserstateService } from '../userstate.service';
 
 
 @Component({
@@ -28,7 +29,8 @@ export class TerminePage implements OnInit {
     public loadingController: LoadingController,
     private router: Router,
     private sanitizer: DomSanitizer,
-    private safariViewController: SafariViewController
+    private safariViewController: SafariViewController,
+    public userState:UserstateService
     ) {
     //this.platform.backButton.subscribeWithPriority(10, () => {
     //  this.router.navigate(["/tabs/tagundnacht"]);
@@ -51,7 +53,9 @@ export class TerminePage implements OnInit {
   }
 
   ngOnInit() {
-    this.showLoader();
+    if(this.userState.isOnline) {
+      this.showLoader();
+    }
     if(this.platform.is('android')) {
       this.iframeLink="https://diekreative.org/events_4_app"
     } else {
@@ -62,7 +66,6 @@ export class TerminePage implements OnInit {
 
     //this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframeLink+"?reload=0");
     this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframeLink+"?reload=" + (new Date()).getTime() + Math.floor(Math.random() * 1000000) );
-
   }
 
   /*
@@ -156,10 +159,6 @@ hideLoader() {
       event.target.complete();
     }
      
-  }
-
-  TerminHomeActivated() {
-    this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframeLink+"?reload=" + (new Date()).getTime() + Math.floor(Math.random() * 1000000) );
   }
 
 }

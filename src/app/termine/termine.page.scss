@@ -15,7 +15,6 @@ h1.ueberuns-text {
     text-transform: uppercase;
     color: #003D58;
     opacity: 1;
-
 }
 
 .back {
@@ -23,6 +22,23 @@ h1.ueberuns-text {
     top: 10px;
     left: 5px;
     color: #003e588a;
+}
+.subtitle {
+    font-size: 14px;
+    font-family: Lato;
+    font-weight: normal;
+    line-height: normal;
+    margin-top:41px;
+    margin-bottom:41px;
+    margin-left:45px;
+    margin-right:45px;
+
+    color: var(--unnamed-color-777777);
+    text-align: left;
+    font: Regular 14px/18px Source Sans Pro;
+    letter-spacing: 0px;
+    color: #777777;
+    opacity: 1;
 }
 .terminehome {
     position: absolute;

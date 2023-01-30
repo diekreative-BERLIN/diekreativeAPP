@@ -1,9 +1,23 @@
 <ion-content>
 
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="100" pullMax="200">
+    <ion-refresher-content 
+      pullingIcon="arrow-down-outline" 
+      pullingText="ziehen zum Aktualisieren" 
+      refreshingSpinner="circular"
+      refreshingText="es wird aktualisiert...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <h1 class="ueberuns-text">Meine Gebets-<br>schichten</h1> 
 
  <!-- div class="back"><a (click)="BackActivated()"><ion-icon name="return-up-back-outline"></ion-icon></a></div -->
-
+ <div class="pos_back">
+  <ion-buttons>
+       <button mat-flat-button shape="round" color="primary" (click)="BackActivated()"><ion-icon class="backicon" name="chevron-back-outline"></ion-icon>&nbsp;zurück</button>
+ </ion-buttons>
+ </div>
+ 
  <div class="punkte"> <img src="../assets/svg/punkte_yellow.svg" id="punkte" > </div>
  <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
 

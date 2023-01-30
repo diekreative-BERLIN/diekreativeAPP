@@ -18,11 +18,22 @@ h1.ueberuns-text {
 
 }
 
-.back {
+.pos_back {
     position: absolute;
-    top: 10px;
-    left: 5px;
-    color: #003e588a;
+    top: 18px;
+    left: 27px;
+}
+/*
+.sc-ion-buttons-md-h {
+    display: flex;
+    align-items: center;
+    transform: translateZ(0);
+    z-index: 99;
+}
+*/
+.innericon.md.hydrated {
+    position: relative;
+    top: 1px;
 }
 
 .positionierung {
@@ -61,5 +72,6 @@ h1.ueberuns-text {
     font-weight: 600;
     color: #FFFFFF;
     font-size: 10px;
+    padding: 7px;
     //text-transform: uppercase;
 }

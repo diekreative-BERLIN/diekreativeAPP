@@ -13,8 +13,6 @@
 
   
  <!-- div class="back"><a (click)="BackActivated()"><ion-icon name="return-up-back-outline"></ion-icon></a></div -->
- <button *ngIf="isIOS" mat-button class="terminehome" (click)="TerminHomeActivated()"><ion-icon name="calendar-sharp"></ion-icon>&nbsp;&nbsp;zurück zu Termine</button>
-
 
  <div class="punkte"> <img src="../assets/svg/punkte_yellow.svg" id="punkte" > </div>
  <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
@@ -25,11 +23,23 @@
       <iframe src="https://diekreative.org/events_4_app?reload=0"
       width="100%" height="20000px" frameborder="0" scrolling="no" ng-onload="hideLoader()">Dein Brower unterstützt leider keine iFrames!&nbsp;</iframe>
  -->
- <iframe id="iframe" class="iframe"
- sandbox="allow-scripts allow-top-navigation allow-pointer-lock allow-same-origin allow-popups allow-forms"
- [src]="browser.secUrl"
- width="100%" height="20000px" frameborder="0" scrolling="no" ng-onload="hideLoader()">
-</iframe>     
+
+ <!--
+ <div *ngIf="!userState.isOnline">
+  <ion-label ><div class="subtitle">
+  Du bist offline. Es können keine Details angezeigt werden!
+  </div></ion-label>
+</div>
+
+<div *ngIf="userState.isOnline">
+-->
+  <iframe id="iframe" class="iframe"
+  sandbox="allow-scripts allow-top-navigation allow-pointer-lock allow-same-origin allow-popups allow-forms"
+  [src]="browser.secUrl"
+  width="100%" height="20000px" frameborder="0" scrolling="no" ng-onload="hideLoader()">
+  </iframe>
+
+<!-- /div --> 
 
       
 

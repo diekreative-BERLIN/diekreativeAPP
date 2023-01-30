@@ -25,6 +25,7 @@
     "@angular/router": "~15.0.4",
     "@awesome-cordova-plugins/file-transfer": "^6.2.0",
     "@awesome-cordova-plugins/ionic-webview": "^6.2.0",
+    "@awesome-cordova-plugins/media": "^6.3.0",
     "@awesome-cordova-plugins/safari-view-controller": "^6.2.0",
     "@capacitor/android": "^4.6.1",
     "@capacitor/core": "4.6.1",
@@ -121,10 +122,11 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-advanced-http": {},
-      "cordova-plugin-media": {
-        "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO"
+      "cordova-plugin-media": {},
+      "cordova-plugin-x-socialsharing": {
+        "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly."
       },
-      "cordova-plugin-x-socialsharing": {},
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-nativestorage": {},
       "cordova-plugin-firebasex": {},
@@ -132,7 +134,6 @@
       "cordova-plugin-enable-multidex": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-media-capture": {},
-      "cordova-plugin-streaming-media": {},
       "cordova-plugin-androidx-adapter": {},
       "cordova-plugin-file-opener2": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
@@ -144,7 +145,8 @@
       },
       "cordova-plugin-file": {},
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-safariviewcontroller": {}
+      "cordova-plugin-safariviewcontroller": {},
+      "cordova-plugin-nativeaudio": {}
     },
     "platforms": [
       "browser"

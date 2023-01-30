@@ -90,6 +90,6 @@ h1, h2, h3, h4, h5 {
 
 //because of (iphone) nodge
 ion-app {
-  margin-top: env(safe-area-inset-top);
+  margin-top: calc( env(safe-area-inset-top) * 0.7 );
   //margin-bottom: env(safe-area-inset-bottom);
 }
