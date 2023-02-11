@@ -1,41 +1,70 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Homescreen Settings</ion-title>
+    <ion-title>Einstellungen</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-accordion-group #accordionGroup [multiple]="false" (ionChange)="accordionGroupChange($event)">
+    <ion-accordion value="homescreen">
+      <ion-item slot="header" color="light">
+        <ion-label>Homescreen bearbeiten</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+        <ion-reorder-group (ionItemReorder)="doReorder($event)" [disabled]="isDisabled">
 
+          <ion-item *ngFor="let entry of form">
+            <ion-label>{{entry.val}}</ion-label>
+            <ion-checkbox slot="start" [(ngModel)]="entry.isChecked" [disabled]="isDisabled"></ion-checkbox>
+            <ion-reorder slot="end"></ion-reorder>
+          </ion-item>
+          
+        </ion-reorder-group>
 
-<!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
-<ion-reorder-group (ionItemReorder)="doReorder($event)" [disabled]="isDisabled">
+        <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+        <div class="center" *ngIf="isDisabled">
+          <ion-button class="centerbtn" (click)="modifyHomescreen()">
+            Homescreen bearbeiten
+          </ion-button>
+        </div>
 
-  <ion-item *ngFor="let entry of form">
-    <ion-label>{{entry.val}}</ion-label>
-    <ion-checkbox slot="start" [(ngModel)]="entry.isChecked" [disabled]="isDisabled"></ion-checkbox>
-    <ion-reorder slot="end"></ion-reorder>
-  </ion-item>
-  
-</ion-reorder-group>
-
-<!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
-<div class="center" *ngIf="isDisabled">
-<ion-button class="centerbtn" (click)="modifyHomescreen()">
-  Homescreen bearbeiten
-</ion-button>
-</div>
-
-<div class="center" *ngIf="!isDisabled">
-<ion-button class="centerbtn" (click)="applyHomescreen()">
-  Fertig
-</ion-button>
-
-<ion-button class="centerbtn" (click)="resetHomescreen()">
-    Reset
-</ion-button>
-
-</div>
+        <div class="center" *ngIf="!isDisabled">
+          <ion-button class="centerbtn" (click)="applyHomescreen()">
+            Fertig
+          </ion-button>
+          <ion-button class="centerbtn" (click)="resetHomescreen()">
+              Reset
+          </ion-button>
+        </div>
+    </div>
+  </ion-accordion>
+  <ion-accordion value="cache">
+    <ion-item slot="header" color="light">
+      <ion-label>Lokaler Cache (Mediathek)</ion-label>
+    </ion-item>
+    <div class="ion-padding" slot="content">
+    <div class="center">
+      <p>heruntergeladene Predigten nach <ion-button (click)="openPicker()">{{cleanupDays}}</ion-button> Tagen löschen</p>
+      <p>aktuell benutzter Cache: {{cacheSize}}</p>
+      <ion-button class="centerbtn" (click)="clearCache()">
+        Cache leeren
+      </ion-button>
+      </div>
+    </div>
+  </ion-accordion>
+  <!--
+  <ion-accordion value="third">
+    <ion-item slot="header" color="light">
+      <ion-label>Third Accordion</ion-label>
+    </ion-item>
+    <div class="ion-padding" slot="content">
+      Third Content
+    </div>
+  </ion-accordion>
+  -->
+</ion-accordion-group>
 
 
 </ion-content>

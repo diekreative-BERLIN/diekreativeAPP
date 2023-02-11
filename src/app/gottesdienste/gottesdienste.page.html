@@ -100,17 +100,17 @@
               </ion-row>
               <ion-row>
                 <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && ZoomAvailable>0">
-                <ion-button (click)="launchZoomMeeting1()" class="qr-button">
-                  <ion-icon name="headset-outline"></ion-icon>
-                  &nbsp;&nbsp;
-                  <ion-label>Original</ion-label>
-                </ion-button>
+                  <ion-button (click)="launchZoomMeeting1()" class="qr-button">
+                    <ion-icon name="headset-outline"></ion-icon>
+                    &nbsp;&nbsp;
+                    <ion-label>Original</ion-label>
+                  </ion-button>
                 
-                <ion-button (click)="launchZoomMeeting2()" class="qr-button">
-                  <ion-icon name="headset-outline"></ion-icon>
-                  &nbsp;&nbsp;
-                  <ion-label>english</ion-label>
-                </ion-button>
+                  <ion-button (click)="launchZoomMeeting2()" class="qr-button">
+                    <ion-icon name="headset-outline"></ion-icon>
+                    &nbsp;&nbsp;
+                    <ion-label>english</ion-label>
+                  </ion-button>
               </ion-col>
               <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && YTAvailable>0">
                 <ion-button (click)="launchYTlive()" class="qr-button">

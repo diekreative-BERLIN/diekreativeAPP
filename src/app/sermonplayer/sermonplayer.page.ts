@@ -40,7 +40,7 @@ export class SermonplayerPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('öffne Player. Muss prepareAudioFile machen mit');
+    console.log('öffne Player. Muss prepareAudioFile von Title >'+this.sermonTitle+'< machen mit');
     console.log(this.sermonURL);
     
     this.play_The_track = this.sermonURL;
@@ -63,7 +63,7 @@ export class SermonplayerPage implements OnInit {
   }
 
   getDuration() {
-    console.log('GETDuration from '+this.play_The_track);
+    //console.log('GETDuration from '+this.play_The_track);
     this.curr_playing_file = this.media.create(this.play_The_track);
     // on occassions, the plugin only gives duration of the file if the file is played
     // at least once
@@ -74,7 +74,7 @@ export class SermonplayerPage implements OnInit {
     // The plugin does not give the correct duration on playback start
     // Need to check for duration repeatedly
     let temp_duration = self.duration;
-    console.log('da? temp_dur='+temp_duration);
+    //console.log('da? temp_dur='+temp_duration);
     this.get_duration_interval = setInterval(() => {
       if (self.duration === -1 || !self.duration) {
         self.duration = ~~(self.curr_playing_file.getDuration());  // make it an integer

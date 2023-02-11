@@ -2,9 +2,14 @@ import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { ChurchapiService } from './connectors/churchapi.service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { File } from '@ionic-native/File/ngx';
+
 //timezone
 import * as moment from 'moment-timezone';
 import { BehaviorSubject } from 'rxjs';
+import * as internal from 'stream';
+
+const MEDIA_FOLDER_NAME = 'temp_files';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +32,10 @@ export class UserstateService {
   isOnline = false;
   //SermonLocalFiles = [];
   SermonLocalFiles: Array<{title: string, pubDate: Date, basedate: string, description: string, url: string, skript: string, youtube: string, savedlocal: Date}> = [];
+  public cleanupDays = 14;
+  lastCronCheck = new Date("01/01/2000");
+  //new Date(new Date().getTime() - (60*60*24*1000));
+  //Date.now();
 
   private homescreen_default = [
     { id: 'Mediathek',     val: 'Mediathek',     isChecked: true },
@@ -46,7 +55,8 @@ export class UserstateService {
   constructor(
     private churchtools:ChurchapiService,
     private platform :Platform,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    private file: File
   ) {
     
     //this.homescreen.next(JSON.parse(JSON.stringify(this.homescreen_default)));
@@ -223,23 +233,11 @@ export class UserstateService {
     this.nativeStorage.remove('settings');
   }
 
-  public async getLocalSermons() {
-    //localSermons auslesen
-    await this.nativeStorage.getItem('localSermons').then((localSermons)=>{
-     console.log('local Sermons aus nativeStorage');
-     console.log(localSermons);
-     //return localSermons.sermon;
-     //this.SermonLocalFiles.push(localSermons);
-
-     console.log('now SermonLocalFiles=');
-     console.log(this.SermonLocalFiles);
-   });
- }
 
  //add a new sermon to the local db
  public addLocalSermon(predigt) {
-  console.log('in userstate - addLocalSermon:');
-  console.log(predigt);
+  //console.log('in userstate - addLocalSermon:');
+  //console.log(predigt);
 
   const data: Array<{title: string, pubDate: Date, basedate: string, description: string, url: string, skript: string, youtube: string, savedlocal: Date}> = [{
     title: predigt.title[0],
@@ -252,22 +250,42 @@ export class UserstateService {
     savedlocal: new Date()
   }];
 
-  console.log('add... data line=');
-  console.log(data);
+  //console.log('add... data line=');
+  //console.log(data);
 
   this.SermonLocalFiles.push(data[0]);
 
   //and now sort
   this.SermonLocalFiles.sort( (b, a)=> parseInt(a.basedate,6) - parseInt(b.basedate,6) );
-  console.log('-sorted-');
-  console.log(this.SermonLocalFiles);
+  //console.log('-sorted-');
+  //console.log(this.SermonLocalFiles);
 
+}
+
+//check if the sermon mp3 file is available in the SermonLocalFiles Array
+public isFileInArray(mp3file) {
+  for(var index in this.SermonLocalFiles) {
+    if (this.SermonLocalFiles[index].url === mp3file) {
+      //console.log('found on pos '+index);
+      return index;
+    }
+  }
+  return -1;
+}
+//remove a sermon from local Sermon Array by its mp3 name
+public removeLocalSermon(fname) {
+  let pos = <number>this.isFileInArray(fname);
+  if (pos > -1) {
+    this.SermonLocalFiles.splice(pos,1);
+    //console.log('new=');
+    //console.log(this.SermonLocalFiles);
+  }
 }
 
  //save localSermons in nativeStorage when leaving Mediathek 
  public saveLocalSermons() {
-    console.log('in userstate - saveLocalSermons: (with stringify:)');
-    console.log(JSON.stringify(this.SermonLocalFiles));
+    //console.log('in userstate - saveLocalSermons: (with stringify:)');
+    //console.log(JSON.stringify(this.SermonLocalFiles));
 
     //console.log('but now only safe simple value');
     //this.nativeStorage.setItem('localSermons', {property: "Wert"} )
@@ -278,6 +296,56 @@ export class UserstateService {
         error => console.error('Error storing localSermons', error)
     );
     
+  }
+
+  public doCronjobs() {
+    if (this.SermonLocalFiles.length > 0) {
+      //console.log('cronjobs to do?');
+      let files2remove = [];
+      
+      let diffInDays = <number>this.momentjs( Date.now() ).format('YYMMDD') - <number>this.momentjs( this.lastCronCheck ).format('YYMMDD');
+
+      if (diffInDays >= 1) {
+        this.lastCronCheck = new Date( Date.now() );
+        //console.log('delete files after '+this.cleanupDays+' days');
+        
+        for(var index in this.SermonLocalFiles) {
+          //console.log(this.SermonLocalFiles[index].savedlocal);
+          let delOn = new Date ( new Date( this.SermonLocalFiles[index].savedlocal ).getTime() + (this.cleanupDays * 60*60*24*1000) );
+          //console.log('file '+this.SermonLocalFiles[index].url+' saved on '+ this.SermonLocalFiles[index].savedlocal+ 'and del on '+delOn );
+          if ( new Date() > delOn ) {
+            //console.log('have to del '+this.SermonLocalFiles[index].url);
+            files2remove.push( {mp3name: this.SermonLocalFiles[index].url, skript: this.SermonLocalFiles[index].skript} );
+          }
+        }
+      }
+
+      //now are there files to del?
+      for(var index in files2remove) {
+        //console.log('del '+files2remove[index].mp3name);
+        if (files2remove[index].skript != "") {
+          this.file.removeFile(this.file.documentsDirectory + MEDIA_FOLDER_NAME, files2remove[index].skript.split('/').pop()).then((ret) => {
+            //console.log('skript deleted?');
+            //console.log(ret);
+          }, (error) => {
+            console.log('error deleting: '+error);
+          });
+        }
+
+        let fname = files2remove[index].mp3name.split('/').pop();
+        this.file.removeFile(this.file.documentsDirectory + MEDIA_FOLDER_NAME, fname).then((ret) => {
+          //console.log('file '+this.file.documentsDirectory + MEDIA_FOLDER_NAME, fname+' deleted?');
+          //console.log(ret);
+
+          this.removeLocalSermon(files2remove[index].mp3name);
+          this.saveLocalSermons();
+          this.AppPageMedienInit = true;
+
+        }, (error) => {
+          console.log('error deleting: '+error);
+        });
+      }
+    }
   }
 
 

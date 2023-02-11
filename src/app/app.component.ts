@@ -170,7 +170,7 @@ ngOnInit() {
   }
 
   mediathekActivated(){
-    this.userState.AppPageMedienInit = true;
+    //this.userState.AppPageMedienInit = true;
     this.router.navigate(["/tabs/predigten-audio"]);
     this.close();
   }

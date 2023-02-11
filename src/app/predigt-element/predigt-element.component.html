@@ -26,11 +26,11 @@
             </ion-tab-button>
 
             <!--  save local -->
-            <ion-tab-button *ngIf="!sermonlocal" (click)="saveSermon(predigt.enclosure[0].$.url)" [disabled]="local_or_online ? 'false' : 'true'">
+            <ion-tab-button *ngIf="!sermonlocal" (click)="saveSermon(predigt.enclosure[0].$.url,predigt.skript[0])" [disabled]="local_or_online ? 'false' : 'true'">
               <ion-icon name="cloud-download" color="primary"></ion-icon>
               <ion-label class="descr" color="primary">SPEICHERN</ion-label>
             </ion-tab-button>
-            <ion-tab-button *ngIf="sermonlocal" (click)="freeUpSermon(predigt.enclosure[0].$.url)" [disabled]="local_or_online ? 'false' : 'true'">
+            <ion-tab-button *ngIf="sermonlocal" (click)="freeUpSermon(predigt.enclosure[0].$.url,predigt.skript[0])" [disabled]="local_or_online ? 'false' : 'true'">
               <ion-icon name="cloud-done" color="primary"></ion-icon>
               <ion-label class="descr" color="primary">GESPEICHERT</ion-label>
             </ion-tab-button>

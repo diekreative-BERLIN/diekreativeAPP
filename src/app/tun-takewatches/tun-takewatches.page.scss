@@ -75,3 +75,15 @@ h1.ueberuns-text {
     padding: 7px;
     //text-transform: uppercase;
 }
+
+.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-primary.mat-mdc-button-base {
+    width: 100%;
+    padding: 5px;
+    padding-right: 12px;
+    background-color: #777777;
+    color: #FFFFFF;
+    font-family: 'Source Sans Pro';
+    //font-weight: bold;
+    font-size: 14px;
+    height: auto;
+}

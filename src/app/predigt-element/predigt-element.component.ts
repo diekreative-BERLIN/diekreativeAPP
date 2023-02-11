@@ -19,6 +19,9 @@ import { NgZone } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { SermonplayerPage } from '../sermonplayer/sermonplayer.page';
 
+//File Opener
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+
 const MEDIA_FOLDER_NAME = 'temp_files';
 
 @Component({
@@ -37,6 +40,7 @@ export class PredigtElementComponent {
   //here creating object to access file transfer object.  
   private fileTransfer: FileTransferObject;
   local_or_online = true;
+  download_in_progress = false;
 
   constructor(
     public userState:UserstateService,
@@ -48,15 +52,18 @@ export class PredigtElementComponent {
     private transfer: FileTransfer,
     private webview: WebView,
     private popover: PopoverController,
-    private _zone: NgZone
+    private _zone: NgZone,
+    private fileOpener: FileOpener,
   ) {
     //this.platform.backButton.subscribeWithPriority(10, () => {
     //  this.router.navigate(["/tabs/tab1"]);
     //});
   }
 
+  //check if a sermon is saved locally
   first_set_local_or_online(sermonURL) {
-    console.log('first set local-or-online for '+sermonURL);
+    if (this.download_in_progress) {return true}
+    //console.log('first set local-or-online for '+sermonURL);
     if ( this.isLocal(sermonURL) ) {
       this.sermonlocal = true;
     }
@@ -69,26 +76,16 @@ export class PredigtElementComponent {
       return false;
     }
   }
-  //can this episode be accessed because we're either online or it has been downloaded before?
-  /*
-  public local_or_online() {
-    //console.log('is local? '+this.sermonlocal+'  isonline? '+this.userState.isOnline);
-    if (this.sermonlocal || this.userState.isOnline) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  */
 
 
+  //start modal player
   popoverPlay(sermonTitle,sermonURL) {
     this.popover.create({component:SermonplayerPage,
       componentProps: {
         sermonTitle: sermonTitle,
         sermonURL: sermonURL
       },
-      cssClass: 'modal_tun_confirm',
+      cssClass: 'modal_sermonplayer',
       backdropDismiss: false,
       showBackdrop: false}).then((popoverElement)=>{
         popoverElement.onDidDismiss().then((ret)=>{
@@ -102,35 +99,14 @@ export class PredigtElementComponent {
   }
 
 
-
   //check if mp3 file is in localDB
   isLocal(mp3file) {
-    return false;
-   let fileName = mp3file.substr(mp3file.lastIndexOf('/') + 1);
-   
-   console.log('check if file '+fileName+' is local');
-   console.log('finde in ');
-   console.log(this.userState.SermonLocalFiles);
-return false; //todo
-   /*
-   //let res = this.userState.SermonLocalFiles.find(e => e.name === fileName);
-   let res = this.userState.SermonLocalFiles.find( e => e.enclosure[0].$.url == mp3file );
-   console.log('res=');
-   console.log(res);
-
-    if (res !== undefined) {
-      //console.log(res.isFile);
-      
+    if (this.userState.isFileInArray(mp3file) > -1) {
       return true;
-      //res.isFile;
-      
     } else {
-      console.log('not found');
       return false;
     }
-    */
   }
-
 
   expandTab(){
     this.fulltext = true;
@@ -148,20 +124,21 @@ return false; //todo
     }
   }
 
+  //Open mp3 file (local or online) in sermon player
   openPlayer(sermonTitle,sermonURL){
-    let sermonFile;
+    let sermonFile = sermonURL;
     if (this.sermonlocal) {
       let fileName = sermonURL.substr(sermonURL.lastIndexOf('/') + 1);
-      let sermonFile = this.file.documentsDirectory + MEDIA_FOLDER_NAME + '/' + fileName;
+      sermonFile = this.file.documentsDirectory + MEDIA_FOLDER_NAME + '/' + fileName;
     } else {
-      let sermonFile = sermonURL;
+      //let sermonFile = sermonURL;
     }
     
     this.popoverPlay(sermonTitle,sermonFile);
   }
 
 
-
+  //social sharing of current sermon
   shareLink(predigturl,titel,excerpt){
     var message = "Hör dir diese Predigt an!\n\n"+excerpt
     var subject = ""+titel
@@ -176,14 +153,30 @@ return false; //todo
     console.log('share subject='+subject+'  url='+predigturl+'   und msg='+message);
   }
 
+  //display Skript with fileopener
+  public showLocalScript(skript) {
+    this.fileOpener
+        .open(skript, "application/pdf")
+        .then(() => console.log("File is opened"))
+        .catch(e => console.log("Error opening file", e));
+  }
+  //open pdf skript either with fileopener (if pdf is local) or with InAppBrowser (online)
   openSkript(skript){
     if (skript!='') {
       this.platform.ready().then(() => {
-        this.iab.create(skript,'_system');
+        if (this.sermonlocal) {
+          skript = this.file.documentsDirectory + MEDIA_FOLDER_NAME + '/' + skript.split('/').pop();
+          console.log('open pdf: '+skript);
+          this.showLocalScript( skript );
+        } else {
+          console.log('open pdf: '+skript);
+          this.iab.create(skript,'_system');
+        }
       });
     }
   }
 
+  //open YT Player
   playYT(YTlink){
     if (YTlink!='') {
       this.platform.ready().then(() => {
@@ -192,26 +185,29 @@ return false; //todo
     }
   }
 
-  saveSermon(mp3link) {
-    //is file already there?
-    //let fileresult = this.isLocal(mp3link);
-    //here encoding path as encodeURI() format.  
+  saveSermon(mp3link,skript) {
     let url = encodeURI(mp3link);
     let fileName = mp3link.substr(mp3link.lastIndexOf('/') + 1);
-    console.log('sichere Predigt Datei '+fileName+' von '+mp3link);
+    console.log('sichere Predigt Datei '+fileName+' von '+mp3link+' und skript '+skript);
 
-    //console.log('this.predigt = ');
-    //console.log( JSON.stringify(this.predigt) );
+    this.download_in_progress = true;
+    //here initializing object
+    if (skript != "") {
+      this.fileTransfer = this.transfer.create();
+      this.fileTransfer.download(encodeURI(skript), this.file.documentsDirectory + MEDIA_FOLDER_NAME + '/' + skript.split('/').pop(), true).then((entry) => {
+        console.log('skript downloaded!: ' + entry.toURL());
+      }, (error) => {  
+        //here logging our error its easier to find out what type of error occured.  
+        console.log('download failed: ' + error);  
+      });
+    }
 
-    this.addEpisode2localDB( this.predigt );
-
-/*
-    //here initializing object. 
+    //here initializing object
     this.fileTransfer = this.transfer.create();
     this.fileTransfer.onProgress((progressEvent) => {
       this._zone.run(() =>{
         var perc = (progressEvent.lengthComputable) ?  Math.floor(progressEvent.loaded / progressEvent.total * 100) : -1;
-        console.log(progressEvent,'%',perc);
+        //console.log(progressEvent,'%',perc);
         this.progress = perc;
       });
     });  
@@ -219,44 +215,52 @@ return false; //todo
     this.fileTransfer.download(url, this.file.documentsDirectory + MEDIA_FOLDER_NAME + '/' + fileName, true).then((entry) => {
         //here logging our success downloaded file path in mobile.  
         console.log('download completed: ' + entry.toURL());
+        this.download_in_progress = false;
         //window.location.reload(); //refresh view
         this.sermonlocal = true;
         //console.log('predigt Info vorhanden..:');
         //console.log(this.predigt);
         this.addEpisode2localDB(this.predigt);
         //this.userState.saveLocalSermons(this.predigt);
+        this.userState.saveLocalSermons();
     }, (error) => {  
         //here logging our error its easier to find out what type of error occured.  
         console.log('download failed: ' + error);  
     });
-*/
   }
 
-  freeUpSermon(mp3name) {
+  //delete Sermon from filesystem and from localFiles Array
+  freeUpSermon(mp3name,skript) {
     let fname = mp3name.split('/').pop();
-    console.log('remove '+fname);
+    console.log('remove '+fname+'  (mp3name='+mp3name+')');
+
+    if (skript != "") {
+      this.file.removeFile(this.file.documentsDirectory + MEDIA_FOLDER_NAME, skript.split('/').pop()).then((ret) => {
+        console.log('skript deleted?');
+        console.log(ret);
+      }, (error) => {
+        console.log('error deleting: '+error);
+      });
+    }
+
     this.file.removeFile(this.file.documentsDirectory + MEDIA_FOLDER_NAME, fname).then((ret) => {
-      console.log('file deleted?');
+      console.log('file '+this.file.documentsDirectory + MEDIA_FOLDER_NAME, fname+' deleted?');
       console.log(ret);
       this.sermonlocal = false;
+      //
+      this.userState.removeLocalSermon(mp3name);
+      //
+      this.userState.saveLocalSermons();
     }, (error) => {
       console.log('error deleting: '+error);
     });
-    //window.location.reload(); //refresh view
   }
 
   //add a new episode to local db
   addEpisode2localDB(predigt) {
-    console.log('add episode to local DB');
-    console.log(predigt);
+    //console.log('add episode to local DB');
+    //console.log(predigt);
     this.userState.addLocalSermon(predigt);
-    /*
-    this.userState.SermonLocalFiles.push(predigt);
-    console.log('now we have ');
-    console.log(this.userState.SermonLocalFiles);
-    console.log('dont forget to save');
-    this.userState.saveLocalSermons(this.userState.SermonLocalFiles);
-    */
   }
 
 }

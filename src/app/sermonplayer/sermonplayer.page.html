@@ -1,11 +1,21 @@
+<!--
 <ion-header>
   <ion-toolbar>
     <ion-title>{{sermonTitle}}</ion-title>
-    <ion-icon class="right" (click)="ClosePopover()" src="../../assets/icon/close-circle-sharp.svg"></ion-icon>
+    <ion-icon (click)="ClosePopover()" src="../../assets/icon/close-circle-sharp.svg"></ion-icon>
   </ion-toolbar>
 </ion-header>
+-->
 
 <ion-content>
+  <div class="player">
+
+  <ion-grid>
+  <ion-row class="top">
+    <ion-col>{{sermonTitle}}</ion-col>
+    <ion-icon class="close" (click)="ClosePopover()" src="../../assets/icon/icon_close.svg"></ion-icon>
+  </ion-row>
+</ion-grid>
 
   <ion-range min="0" max="{{duration}}" [(ngModel)]="position" color="darkColor">
   </ion-range>
@@ -49,5 +59,7 @@
     </ion-col>
   </ion-row>
 </ion-grid>
+
+</div>
 
 </ion-content>

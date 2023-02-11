@@ -50,6 +50,12 @@
   //box-shadow: -8px 0 16px rgba(0, 0, 0, 0.12);
 }
 
+.modal_sermonplayer {
+  --width: 270px;
+  background: rgba(133, 120, 120, 0.342);
+  //box-shadow: -8px 0 16px rgba(0, 0, 0, 0.12);
+}
+
 .modal_qr_popover {
   --width: 270px;
   background: rgba(133, 120, 120, 0.342);
@@ -90,6 +96,7 @@ h1, h2, h3, h4, h5 {
 
 //because of (iphone) nodge
 ion-app {
-  margin-top: calc( env(safe-area-inset-top) * 0.7 );
+  padding-top: calc( env(safe-area-inset-top) * 0.5 );
+  //margin-top: calc( env(safe-area-inset-top) * 0.5 );
   //margin-bottom: env(safe-area-inset-bottom);
 }

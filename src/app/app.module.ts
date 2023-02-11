@@ -76,7 +76,7 @@ import { Media } from '@ionic-native/media/ngx';
     EmailComposer,
     SafariViewController,
     WebView,
-    Media
+    Media,
     //LocalNotifications
   ],
   bootstrap: [AppComponent]

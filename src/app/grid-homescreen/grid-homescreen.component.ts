@@ -34,7 +34,7 @@ export class GridHomescreenComponent implements OnInit {
   handleClick(button) {
     switch (button) {
       case 'Mediathek':
-        this.userState.AppPageMedienInit = true;
+        //this.userState.AppPageMedienInit = true;
         this.router.navigate(["/tabs/predigten-audio"]);
         break;
       case 'Termine':

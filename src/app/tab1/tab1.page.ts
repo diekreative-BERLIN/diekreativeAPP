@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { LoginModalPage } from '../login-modal/login-modal.page';
 import { ModalController } from '@ionic/angular';
 import { HttpClient } from "@angular/common/http";
+import { UserstateService } from '../userstate.service';
+
 
 @Component({
   selector: 'app-tab1',
@@ -12,7 +14,8 @@ export class Tab1Page {
 
   constructor(
     public modalController: ModalController,
-    private http: HttpClient
+    private http: HttpClient,
+    private userState: UserstateService
   ) { }
   
   public async presentModal() {
@@ -24,14 +27,9 @@ export class Tab1Page {
     return await modal.present();
   }
 
-
-
-  mymethod(){
-    //this.playAudio("file.mp3");
-    alert("Hallo");
+  ionViewWillEnter() {
+    this.userState.doCronjobs();
   }
-  /*presentModal(){
-    console.log("t3st")
-  }*/
+
 
 }
