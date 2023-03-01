@@ -277,7 +277,7 @@ public removeLocalSermon(fname) {
   let pos = <number>this.isFileInArray(fname);
   if (pos > -1) {
     this.SermonLocalFiles.splice(pos,1);
-    //console.log('new=');
+    //console.log('removedlocalSermon '+fname+'! Now new list=');
     //console.log(this.SermonLocalFiles);
   }
 }
@@ -298,23 +298,43 @@ public removeLocalSermon(fname) {
     
   }
 
+  //do cronjobs -> auto remove old sermons?
   public doCronjobs() {
-    if (this.SermonLocalFiles.length > 0) {
-      //console.log('cronjobs to do?');
+    this.platform.ready().then(
+      async () => {
+     
+      console.log('cronjobs to do?');
       let files2remove = [];
       
       let diffInDays = <number>this.momentjs( Date.now() ).format('YYMMDD') - <number>this.momentjs( this.lastCronCheck ).format('YYMMDD');
 
       if (diffInDays >= 1) {
+
+        //set SermonLocalArray if still empty
+        if (this.SermonLocalFiles.length < 1) {
+          await this.nativeStorage.getItem('localSermons').then((localSermons)=>{
+            let data = JSON.parse(localSermons);
+            this.SermonLocalFiles = data;
+          });
+        }
+        //console.log('crontobs now.. sermonlocalfiles len ='+this.SermonLocalFiles.length);
+        await this.nativeStorage.getItem('settings_cache').then(
+          data => {
+            this.cleanupDays = data.autocleanup;
+          },
+          error => console.error(error)
+        );
+
         this.lastCronCheck = new Date( Date.now() );
-        //console.log('delete files after '+this.cleanupDays+' days');
+        console.log('delete files after '+this.cleanupDays+' days');
         
         for(var index in this.SermonLocalFiles) {
           //console.log(this.SermonLocalFiles[index].savedlocal);
           let delOn = new Date ( new Date( this.SermonLocalFiles[index].savedlocal ).getTime() + (this.cleanupDays * 60*60*24*1000) );
-          //console.log('file '+this.SermonLocalFiles[index].url+' saved on '+ this.SermonLocalFiles[index].savedlocal+ 'and del on '+delOn );
+  //let delOn = new Date (); //temp - delete today!!
+          console.log('file '+this.SermonLocalFiles[index].url+' saved on '+ this.SermonLocalFiles[index].savedlocal+ 'and del on '+delOn );
           if ( new Date() > delOn ) {
-            //console.log('have to del '+this.SermonLocalFiles[index].url);
+            console.log('have to del '+this.SermonLocalFiles[index].url);
             files2remove.push( {mp3name: this.SermonLocalFiles[index].url, skript: this.SermonLocalFiles[index].skript} );
           }
         }
@@ -322,10 +342,10 @@ public removeLocalSermon(fname) {
 
       //now are there files to del?
       for(var index in files2remove) {
-        //console.log('del '+files2remove[index].mp3name);
+        //console.log('in for schleife. delete: '+files2remove[index].mp3name);
         if (files2remove[index].skript != "") {
           this.file.removeFile(this.file.documentsDirectory + MEDIA_FOLDER_NAME, files2remove[index].skript.split('/').pop()).then((ret) => {
-            //console.log('skript deleted?');
+            //console.log('skript deleted');
             //console.log(ret);
           }, (error) => {
             console.log('error deleting: '+error);
@@ -334,18 +354,29 @@ public removeLocalSermon(fname) {
 
         let fname = files2remove[index].mp3name.split('/').pop();
         this.file.removeFile(this.file.documentsDirectory + MEDIA_FOLDER_NAME, fname).then((ret) => {
-          //console.log('file '+this.file.documentsDirectory + MEDIA_FOLDER_NAME, fname+' deleted?');
+          //console.log('file '+this.file.documentsDirectory + MEDIA_FOLDER_NAME, fname+' deleted');
           //console.log(ret);
-
-          this.removeLocalSermon(files2remove[index].mp3name);
-          this.saveLocalSermons();
-          this.AppPageMedienInit = true;
 
         }, (error) => {
           console.log('error deleting: '+error);
         });
       }
-    }
+
+      let updateLocalSermons = false;
+      for(var index in files2remove) {
+        //console.log('in for schleife. to remove from storage: '+files2remove[index].mp3name);
+        updateLocalSermons = true;
+        this.removeLocalSermon(files2remove[index].mp3name);
+      }
+      if (updateLocalSermons) {
+        //console.log('we have updated local sermons -> save new!');
+        this.saveLocalSermons();
+        this.AppPageMedienInit = true;
+      }
+
+    }); //platf ready
+
+    //}
   }
 
 

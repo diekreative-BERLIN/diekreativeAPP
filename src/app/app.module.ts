@@ -17,7 +17,7 @@ import { ChurchapiService } from './connectors/churchapi.service';
 import { FeedsService } from './communications/feeds.service';
 import { EventsService } from './connectors/events.service';
 import { UserstateService } from './userstate.service';
-import { PredigtElementComponent } from './predigt-element/predigt-element.component';
+//import { PredigtElementComponent } from './predigt-element/predigt-element.component';
 import { HTTP } from '@ionic-native/http/ngx';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UnescapePipe } from './unescape.pipe';

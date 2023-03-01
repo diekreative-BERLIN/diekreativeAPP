@@ -53,7 +53,7 @@ export class PredigtElementComponent {
     private webview: WebView,
     private popover: PopoverController,
     private _zone: NgZone,
-    private fileOpener: FileOpener,
+    private fileOpener: FileOpener
   ) {
     //this.platform.backButton.subscribeWithPriority(10, () => {
     //  this.router.navigate(["/tabs/tab1"]);

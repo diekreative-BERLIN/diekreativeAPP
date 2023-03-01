@@ -511,6 +511,12 @@ async checkin(){
 
   }
 
+//check wether an object is emtpy or not
+private isEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
+
+
   /**
    * we get here every time, the GodiPage is entered and AppPage Infos are read from storage
    * what happens here?
@@ -584,7 +590,6 @@ async checkin(){
     }
     */
 
-
     console.log('isGodiToday='+this.isGodiToday+' eventProgressState='+this.eventProgressState);
     if (this.isGodiToday == 1) {
       if (this.eventProgressState == 0 || this.eventProgressState == 1) {
@@ -604,18 +609,22 @@ async checkin(){
               let EventLinkDate = (JSON.parse(result.data)).date;
               console.log('Datum für next Link:'+EventLinkDate+' (mit Format='+moment( EventLinkDate, 'DD.MM.YYYY' ).format('YYMMDD')+') GoDi Event='+this.momentjs( this.AppPageGodiEvntStart ).format('YYMMDD'));
               //only show zoom and YT link for the current Event
-              if (moment( EventLinkDate, 'DD.MM.YYYY' ).format('YYMMDD') == this.momentjs( this.AppPageGodiEvntStart ).format('YYMMDD')) {
+              //if (moment( EventLinkDate, 'DD.MM.YYYY' ).format('YYMMDD') == this.momentjs( this.AppPageGodiEvntStart ).format('YYMMDD')) {
+                if (1) { //test
                 this.ZoomLink = (JSON.parse(result.data)).zoom;
                 this.YTLink = (JSON.parse(result.data)).youtube;
                 
-                console.log('ZoomLink='+this.ZoomLink);
-                console.log('YTLink='+this.YTLink);
-                if (this.ZoomLink == 'n/a') {
+                console.log('ZoomLink=');
+                console.log(this.ZoomLink);
+                console.log('YTLink=');
+                console.log(this.YTLink);
+
+                if (this.isEmpty(this.ZoomLink) || this.ZoomLink === 'n/a') {
                   this.ZoomAvailable = -1
                 } else {
                   this.ZoomAvailable = 1
                 }
-                if (this.YTLink == 'n/a') {
+                if (this.isEmpty(this.YTLink) || this.YTLink === 'n/a') {
                   this.YTAvailable = -1
                 } else {
                   this.YTAvailable = 1
@@ -624,8 +633,8 @@ async checkin(){
                 this.ZoomAvailable = -1
                 this.YTAvailable = -1
               }
-
-              console.log('try to download skript from '+this.SkriptLink);
+              //console.log('ZoomAvailable='+this.ZoomAvailable+'   YTAvailable='+this.YTAvailable);
+              //console.log('try to download skript from '+this.SkriptLink);
               //'https://dkskript.000webhostapp.com/predigtskript/predigt.pdf'
               let url = encodeURI(this.SkriptLink);
               //here initializing object. 

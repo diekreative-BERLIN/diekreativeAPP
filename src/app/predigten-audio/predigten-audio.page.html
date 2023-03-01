@@ -15,14 +15,20 @@
     <div class="kreuze"> <img src="../assets/svg/kreuze_blue.svg" id="kreuze" > </div>
     <div class="pfeil"> <img src="../assets/svg/pfeil_yellow_2.svg" id="pfeile" > </div>
   </div>
-  
+  <img src="../assets/swipe-down.png" class="swipedown">
   <ion-list>
 
    <div *ngFor="let predigt of predigten"> 
       <app-predigt-element [predigt]=predigt></app-predigt-element>
   </div>
 
-  <ion-button *ngIf="isViewCompact && userState.isOnline && !currentListWasSetByLocalDb" class="centered" (click)="getMoreSermons()">mehr</ion-button>
-
   </ion-list>
+
+  <!--  && predigten.length>0 -->
+  <ion-button *ngIf="isViewCompact && userState.isOnline && !currentListWasSetByLocalDb" class="centered" (click)="getMoreSermons()">mehr</ion-button>
+  <!--
+  <p *ngIf="!userState.isOnline && predigten.length<1" class="centered"><br/><br/><br/>App ist offline und es sind keine Predigten offline verfügbar. (Tipp: Predigten vorher per WLAN herunterladen, damit sie offline zur Vergügung stehen)!</p>
+  
+  <p>Anzahl Predigten: {{predigten.length}}</p>
+  -->
 </ion-content>
