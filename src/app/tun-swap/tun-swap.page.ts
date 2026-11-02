@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ChurchapiService } from '../connectors/churchapi.service';
 //popover
 import {PopoverController} from '@ionic/angular';
@@ -8,6 +8,7 @@ import {PopoverController} from '@ionic/angular';
   selector: 'app-tun-swap',
   templateUrl: './tun-swap.page.html',
   styleUrls: ['./tun-swap.page.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TunSwapPage implements OnInit {
 

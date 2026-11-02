@@ -1,17 +1,34 @@
 <ion-content>
 
+      <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="100" pullMax="200">
+            <ion-refresher-content 
+              pullingIcon="arrow-down-outline" 
+              pullingText="ziehen zum Aktualisieren" 
+              refreshingSpinner="circular"
+              refreshingText="es wird aktualisiert...">
+            </ion-refresher-content>
+      </ion-refresher>
+
   <h1 class="ueberuns-text">Gebets-kalender</h1> 
 
- <!-- div class="back"><a (click)="BackActivated()"><ion-icon name="return-up-back-outline"></ion-icon></a></div -->
+ <!-- div class="back"><a (click)="BackActivated()"><ion-icon name="chevron-back-outline"></ion-icon></a></div -->
+ <div class="pos_back">
+ <ion-buttons>
+      <button mat-flat-button shape="round" color="primary" (click)="BackActivated()"><ion-icon class="innericon" name="chevron-back-outline"></ion-icon>&nbsp;zurück</button>
+</ion-buttons>
+</div>
 
  <div class="punkte"> <img src="../assets/svg/punkte_yellow.svg" id="punkte" > </div>
  <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
 
  <div class="positionierung">
-  
-      <iframe src="https://diekreative.org/churchtools/?q=churchcal&amp;embedded=true&amp;viewname=calView&amp;category_id=17&amp;title=Gebetskalender&amp;cal4web=true" 
-      width="100%" height="800px" frameborder="0" scrolling="no" ng-onload="hideLoader()">Dein Brower unterstützt leider keine iFrames!&nbsp;</iframe>
 
+      <!-- iframe src="(siehe environment.gebetskalenderurl)" 
+      width="100%" height="800px" frameborder="0" scrolling="no" ng-onload="hideLoader()">Dein Brower unterstützt leider keine iFrames!&nbsp;</iframe -->
+      <iframe [src]="browser.secUrl"
+      width="100%" height="800px" frameborder="0" scrolling="no" ng-onload="hideLoader()"
+      sandbox="allow-scripts allow-top-navigation allow-pointer-lock allow-same-origin allow-popups allow-forms"
+      >Dein Brower unterstützt leider keine iFrames!&nbsp;</iframe>
 
 </div>
 </ion-content>

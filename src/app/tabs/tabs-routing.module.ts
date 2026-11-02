@@ -45,6 +45,10 @@ const routes: Routes = [
         loadChildren: () => import('../tun-gebetscal/tun-gebetscal.module').then( m => m.TunGebetscalPageModule)
       },
       {
+        path: 'tun-gebetscalHN',
+        loadChildren: () => import('../tun-gebetscalHN/tun-gebetscalHN.module').then( m => m.TunGebetscalPageModule)
+      },
+      {
         path: 'tun-takewatches',
         loadChildren: () => import('../tun-takewatches/tun-takewatches.module').then( m => m.TunTakewatchesPageModule)
       },
@@ -83,6 +87,18 @@ const routes: Routes = [
       {
         path: 'termine',
         loadChildren: () => import('../termine/termine.module').then( m => m.TerminePageModule)
+      },
+      {
+        path: 'audienz',
+        loadChildren: () => import('../audienz/audienz.module').then( m => m.AudienzPageModule)
+      },
+      {
+        path: 'akademie',
+        loadChildren: () => import('../akademie/akademie.module').then( m => m.AkademiePageModule)
+      },
+      {
+        path: 'ministryteam',
+        loadChildren: () => import('../ministryteam/ministryteam.module').then( m => m.MinistryteamPageModule)
       },
       {
         path: '',

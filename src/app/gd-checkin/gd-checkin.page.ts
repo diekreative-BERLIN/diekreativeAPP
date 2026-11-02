@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ChurchapiService } from '../connectors/churchapi.service';
 //popover
 import {PopoverController} from '@ionic/angular';
@@ -14,6 +14,7 @@ import * as moment from 'moment-timezone';
   selector: 'app-gd-checkin',
   templateUrl: './gd-checkin.page.html',
   styleUrls: ['./gd-checkin.page.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class GdCheckinPage implements OnInit {
   public myAngularxQrCode: string = null;
@@ -31,11 +32,7 @@ export class GdCheckinPage implements OnInit {
     private popover:PopoverController,
     private platform: Platform,
     private churchtools:ChurchapiService
-    ) {
-      //this.platform.backButton.subscribeWithPriority(10, () => {
-      //  this.popover.dismiss("abort");
-      //});
-  }
+    ) { }
 
   @ViewChild(IonSlides) slides: IonSlides;
   
@@ -73,7 +70,7 @@ export class GdCheckinPage implements OnInit {
   }
   slideChanged() {
     let currentIndex = this.slides.getActiveIndex();
-    console.log('Current index is ', currentIndex);
+    //console.log('Current index is ', currentIndex);
   }
 
 }

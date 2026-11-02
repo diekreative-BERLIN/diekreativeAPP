@@ -98,15 +98,6 @@ p.gottesdienst-text {
 }
 
 
-.kreuze {
-    top: 28px;
-    right:0px;
-    width: 96px;
-    height: 96px;
-    opacity: 1; 
-    position: absolute;
-}
-
 .pfeil {
     position: absolute;
     top: 280px;
@@ -253,6 +244,32 @@ mat-expansion-panel * {
 .alert-class {
     white-space: pre-wrap;
 }
+.alert-title {
+    text-align: center;
+}
+
+.alert-wrapper {
+    width: 75vw !important;
+    max-width: 90% !important;
+    height: 65vh !important;
+    max-height: 90% !important;
+}
+.alert-message {
+    height: 100vh;
+}
+.alert-message.sc-ion-alert-md {
+  max-height: unset;
+}
+.alert-message.sc-ion-alert-ios {
+    max-height: unset;
+}
+.alert-head.sc-ion-alert-ios {
+    padding-top: 10px;
+}
+.alert-message.sc-ion-alert-ios, .alert-input-group.sc-ion-alert-ios {
+    font-size: 16px;
+}
+
 /*
 width: 50%;
 display: table;

@@ -1,76 +1,92 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Platform, MenuController } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 
 import { ModalController } from '@ionic/angular';
 import { LoginModalPage } from './login-modal/login-modal.page';
 import { PersondetailModalPage } from './persondetail-modal/persondetail-modal.page';
-import { FeedsService } from './communications/feeds.service';
-import { ChurchapiService } from './connectors/churchapi.service';
 import { UserstateService } from './userstate.service';
 import { Router } from '@angular/router';
-import { HTTP } from '@ionic-native/http/ngx';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { ConnectivityService } from './connectivity.service';
-
+//import { ConnectivityService } from './connectivity.service';
+import { AlertController } from '@ionic/angular';
+import { SplashScreen } from '@capacitor/splash-screen';
+import { StatusBar, Style } from '@capacitor/status-bar';
+import { Network } from '@capacitor/network';
+import { EmailComposer, OpenOptions } from 'capacitor-email-composer'
+//import { DefaultWebViewOptions, InAppBrowser } from '@capacitor/inappbrowser';
+import { DefaultSystemBrowserOptions, InAppBrowser } from '@capacitor/inappbrowser';
+//Back Button
+import { App as CapacitorApp } from '@capacitor/app';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   login = false;
 
   constructor(
     private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
-    private firebaseX: FirebaseX,
     private menu: MenuController,
     public modalController: ModalController,
-    private feeds: FeedsService,
-    private churchToolsApi: ChurchapiService,
     public userState: UserstateService,
     private router: Router,
-    private http: HTTP,
-    private iab: InAppBrowser,
-    private connectivity: ConnectivityService
+    public alertController: AlertController
   ) {
+    console.log('app.component -> es geht los!');
     this.initializeApp();
+  }
+
+  ngOnInit() {
     //handle Android Back Button
-    this.platform.backButton.subscribeWithPriority(10, () => {
-      if (this.router.url == "/tabs/itemslide" || this.router.url == "/tabs/tun-gebetscal" || this.router.url == "/tabs/tun-takewatches") {
-        this.router.navigate(["/tabs/tagundnacht"]);
-      } else if (this.router.url == '/tabs/tab1') {
-        this.router.navigate(["/tabs/termine"]);
-      } else if (this.router.url == '/tabs/tab2') {
-        navigator['app'].exitApp();
+    CapacitorApp.addListener('backButton', ({canGoBack}) => {
+      if(!canGoBack){
+        CapacitorApp.exitApp();
       } else {
-        //go to home
-        this.router.navigate(["/tabs/tab1"]);
+        window.history.back();
       }
     });
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-      this.firebaseX.hasPermission().then((permission)=>{
-        if(!permission){
-          this.firebaseX.grantPermission();
+    this.platform.ready().then(
+      () => {
+        SplashScreen.hide().then(() => {
+          //status bar
+          if(this.platform.is('android')) {
+            //white background and black text
+            StatusBar.setBackgroundColor({color: '#ffffff'});
+          } 
+          StatusBar.setStyle({style: Style.Default});
+        });
         }
+      );
+
+      Network.getStatus().then((status) => {
+        this.userState.isOnline = status.connected;
       });
-      this.firebaseX.getToken()
-        .then(token => {
-        console.log(`The token is ${token}`);}) // save the token server-side and use it to push notifications to this device
-        .catch(error => alert(`Error getting token ${error}`));
+      //Network connection change
+      Network.addListener('networkStatusChange', (status) => {
+        console.log('Network status changed', status);
+        this.userState.isOnline = status.connected;
       });
 
+  }
+
+  //handle push messages in foreground
+  onMessageReceived(message){
+
+    this.alertController.create({
+      cssClass: 'push-message',
+      header: message.aps.alert.title,
+      message: message.aps.alert.body,
+      buttons: ['OK']
+    }).then(res => {
+      res.present();
+    });
+
+    //remove all message badges
   }
 
   openFirst() {
@@ -83,22 +99,9 @@ export class AppComponent {
     this.menu.close('first');
   }
 
-close(){
-  this.menu.close('first');
-}
-
-ngOnInit() {
-  this.connectivity.appIsOnline$.subscribe(online => {
-    console.log(online)
-    if (online) {
-        console.log("App is online");
-        this.userState.isOnline = true;
-    } else {
-        console.log("App is offline")
-        this.userState.isOnline = false;
-    }
-  })
-}
+  close(){
+    this.menu.close('first');
+  }
 
 
   async presentModal() {
@@ -124,13 +127,18 @@ ngOnInit() {
     });
   }
   
+  settingsActivated(){
+    this.router.navigate(["/tabs/settings"]);
+    this.close();
+  }
+
   ctAppActivated(){
     this.router.navigate(["/tabs/ctapp"]);
     this.close();
   }
 
   mediathekActivated(){
-    this.userState.AppPageMedienInit = true;
+    //this.userState.AppPageMedienInit = true;
     this.router.navigate(["/tabs/predigten-audio"]);
     this.close();
   }
@@ -145,8 +153,16 @@ ngOnInit() {
     this.close();
   }
 
-  mailDieKreative(){
-    this.router.navigateByUrl("mailto:office@diekreative.org");
+  async mailDieKreative(){
+    //this.router.navigateByUrl("mailto:office@diekreative.org");
+    let email:OpenOptions= {
+      to: ['office@diekreative.org'],
+      subject: 'Kontakt zu diekreative',
+      isHtml: false
+    };
+
+    // Send a text message using default options
+    await EmailComposer.open(email); 
     this.close();
   }
 
@@ -159,7 +175,6 @@ ngOnInit() {
     this.close();
   }
   tagundnachtActivated(){
-    this.userState.AppPageTUNInit = true;
     this.router.navigate(["/tabs/tagundnacht"]);
     this.close();
   }
@@ -176,12 +191,15 @@ ngOnInit() {
     this.close();
   }
   openWebsite(url){
-    this.platform.ready().then(() => {
-      this.iab.create(url,'_system');
+    this.platform.ready().then(async () => {
+      //2025-03-11 await InAppBrowser.openInWebView({url,options: DefaultWebViewOptions});
+      await InAppBrowser.openInSystemBrowser({url:url, options: DefaultSystemBrowserOptions});
     });
   }
 
 }
+
+
 
 /*
 <ion-item (click)="presentModal()"><ion-icon class="menuicon" color="secondary" name="key-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Login</ion-label></ion-item>

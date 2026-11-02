@@ -11,11 +11,11 @@
     position: absolute;
     top: 158px;
     left: 26px;
-    color: #FFFFFF;
-    font-family: 'Lato bold';
-    font-weight: 400;
-    font-style: normal;
-    font-size: 27px;
+    color: #fff;
+    font-family: Lato bold !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    font-size: 27px !important;
 }
 
 .subtitle {
@@ -115,14 +115,19 @@ div.currentprayer.ng-star-inserted {
     font-size: 14px;
 }
 
+.mat-expansion-panel-body {
+    padding: 0 24px 16px;
+    font-family: 'Source Sans Pro';
+  }
+
 .mat-expansion-panel-content {
 	font-family: 'Source Sans Pro';
     font-style: normal;
     font-weight: 400;
     //font: normal normal normal 14px/18px Source Sans Pro;
     letter-spacing: 0px;
-    //color: #777777;
-    color: red;
+    color: #777777;
+    //color: red;
 }
 
 .md.hydrated {
@@ -147,14 +152,15 @@ div.item-native {
 */
 
 //kein Schatten und nur einfache Linie zwischen den Expansion Elementen
-.mat-expansion-panel:not([class*='mat-elevation-z']) {
-    box-shadow: none;
+.mat-expansion-panel{
+//:not([class*=mat-elevation-z]) {
+    box-shadow: none !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.13);
     border-radius: 0px !important;
 }
 //kein Abstand zwischen den Expansion Elementen
 .mat-expansion-panel-spacing {
-    margin: 0;
+    margin: 0 !important;
 }
 
 b, strong {
@@ -196,7 +202,8 @@ div.mat-expansion-panel-body.ng-tns-c146-2 {
     padding-left: 5px;
 }
 
-.mat-focus-indicator.fullwidth.mat-flat-button.mat-button-base.mat-basic {
+
+.fullwidth.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-basic.mat-mdc-button-base {
     width: 100%;
     padding: 5px;
     background-color: #777777;
@@ -204,8 +211,10 @@ div.mat-expansion-panel-body.ng-tns-c146-2 {
     font-family: 'Source Sans Pro';
     font-weight: bold;
     font-size: 16px;
+    height: 30px!important;
 }
-.mat-focus-indicator.door1.mat-flat-button.mat-button-base.mat-basic {
+
+.door1.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-basic.mat-mdc-button-base {
     width: 48%;
     padding: 5px;
     background-color: #777777;
@@ -213,8 +222,10 @@ div.mat-expansion-panel-body.ng-tns-c146-2 {
     font-family: 'Source Sans Pro';
     font-weight: bold;
     font-size: 16px;
+    height: 45px;
 }
-.mat-focus-indicator.door2.mat-flat-button.mat-button-base.mat-basic {
+
+.door2.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-basic.mat-mdc-button-base {
     width: 48%;
     padding: 5px;
     position: fixed;
@@ -224,4 +235,16 @@ div.mat-expansion-panel-body.ng-tns-c146-2 {
     font-family: 'Source Sans Pro';
     font-weight: bold;
     font-size: 16px;
+    height: 45px;
+}
+
+.doorHN.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-basic.mat-mdc-button-base {
+    width: 100%;
+    padding: 5px;
+    background-color: #777777;
+    color: #FFFFFF;
+    font-family: 'Source Sans Pro';
+    font-weight: bold;
+    font-size: 16px;
+    height: 45px;
 }

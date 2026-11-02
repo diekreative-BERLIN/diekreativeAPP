@@ -1,7 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 
 //modal popover
 import { PopoverController } from '@ionic/angular';
@@ -10,23 +10,26 @@ import { GeneralPage } from '../modals/general/general.page';
 
 
 //timezone
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 //Churchtools connector
 import { ChurchapiService } from '../connectors/churchapi.service';
 import { EventsService } from '../connectors/events.service';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Preferences } from '@capacitor/preferences';
 import { Platform } from '@ionic/angular';
+import { FileOpener, FileOpenerOptions } from '@capacitor-community/file-opener';
+
 
 //alert
-import { AlertController } from '@ionic/angular';
+//import { AlertController } from '@ionic/angular';
 //File transfer
-import { File, FileEntry } from '@ionic-native/File/ngx';
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-//File Opener
-import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { Filesystem, Directory } from '@capacitor/filesystem';
 //In App Browser
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { DefaultSystemBrowserOptions, InAppBrowser } from '@capacitor/inappbrowser';
 import { UserstateService } from '../userstate.service';
+
+//download file withouth FileTransfer - https://stackoverflow.com/questions/61892608/how-to-download-file-from-url-in-ionic-5-without-using-filetransfer
+//14.07.23: did not work - deactivate again
+//import { HTTP } from '@awesome-cordova-plugins/http/ngx';
 
 const MEDIA_FOLDER_NAME = 'temp_files';
 
@@ -34,6 +37,7 @@ const MEDIA_FOLDER_NAME = 'temp_files';
   selector: 'app-gottesdienste',
   templateUrl: './gottesdienste.page.html',
   styleUrls: ['./gottesdienste.page.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class GottesdienstePage {
   //use of moment.js library
@@ -42,7 +46,6 @@ export class GottesdienstePage {
   modalDataReturned: any
   fixForCurrentTimeZone = new Date().getTimezoneOffset() / -60;
   //here creating object to access file transfer object.
-  private fileTransfer: FileTransferObject; 
   timestampLocal;
   isGodiToday;
   eventProgressState;
@@ -54,10 +57,14 @@ export class GottesdienstePage {
   SkriptAvailable = 0;
   SkriptPathLocal;
   ZoomAvailable=0;
+  LiveVoiceAvailable=0;
   YTAvailable=0;
   ZoomLink;
+  LiveVoiceLink;
   YTLink;
   SkriptLink;
+  MVideo;
+  MScript;
   familyQRdata = [];
   groupid = 183; //currently we preset groups to 'GoDi im MW'
 
@@ -73,37 +80,41 @@ export class GottesdienstePage {
   AppPageGodiInfoDate = "";
   AppPageGodiInfo = "";
   AppPageGodiInfotext = "";
-  AppPageGodiQRcheckin = true;
+  //nov '22 -> no more qr checkin needed -> deactivated!
+  //AppPageGodiQRcheckin = true;
+  AppPageGodiQRcheckin = false;
+
   AppPageGoDiQRcheckinCode = "false";
 
   constructor (
     private churchtools:ChurchapiService,
     private events:EventsService,
     private platform: Platform,
-    private nativeStorage: NativeStorage,
     private popover:PopoverController,
-    private router: Router,
-    private file: File,
-    private transfer: FileTransfer,
-    private fileOpener: FileOpener,
-    private iab: InAppBrowser,
     private modalController: ModalController,
-    private alertController: AlertController,
-    public userState: UserstateService
+    public userState: UserstateService,
+    private alertController: AlertController
+    //private nativeHTTP: HTTP
   ) {
-    platform.ready().then(() => {
+    platform.ready().then(async () => {
 
       console.log('platform is ready -> we are at START..');
-      let path = this.file.dataDirectory;
-      this.file.checkDir(path, MEDIA_FOLDER_NAME).then(
-        err => {
-          this.file.createDir(path, MEDIA_FOLDER_NAME, false);
-        }
+      Filesystem.readFile({
+        path: MEDIA_FOLDER_NAME,
+        directory: Directory.Data
+      }).then((result) => {}).catch((error) => {
+        Filesystem.mkdir({
+          path: MEDIA_FOLDER_NAME,
+          directory: Directory.Data,
+          recursive: false
+        });
+      }
       );
-
       //getPersonID
-      this.nativeStorage.getItem('currentUser').then((user)=>{
+      await Preferences.get({key: 'currentUser'}).then((result) => {
+        let user = JSON.parse(result.value);
         this.personid = user.personid;
+        this.personid = user?.personid;
         console.log('personID='+this.personid);
         this.isUserLoggedIn = true;
       });
@@ -111,7 +122,8 @@ export class GottesdienstePage {
       //this.groupid = 183; //currently we preset groups to 'GoDi im MW'
 
       //AppPageGoDi Storage read
-      this.nativeStorage.getItem("AppPageStorage").then((AppPg) => {
+      await Preferences.get({key: 'AppPageStorage'}).then((result) => {
+        const AppPg = JSON.parse(result.value);
         if (AppPg) {
           console.log('CHECK: app storage read OKAY');
           this.AppPageGodiTimestamp = AppPg.godi_timestamp;
@@ -166,9 +178,20 @@ export class GottesdienstePage {
         }
         */
       });
-    
+      console.log('is user loged in: '+this.isUserLoggedIn);
+      if (this.isUserLoggedIn) {
+        this.readFromCheckinData();
+      }
+
+    });
+      
+    }
+
+
+    private async readFromCheckinData() {
       //GodiCheckin Storage
-      this.nativeStorage.getItem('CheckinDataStorage').then((GodiCheck)=>{
+      await Preferences.get({key: 'CheckinDataStorage'}).then((result) => {
+        const GodiCheck = JSON.parse(result.value);
         if (GodiCheck) {
           console.log('CHECK: app storage GoDiCheck read OKAY');
           console.log("qrcode="+GodiCheck.godi_qrcheckincode);
@@ -180,21 +203,14 @@ export class GottesdienstePage {
           console.log('CHECK: app storage GoDiCheck read NOT POSSIBLE');
           if(this.AppPageGodiQRcheckin) {
             this.getQRCodesForFamily(2);
-            //this.getQRCode(this.personid, this.groupid);
           }
         }
       }, (error) => {
         console.log('CHECK: app storage GoDiCheck read ERROR');
         if(this.AppPageGodiQRcheckin) {
           this.getQRCodesForFamily(3);
-          //this.getQRCode(this.personid, this.groupid);
         }
       });
-    });
-
-      //this.platform.backButton.subscribeWithPriority(10, () => {
-      //  this.router.navigate(["/tabs/tab1"]);
-      //});
     }
 
   
@@ -222,7 +238,8 @@ export class GottesdienstePage {
 async checkin(){
 
     //1. Daten bereinigen
-    var daten = this.uniqueData(this.familyQRdata, 'personid');
+    //var daten = this.uniqueData(this.familyQRdata, 'personid');
+    var daten = this.familyQRdata;
     //var daten = this.familyQRdata;
     //2. Ablaufdaten auslesen und Gueltigkeit bestimmen
     this.momentjs.tz.setDefault('Europe/Berlin');
@@ -234,24 +251,30 @@ async checkin(){
     
     console.log('id | name | qrcode | validity | is3gok ');
     for(let zeile of daten){  
-      console.log(zeile.personid + "|" + zeile.name + "|" + zeile.qrcode + "|" + zeile.validity + "|" + zeile.is3gok);
+      console.log(zeile.personid + "|" + zeile.name + "|" + zeile.qrcode + "|" + zeile.validity);
+      ablauf = this.momentjs(zeile.validity).format("X");
 
       is3gok = false;
-      if (timestampLocal < zeile.validity && zeile.validity != 'Invalid date') {
+      if (timestampLocal < ablauf && ablauf != 'Invalid date') {
 
+        //console.log('validity ist okay ('+timestampLocal+' < '+zeile.validity+' ('+this.momentjs(zeile.validity).format("X")+'))');
         is3gok = true;
 
       } else {
 
-        //get validity from db and compare wit timestamp !!with async/await!!
-        await this.churchtools.getCheckValidity(zeile.personid).then((result)=>{
-          ablauf = this.momentjs(JSON.stringify(JSON.parse(result.data)), "YYYYMMDD H:mm:ss").format("X");
-          
-          if (timestampLocal < ablauf && zeile.validity != 'Invalid date') {
-            is3gok = true;
-            saveUpdatedCodes = true;
-          }
-        });
+        //query new validity (but only if we're online)
+        if (this.userState.isOnline) {
+          //get validity from db and compare wit timestamp !!with async/await!!
+          await this.churchtools.getCheckValidity(zeile.personid).then((result)=>{
+            ablauf = this.momentjs(JSON.stringify(JSON.parse(result.data)), "YYYYMMDD H:mm:ss").format("X");
+            
+            //console.log('validity neu ausgelesen: '+ablauf);
+            if (timestampLocal < ablauf && ablauf != 'Invalid date') {
+              is3gok = true;
+              saveUpdatedCodes = true;
+            }
+          });
+        }
 
       }
 
@@ -273,8 +296,6 @@ async checkin(){
     console.log('nun haben wir folgende Werte:');
     console.log(checkinQRitems);
 
-    //nun checkin Codes anzeigen
-    //QRcode: this.AppPageGoDiQRcheckinCode,
 
     await this.popover.create({component:GdCheckinPage,
       componentProps: {
@@ -298,16 +319,16 @@ async checkin(){
   }
 
   //save GoDi Info
-  public saveGoDiInfo() {
+  public async saveGoDiInfo() {
     console.log('>>>>>> SAVE!!! saveGoDiInfo: godi_timestamp: '+this.AppPageGodiTimestamp+', godi_start:'+this.AppPageGodiEvntStart+', godi_end:'+ this.AppPageGodiEvntEnd + ', godi_infodate: '+this.AppPageGodiInfoDate+', godi_info: '+this.AppPageGodiInfo+', godi_infotext: '+this.AppPageGodiInfotext+', godi_qrcheckin: '+this.AppPageGodiQRcheckin);
-    this.nativeStorage.setItem('AppPageStorage', {godi_timestamp: this.AppPageGodiTimestamp, godi_start: this.AppPageGodiEvntStart, godi_end: this.AppPageGodiEvntEnd, godi_infodate: this.AppPageGodiInfoDate, godi_info: this.AppPageGodiInfo, godi_infotext: this.AppPageGodiInfotext, godi_qrcheckin: this.AppPageGodiQRcheckin}).then(
+    await Preferences.set({key: 'AppPageStorage', value: JSON.stringify({godi_timestamp: this.AppPageGodiTimestamp, godi_start: this.AppPageGodiEvntStart, godi_end: this.AppPageGodiEvntEnd, godi_infodate: this.AppPageGodiInfoDate, godi_info: this.AppPageGodiInfo, godi_infotext: this.AppPageGodiInfotext, godi_qrcheckin: this.AppPageGodiQRcheckin})}).then(
       () => console.log('Stored AppPageStorage item!'),
       error => console.error('Error storing AppPageStorage item', error)
     );
   }
-  public saveCheckinCodes() {
+  public async saveCheckinCodes() {
     console.log('>>>>>> SAVE!!! : godi_qrcheckincode: '+this.familyQRdata);
-    this.nativeStorage.setItem('CheckinDataStorage', {godi_qrcheckincode: this.familyQRdata}).then(
+    await Preferences.set({key: 'CheckinDataStorage', value: JSON.stringify({godi_qrcheckincode: this.familyQRdata})}).then(
       () => console.log('Stored CheckinDataStorage item!'),
       error => console.error('Error storing CheckinDataStorage item', error)
     );
@@ -316,27 +337,26 @@ async checkin(){
   //read GoDi Events within next 7 days
   public getNextGoDiEvents(readNextDay) {
     this.churchtools.getNextGoDiEvents().then((result)=>{
-      console.log('nextGoDi Services (readNextDay? '+readNextDay+'): ' + JSON.stringify(result.data));
+      console.log('nextGoDi Services (readNextDay? '+readNextDay+'): ' + result.data);
       //let retval = JSON.parse(JSON.stringify(result)).data ;
       //this.momentjs.tz.setDefault('Europe/Berlin');
       let i=0;
-      let starttime = this.momentjs( (JSON.parse(result.data)[i].start) * 1000).subtract(this.fixForCurrentTimeZone, 'h');
+      let starttime = this.momentjs( (result.data[i].start) * 1000).subtract(this.fixForCurrentTimeZone, 'h');
       //get next Event > consider if result still holds current event - if so, then read next id.
       if (readNextDay>0) {
         if (this.momentjs( starttime ).format('YYMMDD') == this.momentjs( this.timestampLocal ).format('YYMMDD') ) {
           i=1;
-          starttime = this.momentjs( (JSON.parse(result.data)[i].start) * 1000).subtract(this.fixForCurrentTimeZone, 'h');
+          starttime = this.momentjs( (result.data)[i].start * 1000).subtract(this.fixForCurrentTimeZone, 'h');
         }
       }
-      let endtime = this.momentjs( (JSON.parse(result.data)[i].ende) * 1000).subtract(this.fixForCurrentTimeZone, 'h');
+      let endtime = this.momentjs( (result.data[i].ende) * 1000).subtract(this.fixForCurrentTimeZone, 'h');
       this.AppPageGodiEvntStart = starttime;
       this.AppPageGodiEvntEnd = endtime;
-      let infotext =  JSON.parse(result.data)[i].notes ;
+      let infotext =  result.data[i].notes ;
       let infodate = this.momentjs( starttime ).format('DD.MM.YYYY');
-      let info = this.momentjs( starttime ).format('HH:mm') + ' Uhr, ' + JSON.parse(result.data)[i].bezeichng ;
+      let info = this.momentjs( starttime ).format('HH:mm') + ' Uhr, ' + result.data[i].bezeichng ;
       //this.AppPageGodiWeekdayNextEvent = this.momentjs( starttime ).format('d') ;
   console.log('weekday next event = '+this.momentjs( starttime ).format('d')+' Date: '+info+ '  (start:'+starttime+' , end:'+endtime+')');
-      //toto
       this.AppPageGodiInfoDate = infodate;
       this.AppPageGodiInfo = info;
       this.AppPageGodiInfotext = infotext;
@@ -349,8 +369,10 @@ async checkin(){
   //read details for Event - especially if event has qr checkin code activated
   public getGoDiEventDetails() {
     this.churchtools.getGoDiEventDetails(this.groupid).then((result)=>{
-      //console.log("GoDi Event Info:" +JSON.stringify(JSON.parse(result.data)));
-      this.AppPageGodiQRcheckin = (JSON.parse(result.data)).data.settings.qrCodeCheckin;
+      console.log("GoDi Event Info:" +JSON.stringify(JSON.parse(result.data)));
+      //nov '22 - no more needed!
+      //this.AppPageGodiQRcheckin = (JSON.parse(result.data)).data.settings.qrCodeCheckin;
+      this.AppPageGodiQRcheckin = false;
       //console.log('qr checkin? '+this.AppPageGodiQRcheckin);
     });
   }
@@ -361,7 +383,7 @@ async checkin(){
     console.log('check person '+this.personid+' in group?');
     this.churchtools.checkPersonInGroup(this.personid).then((result)=>{
       //console.log("check person:" +JSON.stringify(JSON.parse(result.data)));
-      let daten = (JSON.parse(result.data))[0].group.domainIdentifier;
+      let daten = (result.data)[0].group.domainIdentifier;
       console.log( 'daten: '+daten );
       //let daten = (JSON.parse(result.data));
 
@@ -394,7 +416,7 @@ async checkin(){
   */
 
   //getQRCodes for Person and his/her relatives
-  public async getQRCodesForFamily(number) {
+  public async getQRCodesForFamily_old(number) {
     console.log('get qr code for whole family..'+number);
     this.familyQRdata = [];
     let tempFamilyData = [];
@@ -405,13 +427,15 @@ async checkin(){
     //console.log('ablaufdatum = ' + ablauf.format('DD.MM.YYYY HH:mm'));
     //console.log('ohne format='+ablauf);
 
+  console.log('lies für person id '+this.personid);
+
     //1. add current person to array
     zeile[0].personid=this.personid;
     zeile[0].name=this.userState.fullusername;
     //zeile[0].qrcode=this.AppPageGoDiQRcheckinCode;
     await this.churchtools.getQRCode(this.personid, this.groupid).then((result)=>{
-      let tempdata = JSON.parse(JSON.stringify(JSON.parse(result.data))).data.token;
-      //console.log('2) qrcode wert: ' + tempdata );
+      let tempdata = result.data.data.token;
+      console.log('2) qrcode wert: ' + tempdata );
       zeile[0].qrcode=tempdata;
       tempFamilyData.push(zeile[0]);
     }).catch((err)=>{
@@ -424,7 +448,7 @@ async checkin(){
       //console.log('relationships: '+JSON.stringify(result));
       //console.log('einzeln A: '+JSON.stringify(JSON.parse(result.data)) );
 
-      let daten = (JSON.parse(result.data));
+      let daten = (result.data);
       for (var i=0; i < daten.data.length; i++) {
 
           let zeile = [{"personid":"","name":"","qrcode":"","validity":""}];
@@ -435,29 +459,36 @@ async checkin(){
      }
     })
 
-    //console.log("beim auslesen direkt:");
-    //console.log(tempFamilyData);
+    console.log("beim auslesen direkt:");
+    console.log(tempFamilyData);
+    console.log('tempFamilyData length='+tempFamilyData.length);
 
     //3. add QR code where info is missing
     for (var i=0; i < tempFamilyData.length; i++) {
+      console.log('qrcode? "'+tempFamilyData[i].qrcode+'" personid='+tempFamilyData[i].personid+' groupid='+this.groupid);
       if (tempFamilyData[i].qrcode == '') {
+        console.log('okay emtpy code -> query!');
+
         await this.churchtools.getQRCode(tempFamilyData[i].personid, this.groupid).then((result)=>{
-          let tempdata = JSON.parse(JSON.stringify(JSON.parse(result.data))).data.token;
-          //console.log('2) qrcode wert: ' + tempdata );
-          tempFamilyData[i].qrcode = tempdata;
+          let tempdata = result.data.data.token;
+          console.log('4missing) qrcode wert: ' + tempdata );
+          tempFamilyData[i].qrcode = tempdata
+        }).catch((err)=>{
+          console.log("4)Error getting qrcode"+JSON.stringify(err));
         })
+
       }
     }
 
-    //console.log("mit QR Code bei Relatives ergänzt:");
-    //console.log(tempFamilyData);
+    console.log("mit QR Code bei Relatives ergänzt:");
+    console.log(tempFamilyData);
 
     //4. loop through current tempFamilyData and get validity for entries which have a valid qrcode
     for (var i=0; i < tempFamilyData.length; i++) {
       if (tempFamilyData[i].qrcode != '') {
         let ablauf = '';
         await this.churchtools.getCheckValidity(tempFamilyData[i].personid).then((result)=>{
-          ablauf = this.momentjs(JSON.stringify(JSON.parse(result.data)), "YYYYMMDD H:mm:ss").format("X");
+          ablauf = this.momentjs(result.data, "YYYYMMDD H:mm:ss").format("X");
           tempFamilyData[i].validity = ablauf;
         })
         this.familyQRdata.push(tempFamilyData[i]);
@@ -467,6 +498,31 @@ async checkin(){
     this.saveCheckinCodes();
 
   }
+
+  //getQRCodes for Person and his/her relatives through our own API function -> delivers complete data including qrcode and validity
+  public async getQRCodesForFamily(number) {
+    console.log('get qr code for whole family..'+number+' (personID '+this.personid+', groupID '+this.groupid+')');
+    this.familyQRdata = [];
+
+    await this.churchtools.getFamilyQRcodes(this.personid, this.groupid).then((result)=>{
+      console.log(result);
+      let tempdata = result.data;
+      this.familyQRdata = tempdata;
+
+      this.saveCheckinCodes();
+
+    }).catch((err)=>{
+      console.log("Error getting FamilyQRcode"+JSON.stringify(err));
+      this.AppPageGoDiQRcheckinCode = "false";
+    })
+
+  }
+
+//check wether an object is emtpy or not
+private isEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
+
 
   /**
    * we get here every time, the GodiPage is entered and AppPage Infos are read from storage
@@ -540,8 +596,7 @@ async checkin(){
       //console.log(this.familyQRdata);
     }
     */
-
-
+//temp - this.isGodiToday = 1; this.eventProgressState = 1; this.LiveVoiceAvailable = 1; this.YTAvailable = 1; this.SkriptAvailable = 1; //temp
     console.log('isGodiToday='+this.isGodiToday+' eventProgressState='+this.eventProgressState);
     if (this.isGodiToday == 1) {
       if (this.eventProgressState == 0 || this.eventProgressState == 1) {
@@ -551,52 +606,73 @@ async checkin(){
         }
         if (this.eventProgressState == 1) {
 
-          if (this.ZoomAvailable==0 || this.YTAvailable==0 || this.SkriptAvailable==0) {
+          if (this.ZoomAvailable==0 || this.LiveVoiceAvailable==0 || this.YTAvailable==0 || this.SkriptAvailable==0) {
             console.log('hole links für schichten:')
             this.events.getEventLinks().then((result)=>{
-              console.log(JSON.stringify(result.data));
+              console.log(result.data);
               //this.items = JSON.parse(result.data);
-              this.SkriptLink = (JSON.parse(result.data)).skript; //here we get also the script link
+              this.SkriptLink = (result.data).skript; //here we get also the script link
 
-              let EventLinkDate = (JSON.parse(result.data)).date;
+              let EventLinkDate = (result.data).date;
               console.log('Datum für next Link:'+EventLinkDate+' (mit Format='+moment( EventLinkDate, 'DD.MM.YYYY' ).format('YYMMDD')+') GoDi Event='+this.momentjs( this.AppPageGodiEvntStart ).format('YYMMDD'));
               //only show zoom and YT link for the current Event
-              if (moment( EventLinkDate, 'DD.MM.YYYY' ).format('YYMMDD') == this.momentjs( this.AppPageGodiEvntStart ).format('YYMMDD')) {
-                this.ZoomLink = (JSON.parse(result.data)).zoom;
-                this.YTLink = (JSON.parse(result.data)).youtube;
+              //if (moment( EventLinkDate, 'DD.MM.YYYY' ).format('YYMMDD') == this.momentjs( this.AppPageGodiEvntStart ).format('YYMMDD')) {
+                if (1) { //test
+                this.ZoomLink = (result.data).zoom;
+                this.LiveVoiceLink = (result.data).livevoice;
+                this.YTLink = (result.data).youtube;
+                this.MVideo = (result.data).mvideo;
+                this.MScript = (result.data).mscript;
                 
-                console.log('ZoomLink='+this.ZoomLink);
-                console.log('YTLink='+this.YTLink);
-                if (this.ZoomLink == 'n/a') {
+                console.log('ZoomLink=');
+                console.log(this.ZoomLink);
+                console.log('LiveVoiceLink=');
+                console.log(this.LiveVoiceLink);
+                console.log('YTLink=');
+                console.log(this.YTLink);
+
+                if (this.isEmpty(this.ZoomLink) || this.ZoomLink === 'n/a') {
                   this.ZoomAvailable = -1
                 } else {
                   this.ZoomAvailable = 1
                 }
-                if (this.YTLink == 'n/a') {
+                if (this.isEmpty(this.LiveVoiceLink) || this.LiveVoiceLink === 'n/a') {
+                  this.LiveVoiceAvailable = -1
+                } else {
+                  this.LiveVoiceAvailable = 1
+                }
+                if (this.isEmpty(this.YTLink) || this.YTLink === 'n/a') {
                   this.YTAvailable = -1
                 } else {
                   this.YTAvailable = 1
                 }
               } else {
                 this.ZoomAvailable = -1
+                this.LiveVoiceAvailable = -1
                 this.YTAvailable = -1
               }
 
-              console.log('try to download skript from '+this.SkriptLink);
-              //'https://dkskript.000webhostapp.com/predigtskript/predigt.pdf'
+              //console.log('ZoomAvailable='+this.ZoomAvailable+'   YTAvailable='+this.YTAvailable);
+              //console.log('try to download skript from '+this.SkriptLink);
               let url = encodeURI(this.SkriptLink);
+
+              //this.downloadFileAndStore(url);
+              
               //here initializing object. 
-              this.fileTransfer = this.transfer.create();  
+
               // here iam mentioned this line this.file.externalRootDirectory is a native pre-defined file path storage. You can change a file path whatever pre-defined method.  
-              this.fileTransfer.download(url, this.file.dataDirectory + MEDIA_FOLDER_NAME + '/' + 'skript.pdf', true).then((entry) => {  
-                  //here logging our success downloaded file path in mobile.  
-                  console.log('download completed: ' + entry.toURL());
-                  this.SkriptPathLocal = entry.toURL();
-                  this.SkriptAvailable=1;
-              }, (error) => {  
-                  //here logging our error its easier to find out what type of error occured.  
-                  console.log('download failed: ' + error);
-                  this.SkriptAvailable=-1;
+              Filesystem.downloadFile({
+                url: url,
+                path: MEDIA_FOLDER_NAME + '/' + 'skript.pdf',
+                directory: Directory.Data,
+                recursive: true
+              }).then((result) => {
+                console.log('downloaded file: ' + result.path);
+                this.SkriptPathLocal = result.path;
+                this.SkriptAvailable=1;
+              }).catch((error) => {
+                console.error('download error: ' + error);
+                this.SkriptAvailable=-1;
               });
 
             });
@@ -609,6 +685,7 @@ async checkin(){
           this.didReadNextEvent = true;
         }
       }
+
     }
 
   }
@@ -635,14 +712,14 @@ async checkin(){
   showGoDiDetails(infoQR) {
     //replace('\n\r', '<br/>').replace('\n', '<br/>').replace('\r', '<br/>')
     let message = this.AppPageGodiInfotext;
-    if (infoQR) {
+    if (infoQR && this.AppPageGodiQRcheckin) {
       message = message+'\n\nQR Checkin steht ab '+this.momentjs( this.AppPageGodiEvntStart ).subtract(this.checkinActivateSpan, 'hours').format('DD.MM. HH:mm')+' Uhr zur Verfügung';
     }
-    alert(message);
-    /*
+    //alert(message);
+    
     this.alertController.create({
       header: 'Info',
-      cssClass:'alert-class',
+      //cssClass:'alert-class',
       message: message.replace('\n', '<br/>'),
       buttons: [
         {
@@ -652,7 +729,7 @@ async checkin(){
     }).then(res => {
       res.present();
     });
-    */
+    
   }
 
 
@@ -660,8 +737,21 @@ async checkin(){
   /*
   * detect needed updates when we enter GoDi Page without App restart
   */
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
     console.log('----> ionViewDidEnter: isUserLoggedIn='+this.isUserLoggedIn+' (qrcode: '+this.AppPageGoDiQRcheckinCode+')'+' GodiToday?'+this.isGodiToday);
+    //if we were already on godi page and then have logged in, then we need to set the corresponding infos
+    if (!this.isUserLoggedIn) {
+      await Preferences.get({key: 'currentUser'}).then((result) => {
+        const user = JSON.parse(result.value);
+        this.personid = user?.personid;
+        console.log('personID='+this.personid);
+        this.isUserLoggedIn = true;
+      });
+      if (this.isUserLoggedIn) {
+        this.readFromCheckinData();
+      }
+    }
+
     this.setTimeStamp();
     console.log('timestamp saved: '+this.momentjs( this.AppPageGodiTimestamp ).format('YYMMDD') +' und jetzt:'+this.momentjs( this.timestampLocal ).format('YYMMDD'));
     //this.AppPageGoDiQRcheckinCode
@@ -695,9 +785,10 @@ async checkin(){
   }
 
   //display Skript with fileopener
-  public showSkript() {
-    this.fileOpener
-        .open(this.SkriptPathLocal, "application/pdf")
+  public async showSkript() {
+    await FileOpener.open({ filePath: this.SkriptPathLocal, contentType:'application/pdf'})
+//        .open(this.SkriptPathLocal, "application/pdf")
+      //2023-11-29 taken from predigt-element. works now on android. Need to check in iOS!!
         .then(() => console.log("File is opened"))
         .catch(e => console.log("Error opening file", e));
   }
@@ -726,6 +817,11 @@ async checkin(){
     console.log(this.ZoomLink);
     this.openWebsite(this.ZoomLink);
   }
+  launchLiveVoice(){
+    console.log("launch launchLiveVoice with:");
+    console.log(this.LiveVoiceLink);
+    this.openWebsite(this.LiveVoiceLink);
+  }
   launchYTlive(){
     console.log("launch Youtube with:");
     console.log(this.YTLink);
@@ -733,8 +829,8 @@ async checkin(){
   }
 
   openWebsite(url){
-    this.platform.ready().then(() => {
-      this.iab.create(url,'_system');
+    this.platform.ready().then(async () => {
+      InAppBrowser.openInSystemBrowser({url, options:DefaultSystemBrowserOptions});
     });
   }
   async openModal(modalTitle, modalText, modalShowZoomHowto) {
@@ -759,6 +855,9 @@ async checkin(){
   helpZoom() {
     this.openModal('Gottesdienst per Zoom','zum Mithören vor Ort via Zoom.\n\nZoom hat nur eine geringe zeitliche Verzögerung und eignet sich somit gut zum Mithören des Gottesdienstes vor Ort vom eigenen Smartphone aus.\nFür den Empfang von Bild und Ton muss die kostenlose Zoom App auf dem Smarthpone installiert sein. Zudem empfiehlt sich eine WLAN Verbindung zu nutzen um das Datenvolumen zu schonen.\n\nFür weitere Infos sprich bitte die Info an.\n\n~~~~~ english ~~~~~\nFor english speaking guests we provide a live translation over zoom.\nPlease make sure that you have installed the zoom client on your smartphone (free of charge) and have enough mobile data (or use WiFi) before clicking the "english" button.\nAs soon as zoom starts up, you will be able to choose the english translation channel.\nFeel free to contact our info desk for more information.', false);
   }
+  helpLiveVoice() {
+    this.openModal('Übersetzung per LiveVoice','zum Mithören via LiveVoice vom eigenen Smartphone aus.\n\Dazu muss die kostenlose LiveVoice App auf dem Smarthpone installiert sein. Es fällt nur ein geringes Datenvolumen an.\n\nFür weitere Infos sprich bitte die Info an.\n\n~~~~~ english ~~~~~\n\nFor international guests we provide live translation via LiveVoice App.\nPlease make sure that you have installed the LiveVoice app on your smartphone (free of charge) and have enough mobile data (or use WiFi) before clicking the "english" button.\n\nFeel free to contact our info desk for more information.', false);
+  }
   helpYT() {
     this.openModal('YouTube Livestream', 'Öffnet den aktuellen Livestream in YouTube\n\nDas ist der bevorzugte Weg, um von zuhause aus an der aktuellen Veranstaltung teilzunehmen.', false);
   }
@@ -773,21 +872,28 @@ async checkin(){
   }
 
   //temp
-  public reset() {
+  public async reset() {
     this.AppPageGodiTimestamp = 12345; //reset
-    this.nativeStorage.remove('AppPageStorage');
-    this.nativeStorage.remove('CheckinDataStorage');
+    await Preferences.remove({key: 'AppPageStorage'});
+    await Preferences.remove({key: 'CheckinDataStorage'});
     console.log('made a reset');
   }
     //temp
-    public check() {
-      this.nativeStorage.getItem('AppPageStorage').then((AppPg)=>{
+    public async check() {
+      await Preferences.get({key: 'AppPageStorage'}).then((result)=>{
+        const AppPg = JSON.parse(result.value);
         console.log('Check Infos from AppStorage: timestamp:'+AppPg.godi_timestamp+' InfoDate:'+AppPg.godi_infodate+
         ' AppPageGodiInfo:'+AppPg.godi_info+' AppPageGodiInfotext='+AppPg.godi_infotext+', AppPageGodiQRcheckin='+AppPg.godi_qrcheckin);
       });
-      this.nativeStorage.getItem('CheckinDataStorage').then((GodiCheck)=>{
-        console.log('GoDi Checkin Infos: AppPageGoDiQRcheckinCode:');
-        console.log(GodiCheck.godi_qrcheckincode);
+      await Preferences.get({key: 'CheckinDataStorage'}).then((result)=>{
+        const GodiCheck = JSON.parse(result.value);
+        console.log('GoDi Checkin Infos:');
+        console.log(GodiCheck);
+      });
+      await Preferences.get({key: 'currentUser'}).then((result)=>{
+        const currentUser = JSON.parse(result.value);
+        console.log('currentUser Infos:');
+        console.log(currentUser);
       });
     }
     //temp
@@ -801,4 +907,26 @@ async checkin(){
       this.isFakeNow = true;
     }
 
+
+    //new method to download file withouth FileTransfer Plugin - did not work
+    /*
+    private downloadFileAndStore(url) {
+      //
+      const filePath = this.file.dataDirectory + MEDIA_FOLDER_NAME + '/' + 'skript.pdf';      
+      //const filePath = this.file.dataDirectory + fileName;
+                       // for iOS use this.file.documentsDirectory
+      this.nativeHTTP.downloadFile(url, {}, {}, filePath).then(response => {
+         // prints 200
+         console.log('Predigtskript download - success block...', response);
+         this.SkriptPathLocal = filePath;
+         this.SkriptAvailable=1;
+      }).catch(err => {
+          // prints 403
+          console.log('Predigtskript download - error block ... ', err.status);
+          // prints Permission denied
+          console.log('Predigtskript download - error block ... ', err.error);
+          this.SkriptAvailable=-1;
+      })
+   }
+   */
 }

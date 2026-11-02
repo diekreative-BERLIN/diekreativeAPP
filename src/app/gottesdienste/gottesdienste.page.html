@@ -15,9 +15,6 @@
 
   <div class="gottesdienst-title" style="background-color: #fff;">
     <ion-label class="header-label" color="light">GOTTESDIENSTE</ion-label>   </div>
-
-
-    <div class="kreuze"> <img src="../assets/svg/kreuze_yellow.svg" id="kreuze" > </div>
     <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
 
     <h1 class="gottesdienst-text">WILLKOMMEN</h1>
@@ -49,7 +46,7 @@
     </ion-card>
   </div>
 
-  <div *ngIf="isGodiToday && (eventProgressState == 0 || eventProgressState == 1) || 1">
+  <div *ngIf="isGodiToday && (eventProgressState == 0 || eventProgressState == 1)">
     <!-- #docregion multi -->
     <mat-accordion class="gd-info-now" multi>
       <!-- #enddocregion multi -->
@@ -67,7 +64,7 @@
               <ion-row class="godi-info" (click)="showGoDiDetails(0)">
                 {{AppPageGodiInfotext}}
               </ion-row>
-              <ion-row *ngIf="(AppPageGodiQRcheckin && AppPageGoDiQRcheckinCode != 'false') || 1">
+              <ion-row *ngIf="(AppPageGodiQRcheckin && AppPageGoDiQRcheckinCode != 'false')">
                 <ion-button (click)="checkin()" class="qr-button">
                   <ion-icon name="qr-code-outline"></ion-icon>
                   &nbsp;&nbsp;
@@ -90,6 +87,12 @@
                     <ion-icon name="help-circle-outline"></ion-icon>
                   </ion-button>
                 </ion-col>
+                <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && LiveVoiceAvailable>0">
+                  <ion-button (click)="helpLiveVoice()" class="qr-button">
+                    <ion-label>Translation&nbsp;&nbsp;</ion-label>
+                    <ion-icon name="help-circle-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
                 <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && YTAvailable>0">
                   <ion-button (click)="helpYT()" class="qr-button">
                     <ion-label>livestream&nbsp;&nbsp;</ion-label>
@@ -100,16 +103,23 @@
               </ion-row>
               <ion-row>
                 <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && ZoomAvailable>0">
-                <ion-button (click)="launchZoomMeeting1()" class="qr-button">
-                  <ion-icon name="headset-outline"></ion-icon>
-                  &nbsp;&nbsp;
-                  <ion-label>Original</ion-label>
-                </ion-button>
+                  <ion-button (click)="launchZoomMeeting1()" class="qr-button">
+                    <ion-icon name="headset-outline"></ion-icon>
+                    &nbsp;&nbsp;
+                    <ion-label>Original</ion-label>
+                  </ion-button>
                 
-                <ion-button (click)="launchZoomMeeting2()" class="qr-button">
+                  <ion-button (click)="launchZoomMeeting2()" class="qr-button">
+                    <ion-icon name="headset-outline"></ion-icon>
+                    &nbsp;&nbsp;
+                    <ion-label>english</ion-label>
+                  </ion-button>
+              </ion-col>
+              <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && LiveVoiceAvailable>0">
+                <ion-button (click)="launchLiveVoice()" class="qr-button">
                   <ion-icon name="headset-outline"></ion-icon>
                   &nbsp;&nbsp;
-                  <ion-label>english</ion-label>
+                  <ion-label>LiveVoice</ion-label>
                 </ion-button>
               </ion-col>
               <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && YTAvailable>0">

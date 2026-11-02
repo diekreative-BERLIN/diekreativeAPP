@@ -20,6 +20,11 @@
     font-style: bold;
     font-size: 20px;
 }
+
+// 25-12-22 muss mind 16px sein laut ChatGPT weil sonst iOS den Dialog zoomt
+.tun-input {
+    font-size: 16px;
+}
 .action {
     font-size: 33px;
     position: relative;
@@ -30,7 +35,7 @@
     font-family: "Source Sans Pro";
     font-style: normal;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 16px;
 }
 .left {
     float: left;

@@ -1,0 +1,84 @@
+<!--
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{sermonTitle}}</ion-title>
+    <ion-icon (click)="ClosePopover()" src="../../assets/icon/close-circle-sharp.svg"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+-->
+
+<ion-content>
+  <div class="player">
+
+  <ion-grid>
+  <ion-row class="top">
+    <ion-col>{{sermonTitle}}</ion-col>
+    <ion-icon class="close" (click)="ClosePopover()" src="../../assets/icon/icon_close.svg"></ion-icon>
+  </ion-row>
+  <img [src]="sermonImageURL" class="sermonImage">
+</ion-grid>
+
+
+<audio  #audioRef 
+  style="background-color: beige;"
+  ></audio>
+
+<audio  #metaaudioRef [src]="sermonURL" preload="auto">
+</audio>
+
+  <ion-range *ngIf="isLoaded" min="0" max="{{audioService.audio.duration}}" 
+    value="{{audioService.audio.currentTime}}" 
+    (ionKnobMoveEnd)="setCurrentTime($event)" 
+    debounce="5">
+  </ion-range> 
+  <ion-range *ngIf="!isLoaded" min="0" max="{{metaaudio.duration}}" value="{{metaaudio.currentTime}}" 
+    (ionKnobMoveEnd)="setCurrentTime($event)"
+    debounce="5">
+  </ion-range> 
+  <div class="rangePlaytime">
+    <ion-label class="startTime" color="darkColor" *ngIf="isSameSermon()">{{ audioService.audio.currentTime | toHHMMSSPipe }}</ion-label>
+    <ion-label class="startTime" color="darkColor" *ngIf="!isSameSermon()">{{ 0 | toHHMMSSPipe }}</ion-label>
+    <ion-label class="endTime" color="darkColor" *ngIf="durationNaN()">--:--</ion-label>
+    <ion-label class="endTime" color="darkColor" *ngIf="!durationNaN()">{{ metaaudio.duration | toHHMMSSPipe }}</ion-label>
+  </div>
+<ion-grid>
+  <ion-row justify-content-center align-items-center style="height: 100%">
+    <ion-col>
+      <div class="flexRow">
+
+        <div>
+          <ion-button fill="clear" color="darkColor" (click)="controlSeconds('back')">
+            <ion-icon name="play-back-outline"></ion-icon>
+          </ion-button>
+        </div>
+        
+
+        <div>
+          <ion-button class="play_pause_btn" (click)="play()" color="darkColor" *ngIf="audioService.audio.paused && isLoaded" justify-content-center
+             align-items-center>
+            <ion-icon name="play" class="darkColor"></ion-icon>
+          </ion-button>
+          <ion-button class="play_pause_btn" (click)="load()" color="darkColor" *ngIf="!isLoaded" justify-content-center
+             align-items-center>
+            <ion-icon name="play" class="darkColor"></ion-icon>
+          </ion-button>
+          <ion-button class="play_pause_btn" (click)="audioService.audio.pause()" color="darkColor" *ngIf="!audioService.audio.paused && isLoaded" justify-content-center
+             align-items-center>
+            <ion-icon name="pause" class="darkColor"></ion-icon>
+          </ion-button>
+        </div>
+
+        <div>
+          <ion-button fill="clear" color="darkColor" (click)="controlSeconds('forward')">
+            <ion-icon name="play-forward-outline" class="Iconsize_For_Rev"></ion-icon>
+          </ion-button>
+        </div>
+
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+</div>
+
+</ion-content>

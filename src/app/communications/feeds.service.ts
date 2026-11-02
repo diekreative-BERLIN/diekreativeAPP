@@ -1,23 +1,47 @@
 import { Injectable } from '@angular/core';
 import { NewsRss } from './news-rss';
 import * as xml2js from "xml2js";
-import { HttpClient,  HttpErrorResponse, HttpHeaders } from "@angular/common/http";
+import { HttpClient,  HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeedsService {
   RssData: NewsRss;
+  RssData2: BehaviorSubject<NewsRss> = new BehaviorSubject<NewsRss>(null);
 
   public PREDIGTEN_URL = environment.predigtenurl;
+  
   constructor(private http: HttpClient) { 
-    this.GetRssFeedData(this.PREDIGTEN_URL);
+    this.GetRssFeedData(this.PREDIGTEN_URL,'');
   }
 
-  GetRssFeedData(URL) {
+  public async GetRssFeedData(URL,param){
     const requestOptions: Object = {
       observe: "body",
+      params: new HttpParams().set('mode', param),
+      responseType: "text"
+    };
+    const data = await firstValueFrom(this.http.get<NewsRss>(URL, requestOptions));
+    let istate = false;
+    console.log("data"+JSON.stringify(data));
+    let parseString = xml2js.parseString;
+    await parseString(data, (err, result: NewsRss) => {
+      this.RssData = result;
+      this.RssData2.next(this.RssData);
+      console.log(this.RssData);
+      istate = true;
+    });
+    return istate;
+  }
+
+  /*
+  public GetRssFeedData(URL,param) {
+    const requestOptions: Object = {
+      observe: "body",
+      params: new HttpParams().set('mode', param),
       responseType: "text"
     };
     console.log("in getrssfeeddata");
@@ -31,4 +55,6 @@ export class FeedsService {
         });
       });
   }
+  */
+
 }

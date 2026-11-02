@@ -1,0 +1,85 @@
+
+
+
+h1.ueberuns-text {
+    margin-top: 72px;
+    margin-left: 104px;
+    //margin-bottom: 0px;
+    //font: Bold var(--unnamed-font-size-27)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-lato);
+    //letter-spacing: var(--unnamed-character-spacing-2-02);
+    //color: var(--unnamed-color-003d58);
+    text-align: left;
+    font-family: 'Lato bold';
+    font: Bold 27px/27px Lato;
+    letter-spacing: 2.02px;
+    text-transform: uppercase;
+    color: #003D58;
+    opacity: 1;
+
+}
+
+.pos_back {
+    position: absolute;
+    top: 18px;
+    left: 27px;
+}
+/*
+.sc-ion-buttons-md-h {
+    display: flex;
+    align-items: center;
+    transform: translateZ(0);
+    z-index: 99;
+}
+*/
+.innericon.md.hydrated {
+    position: relative;
+    top: 1px;
+}
+
+
+.positionierung {
+    position: absolute;
+    top: 230px;
+    width: 100%;
+}
+
+.punkte {
+    position: absolute;
+    stroke-width: 0.1px;
+    top: -5px;
+    left: 450px;
+    width: 66px;
+    height: 66px;
+    opacity: 1; 
+}
+
+.pfeil {
+    position: absolute;
+    top: 110px;
+    left: 31px;
+    width: 48px;
+    height: 30px;
+}
+
+.ios.hydrated {
+	font-family: 'Source Sans Pro';
+    font-style: bold;
+}
+
+
+.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-primary.mat-mdc-button-base {
+    width: 100%;
+    padding: 5px;
+    padding-right: 12px;
+    background-color: #777777;
+    color: #FFFFFF;
+    font-family: 'Source Sans Pro';
+    //font-weight: bold;
+    font-size: 14px;
+    height: auto;
+}
+
+//25-12-22 laut ChatGPT das Scrollen im iFrame selbst unterbinden. scrolling="no" reicht nicht. Es braucht css
+iframe {
+  overflow: hidden !important;
+}

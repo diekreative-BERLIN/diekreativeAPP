@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
-import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { EmailComposer } from 'capacitor-email-composer';
 
 @Component({
   selector: 'app-erlebt',
   templateUrl: './erlebt.page.html',
   styleUrls: ['./erlebt.page.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ErlebtPage {
   inputErlebt: string = "";
@@ -14,17 +15,12 @@ export class ErlebtPage {
   isChecked;
 
   constructor(
-    public emailComposer: EmailComposer,
     private platform: Platform,
     private router: Router
-  ) {
-    //this.platform.backButton.subscribeWithPriority(10, () => {
-    //  this.router.navigate(["/tabs/tab1"]);
-    //});
-  }
+  ) { }
 
 
-  sendTestimony() {
+  async sendTestimony() {
 
     
     //this.emailComposer.requestPermission().then(yesNo => {
@@ -35,7 +31,7 @@ export class ErlebtPage {
           //if (available) {
           if(this.inputErlebt && this.useErlebt && this.isChecked) {
             let email = {
-              to: 'zeugnis@diekreative.org',
+              to: ['zeugnisse@diekreative.berlin'],
               subject: 'was ich mit Gott erlebt habe',
               body: 'Hallo, ich habe folgendes erlebt:\n\n'+this.inputErlebt+
                     '\n\nDas Zeugnis darf in anonymisierter Form verwendet werden? '+this.useErlebt+
@@ -45,7 +41,7 @@ export class ErlebtPage {
             };
 
             // Send a text message using default options
-            this.emailComposer.open(email);
+            await EmailComposer.open(email);
           }
           //}
         //});

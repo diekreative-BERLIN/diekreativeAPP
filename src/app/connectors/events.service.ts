@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HTTP } from '@ionic-native/http/ngx'
 import { environment } from 'src/environments/environment';
+
+import { CapacitorHttp } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,10 @@ export class EventsService {
   private EVENTS_API_SERVER_token = environment.prayerapitoken;
   private EVENTS_API_SERVER = environment.eventsurl;
 
-  constructor(private http:HTTP) { }
+  constructor() { }
 
    public getEventLinks(){
-    return this.http.get(this.EVENTS_API_SERVER,{},{token:this.EVENTS_API_SERVER_token});
+    return CapacitorHttp.get({url:this.EVENTS_API_SERVER, headers:{token:this.EVENTS_API_SERVER_token}});
   }
 
 }

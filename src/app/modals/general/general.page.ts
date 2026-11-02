@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'app-general',
   templateUrl: './general.page.html',
   styleUrls: ['./general.page.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class GeneralPage implements OnInit {
 

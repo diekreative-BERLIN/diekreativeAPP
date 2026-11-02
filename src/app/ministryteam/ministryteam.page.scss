@@ -1,0 +1,89 @@
+
+.tagundnacht-title {
+    box-shadow: 0px 3px 6px #00000029;
+    width:100%; 
+    height:209px; 
+    background-image: url('../../assets/headerimages/Header_Unterseiten_MINISTRYTEAM.jpg'); 
+    background-size: cover;
+}
+
+.header-label{
+    position: absolute;
+    top: 158px;
+    left: 26px;
+    color: #fff;
+    font-family: Lato bold !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    font-size: 27px !important;
+}
+
+.subtitle {
+    font-size: 14px;
+    font-family: Lato;
+    font-weight: normal;
+    line-height: normal;
+    margin-top:55px;
+    margin-bottom:41px;
+    margin-left:45px;
+    margin-right:45px;
+
+    color: var(--unnamed-color-777777);
+    text-align: left;
+    font: Regular 14px/18px Source Sans Pro;
+    letter-spacing: 0px;
+    color: #777777;
+    opacity: 1;
+}
+
+.m_info {
+    padding-left: 30px;
+}
+
+h3 {
+    color: var(--ion-color-secondary)
+}
+
+h2 {
+    color: var(--ion-color-primary)
+}
+
+
+   /* .headercaption */
+
+
+
+ion-button {
+    color:#ffffff;
+    font-weight: bold;
+}
+
+
+.md.hydrated {
+	font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    //font: normal normal normal 14px/18px Source Sans Pro;
+    letter-spacing: 0px;
+    //color: #777777;
+    font-size: 14px;
+}
+
+
+
+.fullwidth.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-basic.mat-mdc-button-base {
+    width: 100%;
+    padding: 5px;
+    background-color: #777777;
+    color: #FFFFFF;
+    font-family: 'Source Sans Pro';
+    font-weight: bold;
+    font-size: 16px;
+    height: auto;
+}
+.positionierung {
+    position: absolute;
+    top: 230px;
+    width: 100%;
+}
+

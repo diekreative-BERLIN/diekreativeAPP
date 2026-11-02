@@ -19,28 +19,20 @@
     font-size: 27px;
 }
 
-.kreuze {
-    top: 27px;
-    left: 14px;
-    width: 79px;
-    height: 10px;
-    opacity: 1; 
-    position: absolute;  
-    pointer-events: none;  
+.swipedown {
+    top: 240px;
+    left: 19px;
+    width: 70%;
+    position: absolute;
 }
 
-.pfeil {
-    position: absolute;
-    top: 139px;
-    right: 72px;
-    width: 67.45px;
-    height: 59px;
-    pointer-events: none;
-    /* border: 1.5px solid var(--unnamed-color-e1a730); 
-    border: 1.5px;  
-    border: 2px solid #E1A730; */
-}
 
 .descriptionopen{
     white-space: normal;
 }
+
+.centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }

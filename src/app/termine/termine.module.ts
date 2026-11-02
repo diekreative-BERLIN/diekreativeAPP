@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TerminePagePageRoutingModule } from './termine-routing.module';
 
 import { TerminePage } from './termine.page';
+import { SafePipe } from '../SafePipe';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { TerminePage } from './termine.page';
     IonicModule,
     TerminePagePageRoutingModule
   ],
-  declarations: [TerminePage]
+  declarations: [TerminePage, SafePipe]
 })
 export class TerminePageModule {}

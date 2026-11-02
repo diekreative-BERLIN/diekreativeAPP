@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ChurchapiService } from '../connectors/churchapi.service';
 //popover
 import {PopoverController} from '@ionic/angular';
@@ -7,6 +7,7 @@ import {PopoverController} from '@ionic/angular';
   selector: 'app-tun-release',
   templateUrl: './tun-release.page.html',
   styleUrls: ['./tun-release.page.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TunReleasePage implements OnInit {
 

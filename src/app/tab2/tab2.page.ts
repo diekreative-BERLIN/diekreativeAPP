@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { DefaultSystemBrowserOptions, InAppBrowser } from '@capacitor/inappbrowser';
 
 @Component({
   selector: 'app-tab2',
@@ -11,18 +11,13 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 export class Tab2Page {
 
   constructor(
-    private iab: InAppBrowser,
     private platform: Platform,
     private router: Router
-  ) {
-    //this.platform.backButton.subscribeWithPriority(10, () => {
-    //  this.router.navigate(["/tabs/tab1"]);
-    //});
-  }
+  ) {  }
 
   openWebsite(url){
     this.platform.ready().then(() => {
-      this.iab.create(url,'_system');
+      InAppBrowser.openInSystemBrowser({url, options:DefaultSystemBrowserOptions});
     });
   }
 

@@ -17,6 +17,7 @@ $RECYCLE.BIN/
 log.txt
 npm-debug.log*
 
+/.angular
 /.idea
 /.ionic
 /.sass-cache
@@ -29,8 +30,27 @@ npm-debug.log*
 /platforms
 /plugins
 /www
-src/environments/environment.prod.ts
+
+# native Capacitor-Projekte (enthalten Build-Artefakte mit kompilierten Schlüsseln)
+/android
+/ios
+
+# Schlüssel, Kennworte, URLs – nur lokal!
 src/environments/environment.ts
+src/environments/environment.prod.ts
 passwords.txt
+.env
+.env.*
+
+# Firebase-Konfigurationen
 GoogleService-Info.plist
 google-services.json
+/Info.plist
+
+# Backups / Experimente
+*.bak
+*.try
+*-backup
+*-try-video
+*.ts_*
+*.zip

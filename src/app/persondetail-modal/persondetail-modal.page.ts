@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { UserstateService } from '../userstate.service';
 
@@ -6,6 +6,7 @@ import { UserstateService } from '../userstate.service';
   selector: 'app-persondetail-modal',
   templateUrl: './persondetail-modal.page.html',
   styleUrls: ['./persondetail-modal.page.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PersondetailModalPage implements OnInit {
 

@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { ChurchapiService } from './churchapi.service';
+import { environment } from 'src/environments/environment';
 
 export const loginResponse = {"data":{"status":"success","message":"login.success","personId":1,"location":"?=churchhome"}};
 
@@ -32,13 +33,13 @@ describe('ChurchapiService', () => {
 
   it('should receive loginResponse',()=>{
 
-    service.login('admin','admin').subscribe((resp)=>{
+    service.login('testuser','testpass').subscribe((resp)=>{
       expect(resp).not.toBe(null);
       expect(JSON.stringify(resp)).toEqual(JSON.stringify(loginResponse))
     });
 
     const req = httpTestingController
-              .expectOne(`http://ec2-18-184-42-189.eu-central-1.compute.amazonaws.com/api/login?username=admin&password=admin`);
+              .expectOne(`${environment.churchtoolsurl}/api/login?username=testuser&password=testpass`);
 
     req.flush(loginResponse);
     
@@ -52,7 +53,7 @@ describe('ChurchapiService', () => {
     });
 
     const req = httpTestingController
-              .expectOne(`http://ec2-18-184-42-189.eu-central-1.compute.amazonaws.com/index.php?q=churchcal/ajax&func=getCalPerCategory&category_ids[]=2`);
+              .expectOne(`${environment.churchtoolsurl}/index.php?q=churchcal/ajax&func=getCalPerCategory&category_ids[]=2`);
 
     req.flush(getCal2Response);
     

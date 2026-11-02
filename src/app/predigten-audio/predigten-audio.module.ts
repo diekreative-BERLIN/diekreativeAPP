@@ -14,6 +14,7 @@ import { PredigtElementComponent } from '../predigt-element/predigt-element.comp
     CommonModule,
     FormsModule,
     IonicModule,
+    
     PredigtenAudioPageRoutingModule
   ],
   declarations: [PredigtenAudioPage, PredigtElementComponent]

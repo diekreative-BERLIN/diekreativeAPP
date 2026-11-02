@@ -1,13 +1,13 @@
 
 
 <ion-content>
+
     <div class="tagundnacht-title" style="background-color: #fff;">
       <ion-label class="header-label" color="light">TAGUNDNACHT</ion-label>
-   <div class="punkte"> <img src="../assets/svg/punkte_yellow.svg"> </div>
 </div>
 
 <div *ngIf="!userState.isOnline">
-  <ion-label ><div class="subtitle">
+  <ion-label><div class="subtitle">
     Du bist offline. Es können keine Details angezeigt werden!
     </div></ion-label>
 </div>
@@ -24,14 +24,14 @@ Du bist herzlich eingeladen mitzubeten
     </ion-row>
   </ion-grid>
 </ion-buttons>
-<ion-buttons *ngIf="userState.hasTuerOeffner">
+<ion-buttons *ngIf="userState.isGebetLeiter">
   <ion-grid>
     <ion-row>
       <button mat-flat-button color="basic" class="fullwidth" (click)="freieSchichtenActivated()">Freie Gebetsschichten</button>
     </ion-row>
   </ion-grid>
 </ion-buttons>
-<ion-buttons *ngIf="userState.hasTuerOeffner">
+<ion-buttons *ngIf="userState.isGebetLeiter">
   <ion-grid>
     <ion-row>
       <button mat-flat-button color="basic" class="fullwidth" (click)="meineSchichtenActivated()">Meine Gebetsschichten</button>
@@ -47,6 +47,22 @@ Du bist herzlich eingeladen mitzubeten
   </ion-grid>
 </ion-buttons>
 
+<ion-buttons *ngIf="userState.hasTuerOeffnerHN">
+  <ion-grid>
+    <ion-row> 
+      <button mat-flat-button color="basic" class="fullwidth" (click)="GebetskalenderHNActivated()">Gebetskalender Hohen Neuendorf</button>
+    </ion-row>
+  </ion-grid>
+</ion-buttons>
+<ion-buttons *ngIf="userState.hasTuerOeffnerHN">
+  <ion-grid>
+    <ion-row>
+      <button mat-flat-button color="basic" class="door1" (click)="tueroeffner.openHNDoor(1)"><img src="../../assets/icon/door-24px.svg">  HN Tor</button>
+      <button mat-flat-button color="basic" class="door2" (click)="tueroeffner.openHNDoor(2)"><img src="../../assets/icon/door-24px.svg">  HN Wagen</button>
+    </ion-row>
+  </ion-grid>
+</ion-buttons>
+<!-- {{Math.floor(( Date.now() % 86400000) / 3600000) - Math.floor(( userState.AppPageTunTimestamp % 86400000) / 3600000)}} -->
   <!-- #docregion multi -->
   <mat-accordion class="example-headers-align" multi>
   <!-- #enddocregion multi -->
@@ -61,12 +77,11 @@ Du bist herzlich eingeladen mitzubeten
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
         <div class="currentprayer">
-
           {{items[0].time}}&nbsp;{{items[0].format}}&nbsp;({{items[0].person}})&nbsp;{{items[0].note}}
 <!--
       11-12 Uhr&nbsp;Gebetsformat&nbsp;Person&nbsp;Notiz
 -->
-      </div>
+        </div>
       </ng-template>
     </mat-expansion-panel>
 
@@ -79,9 +94,7 @@ Du bist herzlich eingeladen mitzubeten
         <ion-icon *ngIf="nextprayer.expanded" name="close"></ion-icon>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
-
         <ion-list>
-
           <ion-item-sliding *ngFor = "let item of items | slice:1">
             <ion-item class="nextprayer">{{item.time}}&nbsp;
             {{item.format}}&nbsp;({{item.person}})&nbsp;{{item.note}}
@@ -94,10 +107,8 @@ Du bist herzlich eingeladen mitzubeten
           </ion-item-sliding>
 -->
         </ion-list>
-
       </ng-template>
     </mat-expansion-panel>
-	
 	<mat-expansion-panel hideToggle="true" #praytopic1>
       <mat-expansion-panel-header>
         <mat-panel-title>

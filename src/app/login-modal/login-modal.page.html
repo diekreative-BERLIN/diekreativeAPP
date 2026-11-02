@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="head">
     <ion-label slot="start">Churchtools Login</ion-label>
     <ion-button slot="end" (click)="dismiss()">zurück</ion-button>
     &nbsp;&nbsp;
@@ -7,12 +7,6 @@
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    &nbsp;<br>
-    Mitglieder und Freunde der Gemeinde, die zu unserem Churchtools einen Zugang haben, können sich hier mit ihrem in Churchtools gespeichertem E-Mail/Benutzernamen und Passwort einloggen.
-    Dadurch wird das Checkin per QR-Code zu unseren Gottesdiensten freigeschaltet und, falls sie registrierte Beter sind, auch weitere Funktionen zum Verwalten der Gebetsschichten sowie Zugang zum Türöffner.
-  <br>&nbsp;
-  </ion-item>
   <ion-item>
     <ion-label>Benutzername</ion-label>
     <ion-input type="text" [(ngModel)]="username"></ion-input>
@@ -22,4 +16,11 @@
     <ion-input type="password" [(ngModel)]="password"></ion-input>
   </ion-item>
   <ion-button (click)="login()" expand="block">Login</ion-button>
+  <ion-item>
+    &nbsp;<br>
+    Wenn Du bei unserer Churchtools Instanz (diekreative.church.tools) einen Account hast, kannst Du Dich hier mit Deinen Zugangsdaten einloggen.
+    Dadurch werden erweiterte Funktionen in der App freigeschaltet wie z.B. Gebetshaus Funktionen wie der Türöffner, Checkin-QR Code's für den Kids checkin und ein direkter Zugang zur Kursplattform.
+    Wenn Du noch keinen Zugang bei Churchtools hast, schreib uns gerne eine Mail an office(at)diekreative.org
+  <br>&nbsp;
+  </ion-item>
 </ion-content>

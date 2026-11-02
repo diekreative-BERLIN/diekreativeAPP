@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { UserstateService } from '../userstate.service';
 import { ChurchapiService } from '../connectors/churchapi.service';
 //popover
@@ -9,6 +9,7 @@ import {PopoverController} from '@ionic/angular';
   selector: 'app-tun-takeover',
   templateUrl: './tun-takeover.page.html',
   styleUrls: ['./tun-takeover.page.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TunTakeoverPage implements OnInit {
 

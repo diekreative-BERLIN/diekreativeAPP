@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NavController } from "@ionic/angular";
 import { ChurchapiService } from '../connectors/churchapi.service';
 import { UserstateService } from '../userstate.service';
@@ -16,10 +16,13 @@ import { TunReleasePage } from '../tun-release/tun-release.page';
   selector: 'app-itemslide',
   templateUrl: './itemslide.page.html',
   styleUrls: ['./itemslide.page.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ItemslidePage implements OnInit {
   items:any;
   initializing: any = false;
+  userfilter;
+  explicitusername;
 
   constructor(
     public navCtrl: NavController,
@@ -29,21 +32,34 @@ export class ItemslidePage implements OnInit {
     private platform: Platform,
     private router: Router
   ) {
-    let userfilter = encodeURI(this.userstate.shortusername);
-    let explicitusername = encodeURI(this.userstate.explicitusername);
-    this.churchtools.getGebetsschichten(7300,userfilter,explicitusername).then((result)=>{
-      console.log(JSON.stringify(result.data));
-      this.items = JSON.parse(result.data);
+    this.userfilter = encodeURI(this.userstate.shortusername);
+    this.explicitusername = encodeURI(this.userstate.explicitusername);
+    this.churchtools.getGebetsschichten(7300,this.userfilter,this.explicitusername).then((result)=>{
+      console.log('in Constructor Übersicht eigene Gebetsschichten');
+      console.log(result.data);
+      this.items = result.data;
       this.initializing = false;
     });
 
-    //this.platform.backButton.subscribeWithPriority(10, () => {
-    //  this.router.navigate(["/tabs/tagundnacht"]);
-    //});
   }
 
   ngOnInit() {
     this.initializing = true;
+    //console.log('itemslide - onInit');
+  }
+
+  async doRefresh(event) {
+    if (event) {
+      console.log('re-read Gebetsschichten');
+      
+      this.churchtools.getGebetsschichten(7300,this.userfilter,this.explicitusername).then((result)=>{
+        console.log('Reload Übersicht eigene Gebetsschichten');
+        console.log(result.data);
+        this.items = result.data;
+        this.initializing = false;
+      });
+      event.target.complete();
+    }
   }
 
 

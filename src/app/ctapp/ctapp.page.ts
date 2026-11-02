@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { DefaultSystemBrowserOptions, InAppBrowser } from '@capacitor/inappbrowser';
 import { Router } from '@angular/router';
-
 import { ChurchapiService } from '../connectors/churchapi.service';
 import { UserstateService } from '../userstate.service';
 
@@ -10,22 +9,18 @@ import { UserstateService } from '../userstate.service';
   selector: 'app-ctapp',
   templateUrl: './ctapp.page.html',
   styleUrls: ['./ctapp.page.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CtappPage implements OnInit {
   loginstring = "";
   AppPlatform = "";
 
   constructor(
-    private iab: InAppBrowser,
     private platform: Platform,
     private router: Router,
     private churchtools:ChurchapiService,
     public userState:UserstateService
-    ) {
-      //this.platform.backButton.subscribeWithPriority(10, () => {
-      //  this.router.navigate(["/tabs/tab1"]);
-      //});
-    }
+    ) {  }
 
   ngOnInit() {
     if(this.platform.is('android')) {
@@ -37,26 +32,34 @@ export class CtappPage implements OnInit {
 
   openCtApp(){
     let personid = this.userState.personid;
-    this.churchtools.getLoginString(personid).then((res)=>{
+    return this.churchtools.getLoginString(personid).then((res)=>{
       
-      console.log(JSON.stringify(res.data));
-      this.loginstring = (JSON.parse(res.data)).loginString;
+      console.log(res.data);
+      this.loginstring = (res.data).loginString;
       console.log("nun, loginstr="+this.loginstring);
 
-      let url = "churchtools://login?instanceurl=https://diekreative.org/churchtools/&loginstring="+this.loginstring+"&personid="+personid;
+      //let url = "churchtools://login?instanceurl=<churchtoolsurl>/&loginstring=..."
+      let url = "churchtools://login?instanceurl="+this.churchtools.DK_API_SERVER+"/&loginstring="+this.loginstring+"&personid="+personid;
+      
       console.log("CT App oeffnen mit:");
       console.log(url);
 
-      this.openWebsite(url);
-
+      window.open(url);  //TODO Marc 26.05.
+   
     }).catch((err)=>{
       this.loginstring = "";
     })
   }
 
   openWebsite(url){
-    this.platform.ready().then(() => {
-      this.iab.create(url,'_system');
+    this.platform.ready().then(async () => {
+      await InAppBrowser.openInSystemBrowser({url:url,options:DefaultSystemBrowserOptions});
+    });
+  }
+
+   openWebsiteInDefaultBrowser(url){
+    this.platform.ready().then(async () => {
+      await InAppBrowser.openInExternalBrowser({url:url});
     });
   }
 
