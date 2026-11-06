@@ -32,7 +32,16 @@ npm-debug.log*
 /www
 
 # native Capacitor-Projekte (enthalten Build-Artefakte mit kompilierten Schlüsseln)
-/android
+# Ausnahme: android/app/src/main/AndroidManifest.xml enthält keine Schlüssel
+# (nur Berechtigungen) und wird versioniert – Freigabe Ebene für Ebene.
+/android/*
+!/android/app/
+/android/app/*
+!/android/app/src/
+/android/app/src/*
+!/android/app/src/main/
+/android/app/src/main/*
+!/android/app/src/main/AndroidManifest.xml
 # Ausnahme: ios/App/App/Info.plist enthält keine Schlüssel (nur Berechtigungstexte)
 # und wird versioniert. Git braucht dafür die Ausnahme Ebene für Ebene.
 /ios/*
