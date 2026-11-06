@@ -2,18 +2,56 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { UserstateService } from './userstate.service';
 import { CapacitorHttp } from '@capacitor/core';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { StandortService, StandortId } from './standort.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TueroeffnerService {
-  constructor(private userstate:UserstateService) {
+  constructor(
+    private userstate:UserstateService,
+    private standort:StandortService,
+    private alertCtrl:AlertController,
+    private loadingCtrl:LoadingController
+  ) {
+  }
+
+  private pruefungLaeuft = false;
+
+  /** Öffnet die Tür nur, wenn das Gerät am passenden Standort ist. */
+  private async nurVorOrt(id: StandortId, oeffnen: () => Promise<any>) {
+    if (this.pruefungLaeuft) { return; }
+    this.pruefungLaeuft = true;
+    const loading = await this.loadingCtrl.create({ message: 'Standort wird geprüft…' });
+    await loading.present();
+    try {
+      const ergebnis = await this.standort.istAmStandort(id);
+      await loading.dismiss();
+      if (!ergebnis.erlaubt) {
+        const alert = await this.alertCtrl.create({
+          header: 'Nicht vor Ort',
+          message: ergebnis.grund,
+          buttons: ['OK']
+        });
+        await alert.present();
+        return;
+      }
+      return await oeffnen();
+    } finally {
+      await loading.dismiss().catch(() => {});
+      this.pruefungLaeuft = false;
+    }
   }
 
   private PRAY_API_SERVER_token = environment.prayerapitoken;
   private HN_API_SERVER_token = environment.tokenHN;
 
   public openFrontDoor(){
+    return this.nurVorOrt('schivelbeiner', () => this.sendFrontDoor());
+  }
+
+  private sendFrontDoor(){
     console.log("open Frontdoor");
     const options = {
       url: environment.tueroeffnerurl,
@@ -33,6 +71,10 @@ export class TueroeffnerService {
   }
 
   public openSecondDoor(){
+    return this.nurVorOrt('schivelbeiner', () => this.sendSecondDoor());
+  }
+
+  private sendSecondDoor(){
     console.log("open Second Door");
     return CapacitorHttp.post({
       url:environment.tueroeffnerurl,
@@ -48,6 +90,10 @@ export class TueroeffnerService {
   }
 
   public openHNDoor(doorid){
+    return this.nurVorOrt('hohenneuendorf', () => this.sendHNDoor(doorid));
+  }
+
+  private sendHNDoor(doorid){
     //console.log("open Door HohenN");
     /*
      "usertoken":this.userstate.logintoken, "userid":""+this.userstate.personid,"doorid":"2"

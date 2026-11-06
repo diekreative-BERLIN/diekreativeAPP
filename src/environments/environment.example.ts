@@ -15,5 +15,9 @@ export const environment = {
   dkeventsapiurl: "https://…",
   lifegroupsurl: "https://…",
   gebetskalenderurl: "https://…",
-  gebetskalenderHNurl: "https://…"
+  gebetskalenderHNurl: "https://…",
+  // WLAN-Erkennung Schivelbeiner Str. ("diekreative Guest"): DynDNS-Name des Anschlusses
+  // (z. B. MyFRITZ-Adresse) und/oder feste IPs. Beides leer = nur GPS-Prüfung.
+  standortHostSchivelbeiner: "",
+  standortIPsSchivelbeiner: []
 };
