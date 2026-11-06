@@ -33,7 +33,14 @@ npm-debug.log*
 
 # native Capacitor-Projekte (enthalten Build-Artefakte mit kompilierten Schlüsseln)
 /android
-/ios
+# Ausnahme: ios/App/App/Info.plist enthält keine Schlüssel (nur Berechtigungstexte)
+# und wird versioniert. Git braucht dafür die Ausnahme Ebene für Ebene.
+/ios/*
+!/ios/App/
+/ios/App/*
+!/ios/App/App/
+/ios/App/App/*
+!/ios/App/App/Info.plist
 
 # Schlüssel, Kennworte, URLs – nur lokal!
 src/environments/environment.ts
