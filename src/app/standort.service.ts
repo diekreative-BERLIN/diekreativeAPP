@@ -39,18 +39,50 @@ export interface StandortErgebnis {
   grund?: string;
 }
 
+/**
+ * Nach einer erfolgreichen Prüfung gilt der Standort so lange als bestätigt.
+ * So kann z. B. nach der Außentür direkt die Innentür geöffnet werden.
+ */
+const BESTAETIGUNG_GUELTIG_MS = 2 * 60 * 1000;
+
 @Injectable({
   providedIn: 'root'
 })
 export class StandortService {
 
+  /** Zeitpunkt der letzten erfolgreichen Prüfung je Standort */
+  private letzteBestaetigung: Partial<Record<StandortId, number>> = {};
+
   /**
-   * Prüft, ob sich das Gerät am angegebenen Standort befindet.
+   * Prüft den Standort und merkt sich einen Erfolg für 2 Minuten.
+   * Fehlschläge werden nicht gemerkt, damit ein neuer Versuch sofort neu prüft.
+   */
+  async istAmStandort(id: StandortId): Promise<StandortErgebnis> {
+    if (this.istKuerzlichBestaetigt(id)) {
+      return { erlaubt: true };
+    }
+    const ergebnis = await this.pruefeStandort(id);
+    if (ergebnis.erlaubt) {
+      this.letzteBestaetigung[id] = Date.now();
+    } else {
+      delete this.letzteBestaetigung[id];
+    }
+    return ergebnis;
+  }
+
+  /** true, wenn der Standort in den letzten 2 Minuten bestätigt wurde (ohne neue Ortung). */
+  istKuerzlichBestaetigt(id: StandortId): boolean {
+    const zuletzt = this.letzteBestaetigung[id];
+    return !!zuletzt && Date.now() - zuletzt < BESTAETIGUNG_GUELTIG_MS;
+  }
+
+  /**
+   * Prüft (ohne Zwischenspeicher), ob sich das Gerät am angegebenen Standort befindet.
    * 1. Für die Schivelbeiner Str.: Ist das Gerät im WLAN vor Ort (erkannt an der
    *    öffentlichen IP-Adresse des Anschlusses)? Funktioniert ohne GPS.
    * 2. Sonst: GPS/Ortung mit Umkreisprüfung.
    */
-  async istAmStandort(id: StandortId): Promise<StandortErgebnis> {
+  private async pruefeStandort(id: StandortId): Promise<StandortErgebnis> {
     const standort = STANDORTE[id];
 
     if (id === 'schivelbeiner' && await this.istImStandortNetz()) {

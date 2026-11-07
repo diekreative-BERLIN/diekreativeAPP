@@ -21,6 +21,10 @@ export class TueroeffnerService {
 
   /** Öffnet die Tür nur, wenn das Gerät am passenden Standort ist. */
   private async nurVorOrt(id: StandortId, oeffnen: () => Promise<any>) {
+    // Standort in den letzten 2 Minuten bestätigt (z. B. Außentür) -> sofort öffnen
+    if (this.standort.istKuerzlichBestaetigt(id)) {
+      return oeffnen();
+    }
     if (this.pruefungLaeuft) { return; }
     this.pruefungLaeuft = true;
     const loading = await this.loadingCtrl.create({ message: 'Standort wird geprüft…' });
