@@ -3,6 +3,7 @@ import { UserstateService } from '../userstate.service';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { DefaultSystemBrowserOptions, InAppBrowser } from '@capacitor/inappbrowser';
+import { KursplattformService } from '../connectors/kursplattform.service';
 
 @Component({
   selector: 'app-grid-homescreen',
@@ -15,7 +16,8 @@ export class GridHomescreenComponent implements OnInit {
   constructor(
     private userState:UserstateService,
     private router: Router,
-    private platform: Platform
+    private platform: Platform,
+    private kursplattform: KursplattformService
   ) {  }
 
 
@@ -66,6 +68,9 @@ export class GridHomescreenComponent implements OnInit {
         break;
       case 'Ministryteam':
         this.router.navigate(["/tabs/ministryteam"]);
+        break;
+      case 'Kursplattform':
+        this.platform.ready().then(() => this.kursplattform.open());
         break;
     }
   }

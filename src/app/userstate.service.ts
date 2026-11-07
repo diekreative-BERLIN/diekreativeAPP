@@ -47,6 +47,7 @@ export class UserstateService {
     { id: 'Ueberuns',      val: 'Über uns',      isChecked: true, permissionID: 0 },
     { id: 'Geben',         val: 'Geben',         isChecked: true, permissionID: 0 },
     { id: 'Erlebt',        val: 'Erlebt',        isChecked: true, permissionID: 0 },
+    { id: 'Kursplattform', val: 'Kursplattform', isChecked: true, permissionID: 0 },
     { id: 'Ministryteam',  val: 'Ministryteam',  isChecked: true, permissionID: 1 }
   ];
   //{ id: 'Akademie',      val: 'Akademie',      isChecked: true },
@@ -155,7 +156,7 @@ export class UserstateService {
             const res = JSON.parse(result.value);
             console.log('habe aus native storage settings gelesen:');
             console.log(JSON.stringify(res.settings));
-            this.homescreen.next(res.settings);
+            this.homescreen.next(this.mergeWithDefaultHomescreen(res.settings));
           }
         )
       });
@@ -354,6 +355,17 @@ export class UserstateService {
     );
     
   }
+  // Gespeicherte Startseiten-Einstellungen um neu hinzugekommene Kacheln ergänzen,
+  // damit bestehende Nutzer neue Kacheln (z. B. Kursplattform) auch sehen.
+  private mergeWithDefaultHomescreen(saved) {
+    if (!Array.isArray(saved)) {
+      return this.homescreen_default;
+    }
+    const known = new Set(saved.map((entry) => entry?.id));
+    const missing = this.homescreen_default.filter((entry) => !known.has(entry.id));
+    return saved.concat(missing.map((entry) => ({ ...entry })));
+  }
+
   public async resetHomeSettings() {
     console.log('in userstate reset homescreen to: ');
     //this.homescreen.next(JSON.parse(JSON.stringify(this.homescreen_default)));

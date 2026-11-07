@@ -13,6 +13,7 @@ export const environment = {
   predigtenurl: "https://…",
   eventsurl: "https://…",
   dkeventsapiurl: "https://…",
+  kursplattformurl: "https://kursplattform.diekreative.org",
   lifegroupsurl: "https://…",
   gebetskalenderurl: "https://…",
   gebetskalenderHNurl: "https://…",
