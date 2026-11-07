@@ -6,6 +6,7 @@ import { ModalController } from '@ionic/angular';
 import { LoginModalPage } from './login-modal/login-modal.page';
 import { PersondetailModalPage } from './persondetail-modal/persondetail-modal.page';
 import { UserstateService } from './userstate.service';
+import { KursplattformService } from './connectors/kursplattform.service';
 import { Router } from '@angular/router';
 //import { ConnectivityService } from './connectivity.service';
 import { AlertController } from '@ionic/angular';
@@ -32,7 +33,8 @@ export class AppComponent implements OnInit {
     public modalController: ModalController,
     public userState: UserstateService,
     private router: Router,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private kursplattform: KursplattformService
   ) {
     console.log('app.component -> es geht los!');
     this.initializeApp();
@@ -189,6 +191,11 @@ export class AppComponent implements OnInit {
   erlebtActivated(){
     this.router.navigate(["/tabs/erlebt"]);
     this.close();
+  }
+
+  kursplattformActivated(){
+    this.close();
+    this.platform.ready().then(() => this.kursplattform.open());
   }
   openWebsite(url){
     this.platform.ready().then(async () => {
