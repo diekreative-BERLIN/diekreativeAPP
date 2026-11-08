@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { ChurchapiService } from './connectors/churchapi.service';
+import { CampusService } from './campus.service';
 
 import { Preferences } from '@capacitor/preferences';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
@@ -58,6 +59,7 @@ export class UserstateService {
   constructor(
     private churchtools:ChurchapiService,
     private platform :Platform,
+    private campusService: CampusService,
   ) {
     this.SermonLocalFiles = [];
     //this.homescreen.next(JSON.parse(JSON.stringify(this.homescreen_default)));
@@ -199,6 +201,20 @@ export class UserstateService {
         var lastname=res2.data.data.lastName;
         this.shortusername = res2.data.data.firstName + " " +lastname.substr(0,1)+"."  
         console.log("shortname="+this.shortusername);
+
+        // Standort (Campus): Bei einem echten Login (mit Benutzername/Passwort) den Standort
+        // der Person vorauswählen. Beim automatischen Login mit Token beim App-Start bleibt
+        // die Auswahl aus den Einstellungen erhalten, nur die Standortliste wird aufgefrischt.
+        if (username !== undefined && password !== undefined) {
+          let campusId = res2.data.data.campusId;
+          if (!('campusId' in res2.data.data)) {
+            campusId = await this.campusService.ladeCampusIdDerPerson(personid, this.logintoken);
+          }
+          console.log('Standort (campusId) der Person: ' + campusId);
+          this.campusService.uebernehmeCampusDerPerson(campusId, this.logintoken);
+        } else {
+          this.campusService.ladeCampusse(this.logintoken);
+        }
         //logintoken MUSS in currentUser gespeichert werden. Wenn er noch nicht bekannt ist, dann später ergänzen!!
         //console.log("logintoken schon bekannt? "+this.logintoken);
 
@@ -279,6 +295,7 @@ export class UserstateService {
       this.churchtools.getLoginToken(personid,username,password).then(async (res)=>{
         //console.log("churchtools.getLoginToken mit personid:"+personid+" username:"+username+" pswd:"+password+" ergibt logintoken: "+res.data.data);
         this.logintoken = res.data.data;
+        this.campusService.ladeCampusse(this.logintoken);
         //console.log("has Logintoken");
         await Preferences.set({key: 'usertoken', value: JSON.stringify({logintoken: this.logintoken})})
         .then(
@@ -552,6 +569,7 @@ public removeLocalSermon(fname) {
     await Preferences.remove({key: 'currentUser'});
     await Preferences.remove({key: 'usertoken'});
     await Preferences.remove({key: 'CheckinDataStorage'});
+    await this.campusService.zuruecksetzen();
     console.log("user has been logged out");
     alert('Hinweis: Du hast Dich ausgeloggt. Logge Dich erneut für den Türöffner & Co.');
   }

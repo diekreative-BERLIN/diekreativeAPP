@@ -7,6 +7,33 @@
 <ion-content>
 
   <ion-accordion-group #accordionGroup [multiple]="false" (ionChange)="accordionGroupChange($event)">
+    <ion-accordion value="standort">
+      <ion-item slot="header" color="light">
+        <ion-label>Standort</ion-label>
+        <ion-note slot="end">{{ aktiverCampusName }}</ion-note>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <p class="hinweis">Wähle deinen Standort. Danach richten sich z.&nbsp;B. die angezeigten Gottesdienste und Termine.</p>
+        <ion-radio-group [value]="aktiverCampusId ?? alleStandorte" (ionChange)="campusGewaehlt($event)">
+          <ion-item>
+            <ion-label>Alle Standorte</ion-label>
+            <ion-radio slot="start" [value]="alleStandorte"></ion-radio>
+          </ion-item>
+          <ion-item *ngFor="let campus of campusse">
+            <ion-label>{{ campus.name }}</ion-label>
+            <ion-radio slot="start" [value]="campus.id"></ion-radio>
+          </ion-item>
+          <ion-item *ngIf="aktiverCampusId != null && !istInListe(aktiverCampusId)">
+            <ion-label>{{ aktiverCampusName }}</ion-label>
+            <ion-radio slot="start" [value]="aktiverCampusId"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+        <p class="hinweis" *ngIf="campusse.length === 0 && !campusLaedt">
+          Die Standorte werden nach dem Login geladen.
+        </p>
+        <p class="hinweis" *ngIf="campusLaedt">Standorte werden geladen …</p>
+      </div>
+    </ion-accordion>
     <ion-accordion value="homescreen">
       <ion-item slot="header" color="light">
         <ion-label>Homescreen bearbeiten</ion-label>

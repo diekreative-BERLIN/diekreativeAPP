@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { UserstateService } from '../userstate.service';
 import { IonReorderGroup } from '@ionic/angular';
 import { IonAccordionGroup } from '@ionic/angular';
 import { PickerController } from '@ionic/angular';
 import { Preferences } from '@capacitor/preferences';
 import { Directory, Filesystem } from '@capacitor/filesystem';
+import { Subscription } from 'rxjs';
+import { Campus, CampusService } from '../campus.service';
 
 const MEDIA_FOLDER_NAME = 'temp_files';
 
@@ -14,8 +16,14 @@ const MEDIA_FOLDER_NAME = 'temp_files';
   styleUrls: ['./settings.page.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SettingsPage implements OnInit {
+export class SettingsPage implements OnInit, OnDestroy {
   form:any = [];
+  /** Wert der Option "Alle Standorte" in der Radio-Gruppe (null lässt sich dort nicht auswählen). */
+  readonly alleStandorte = 'alle';
+  campusse: Campus[] = [];
+  aktiverCampusId: number | null = null;
+  campusLaedt = false;
+  private campusAbos: Subscription[] = [];
   public isDisabled = true;
   cachefiles = [];
   cacheSize;
@@ -27,7 +35,8 @@ export class SettingsPage implements OnInit {
 
   constructor(
     private userState:UserstateService,
-    private pickerCtrl: PickerController
+    private pickerCtrl: PickerController,
+    private campusService: CampusService
   ) {
     //this.form = this.form.concat(this.userState.AppHomescreen);
     console.log('in settings Constructor von settings.page');
@@ -36,9 +45,45 @@ export class SettingsPage implements OnInit {
       //console.log(form2);
       this.form=form2;
     });
+    this.campusAbos.push(
+      this.campusService.campusse.subscribe((liste) => this.campusse = liste),
+      this.campusService.aktiverCampusId.subscribe((id) => this.aktiverCampusId = id)
+    );
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.campusAbos.forEach((abo) => abo.unsubscribe());
+  }
+
+  // Standort
+
+  get aktiverCampusName(): string {
+    return this.campusService.campusName(this.aktiverCampusId);
+  }
+
+  istInListe(id: number): boolean {
+    return this.campusse.some((c) => c.id === id);
+  }
+
+  campusGewaehlt(ev: any) {
+    const wert = ev.detail.value;
+    const id = (wert === this.alleStandorte || wert == null) ? null : Number(wert);
+    if (id !== this.aktiverCampusId) {
+      this.campusService.setzeCampus(id);
+    }
+  }
+
+  /** Beim Öffnen des Standort-Bereichs die Liste auffrischen (klappt nur angemeldet). */
+  private async aktualisiereCampusse() {
+    if (!this.userState.loggedin) {
+      return;
+    }
+    this.campusLaedt = this.campusse.length === 0;
+    await this.campusService.ladeCampusse(this.userState.logintoken);
+    this.campusLaedt = false;
   }
 
   ionViewWillEnter() {
@@ -189,6 +234,9 @@ export class SettingsPage implements OnInit {
   accordionGroupChange = (ev: any) => {
     if (ev.detail.value == "cache") {
       this.getFilesAndSize();
+    }
+    if (ev.detail.value == "standort") {
+      this.aktualisiereCampusse();
     }
   }
 
