@@ -211,6 +211,15 @@ export class ChurchapiService {
     return CapacitorHttp.get({url:this.REST_API_SERVER+'/'+request});
     //return this.httpClient.get(this.REST_API_SERVER+'/'+request,{params:params, withCredentials:true});
   }
+  /**
+   * Holt den Logintoken direkt bei ChurchTools mit der Sitzung (Cookie) aus dem Login der App.
+   * Funktioniert auch mit 2-Faktor-Anmeldung, weil die App die 2FA selbst durchlaufen hat.
+   */
+  public async getLoginTokenViaSession(personid){
+    const id = encodeURIComponent(String(personid).replace(/"/g, ''));
+    return CapacitorHttp.get({url: this.REST_API_SERVER + '/persons/' + id + '/logintoken'});
+  }
+
   public async getLoginToken(personid,username,password){
     let usernameEncoded = encodeURIComponent(username);
     let passwordEncoded = encodeURIComponent(password);

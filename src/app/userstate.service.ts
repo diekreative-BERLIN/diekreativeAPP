@@ -70,8 +70,10 @@ export class UserstateService {
       await Preferences.get({key: 'usertoken'}).then((result)=>{
         console.log("in platformReady -> get usetoken user aus preferences db:");
         console.log(result);
-        const usetoken = JSON.parse(result.value);
-        this.logintoken = usetoken.logintoken;
+        // Fehlt der Eintrag, darf das Lesen nicht abbrechen (sonst wird currentUser nie geladen).
+        let usetoken = null;
+        try { usetoken = JSON.parse(result.value); } catch (e) { usetoken = null; }
+        this.logintoken = usetoken?.logintoken || "";
       })
       await Preferences.get({key: 'currentUser'}).then((result)=>{
         console.log("in platformReady -> get current user aus preferences db:");
@@ -163,6 +165,19 @@ export class UserstateService {
         )
       });
 
+  }
+
+  /** Liest den Token aus einer Antwort der Form {"data": "<token>"} (Objekt oder JSON-Text). */
+  private extractLoginToken(res: any): string {
+    if (!res || res.status < 200 || res.status >= 300) {
+      return "";
+    }
+    let body = res.data;
+    if (typeof body === 'string') {
+      try { body = JSON.parse(body); } catch (e) { return ""; }
+    }
+    const token = body?.data;
+    return (typeof token === 'string' && token.length > 0) ? token : "";
   }
 
   public async userLoginSuccessful(personid,username?,password?){
@@ -294,7 +309,20 @@ export class UserstateService {
     if ((personid !== undefined) && (username !== undefined) && (password !== undefined)) {
       this.churchtools.getLoginToken(personid,username,password).then(async (res)=>{
         //console.log("churchtools.getLoginToken mit personid:"+personid+" username:"+username+" pswd:"+password+" ergibt logintoken: "+res.data.data);
-        this.logintoken = res.data.data;
+        let token = this.extractLoginToken(res);
+        if (!token) {
+          // Die eigene API meldet sich nur mit Benutzername/Passwort bei ChurchTools an
+          // und liefert z. B. bei aktiver 2-Faktor-Anmeldung keinen Token (trotz Status 200).
+          // Dann den Token direkt über die ChurchTools-Sitzung der App holen.
+          console.log("logintoken: eigene API ohne Token (Status " + res?.status + "), versuche ChurchTools-Sitzung");
+          try {
+            token = this.extractLoginToken(await this.churchtools.getLoginTokenViaSession(personid));
+          } catch (e) {
+            console.log("logintoken: Abruf über ChurchTools-Sitzung fehlgeschlagen", e);
+          }
+        }
+        console.log("logintoken vorhanden: " + !!token);
+        this.logintoken = token || "";
         this.campusService.ladeCampusse(this.logintoken);
         //console.log("has Logintoken");
         await Preferences.set({key: 'usertoken', value: JSON.stringify({logintoken: this.logintoken})})
