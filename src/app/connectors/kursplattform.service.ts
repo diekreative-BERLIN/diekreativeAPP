@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Injectable } from '@angular/core';
 import { CapacitorHttp } from '@capacitor/core';
 import { AndroidViewStyle, DefaultSystemBrowserOptions, InAppBrowser } from '@capacitor/inappbrowser';
@@ -25,15 +26,25 @@ export class KursplattformService {
     private userState: UserstateService,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
+    private translate: TranslateService,
   ) {}
 
   public async open(): Promise<void> {
-    if (!this.userState.loggedin || !this.userState.logintoken) {
+    console.log('Kursplattform: loggedin=' + this.userState.loggedin + ', logintoken vorhanden=' + !!this.userState.logintoken);
+
+    if (!this.userState.loggedin) {
       await this.openBrowser(this.baseUrl + '/');
       return;
     }
 
-    const loading = await this.loadingCtrl.create({ message: 'Anmeldung bei der Kursplattform …' });
+    // In der App angemeldet, aber ohne ChurchTools-Logintoken: nicht still ohne Login
+    // öffnen, sondern sagen, wie man es behebt (in der App neu anmelden).
+    if (!this.userState.logintoken) {
+      await this.showFallbackAlert(this.translate.instant('KURS.NO_TOKEN'));
+      return;
+    }
+
+    const loading = await this.loadingCtrl.create({ message: this.translate.instant('KURS.LOGGING_IN') });
     await loading.present();
 
     let loginUrl: string | null = null;
@@ -51,11 +62,11 @@ export class KursplattformService {
       if (res.status === 200 && data?.login_url && this.isOwnUrl(data.login_url)) {
         loginUrl = data.login_url;
       } else {
-        errorMessage = data?.message || 'Die automatische Anmeldung hat nicht geklappt.';
+        errorMessage = data?.message || this.translate.instant('KURS.AUTO_LOGIN_FAILED');
       }
     } catch (err) {
       console.log('Kursplattform: Ticket-Anfrage fehlgeschlagen', err);
-      errorMessage = 'Die Kursplattform ist gerade nicht erreichbar.';
+      errorMessage = this.translate.instant('KURS.UNREACHABLE');
     } finally {
       await loading.dismiss();
     }
@@ -65,12 +76,17 @@ export class KursplattformService {
       return;
     }
 
+    await this.showFallbackAlert(errorMessage);
+  }
+
+  /** Hinweis mit der Möglichkeit, die Kursplattform ohne automatische Anmeldung zu öffnen. */
+  private async showFallbackAlert(errorMessage: string): Promise<void> {
     const alert = await this.alertCtrl.create({
-      header: 'Kursplattform',
-      message: errorMessage + ' Du kannst dich auf der Kursplattform aber auch selbst anmelden.',
+      header: this.translate.instant('KURS.TITLE'),
+      message: errorMessage + ' ' + this.translate.instant('KURS.SELF_LOGIN'),
       buttons: [
-        { text: 'Abbrechen', role: 'cancel' },
-        { text: 'Trotzdem öffnen', handler: () => { this.openBrowser(this.baseUrl + '/'); } },
+        { text: this.translate.instant('COMMON.CANCEL'), role: 'cancel' },
+        { text: this.translate.instant('KURS.OPEN_ANYWAY'), handler: () => { this.openBrowser(this.baseUrl + '/'); } },
       ],
     });
     await alert.present();

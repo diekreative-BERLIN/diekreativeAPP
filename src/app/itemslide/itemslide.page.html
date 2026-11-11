@@ -3,18 +3,18 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="100" pullMax="200">
     <ion-refresher-content 
       pullingIcon="arrow-down-outline" 
-      pullingText="ziehen zum Aktualisieren" 
+      [pullingText]="'COMMON.PULL_TO_REFRESH' | translate" 
       refreshingSpinner="circular"
-      refreshingText="es wird aktualisiert...">
+      [refreshingText]="'COMMON.REFRESHING' | translate">
     </ion-refresher-content>
   </ion-refresher>
 
-  <h1 class="ueberuns-text">Meine Gebets-<br>schichten</h1> 
+  <h1 class="ueberuns-text" [innerHTML]="'TUN.MY_SHIFTS_TITLE' | translate"></h1> 
 
  <!-- div class="back"><a (click)="BackActivated()"><ion-icon name="return-up-back-outline"></ion-icon></a></div -->
  <div class="pos_back">
   <ion-buttons>
-       <button mat-flat-button shape="round" color="primary" (click)="BackActivated()"><ion-icon class="backicon" name="chevron-back-outline"></ion-icon>&nbsp;zurück</button>
+       <button mat-flat-button shape="round" color="primary" (click)="BackActivated()"><ion-icon class="backicon" name="chevron-back-outline"></ion-icon>&nbsp;{{ 'COMMON.BACK' | translate }}</button>
  </ion-buttons>
  </div>
  
@@ -37,8 +37,8 @@
       </ion-item>
 
       <ion-item-options>
-        <button class="swap" (click)="swapItem(item,item.id,item.repeat_id,item.start,item.ende,item.format,item.person)"> tauschen</button>
-        <button class="release" (click)="releaseItem(item,item.id,item.repeat_id,item.start,item.ende,item.format,item.person)"> freigeben</button>
+        <button class="swap" (click)="swapItem(item,item.id,item.repeat_id,item.start,item.ende,item.format,item.person)"> {{ 'TUN.SWAP' | translate }}</button>
+        <button class="release" (click)="releaseItem(item,item.id,item.repeat_id,item.start,item.ende,item.format,item.person)"> {{ 'TUN.RELEASE' | translate }}</button>
       </ion-item-options>
 
     </ion-item-sliding>

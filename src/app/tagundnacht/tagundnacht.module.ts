@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -20,8 +21,9 @@ import { UnescapePipe } from '../unescape.pipe';
     IonicModule,
     MatNativeDateModule,
     TagundnachtPageRoutingModule,
-    DemoMaterialModule
-    //MatCommonModule
+    DemoMaterialModule,
+    //MatCommonModule,
+    TranslateModule
   ],
   declarations: [TagundnachtPage, UnescapePipe]
 })

@@ -1,5 +1,6 @@
 import { FormsModule } from '@angular/forms';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -20,6 +21,7 @@ import { TunTakeoverPageModule } from './tun-takeover/tun-takeover.module';
 import { GdCheckinPageModule } from './gd-checkin/gd-checkin.module';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
+import { SpracheService, StatischerTranslateLoader } from './sprache.service';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 registerLocaleData(localeDe, 'de');
@@ -33,11 +35,21 @@ registerLocaleData(localeDe, 'de');
     FormsModule, BrowserModule, IonicModule.forRoot(), 
     AppRoutingModule, HttpClientModule, BrowserAnimationsModule, 
     TunSwapPageModule, TunReleasePageModule, TunTakeoverPageModule,
-    GdCheckinPageModule],
+    GdCheckinPageModule,
+    TranslateModule.forRoot({
+      defaultLanguage: 'de',
+      loader: { provide: TranslateLoader, useClass: StatischerTranslateLoader }
+    })],
   providers: [
     ChurchapiService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'de' },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (sprache: SpracheService) => () => sprache.init(),
+      deps: [SpracheService],
+      multi: true
+    },
     HttpClientModule,
     FeedsService,
     EventsService,

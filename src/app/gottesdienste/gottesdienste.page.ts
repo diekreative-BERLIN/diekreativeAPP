@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { Router } from '@angular/router';
@@ -93,7 +94,8 @@ export class GottesdienstePage {
     private popover:PopoverController,
     private modalController: ModalController,
     public userState: UserstateService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private translate: TranslateService
     //private nativeHTTP: HTTP
   ) {
     platform.ready().then(async () => {
@@ -354,7 +356,7 @@ async checkin(){
       this.AppPageGodiEvntEnd = endtime;
       let infotext =  result.data[i].notes ;
       let infodate = this.momentjs( starttime ).format('DD.MM.YYYY');
-      let info = this.momentjs( starttime ).format('HH:mm') + ' Uhr, ' + result.data[i].bezeichng ;
+      let info = this.momentjs( starttime ).format(this.translate.instant('GODI.TIME_FORMAT')) + ', ' + result.data[i].bezeichng ;
       //this.AppPageGodiWeekdayNextEvent = this.momentjs( starttime ).format('d') ;
   console.log('weekday next event = '+this.momentjs( starttime ).format('d')+' Date: '+info+ '  (start:'+starttime+' , end:'+endtime+')');
       this.AppPageGodiInfoDate = infodate;
@@ -713,12 +715,13 @@ private isEmpty(obj) {
     //replace('\n\r', '<br/>').replace('\n', '<br/>').replace('\r', '<br/>')
     let message = this.AppPageGodiInfotext;
     if (infoQR && this.AppPageGodiQRcheckin) {
-      message = message+'\n\nQR Checkin steht ab '+this.momentjs( this.AppPageGodiEvntStart ).subtract(this.checkinActivateSpan, 'hours').format('DD.MM. HH:mm')+' Uhr zur Verfügung';
+      const zeit = this.momentjs( this.AppPageGodiEvntStart ).subtract(this.checkinActivateSpan, 'hours').format(this.translate.instant('GODI.QR_TIME_FORMAT'));
+      message = message+'\n\n'+this.translate.instant('GODI.QR_AVAILABLE_FROM', { zeit });
     }
     //alert(message);
     
     this.alertController.create({
-      header: 'Info',
+      header: this.translate.instant('GODI.INFO'),
       //cssClass:'alert-class',
       message: message.replace('\n', '<br/>'),
       buttons: [
@@ -853,13 +856,13 @@ private isEmpty(obj) {
     return await modal.present();
   }
   helpZoom() {
-    this.openModal('Gottesdienst per Zoom','zum Mithören vor Ort via Zoom.\n\nZoom hat nur eine geringe zeitliche Verzögerung und eignet sich somit gut zum Mithören des Gottesdienstes vor Ort vom eigenen Smartphone aus.\nFür den Empfang von Bild und Ton muss die kostenlose Zoom App auf dem Smarthpone installiert sein. Zudem empfiehlt sich eine WLAN Verbindung zu nutzen um das Datenvolumen zu schonen.\n\nFür weitere Infos sprich bitte die Info an.\n\n~~~~~ english ~~~~~\nFor english speaking guests we provide a live translation over zoom.\nPlease make sure that you have installed the zoom client on your smartphone (free of charge) and have enough mobile data (or use WiFi) before clicking the "english" button.\nAs soon as zoom starts up, you will be able to choose the english translation channel.\nFeel free to contact our info desk for more information.', false);
+    this.openModal(this.translate.instant('GODI.ZOOM_TITLE'), this.translate.instant('GODI.ZOOM_TEXT'), false);
   }
   helpLiveVoice() {
-    this.openModal('Übersetzung per LiveVoice','zum Mithören via LiveVoice vom eigenen Smartphone aus.\n\Dazu muss die kostenlose LiveVoice App auf dem Smarthpone installiert sein. Es fällt nur ein geringes Datenvolumen an.\n\nFür weitere Infos sprich bitte die Info an.\n\n~~~~~ english ~~~~~\n\nFor international guests we provide live translation via LiveVoice App.\nPlease make sure that you have installed the LiveVoice app on your smartphone (free of charge) and have enough mobile data (or use WiFi) before clicking the "english" button.\n\nFeel free to contact our info desk for more information.', false);
+    this.openModal(this.translate.instant('GODI.LIVEVOICE_TITLE'), this.translate.instant('GODI.LIVEVOICE_TEXT'), false);
   }
   helpYT() {
-    this.openModal('YouTube Livestream', 'Öffnet den aktuellen Livestream in YouTube\n\nDas ist der bevorzugte Weg, um von zuhause aus an der aktuellen Veranstaltung teilzunehmen.', false);
+    this.openModal(this.translate.instant('GODI.YT_TITLE'), this.translate.instant('GODI.YT_TEXT'), false);
   }
 
   doRefresh(event) {

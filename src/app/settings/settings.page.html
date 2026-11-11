@@ -1,22 +1,45 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Einstellungen</ion-title>
+    <ion-title>{{ 'SETTINGS.TITLE' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <ion-accordion-group #accordionGroup [multiple]="false" (ionChange)="accordionGroupChange($event)">
+    <ion-accordion value="sprache">
+      <ion-item slot="header" color="light">
+        <ion-icon name="language-outline" slot="start"></ion-icon>
+        <ion-label>{{ 'SETTINGS.LANGUAGE' | translate }}</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <p class="hinweis">{{ 'SETTINGS.LANGUAGE_HINT' | translate }}</p>
+        <ion-radio-group [value]="sprachWahl" (ionChange)="spracheGewaehlt($event)">
+          <ion-item>
+            <ion-label>{{ 'SETTINGS.LANGUAGE_AUTO' | translate }}</ion-label>
+            <ion-radio slot="start" value="auto"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Deutsch</ion-label>
+            <ion-radio slot="start" value="de"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>English</ion-label>
+            <ion-radio slot="start" value="en"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </div>
+    </ion-accordion>
     <ion-accordion value="standort">
       <ion-item slot="header" color="light">
-        <ion-label>Standort</ion-label>
+        <ion-label>{{ 'SETTINGS.LOCATION' | translate }}</ion-label>
         <ion-note slot="end">{{ aktiverCampusName }}</ion-note>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <p class="hinweis">Wähle deinen Standort. Danach richten sich z.&nbsp;B. die angezeigten Gottesdienste und Termine.</p>
+        <p class="hinweis">{{ 'SETTINGS.LOCATION_HINT' | translate }}</p>
         <ion-radio-group [value]="aktiverCampusId ?? alleStandorte" (ionChange)="campusGewaehlt($event)">
           <ion-item>
-            <ion-label>Alle Standorte</ion-label>
+            <ion-label>{{ 'SETTINGS.ALL_LOCATIONS' | translate }}</ion-label>
             <ion-radio slot="start" [value]="alleStandorte"></ion-radio>
           </ion-item>
           <ion-item *ngFor="let campus of campusse">
@@ -29,21 +52,21 @@
           </ion-item>
         </ion-radio-group>
         <p class="hinweis" *ngIf="campusse.length === 0 && !campusLaedt">
-          Die Standorte werden nach dem Login geladen.
+          {{ 'SETTINGS.LOCATIONS_AFTER_LOGIN' | translate }}
         </p>
-        <p class="hinweis" *ngIf="campusLaedt">Standorte werden geladen …</p>
+        <p class="hinweis" *ngIf="campusLaedt">{{ 'SETTINGS.LOCATIONS_LOADING' | translate }}</p>
       </div>
     </ion-accordion>
     <ion-accordion value="homescreen">
       <ion-item slot="header" color="light">
-        <ion-label>Homescreen bearbeiten</ion-label>
+        <ion-label>{{ 'SETTINGS.HOMESCREEN_EDIT' | translate }}</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
         <ion-reorder-group (ionItemReorder)="doReorder($event)" [disabled]="isDisabled">
 
           <ion-item *ngFor="let entry of form" [hidden]="!hasPermission(entry.permissionID)">
-              <ion-label>{{entry.val}}</ion-label>
+              <ion-label>{{ 'HOMESCREEN.' + entry.id | translate }}</ion-label>
               <ion-checkbox *ngIf="!hasPermission(entry.permissionID)" slot="start" [(ngModel)]="entry.isChecked" [disabled]="true"></ion-checkbox>
               <ion-checkbox *ngIf="hasPermission(entry.permissionID)" slot="start" [(ngModel)]="entry.isChecked" [disabled]="isDisabled"></ion-checkbox>
               <ion-reorder slot="end"></ion-reorder>
@@ -54,30 +77,30 @@
         <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
         <div class="center" *ngIf="isDisabled">
           <ion-button class="centerbtn" (click)="modifyHomescreen()">
-            Homescreen bearbeiten
+            {{ 'SETTINGS.HOMESCREEN_EDIT' | translate }}
           </ion-button>
         </div>
 
         <div class="center" *ngIf="!isDisabled">
           <ion-button class="centerbtn" (click)="applyHomescreen()">
-            Fertig
+            {{ 'SETTINGS.DONE' | translate }}
           </ion-button>
           <ion-button class="centerbtn" (click)="resetHomescreen()">
-              Reset
+              {{ 'SETTINGS.RESET' | translate }}
           </ion-button>
         </div>
     </div>
   </ion-accordion>
   <ion-accordion value="cache">
     <ion-item slot="header" color="light">
-      <ion-label>Lokaler Cache (Mediathek)</ion-label>
+      <ion-label>{{ 'SETTINGS.CACHE_TITLE' | translate }}</ion-label>
     </ion-item>
     <div class="ion-padding" slot="content">
     <div class="center">
-      <p>heruntergeladene Predigten nach <ion-button (click)="openPicker()">{{cleanupDays}}</ion-button> Tagen löschen</p>
-      <p>aktuell benutzter Cache: {{cacheSize}}</p>
+      <p>{{ 'SETTINGS.CACHE_DELETE_BEFORE' | translate }} <ion-button (click)="openPicker()">{{cleanupDays}}</ion-button> {{ 'SETTINGS.CACHE_DELETE_AFTER' | translate }}</p>
+      <p>{{ 'SETTINGS.CACHE_USED' | translate }} {{cacheSize}}</p>
       <ion-button class="centerbtn" (click)="clearCache()">
-        Cache leeren
+        {{ 'SETTINGS.CACHE_CLEAR' | translate }}
       </ion-button>
       </div>
     </div>

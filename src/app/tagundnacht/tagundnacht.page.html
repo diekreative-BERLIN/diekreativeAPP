@@ -8,41 +8,38 @@
 
 <div *ngIf="!userState.isOnline">
   <ion-label><div class="subtitle">
-    Du bist offline. Es können keine Details angezeigt werden!
+    {{ 'COMMON.OFFLINE' | translate }}
     </div></ion-label>
 </div>
 
 <div *ngIf="userState.isOnline">
-<ion-label ><div class="subtitle">
-Wir beten 24 Stunden - 7 Tage - 52 Wochen <br>
-Du bist herzlich eingeladen mitzubeten
-</div></ion-label>
+<ion-label ><div class="subtitle" [innerHTML]="'TUN.SUBTITLE' | translate"></div></ion-label>
 <ion-buttons>
   <ion-grid>
     <ion-row> 
-      <button mat-flat-button color="basic" class="fullwidth" (click)="GebetskalenderActivated()">Gebetskalender</button>
+      <button mat-flat-button color="basic" class="fullwidth" (click)="GebetskalenderActivated()">{{ 'TUN.PRAYER_CAL' | translate }}</button>
     </ion-row>
   </ion-grid>
 </ion-buttons>
 <ion-buttons *ngIf="userState.isGebetLeiter">
   <ion-grid>
     <ion-row>
-      <button mat-flat-button color="basic" class="fullwidth" (click)="freieSchichtenActivated()">Freie Gebetsschichten</button>
+      <button mat-flat-button color="basic" class="fullwidth" (click)="freieSchichtenActivated()">{{ 'TUN.FREE_SHIFTS' | translate }}</button>
     </ion-row>
   </ion-grid>
 </ion-buttons>
 <ion-buttons *ngIf="userState.isGebetLeiter">
   <ion-grid>
     <ion-row>
-      <button mat-flat-button color="basic" class="fullwidth" (click)="meineSchichtenActivated()">Meine Gebetsschichten</button>
+      <button mat-flat-button color="basic" class="fullwidth" (click)="meineSchichtenActivated()">{{ 'TUN.MY_SHIFTS' | translate }}</button>
     </ion-row>
   </ion-grid>
 </ion-buttons>
 <ion-buttons *ngIf="userState.hasTuerOeffner">
   <ion-grid>
     <ion-row>
-      <button mat-flat-button color="basic" class="door1" (click)="tueroeffner.openFrontDoor()"><img src="../../assets/icon/door-24px.svg">  Aussen</button>
-      <button mat-flat-button color="basic" class="door2" (click)="tueroeffner.openSecondDoor()"><img src="../../assets/icon/door-24px.svg">  Innen</button>
+      <button mat-flat-button color="basic" class="door1" (click)="tueroeffner.openFrontDoor()"><img src="../../assets/icon/door-24px.svg">  {{ 'TUN.OUTSIDE' | translate }}</button>
+      <button mat-flat-button color="basic" class="door2" (click)="tueroeffner.openSecondDoor()"><img src="../../assets/icon/door-24px.svg">  {{ 'TUN.INSIDE' | translate }}</button>
     </ion-row>
   </ion-grid>
 </ion-buttons>
@@ -50,15 +47,15 @@ Du bist herzlich eingeladen mitzubeten
 <ion-buttons *ngIf="userState.hasTuerOeffnerHN">
   <ion-grid>
     <ion-row> 
-      <button mat-flat-button color="basic" class="fullwidth" (click)="GebetskalenderHNActivated()">Gebetskalender Hohen Neuendorf</button>
+      <button mat-flat-button color="basic" class="fullwidth" (click)="GebetskalenderHNActivated()">{{ 'TUN.PRAYER_CAL_HN' | translate }}</button>
     </ion-row>
   </ion-grid>
 </ion-buttons>
 <ion-buttons *ngIf="userState.hasTuerOeffnerHN">
   <ion-grid>
     <ion-row>
-      <button mat-flat-button color="basic" class="door1" (click)="tueroeffner.openHNDoor(1)"><img src="../../assets/icon/door-24px.svg">  HN Tor</button>
-      <button mat-flat-button color="basic" class="door2" (click)="tueroeffner.openHNDoor(2)"><img src="../../assets/icon/door-24px.svg">  HN Wagen</button>
+      <button mat-flat-button color="basic" class="door1" (click)="tueroeffner.openHNDoor(1)"><img src="../../assets/icon/door-24px.svg">  {{ 'TUN.HN_GATE' | translate }}</button>
+      <button mat-flat-button color="basic" class="door2" (click)="tueroeffner.openHNDoor(2)"><img src="../../assets/icon/door-24px.svg">  {{ 'TUN.HN_WAGON' | translate }}</button>
     </ion-row>
   </ion-grid>
 </ion-buttons>
@@ -70,7 +67,7 @@ Du bist herzlich eingeladen mitzubeten
   <mat-expansion-panel hideToggle="true" #currentprayer>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Aktuelles Gebet
+          {{ 'TUN.CURRENT_PRAYER' | translate }}
         </mat-panel-title>
         <ion-icon *ngIf="!currentprayer.expanded" name="chevron-down"></ion-icon>
         <ion-icon *ngIf="currentprayer.expanded" name="close"></ion-icon>
@@ -88,7 +85,7 @@ Du bist herzlich eingeladen mitzubeten
 	<mat-expansion-panel hideToggle="true" #nextprayer>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          N&auml;chstes Gebet
+          {{ 'TUN.NEXT_PRAYER' | translate }}
         </mat-panel-title>
         <ion-icon *ngIf="!nextprayer.expanded" name="chevron-down"></ion-icon>
         <ion-icon *ngIf="nextprayer.expanded" name="close"></ion-icon>
@@ -112,7 +109,7 @@ Du bist herzlich eingeladen mitzubeten
 	<mat-expansion-panel hideToggle="true" #praytopic1>
       <mat-expansion-panel-header>
         <mat-panel-title>
-        	Wochenschwerpunkt
+        	{{ 'TUN.WEEK_FOCUS' | translate }}
         </mat-panel-title>
         <ion-icon *ngIf="!praytopic1.expanded" name="chevron-down"></ion-icon>
         <ion-icon *ngIf="praytopic1.expanded" name="close"></ion-icon>
@@ -125,7 +122,7 @@ Du bist herzlich eingeladen mitzubeten
 	<mat-expansion-panel hideToggle="true" #praytopic2>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Gebet f&uuml;r verfolgte Christen
+          {{ 'TUN.PERSECUTED' | translate }}
         </mat-panel-title>
         <ion-icon *ngIf="!praytopic2.expanded" name="chevron-down"></ion-icon>
         <ion-icon *ngIf="praytopic2.expanded" name="close"></ion-icon>

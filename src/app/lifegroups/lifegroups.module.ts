@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +17,8 @@ import { IframeTrackerDirective} from './lifegroups.directive';
     CommonModule,
     FormsModule,
     IonicModule,
-    LifegroupsPageRoutingModule
+    LifegroupsPageRoutingModule,
+    TranslateModule
   ],
   declarations: [LifegroupsPage, IframeTrackerDirective]
 })

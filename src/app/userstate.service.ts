@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { ChurchapiService } from './connectors/churchapi.service';
@@ -60,6 +61,7 @@ export class UserstateService {
     private churchtools:ChurchapiService,
     private platform :Platform,
     private campusService: CampusService,
+    private translate: TranslateService,
   ) {
     this.SermonLocalFiles = [];
     //this.homescreen.next(JSON.parse(JSON.stringify(this.homescreen_default)));
@@ -113,7 +115,7 @@ export class UserstateService {
               this.shortusername = "";
               this.explicitusername = "";
               console.log("---> User loged out A")
-              alert('Hinweis: Du wurdest ausgeloggt. Logge Dich erneut für den Türöffner & Co. (Fehler-Nr 1)');
+              alert(this.translate.instant('USER.LOGGED_OUT', { nr: '1' }));
             }
           }).catch(async (err)=>{
             console.log("Error Login with token"+JSON.stringify(err));
@@ -129,7 +131,7 @@ export class UserstateService {
             this.shortusername = "";
             this.explicitusername = "";
             console.log("---> User loged out B")
-              alert('Hinweis: Du wurdest ausgeloggt. Logge Dich erneut für den Türöffner & Co. (Fehler-Nr 2)');
+              alert(this.translate.instant('USER.LOGGED_OUT', { nr: '2' }));
           })
           }
         }
@@ -339,7 +341,7 @@ export class UserstateService {
         this.hasTuerOeffnerHN = false;
         this.isMinistryTeam = false;
         this.logintoken = "";
-              alert('Hinweis: Du wurdest ausgeloggt. Logge Dich erneut für den Türöffner & Co. (logintoken Fehler-Nr 3)');
+              alert(this.translate.instant('USER.LOGGED_OUT', { nr: '3' }));
       });
     }
 
@@ -377,7 +379,7 @@ export class UserstateService {
     this.hasTuerOeffnerHN = false;
     this.logintoken = "";
     console.log("dropped here with error " + JSON.stringify(err));
-    alert('Hinweis: Du wurdest ausgeloggt. Logge Dich erneut für den Türöffner & Co. (Fehler-Nr 4)');
+    alert(this.translate.instant('USER.LOGGED_OUT', { nr: '4' }));
   });
   await Preferences.set({key: 'currentUser', value: JSON.stringify({personid: this.personid, fullusername: this.fullusername,
     isGebetLeiter:this.isGebetLeiter,
@@ -599,7 +601,7 @@ public removeLocalSermon(fname) {
     await Preferences.remove({key: 'CheckinDataStorage'});
     await this.campusService.zuruecksetzen();
     console.log("user has been logged out");
-    alert('Hinweis: Du hast Dich ausgeloggt. Logge Dich erneut für den Türöffner & Co.');
+    alert(this.translate.instant('USER.LOGGED_OUT_SELF'));
   }
 
 }

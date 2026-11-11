@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { UserstateService } from '../userstate.service';
 import { TueroeffnerService } from '../tueroeffner.service';
@@ -26,10 +27,11 @@ export class TagundnachtPage implements ViewDidEnter{
     public userState:UserstateService,
     public tueroeffner:TueroeffnerService,
     private router: Router,
-    private churchtools:ChurchapiService
+    private churchtools:ChurchapiService,
+    private translate:TranslateService
   ) {
-    this.WeekTopics = "<ul><li>..einen kleinen Moment bitte..</li><li>..Daten werden geladen</li></ul>";
-    this.PersecutedTopic = "Gebet f&uuml;r Verfolgte";
+    this.WeekTopics = this.translate.instant('TUN.LOADING_TOPICS');
+    this.PersecutedTopic = this.translate.instant('TUN.PERSECUTED_DEFAULT');
     this.items= [];
     /*
       this.churchtools.getGebetsschichten(5).then((result)=>{

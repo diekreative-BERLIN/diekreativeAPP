@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +15,8 @@ import { toHHMMSSPipe } from '../toHHMMSSPipe';
     CommonModule,
     FormsModule,
     IonicModule,
-    SermonplayerPageRoutingModule
+    SermonplayerPageRoutingModule,
+    TranslateModule
   ],
   declarations: [SermonplayerPage, toHHMMSSPipe],
   exports: [toHHMMSSPipe]

@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Injectable } from '@angular/core';
 import { Geolocation } from '@capacitor/geolocation';
 import { CapacitorHttp } from '@capacitor/core';
@@ -33,6 +34,13 @@ export const STANDORTE: Record<StandortId, Standort> = {
 /** Ungenaue Positionen (z. B. nur Funkzelle) werden höchstens bis zu diesem Wert toleriert. */
 const MAX_ACCURACY_TOLERANCE = 100;
 
+interface GemerktePosition {
+  lat: number;
+  lon: number;
+  accuracy: number;
+  zeit: number;
+}
+
 export interface StandortErgebnis {
   erlaubt: boolean;
   /** Kurzer Hinweis für den Nutzer, falls nicht erlaubt */
@@ -50,8 +58,13 @@ const BESTAETIGUNG_GUELTIG_MS = 2 * 60 * 1000;
 })
 export class StandortService {
 
+  constructor(private translate: TranslateService) {}
+
   /** Zeitpunkt der letzten erfolgreichen Prüfung je Standort */
   private letzteBestaetigung: Partial<Record<StandortId, number>> = {};
+
+  /** Letzte GPS-Ortung (standortübergreifend), gilt ebenfalls 2 Minuten */
+  private letztePosition?: GemerktePosition;
 
   /**
    * Prüft den Standort und merkt sich einen Erfolg für 2 Minuten.
@@ -77,19 +90,29 @@ export class StandortService {
   }
 
   /**
-   * Prüft (ohne Zwischenspeicher), ob sich das Gerät am angegebenen Standort befindet.
-   * 1. Für die Schivelbeiner Str.: Ist das Gerät im WLAN vor Ort (erkannt an der
+   * Prüft, ob sich das Gerät am angegebenen Standort befindet.
+   * 1. Liegt eine Ortung aus den letzten 2 Minuten vor (egal für welchen Button)
+   *    und passt sie zu diesem Standort? Dann sofort erlaubt.
+   * 2. Für die Schivelbeiner Str.: Ist das Gerät im WLAN vor Ort (erkannt an der
    *    öffentlichen IP-Adresse des Anschlusses)? Funktioniert ohne GPS.
-   * 2. Sonst: GPS/Ortung mit Umkreisprüfung.
+   * 3. Sonst: neue GPS-Ortung mit Umkreisprüfung.
+   * Eine gemerkte Position, die NICHT passt, führt nie zur Ablehnung, sondern
+   * immer zu einer neuen Ortung – man könnte ja inzwischen angekommen sein.
    */
   private async pruefeStandort(id: StandortId): Promise<StandortErgebnis> {
     const standort = STANDORTE[id];
+
+    const gemerkt = this.letztePosition;
+    if (gemerkt && Date.now() - gemerkt.zeit < BESTAETIGUNG_GUELTIG_MS
+        && this.istImUmkreis(standort, gemerkt)) {
+      return { erlaubt: true };
+    }
 
     if (id === 'schivelbeiner' && await this.istImStandortNetz()) {
       return { erlaubt: true };
     }
 
-    let position;
+    let position: GemerktePosition;
     try {
       const perm = await Geolocation.checkPermissions();
       if (perm.location !== 'granted' && perm.coarseLocation !== 'granted') {
@@ -98,30 +121,37 @@ export class StandortService {
           return { erlaubt: false, grund: this.hinweisOhneOrtung(id) };
         }
       }
-      position = await Geolocation.getCurrentPosition({
+      const fix = await Geolocation.getCurrentPosition({
         enableHighAccuracy: true,
         timeout: 10000,
         maximumAge: 30000
       });
+      position = {
+        lat: fix.coords.latitude,
+        lon: fix.coords.longitude,
+        accuracy: fix.coords.accuracy || 0,
+        zeit: Date.now()
+      };
+      this.letztePosition = position;
     } catch (err) {
       console.log('Standort konnte nicht ermittelt werden ' + JSON.stringify(err));
       return { erlaubt: false, grund: this.hinweisOhneOrtung(id) };
     }
 
-    const distanz = this.distanzInMetern(
-      position.coords.latitude, position.coords.longitude,
-      standort.lat, standort.lon
-    );
-    const toleranz = Math.min(position.coords.accuracy || 0, MAX_ACCURACY_TOLERANCE);
-
-    if (distanz <= standort.radius + toleranz) {
+    if (this.istImUmkreis(standort, position)) {
       return { erlaubt: true };
     }
+    const distanz = this.distanzInMetern(position.lat, position.lon, standort.lat, standort.lon);
     return {
       erlaubt: false,
-      grund: `Du bist ca. ${this.formatDistanz(distanz)} von ${standort.name} entfernt. ` +
-             `Die Tür kann nur direkt vor Ort geöffnet werden.`
+      grund: this.translate.instant('DOOR.TOO_FAR', { distanz: this.formatDistanz(distanz), ort: standort.name })
     };
+  }
+
+  private istImUmkreis(standort: Standort, pos: GemerktePosition): boolean {
+    const distanz = this.distanzInMetern(pos.lat, pos.lon, standort.lat, standort.lon);
+    const toleranz = Math.min(pos.accuracy, MAX_ACCURACY_TOLERANCE);
+    return distanz <= standort.radius + toleranz;
   }
 
   /**
@@ -175,9 +205,9 @@ export class StandortService {
   }
 
   private hinweisOhneOrtung(id: StandortId): string {
-    const basis = 'Dein Standort konnte nicht ermittelt werden. Bitte erlaube der App den Zugriff auf deinen Standort und schalte die Ortung ein.';
+    const basis = this.translate.instant('DOOR.NO_LOCATION');
     return id === 'schivelbeiner'
-      ? basis + ' Alternativ: Verbinde dich mit dem WLAN "diekreative Guest".'
+      ? basis + ' ' + this.translate.instant('DOOR.NO_LOCATION_WIFI')
       : basis;
   }
 
@@ -193,6 +223,6 @@ export class StandortService {
   }
 
   private formatDistanz(m: number): string {
-    return m < 1000 ? `${Math.round(m)} m` : `${(m / 1000).toFixed(1).replace('.', ',')} km`;
+    return m < 1000 ? `${Math.round(m)} m` : `${(m / 1000).toFixed(1).replace('.', this.translate.currentLang === 'de' ? ',' : '.')} km`;
   }
 }

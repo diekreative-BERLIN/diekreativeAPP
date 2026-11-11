@@ -1,26 +1,24 @@
 <ion-header>
   <ion-toolbar class="head">
-    <ion-label slot="start">Churchtools Login</ion-label>
-    <ion-button slot="end" (click)="dismiss()">zurück</ion-button>
+    <ion-label slot="start">{{ 'LOGIN.TITLE' | translate }}</ion-label>
+    <ion-button slot="end" (click)="dismiss()">{{ 'COMMON.BACK' | translate }}</ion-button>
     &nbsp;&nbsp;
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-item>
-    <ion-label>Benutzername</ion-label>
+    <ion-label>{{ 'LOGIN.USERNAME' | translate }}</ion-label>
     <ion-input type="text" [(ngModel)]="username"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label>Passwort</ion-label>
+    <ion-label>{{ 'LOGIN.PASSWORD' | translate }}</ion-label>
     <ion-input type="password" [(ngModel)]="password"></ion-input>
   </ion-item>
-  <ion-button (click)="login()" expand="block">Login</ion-button>
+  <ion-button (click)="login()" expand="block">{{ 'LOGIN.BUTTON' | translate }}</ion-button>
   <ion-item>
     &nbsp;<br>
-    Wenn Du bei unserer Churchtools Instanz (diekreative.church.tools) einen Account hast, kannst Du Dich hier mit Deinen Zugangsdaten einloggen.
-    Dadurch werden erweiterte Funktionen in der App freigeschaltet wie z.B. Gebetshaus Funktionen wie der Türöffner, Checkin-QR Code's für den Kids checkin und ein direkter Zugang zur Kursplattform.
-    Wenn Du noch keinen Zugang bei Churchtools hast, schreib uns gerne eine Mail an office(at)diekreative.org
+    {{ 'LOGIN.INFO' | translate }}
   <br>&nbsp;
   </ion-item>
 </ion-content>

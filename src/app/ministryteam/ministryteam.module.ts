@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,8 +16,9 @@ import {DemoMaterialModule} from '../material-module';
     FormsModule,
     IonicModule,
     MinistryteamPageRoutingModule,
-    DemoMaterialModule
-    //MatCommonModule
+    DemoMaterialModule,
+    //MatCommonModule,
+    TranslateModule
   ],
   declarations: [MinistryteamPage]
 })

@@ -7,6 +7,8 @@ import { Preferences } from '@capacitor/preferences';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Subscription } from 'rxjs';
 import { Campus, CampusService } from '../campus.service';
+import { SprachWahl, SpracheService } from '../sprache.service';
+import { TranslateService } from '@ngx-translate/core';
 
 const MEDIA_FOLDER_NAME = 'temp_files';
 
@@ -23,6 +25,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   campusse: Campus[] = [];
   aktiverCampusId: number | null = null;
   campusLaedt = false;
+  sprachWahl: SprachWahl = 'auto';
   private campusAbos: Subscription[] = [];
   public isDisabled = true;
   cachefiles = [];
@@ -36,7 +39,9 @@ export class SettingsPage implements OnInit, OnDestroy {
   constructor(
     private userState:UserstateService,
     private pickerCtrl: PickerController,
-    private campusService: CampusService
+    private campusService: CampusService,
+    private sprache: SpracheService,
+    private translate: TranslateService
   ) {
     //this.form = this.form.concat(this.userState.AppHomescreen);
     console.log('in settings Constructor von settings.page');
@@ -47,7 +52,8 @@ export class SettingsPage implements OnInit, OnDestroy {
     });
     this.campusAbos.push(
       this.campusService.campusse.subscribe((liste) => this.campusse = liste),
-      this.campusService.aktiverCampusId.subscribe((id) => this.aktiverCampusId = id)
+      this.campusService.aktiverCampusId.subscribe((id) => this.aktiverCampusId = id),
+      this.sprache.wahl.subscribe((wahl) => this.sprachWahl = wahl)
     );
   }
 
@@ -56,6 +62,15 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.campusAbos.forEach((abo) => abo.unsubscribe());
+  }
+
+  // Sprache
+
+  spracheGewaehlt(ev: any) {
+    const wahl = ev.detail.value as SprachWahl;
+    if (wahl && wahl !== this.sprachWahl) {
+      this.sprache.setze(wahl);
+    }
   }
 
   // Standort
@@ -154,19 +169,19 @@ export class SettingsPage implements OnInit, OnDestroy {
           name: 'days',
           options: [
             {
-              text: 'löschen nach 2 Tagen',
+              text: this.translate.instant('SETTINGS.PICKER_DAYS', { days: 2 }),
               value: '2',
             },
             {
-              text: 'löschen nach 7 Tagen',
+              text: this.translate.instant('SETTINGS.PICKER_DAYS', { days: 7 }),
               value: '7',
             },
             {
-              text: 'löschen nach 14 Tagen',
+              text: this.translate.instant('SETTINGS.PICKER_DAYS', { days: 14 }),
               value: '14',
             },
             {
-              text: 'löschen nach 30 Tagen',
+              text: this.translate.instant('SETTINGS.PICKER_DAYS', { days: 30 }),
               value: '30',
             },
           ],
@@ -174,7 +189,7 @@ export class SettingsPage implements OnInit, OnDestroy {
       ],
       buttons: [
         {
-          text: 'Abbruch',
+          text: this.translate.instant('SETTINGS.PICKER_CANCEL'),
           role: 'abbruch',
         },
         {

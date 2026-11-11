@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -14,7 +15,8 @@ import { Tab2PageRoutingModule } from './tab2-routing.module';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab2PageRoutingModule
+    Tab2PageRoutingModule,
+    TranslateModule
   ],
   declarations: [Tab2Page]
 })

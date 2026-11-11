@@ -12,6 +12,10 @@ import { Router } from '@angular/router';
 })
 export class CreditsPage implements OnInit {
 
+  /** Einträge der App-Historie (Schlüssel in CREDITS.H.*), neueste zuerst */
+  historie = ['V204', 'V203', 'V202', 'V201', 'V200', 'V108', 'V107', 'V106', 'V105', 'RELEASE', 'APPSTORE',
+    'TROPFEN', 'PARTY', 'HACKATON', 'KICKOFF', 'TEAM', 'IDEE'];
+
   constructor(
     private platform: Platform,
     private router: Router

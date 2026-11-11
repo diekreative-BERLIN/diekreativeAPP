@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 
 import { Injectable} from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders, HttpResponse } from '@angular/common/http';
@@ -29,7 +30,8 @@ export class ChurchapiService {
   private LOGINROOT = "q=login/ajax&func="
 
   constructor(private httpClient: HttpClient,
-              private alertCtrl: AlertController) {}
+              private alertCtrl: AlertController,
+              private translate: TranslateService) {}
 
 /*
   public async login(username, password){
@@ -91,13 +93,13 @@ export class ChurchapiService {
   private showTotpDialog(): Promise<string | null> {
     return new Promise(async (resolve) => {
       const alert = await this.alertCtrl.create({
-        header: '2-Faktor-Authentifizierung',
-        subHeader: 'Bitte gib den Code aus deiner Authenticator-App ein.',
+        header: this.translate.instant('TOTP.HEADER'),
+        subHeader: this.translate.instant('TOTP.SUBHEADER'),
         inputs: [
           {
             name: 'totpCode',
             type: 'number',
-            placeholder: '6-stelliger Code',
+            placeholder: this.translate.instant('TOTP.PLACEHOLDER'),
             attributes: {
               maxlength: 6,
               inputmode: 'numeric',
@@ -107,12 +109,12 @@ export class ChurchapiService {
         ],
         buttons: [
           {
-            text: 'Abbrechen',
+            text: this.translate.instant('COMMON.CANCEL'),
             role: 'cancel',
             handler: () => resolve(null)
           },
           {
-            text: 'Bestätigen',
+            text: this.translate.instant('TOTP.CONFIRM'),
             handler: (data) => {
               const code = data?.totpCode?.trim();
               if (code && code.length === 6) {

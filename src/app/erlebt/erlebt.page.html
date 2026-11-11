@@ -4,13 +4,12 @@
 
 
   <div class="title" style="background-color: #fff;">
-    <ion-label class="header-label" color="light">ERLEBT</ion-label>   </div>
+    <ion-label class="header-label" color="light">{{ 'ERLEBT.TITLE' | translate }}</ion-label>   </div>
 
 
-    <h1 class="text">GOTT IST REAL</h1>
-    <h2 class="text">Wir freuen uns von dir zu hören!</h2>
-    <p class="text">Du hast etwas tolles mit Gott erlebt? Lass es uns wissen, damit wir uns mit Dir freuen können und ER dadurch verherrlicht wird!
-    </p>
+    <h1 class="text">{{ 'ERLEBT.HEADLINE' | translate }}</h1>
+    <h2 class="text">{{ 'ERLEBT.SUBLINE' | translate }}</h2>
+    <p class="text">{{ 'ERLEBT.TEXT' | translate }}</p>
 
  <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
   </div>
@@ -20,27 +19,27 @@
     <form>
       <ion-item lines="none">
       <mat-form-field appearance="fill" class="input_erlebt">
-        <mat-label>das hab ich erlebt</mat-label>
+        <mat-label>{{ 'ERLEBT.INPUT_LABEL' | translate }}</mat-label>
         <textarea matInput [(ngModel)]="inputErlebt" name="inputErlebt" rows="5" required></textarea>
       </mat-form-field>
     </ion-item>
   <ion-item lines="none">
-      <div class="ask_use">Dürfen wir Dein Zeugnis in anonymisierter Form verwenden? z.B. für die Website</div>
+      <div class="ask_use">{{ 'ERLEBT.ASK_USE' | translate }}</div>
       <mat-form-field appearance="fill" class="input_use">
-        <mat-label class="ask_use">J/N</mat-label>
+        <mat-label class="ask_use">{{ 'ERLEBT.YN' | translate }}</mat-label>
         <mat-select [(ngModel)]="useErlebt" name="useErlebt" required>
-          <mat-option value="Ja">Ja</mat-option>
-          <mat-option value="Nein">Nein</mat-option>
+          <mat-option value="Ja">{{ 'COMMON.YES' | translate }}</mat-option>
+          <mat-option value="Nein">{{ 'COMMON.NO' | translate }}</mat-option>
         </mat-select>
       </mat-form-field>
     </ion-item>
       <ion-item lines="none">
       <mat-checkbox class="check" [(ngModel)]="isChecked" name="isChecked" required>
-        <mat-label class="check-label">Mit dem Absenden des Formulars erkläre ich mich mit der Verarbeitung meiner personenbezogenen Daten entsprechend der Datenschutzerklärung einverstanden.</mat-label>
+        <mat-label class="check-label">{{ 'ERLEBT.PRIVACY' | translate }}</mat-label>
       </mat-checkbox>
     </ion-item>
     <div class="center">
-      <button mat-stroked-button color="basic" class="fullwidth" (click)="sendTestimony()">mein Erlebnis versenden</button>
+      <button mat-stroked-button color="basic" class="fullwidth" (click)="sendTestimony()">{{ 'ERLEBT.SEND' | translate }}</button>
     </div>
     </form>
   </div>

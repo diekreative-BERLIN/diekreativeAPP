@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +14,8 @@ import { PredigtenAudioDetailsPage } from './predigten-audio-details.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    PredigtenAudioDetailsPageRoutingModule
+    PredigtenAudioDetailsPageRoutingModule,
+    TranslateModule
   ],
   declarations: [PredigtenAudioDetailsPage]
 })

@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Injectable } from '@angular/core';
 import { Platform, ToastController } from '@ionic/angular';
 import { CapacitorHttp } from '@capacitor/core';
@@ -42,7 +43,8 @@ export class CampusService {
 
   constructor(
     private platform: Platform,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private translate: TranslateService
   ) {
     this.bereit = this.platform.ready().then(() => this.ladeGespeichertes());
   }
@@ -62,9 +64,9 @@ export class CampusService {
   /** Anzeigename eines Standorts, auch wenn er (noch) nicht in der Liste ist. */
   public campusName(id: number | null): string {
     if (id == null) {
-      return 'Alle Standorte';
+      return this.translate.instant('CAMPUS.ALL');
     }
-    return this.findeCampus(id)?.name ?? `Standort ${id}`;
+    return this.findeCampus(id)?.name ?? this.translate.instant('CAMPUS.FALLBACK', { id });
   }
 
   /** Setzt den aktiven Standort (null = alle) und speichert ihn. */
@@ -139,7 +141,7 @@ export class CampusService {
     await this.setzeCampus(id);
 
     const toast = await this.toastCtrl.create({
-      message: `Standort „${this.campusName(id)}“ wurde ausgewählt. Du kannst ihn jederzeit in den Einstellungen ändern.`,
+      message: this.translate.instant('CAMPUS.SELECTED', { name: this.campusName(id) }),
       duration: 5000,
       position: 'bottom',
       buttons: [{ text: 'OK', role: 'cancel' }]

@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ChurchapiService } from '../connectors/churchapi.service';
 //popover
@@ -14,7 +15,8 @@ export class TunSwapPage implements OnInit {
 
   constructor(
      private popover:PopoverController,
-     private churchtools:ChurchapiService) { }
+     private churchtools:ChurchapiService,
+     private translate:TranslateService) { }
   person;
   typ;
   sessID;
@@ -35,10 +37,10 @@ export class TunSwapPage implements OnInit {
   {
      console.log("neue Person eintragen: "+this.person+"  mit Typ:"+this.typ+" auf SessID "+this.sessID+" am:"+this.startdate);
      if(this.person==undefined) {
-        alert("bitte trag den Namen der Person ein, die für Dich die Gebetsschicht übernimmt");
+        alert(this.translate.instant('TUN.NEED_NAME'));
      }
      else if(this.typ==undefined) {
-        alert("bitte noch die Gebetsform angeben. Z.B. A+F für Anbetung und Fürbitte");
+        alert(this.translate.instant('TUN.NEED_FORM_SWAP'));
      } else {
         let oldentry = "("+this.oldformat+") "+this.oldperson;
         let ret=this.churchtools.swapSession(this.sessID,this.startdate,this.enddate,oldentry,this.person,this.typ);

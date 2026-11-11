@@ -3,26 +3,23 @@
 <ion-content>
   
     <div class="tagundnacht-title" style="background-color: #fff;">
-      <ion-label class="header-label" color="light">MINISTRYTEAM</ion-label>
+      <ion-label class="header-label" color="light">{{ 'MINISTRY.TITLE' | translate }}</ion-label>
   </div>
 
 
 
 
-<ion-label><div class="subtitle">
-Du bist Teil vom Ministry Team von<br>
-diekreative BERLIN
-</div></ion-label>
+<ion-label><div class="subtitle" [innerHTML]="'MINISTRY.SUBTITLE' | translate"></div></ion-label>
 
 <div class="m_info">
   <ion-button color="primary" fill="outline" (click)="showMinistryVideo()" class="qr-button">
     <ion-icon name="logo-youtube"></ion-icon>
-    <ion-label>&nbsp;&nbsp;Aufnahme Ministryschulung</ion-label>
+    <ion-label>&nbsp;&nbsp;{{ 'MINISTRY.VIDEO' | translate }}</ion-label>
   </ion-button>
 
   <ion-button color="primary" fill="outline" (click)="openSkript()" class="qr-button">
     <ion-icon name="reader-outline"></ion-icon>
-    <ion-label>&nbsp;&nbsp;Skript Ministryteam</ion-label>
+    <ion-label>&nbsp;&nbsp;{{ 'MINISTRY.SCRIPT' | translate }}</ion-label>
   </ion-button>
 
 </div>

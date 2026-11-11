@@ -3,18 +3,18 @@
       <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="100" pullMax="200">
             <ion-refresher-content 
               pullingIcon="arrow-down-outline" 
-              pullingText="ziehen zum Aktualisieren" 
+              [pullingText]="'COMMON.PULL_TO_REFRESH' | translate" 
               refreshingSpinner="circular"
-              refreshingText="es wird aktualisiert...">
+              [refreshingText]="'COMMON.REFRESHING' | translate">
             </ion-refresher-content>
       </ion-refresher>
 
-  <h1 class="ueberuns-text">Gebets-kalender Hohen Neuendorf</h1> 
+  <h1 class="ueberuns-text">{{ 'TUN.CAL_HN_TITLE' | translate }}</h1> 
 
  <!-- div class="back"><a (click)="BackActivated()"><ion-icon name="chevron-back-outline"></ion-icon></a></div -->
  <div class="pos_back">
  <ion-buttons>
-      <button mat-flat-button shape="round" color="primary" (click)="BackActivated()"><ion-icon class="innericon" name="chevron-back-outline"></ion-icon>&nbsp;zurück</button>
+      <button mat-flat-button shape="round" color="primary" (click)="BackActivated()"><ion-icon class="innericon" name="chevron-back-outline"></ion-icon>&nbsp;{{ 'COMMON.BACK' | translate }}</button>
 </ion-buttons>
 </div>
 
@@ -26,7 +26,7 @@
      <iframe [src]="browser.secUrl"
       width="100%" height="1450px" frameborder="0" scrolling="no" ng-onload="hideLoader()"
       sandbox="allow-scripts allow-top-navigation allow-pointer-lock allow-same-origin allow-popups allow-forms"
-      >Dein Brower unterstützt leider keine iFrames!&nbsp;</iframe>
+      >{{ 'COMMON.NO_IFRAMES' | translate }}&nbsp;</iframe>
 
 </div>
 </ion-content>

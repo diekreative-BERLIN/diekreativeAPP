@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
@@ -24,7 +25,8 @@ export class TunGebetscalPage implements OnInit {
     private platform: Platform,
     public loadingController: LoadingController,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private translate: TranslateService
   ) {  }
 
   ngOnInit() {
@@ -37,7 +39,7 @@ export class TunGebetscalPage implements OnInit {
   // This will show the loader
   showLoader() {
     this.loading = this.loadingController.create({
-      message: 'Gebetskalender wird geladen...',
+      message: this.translate.instant('TUN.CAL_LOADING'),
       duration: 3000
     }).then((res) => {
       res.present();

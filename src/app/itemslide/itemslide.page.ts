@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NavController } from "@ionic/angular";
 import { ChurchapiService } from '../connectors/churchapi.service';
@@ -30,7 +31,8 @@ export class ItemslidePage implements OnInit {
     private userstate:UserstateService,
     private churchtools:ChurchapiService,
     private platform: Platform,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
     this.userfilter = encodeURI(this.userstate.shortusername);
     this.explicitusername = encodeURI(this.userstate.explicitusername);
@@ -82,7 +84,7 @@ export class ItemslidePage implements OnInit {
   swapItem(item,sessID,repeatID,startdate,enddate,format,person){
     console.log("repeatid="+repeatID);
     if(repeatID=="") {
-      alert("Die Schicht '"+format+"' kann nicht mehr getauscht werden. Sie wurde bereits einmal freigegeben und übernommen bzw. getauscht")
+      alert(this.translate.instant('TUN.CANT_SWAP', { format }))
     } else {
       console.log('tausche Schicht mit ID='+sessID);
       this.popover.create({component:TunSwapPage,
@@ -113,7 +115,7 @@ export class ItemslidePage implements OnInit {
   releaseItem(item,sessID,repeatID,startdate,enddate,format,person){
     console.log("repeatid="+repeatID);
     if(repeatID=="") {
-      alert("Die Schicht '"+format+"' kann nicht mehr freigegeben werden. Sie wurde bereits einmal freigegeben und übernommen bzw. getauscht")
+      alert(this.translate.instant('TUN.CANT_RELEASE', { format }))
     } else {
       console.log('gib Schicht mit ID='+sessID+' frei!');
       this.popover.create({component:TunReleasePage,

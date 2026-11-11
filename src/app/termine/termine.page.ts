@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit, SecurityContext } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
@@ -26,7 +27,8 @@ export class TerminePage implements OnInit {
     public loadingController: LoadingController,
     private router: Router,
     private sanitizer: DomSanitizer,
-    public userState:UserstateService
+    public userState:UserstateService,
+    private translate:TranslateService
     ) {
       if (window.addEventListener) {
         window.addEventListener("message", this.receiveMessage.bind(this), false);
@@ -95,7 +97,7 @@ export class TerminePage implements OnInit {
   // This will show the loader
   showLoader() {
     this.loading = this.loadingController.create({
-      message: 'Terminseite wird geladen...',
+      message: this.translate.instant('TERMINE.LOADING'),
       duration: 3000
     }).then((res) => {
       res.present();

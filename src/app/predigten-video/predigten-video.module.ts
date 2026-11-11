@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +14,8 @@ import { PredigtenVideoPage } from './predigten-video.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    PredigtenVideoPageRoutingModule
+    PredigtenVideoPageRoutingModule,
+    TranslateModule
   ],
   declarations: [PredigtenVideoPage]
 })

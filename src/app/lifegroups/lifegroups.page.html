@@ -1,10 +1,10 @@
 <ion-content>
   <div style="width:100%; height:209px; background-image: url(../../assets/headerimages/Header_Unterseiten_LIFEGROUP.jpg); background-size: cover;">
-    <h1 class="lifegroup-title">LIFEGROUPS</h1>
+    <h1 class="lifegroup-title">{{ 'LIFEGROUPS.TITLE' | translate }}</h1>
   </div>
-  <h1 class="lifegroup-text">SEI DABEI</h1>
-  <h2 class="lifegroup-text">Get in touch</h2>
-  <p class="lifegroup-text">Finde deinen Platz in unseren lifeGroups. Wöchentliche Gruppentreffen mit tollen Leitern und eigenen Visionen an unterschiedlichen Standorten in ganz Berlin. <br /><br />Get in touch mit Gott und Menschen – in unseren lifeGroups.</p> 
+  <h1 class="lifegroup-text">{{ 'LIFEGROUPS.JOIN' | translate }}</h1>
+  <h2 class="lifegroup-text">{{ 'LIFEGROUPS.GET_IN_TOUCH' | translate }}</h2>
+  <p class="lifegroup-text" [innerHTML]="'LIFEGROUPS.INTRO' | translate"></p> 
 
   <div class="pfeil-re"><img src="../assets/svg/pfeil_yellow_1.svg" id="pfeile" > </div>
   <div class="pfeil-blue"><img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
@@ -12,17 +12,17 @@
 
   <div *ngIf="!userState.isOnline">
     <ion-label><div class="subtitle">
-    Du bist offline. Es können keine Details angezeigt werden!
+    {{ 'COMMON.OFFLINE' | translate }}
     </div></ion-label>
   </div>
   
   <div *ngIf="userState.isOnline">
-    <h3 class="lifegroup-text">Finde deine lifeGroup</h3>
+    <h3 class="lifegroup-text">{{ 'LIFEGROUPS.FIND' | translate }}</h3>
     <!--
     <p *ngIf="AppPlatform  === 'iOS'" class="lifegroup-text">Hier findest du eine erste Übersicht über unsere lifeGroups. Für weitere Informationen und um an einer lifeGroup teilzunehmen besuche vor oder nach dem Gottesdienst unsere Info. <i>(Die Schaltflächen Info bzw Infos & Anmeldung sind nicht aktiv).</i></p>
     <p *ngIf="AppPlatform  === 'android'" class="lifegroup-text">Hier findest du eine erste Übersicht über unsere lifeGroups. Für weitere Informationen und um an einer lifeGroup teilzunehmen besuche vor oder nach dem Gottesdienst unsere Info.</p>
     -->
-    <p class="lifegroup-text">Hier findest du eine erste Übersicht über unsere lifeGroups. Für weitere Informationen und um an einer lifeGroup teilzunehmen besuche vor oder nach dem Gottesdienst unsere Info.</p>
+    <p class="lifegroup-text">{{ 'LIFEGROUPS.OVERVIEW' | translate }}</p>
     <!-- <iframe appIframeTracker (iframeClick)="onIframeClick()" width="100%" style="border-width:0px" height="900px" [src]="url"></iframe> -->
      <iframe appIframeTracker width="100%" style="border-width:0px" height="900px" [src]="url"></iframe>
     <!-- sandbox="allow-top-navigation-by-user-activation" -->

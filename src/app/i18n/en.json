@@ -1,0 +1,366 @@
+{
+  "COMMON": {
+    "PULL_TO_REFRESH": "pull to refresh",
+    "REFRESHING": "refreshing...",
+    "REFRESH_ONLINE_ONLY": "Refreshing only works online",
+    "BACK": "back",
+    "OK": "OK",
+    "CANCEL": "Cancel",
+    "YES": "Yes",
+    "NO": "No",
+    "OFFLINE": "You are offline. No details can be shown!",
+    "NO_IFRAMES": "Unfortunately your browser does not support iFrames!"
+  },
+  "MENU": {
+    "WELCOME": "Hello, welcome!",
+    "LOGIN": "Login",
+    "SETTINGS": "Settings",
+    "CT_APP": "Churchtools App",
+    "ABOUT_APP": "about this app",
+    "CONTACT": "Contact",
+    "MEDIATHEK": "Media library",
+    "TERMINE": "Events",
+    "TAGUNDNACHT": "dayandnight",
+    "GOTTESDIENSTE": "Services",
+    "LIFEGROUPS": "Lifegroups",
+    "KURSPLATTFORM": "Course platform",
+    "ABOUT_US": "about us",
+    "ERLEBT": "Testimonies",
+    "IMPRINT": "Imprint"
+  },
+  "TABS": {
+    "HOME": "HOME",
+    "DIRECTIONS": "DIRECTIONS",
+    "TAGUNDNACHT": "DAYANDNIGHT",
+    "GIVE": "GIVE"
+  },
+  "SETTINGS": {
+    "TITLE": "Settings",
+    "LANGUAGE": "Language (Sprache)",
+    "LANGUAGE_HINT": "By default the app follows the language of your smartphone.",
+    "LANGUAGE_AUTO": "Automatic (device language)",
+    "LOCATION": "Location",
+    "LOCATION_HINT": "Choose your location. The services and events shown are based on it.",
+    "ALL_LOCATIONS": "All locations",
+    "LOCATIONS_AFTER_LOGIN": "Locations are loaded after you log in.",
+    "LOCATIONS_LOADING": "Loading locations …",
+    "HOMESCREEN_EDIT": "Edit home screen",
+    "DONE": "Done",
+    "RESET": "Reset",
+    "CACHE_TITLE": "Local cache (media library)",
+    "CACHE_DELETE_BEFORE": "delete downloaded sermons after",
+    "CACHE_DELETE_AFTER": "days",
+    "CACHE_USED": "cache currently used:",
+    "CACHE_CLEAR": "Clear cache",
+    "PICKER_DAYS": "delete after {{days}} days",
+    "PICKER_CANCEL": "Cancel"
+  },
+  "HOMESCREEN": {
+    "Mediathek": "Media library",
+    "Termine": "Events",
+    "Tagundnacht": "Dayandnight",
+    "Gottesdienste": "Services",
+    "LifeGroups": "LifeGroups",
+    "Ueberuns": "About us",
+    "Geben": "Give",
+    "Erlebt": "Testimonies",
+    "Kursplattform": "Course platform",
+    "Ministryteam": "Ministry team"
+  },
+  "CAMPUS": {
+    "ALL": "All locations",
+    "FALLBACK": "Location {{id}}",
+    "SELECTED": "Location “{{name}}” has been selected. You can change it at any time in the settings."
+  },
+  "DOOR": {
+    "CHECKING": "Checking location…",
+    "NOT_ON_SITE": "Not on site",
+    "TOO_FAR": "You are about {{distanz}} away from {{ort}}. The door can only be opened on site.",
+    "NO_LOCATION": "Your location could not be determined. Please allow the app to access your location and turn on location services.",
+    "NO_LOCATION_WIFI": "Alternatively: connect to the Wi-Fi \"diekreative Guest\"."
+  },
+  "KURS": {
+    "TITLE": "Course platform",
+    "LOGGING_IN": "Signing in to the course platform …",
+    "AUTO_LOGIN_FAILED": "Automatic sign-in did not work.",
+    "NO_TOKEN": "The app is missing your ChurchTools access for automatic sign-in. Please sign out of the app and sign in again.",
+    "UNREACHABLE": "The course platform is currently unavailable.",
+    "SELF_LOGIN": "You can still sign in on the course platform yourself.",
+    "OPEN_ANYWAY": "Open anyway"
+  },
+  "TOTP": {
+    "HEADER": "Two-factor authentication",
+    "SUBHEADER": "Please enter the code from your authenticator app.",
+    "PLACEHOLDER": "6-digit code",
+    "CONFIRM": "Confirm"
+  },
+  "USER": {
+    "LOGGED_OUT": "Note: You have been logged out. Please log in again to use the door opener & co. (error no. {{nr}})",
+    "LOGGED_OUT_SELF": "Note: You have logged out. Please log in again to use the door opener & co."
+  },
+  "LOGIN": {
+    "TITLE": "Churchtools Login",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "BUTTON": "Login",
+    "INFO": "If you have an account on our Churchtools instance (diekreative.church.tools), you can log in here with your credentials. This unlocks additional features in the app, e.g. house of prayer features like the door opener, check-in QR codes for kids check-in and direct access to the course platform. If you don't have a Churchtools account yet, feel free to email us at office(at)diekreative.org",
+    "INVALID": "Login data is invalid. Username or password is wrong or the account is locked.\n\nPlease also check that Wi-Fi or mobile data is turned on, as logging in is not possible without a connection."
+  },
+  "PERSON": {
+    "TITLE": "Logged-in user",
+    "LOGGED_IN_AS": "Logged in as {{name}}",
+    "LOGOUT": "Logout"
+  },
+  "DIRECTIONS": {
+    "TITLE": "DIRECTIONS",
+    "SUBTITLE": "This is where you'll find us",
+    "SERVICE": "SERVICE",
+    "SERVICE_TIME": "Service every Sunday at 10:30 am",
+    "PRAYERHOUSE": "HOUSE OF PRAYER",
+    "ALL_YEAR": "24/7, all year round"
+  },
+  "TUN": {
+    "SUBTITLE": "We pray 24 hours - 7 days - 52 weeks <br> You are warmly invited to pray with us",
+    "PRAYER_CAL": "Prayer calendar",
+    "PRAYER_CAL_HN": "Prayer calendar Hohen Neuendorf",
+    "FREE_SHIFTS": "Available prayer shifts",
+    "MY_SHIFTS": "My prayer shifts",
+    "OUTSIDE": "Outside",
+    "INSIDE": "Inside",
+    "HN_GATE": "HN gate",
+    "HN_WAGON": "HN wagon",
+    "CURRENT_PRAYER": "Current prayer",
+    "NEXT_PRAYER": "Upcoming prayer",
+    "WEEK_FOCUS": "Focus of the week",
+    "PERSECUTED": "Prayer for persecuted Christians",
+    "PERSECUTED_DEFAULT": "Prayer for the persecuted",
+    "LOADING_TOPICS": "<ul><li>..just a moment please..</li><li>..loading data</li></ul>",
+    "MY_SHIFTS_TITLE": "My prayer<br>shifts",
+    "FREE_SHIFTS_TITLE": "Available prayer<br>shifts",
+    "CAL_TITLE": "Prayer calendar",
+    "CAL_HN_TITLE": "Prayer calendar Hohen Neuendorf",
+    "CAL_LOADING": "Loading prayer calendar...",
+    "SWAP": "swap",
+    "RELEASE": "release",
+    "TAKEOVER": "take over",
+    "CANT_SWAP": "The shift '{{format}}' can no longer be swapped. It has already been released and taken over or swapped once.",
+    "CANT_RELEASE": "The shift '{{format}}' can no longer be released. It has already been released and taken over or swapped once.",
+    "RELEASE_CONFIRM": "Do you really want to release your shift?",
+    "SWAP_QUESTION": "Who will take over your shift?",
+    "NAME": "Name",
+    "PRAYER_FORM": "Type of prayer",
+    "ENTER": "submit",
+    "TAKEOVER_THANKS": "Great that you're taking over this shift!",
+    "NEED_NAME": "please enter the name of the person taking over your prayer shift",
+    "NEED_FORM_SWAP": "please also enter the type of prayer, e.g. W+I for worship and intercession",
+    "NEED_FORM": "please enter your type of prayer, e.g. W+I for worship and intercession",
+    "SHIFT_TAKEN": "Oops, someone was faster than you. This shift has just been taken over by someone else. Thank you for your willingness anyway!"
+  },
+  "GODI": {
+    "TITLE": "SERVICES",
+    "WELCOME": "WELCOME",
+    "LOOKING_FORWARD": "We look forward to seeing you!",
+    "INTRO": "Feel free to drop by – in person or via our live stream. Our services are held in German with English translation.",
+    "NEXT": "next service",
+    "TODAY": "today",
+    "QR": "Your QR code for check-in",
+    "SCRIPT": "Sermon script",
+    "ON_SITE": "on site",
+    "TRANSLATION": "Translation",
+    "LIVESTREAM": "livestream",
+    "ORIGINAL": "Original",
+    "ENGLISH": "english",
+    "TIME_FORMAT": "h:mm A",
+    "QR_TIME_FORMAT": "MMM D, h:mm A",
+    "QR_AVAILABLE_FROM": "QR check-in is available from {{zeit}}",
+    "INFO": "Info",
+    "ZOOM_TITLE": "Service via Zoom",
+    "ZOOM_TEXT": "For english speaking guests we provide a live translation over Zoom.\n\nPlease make sure that you have installed the Zoom app on your smartphone (free of charge) and have enough mobile data (or use Wi-Fi) before clicking the \"english\" button.\nAs soon as Zoom starts up, you will be able to choose the english translation channel.\n\nZoom has only a small delay, so it is also well suited for listening along to the service on site with your own smartphone (\"Original\" button).\n\nFeel free to contact our info desk for more information.",
+    "LIVEVOICE_TITLE": "Translation via LiveVoice",
+    "LIVEVOICE_TEXT": "For international guests we provide live translation via the LiveVoice app.\n\nPlease make sure that you have installed the LiveVoice app on your smartphone (free of charge) and have enough mobile data (or use Wi-Fi). It only uses a small amount of data.\n\nFeel free to contact our info desk for more information.",
+    "YT_TITLE": "YouTube Livestream",
+    "YT_TEXT": "Opens the current livestream on YouTube.\n\nThis is the best way to join the current service from home."
+  },
+  "CHECKIN": {
+    "SHOW_QR": "Just show the following QR code at check-in and you're checked in!",
+    "MORE_FAMILY": "more family members?",
+    "MORE_FAMILY_TEXT": "if more family members have been added to the current group, you can reload them here",
+    "FAMILY_HINT": "Your family members need to be linked to you in Churchtools and also be part of this event group. The check-in team will be happy to help."
+  },
+  "TERMINE": {
+    "TITLE": "Events",
+    "LOADING": "Loading events..."
+  },
+  "ABOUT": {
+    "TITLE": "ABOUT US",
+    "HEARTBEAT": "Our heartbeat",
+    "WHO": "Who we are",
+    "WHO_TEXT": "We are a church that worships and prays day and night, finds, develops and releases people, and brings heaven to earth.",
+    "VISION": "Our vision",
+    "VISION_1": "People who know that God loves them passionately",
+    "VISION_2": "and who in turn love God passionately",
+    "VISION_3": "and where everyone discovers and trains their passions and gifts",
+    "VISION_P1": "All of this is expressed in: find – develop – release!",
+    "VISION_P2": "By “bringing heaven to earth” we mean what Jesus says in Matthew 6:10: your kingdom come, your will be done, on earth as it is in heaven. So God's will is: heaven on earth.",
+    "VISION_P3": "Jesus explains that his kingdom, the reign of God (heaven), is at hand. God's world is within reach. His solutions and answers, his healing power, his love, his ability to set free. God is the answer to all the problems of this world, of our societies, of our families and of our personal lives.",
+    "VISION_P4": "God wants to transform entire nations, set them on fire with passion for his Son and pour out blessing into every area of life and every sphere of society.",
+    "VISION_P5": "This is what we dream of, and this is what we want God to use us for.",
+    "BELIEVE": "What we believe",
+    "BELIEVE_P1": "We believe <b>that God is.</b> That he is present, that he is near, that he is good, that he can be experienced. In the middle of Berlin or anywhere else.",
+    "BELIEVE_P2": "That the ancient message of the Bible is relevant today and can be experienced today.",
+    "BELIEVE_P3": "We also believe that God still speaks prophetically today, and that He has plans for Berlin. There are many prophetic promises over our city of Berlin. God has spoken that it will be a city where many people will experience healing. Healing of body and soul.",
+    "BELIEVE_P4": "We believe in revival and the transformation of entire nations!",
+    "BELIEVE_P5": "As a church we want to be part of this, we expect it, and we are reaching out for it!",
+    "LEADERSHIP": "Church leadership",
+    "BIO_CHRISTOPHE": "Elder and senior leader. He is married to Miriam. Together they have three children.",
+    "BIO_MARC": "Elder and pastor for children and youth. Responsible for IT and head of diekreative Akademie. Marc is an IT specialist and is married to Steffi.",
+    "BIO_MATTHIAS": "Elder and head of administration and personnel. Together with Rike he pastorally oversees the area of \"volunteers\".",
+    "BIO_RIKE": "Pastor for families. Married to Matthias. Together they have four children. They lead our marriage ministry \"Gute Beziehungen\" (good relationships).",
+    "BIO_KARSTEN": "Pastor for arts and music. Leads worship, multimedia and communications. He is married to Marisa. They have three children.",
+    "BIO_MARISA": "Married to Karsten. She is an educational scientist specialising in daycare quality and family support.",
+    "BIO_JUTTA": "Leads our diaconal ministry and the Alpha course. She also supports the coordination of our lifeGroups. Jutta has four grown-up children."
+  },
+  "CTAPP": {
+    "INTRO": "The official Churchtools app gives you an overview of your services and groups, offers secure group chat directly in the Churchtools app and more..",
+    "STEP1": "1. Install the ChurchTools app",
+    "STEP1_TEXT": "You can download the Churchtools app right here:",
+    "STEP2": "2. Connect the app to Churchtools",
+    "STEP2_TEXT": "Then tap the following button to log the Churchtools app straight in with your Churchtools username and get started ;-)",
+    "CONNECT": "Connect ChurchTools app"
+  },
+  "ERLEBT": {
+    "TITLE": "TESTIMONIES",
+    "HEADLINE": "GOD IS REAL",
+    "SUBLINE": "We'd love to hear from you!",
+    "TEXT": "Have you experienced something great with God? Let us know, so we can celebrate with you and HE is glorified through it!",
+    "INPUT_LABEL": "this is what I experienced",
+    "ASK_USE": "May we use your testimony anonymously? e.g. on our website",
+    "YN": "Y/N",
+    "PRIVACY": "By submitting this form I agree to the processing of my personal data in accordance with the privacy policy.",
+    "SEND": "send my testimony"
+  },
+  "LIFEGROUPS": {
+    "TITLE": "LIFEGROUPS",
+    "JOIN": "JOIN IN",
+    "GET_IN_TOUCH": "Get in touch",
+    "INTRO": "Find your place in our lifeGroups. Weekly group meetings with great leaders and their own visions at different locations all over Berlin. <br /><br />Get in touch with God and people – in our lifeGroups.",
+    "FIND": "Find your lifeGroup",
+    "OVERVIEW": "Here is a first overview of our lifeGroups. For more information and to join a lifeGroup, visit our info desk before or after the service."
+  },
+  "MINISTRY": {
+    "TITLE": "MINISTRY TEAM",
+    "SUBTITLE": "You are part of the ministry team of<br>diekreative BERLIN",
+    "VIDEO": "Ministry training recording",
+    "SCRIPT": "Ministry team script"
+  },
+  "SERMONS": {
+    "TITLE": "SERMONS",
+    "SEARCH": "search sermons",
+    "MORE": "more",
+    "LISTEN": "LISTEN",
+    "SHARE": "SHARE",
+    "SAVE": "SAVE",
+    "SAVED": "SAVED",
+    "SCRIPT": "SCRIPT",
+    "YOUTUBE": "YOUTUBE",
+    "SHARE_MESSAGE": "Listen to this sermon!"
+  },
+  "CREDITS": {
+    "WELCOME": "great that you installed our app!<br>This app was born right out of our community.<br><b>by the community for the community!</b><br>",
+    "INTRO": "Here you'll find the story of this app and the technical background of the components used.",
+    "HISTORY": "History",
+    "FRAMEWORKS": "Frameworks",
+    "FRAMEWORKS_INTRO": "This app was developed using the following software components (frameworks)",
+    "IONIC": "Open-source web framework for building hybrid apps.<br>The app's layout was programmed in Ionic using html and css.",
+    "ANGULAR": "TypeScript-based front-end web application framework.<br>The app's features are programmed with Angular/TypeScript.",
+    "CAPACITOR": "Framework for building hybrid applications for mobile devices.<br>Capacitor was used to compile the app for iOS and Android.",
+    "H": {
+      "V204": {
+        "DATE": "November 2026",
+        "TITLE": "V2.04",
+        "TEXT": "The door opener has a new security feature: the door can now only be operated on-site within a certain radius. To use this feature, location services must be enabled for the app, or the app must be connected to the guest Wi-Fi network at the prayer house. The app now allows users to select their campus location to view the corresponding events. Our course platform has been integrated into the app with automatic login for registered users. The app is now also available in English (may be changed in the settings)."
+      },
+      "V203": {
+        "DATE": "Summer 2026",
+        "TITLE": "V2.03",
+        "TEXT": "Our icons got a new look. Login with two-factor authentication is now supported. On Android the problem that you could not log in again has been fixed."
+      },
+      "V202": {
+        "DATE": "Christmas 2025",
+        "TITLE": "V2.02",
+        "TEXT": "Small bug fixes and, for registered users, an additional prayer calendar in Hohen Neuendorf."
+      },
+      "V201": {
+        "DATE": "August 2025",
+        "TITLE": "V2.01",
+        "TEXT": "Small bug fixes and, for registered users, access for prayer in Hohen Neuendorf."
+      },
+      "V200": {
+        "DATE": "June 2025",
+        "TITLE": "V2.00",
+        "TEXT": "A new generation of the app is ready! Apart from the fact that the app is based on new source code, users are surely more interested in what's new in the interface. Sermons are now <b>searchable</b> and can be <b>played in the background</b>. The app now also runs in landscape mode (handy for tablets). For registered users (with a diekreative Churchtools account) further features are unlocked, such as door openers for the house of prayer and the barrack, as well as information for the ministry team."
+      },
+      "V108": {
+        "DATE": "Spring 2023",
+        "TITLE": "V1.08",
+        "TEXT": "Revamped media library. You can now download sermons including sermon scripts to your device (preferably via Wi-Fi), so you can save data on the go or listen to sermons in airplane mode. Many events now have further information, which can now also be shown on iOS (previously Android only). Some bugs were fixed as well (e.g. lifeGroups are displayed correctly again). We look forward to your feedback and would be happy about a rating in the Play Store / App Store."
+      },
+      "V107": {
+        "DATE": "November 2022",
+        "TITLE": "V1.07",
+        "TEXT": "From now on you can edit the home screen and arrange the tiles yourself. The media library loads faster - only the latest 20 sermons are shown. With the 'MORE' button you can show the remaining sermons."
+      },
+      "V106": {
+        "DATE": "December 2021",
+        "TITLE": "V1.06",
+        "TEXT": "*CHRISTMAS UPDATE* ;-)   An update was long overdue. Now it's finally here. New are the events overview and the option to also check in family members for the service via QR code. On every page showing current information, you can refresh the display by swiping down. There were also some bug fixes and optimisations."
+      },
+      "V105": {
+        "DATE": "April 1, 2021",
+        "TITLE": "V1.05",
+        "TEXT": "no April Fools' joke! Finally there's a bigger update again. The app now also runs on iPad, and for Android users the back button now works (especially for Basti ;-) ) If there is a sermon script for the service, it can be shown directly in the app under \"Services\". From there you can also start the YouTube livestream directly or listen to the service via the Zoom app (useful for visitors on site who can hear the sound better that way or listen to the English translation)."
+      },
+      "RELEASE": {
+        "DATE": "January 10, 2021",
+        "TITLE": "official app release",
+        "TEXT": "At our prayer service the app is released and promoted for iOS and Android!"
+      },
+      "APPSTORE": {
+        "DATE": "December 31, 2020",
+        "TITLE": "first version in the App Store!",
+        "TEXT": "Just in time for the end of the year, the first (preview) version of the app appears in the Apple App Store ;-)"
+      },
+      "TROPFEN": {
+        "DATE": "until end of October 2020",
+        "TITLE": "slow and steady..",
+        "TEXT": "Things get a bit quiet around the app on the outside. But a lot is happening in the background. Login to Churchtools, door opener, releasing and taking over prayer shifts.. all of this works now! The app is now really close to its first release!"
+      },
+      "PARTY": {
+        "DATE": "August 19, 2020",
+        "TITLE": "App Release Party",
+        "TEXT": "By now the alpha version of the app is ready. That has to be celebrated in <b>Anja</b>'s allotment garden! And of course the app is presented live. And the last tasks are handed out. There are still a few cosmetic fixes, and the connection to the door opener, prayer calendar etc. still has to be built."
+      },
+      "HACKATON": {
+        "DATE": "July 31 - August 4, 2020",
+        "TITLE": "App Hackathon",
+        "TEXT": "In the middle of the summer break we \"hole up\" in beautiful Gussow, in the guest house of the Stadtmission, and get to work. They were busy days that were a lot of fun and joy. And the result is impressive. Even though, unfortunately, we couldn't install the app on our smartphones on the last day yet. Designing and programming an app takes more time than some might think.",
+        "TEXT2": "Thanks to everyone involved! You are by far the best! ;-)"
+      },
+      "KICKOFF": {
+        "DATE": "April 25, 2020",
+        "TITLE": "App Kickoff Meeting",
+        "TEXT": "<b>Here we go!</b> Enough crazy people from our church have come together to join our 4-hour Zoom kickoff meeting and contribute their ideas and skills. First teams are formed and first wishes for the app are put into words. And it is already decided that we want to organise an <b>app hackathon</b> during the summer break, where we develop the app together!"
+      },
+      "TEAM": {
+        "DATE": "February 2020",
+        "TITLE": "A project team is born",
+        "TEXT": "<b>Andrea</b> hears about our idea and brings in a developer - <b>Christian</b> - and also spontaneously offers to sponsor part of the costs for the app, because she believes in our project!<br>So the three of us (Marc, Mirine, Christian) meet via Zoom in the middle of the COVID lockdown and quickly agree that the app should be born right out of our community. That means we don't want to outsource the app but design and develop it completely ourselves!"
+      },
+      "IDEE": {
+        "DATE": "January 2020",
+        "TITLE": "first idea",
+        "TEXT": "<b>Marc:</b> As a church we want to find, develop and release people's potential. As a former IT guy I wondered whether we could also be creative in the field of IT within Christianity and lead the way as pioneers. There was a first meeting and exchange of ideas with <b>Mirine</b>. Lots of good ideas came together, but how do we put them into practice? Hire a development company? Dive into the subject ourselves?.."
+      }
+    }
+  }
+}

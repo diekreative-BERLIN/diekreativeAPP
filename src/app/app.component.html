@@ -43,13 +43,13 @@
           <ion-row (click)="loggedpersonActivated()">
             <ion-col size="3"><ion-icon id="personlogo" name="person-circle-sharp"></ion-icon></ion-col>
             <ion-col size="9"><div id="username"><ion-label id="fullusername" color="primary">{{userState.fullusername}}</ion-label><br>
-              <ion-label id="herzlichwillkommen" color="primary">Hallo, Herzlich Willkommen.</ion-label></div></ion-col>
+              <ion-label id="herzlichwillkommen" color="primary">{{ 'MENU.WELCOME' | translate }}</ion-label></div></ion-col>
           </ion-row>
         </ion-grid>
 
-        <ion-item class="login" *ngIf="!userState.loggedin" (click)="presentModal()"><ion-icon class="menuicon" color="secondary" name="key-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Login</ion-label></ion-item>
+        <ion-item class="login" *ngIf="!userState.loggedin" (click)="presentModal()"><ion-icon class="menuicon" color="secondary" name="key-sharp"></ion-icon><ion-label>&nbsp;&nbsp;{{ 'MENU.LOGIN' | translate }}</ion-label></ion-item>
         
-        <ion-item (click)="settingsActivated()"><ion-icon class="menuicon" color="secondary" name="settings"></ion-icon><ion-label>&nbsp;&nbsp;Einstellungen</ion-label></ion-item>
+        <ion-item (click)="settingsActivated()"><ion-icon class="menuicon" color="secondary" name="settings"></ion-icon><ion-label>&nbsp;&nbsp;{{ 'MENU.SETTINGS' | translate }}</ion-label></ion-item>
         
         <!-- <ion-tab-button tab="settings">
       <ion-icon name="settings"></ion-icon>
@@ -58,16 +58,16 @@
     
         <ion-item *ngIf="userState.loggedin" (click)="ctAppActivated()"><ion-icon class="menuicon" color="secondary" src="/assets/icon/CT_Logo.svg"></ion-icon><ion-label>&nbsp;&nbsp;Churchtools App</ion-label></ion-item>        
         <!--ion-item><ion-icon class="menuicon" color="secondary" name="notifications-outline"></ion-icon><ion-label>&nbsp;&nbsp;Mitteilungen</ion-label></ion-item-->
-        <ion-item (click)="creditsActivated()"><ion-icon class="menuicon" color="secondary" name="information-circle-sharp"></ion-icon><ion-label>&nbsp;&nbsp;&uuml;ber diese App</ion-label></ion-item>
-        <ion-item (click)="mailDieKreative()"><ion-icon class="menuicon" color="secondary" name="mail-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Kontakt</ion-label></ion-item>
-        <ion-item (click)="mediathekActivated()"><ion-icon class="menuicon" color="secondary" name="mic-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Mediathek</ion-label></ion-item>
-        <ion-item (click)="termineActivated()"><ion-icon class="menuicon" color="secondary" name="calendar-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Termine</ion-label></ion-item>
-        <ion-item (click)="tagundnachtActivated()"><ion-icon class="menuicon" color="secondary" src="/assets/icon/tagundnacht.svg"></ion-icon><ion-label>&nbsp;&nbsp;Tagundnacht</ion-label></ion-item>
-        <ion-item (click)="godiActivated()"><ion-icon class="menuicon" color="secondary" name="flame"></ion-icon><ion-label>&nbsp;&nbsp;Gottesdienste</ion-label></ion-item>
-        <ion-item (click)="lifegroupsActivated()"><ion-icon class="menuicon" color="secondary" name="people-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Lifegroups</ion-label></ion-item>
-        <ion-item (click)="kursplattformActivated()"><ion-icon class="menuicon" color="secondary" name="school-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Kursplattform</ion-label></ion-item>
-        <ion-item (click)="aboutUsActivated()"><ion-icon class="menuicon" color="secondary" name="fitness"></ion-icon><ion-label>&nbsp;&nbsp;&uuml;ber uns</ion-label></ion-item>
-        <ion-item lines="none" (click)="erlebtActivated()"><ion-icon class="menuicon" color="secondary" name="share-social-sharp"></ion-icon><ion-label>&nbsp;&nbsp;Erlebt</ion-label></ion-item>
+        <ion-item (click)="creditsActivated()"><ion-icon class="menuicon" color="secondary" name="information-circle-sharp"></ion-icon><ion-label>&nbsp;&nbsp;{{ 'MENU.ABOUT_APP' | translate }}</ion-label></ion-item>
+        <ion-item (click)="mailDieKreative()"><ion-icon class="menuicon" color="secondary" name="mail-sharp"></ion-icon><ion-label>&nbsp;&nbsp;{{ 'MENU.CONTACT' | translate }}</ion-label></ion-item>
+        <ion-item (click)="mediathekActivated()"><ion-icon class="menuicon" color="secondary" name="mic-sharp"></ion-icon><ion-label>&nbsp;&nbsp;{{ 'MENU.MEDIATHEK' | translate }}</ion-label></ion-item>
+        <ion-item (click)="termineActivated()"><ion-icon class="menuicon" color="secondary" name="calendar-sharp"></ion-icon><ion-label>&nbsp;&nbsp;{{ 'MENU.TERMINE' | translate }}</ion-label></ion-item>
+        <ion-item (click)="tagundnachtActivated()"><ion-icon class="menuicon" color="secondary" src="/assets/icon/tagundnacht.svg"></ion-icon><ion-label>&nbsp;&nbsp;{{ 'MENU.TAGUNDNACHT' | translate }}</ion-label></ion-item>
+        <ion-item (click)="godiActivated()"><ion-icon class="menuicon" color="secondary" name="flame"></ion-icon><ion-label>&nbsp;&nbsp;{{ 'MENU.GOTTESDIENSTE' | translate }}</ion-label></ion-item>
+        <ion-item (click)="lifegroupsActivated()"><ion-icon class="menuicon" color="secondary" name="people-sharp"></ion-icon><ion-label>&nbsp;&nbsp;{{ 'MENU.LIFEGROUPS' | translate }}</ion-label></ion-item>
+        <ion-item (click)="kursplattformActivated()"><ion-icon class="menuicon" color="secondary" name="school-sharp"></ion-icon><ion-label>&nbsp;&nbsp;{{ 'MENU.KURSPLATTFORM' | translate }}</ion-label></ion-item>
+        <ion-item (click)="aboutUsActivated()"><ion-icon class="menuicon" color="secondary" name="fitness"></ion-icon><ion-label>&nbsp;&nbsp;{{ 'MENU.ABOUT_US' | translate }}</ion-label></ion-item>
+        <ion-item lines="none" (click)="erlebtActivated()"><ion-icon class="menuicon" color="secondary" name="share-social-sharp"></ion-icon><ion-label>&nbsp;&nbsp;{{ 'MENU.ERLEBT' | translate }}</ion-label></ion-item>
         <br><br><br><br>
         <!--eingeloggter Status
       <ion-header>
@@ -93,7 +93,7 @@
             </ion-row>
             <ion-row class="minorinfo">
               <ion-col>
-                <a href="#" (click)="openWebsite('https://diekreative.org/impressum')">Impressum</a>
+                <a href="#" (click)="openWebsite('https://diekreative.org/impressum')">{{ 'MENU.IMPRINT' | translate }}</a>
               </ion-col>
               <ion-col></ion-col>
             </ion-row>

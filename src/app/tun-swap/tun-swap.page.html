@@ -7,12 +7,12 @@
       </ion-row>
       
       <ion-row><ion-col class="face"><img src="../../assets/icon/people-sharp.svg"></ion-col></ion-row>
-      <ion-row><ion-col class="question">Wer wird deine Schicht &uuml;bernehmen?</ion-col></ion-row>
+      <ion-row><ion-col class="question">{{ 'TUN.SWAP_QUESTION' | translate }}</ion-col></ion-row>
       <br>
-      <ion-row><ion-col class="center"><input class="tun-input" [(ngModel)]="person" placeholder="Name"></ion-col></ion-row>
-      <ion-row><ion-col class="center"><input class="tun-input" [(ngModel)]="typ" placeholder="Gebetsform"></ion-col></ion-row>
+      <ion-row><ion-col class="center"><input class="tun-input" [(ngModel)]="person" [placeholder]="'TUN.NAME' | translate"></ion-col></ion-row>
+      <ion-row><ion-col class="center"><input class="tun-input" [(ngModel)]="typ" [placeholder]="'TUN.PRAYER_FORM' | translate"></ion-col></ion-row>
       <br>
-      <ion-row><ion-col class="center"><ion-button class="doit" (click)="EnterNewPerson()">eintragen</ion-button></ion-col></ion-row>
+      <ion-row><ion-col class="center"><ion-button class="doit" (click)="EnterNewPerson()">{{ 'TUN.ENTER' | translate }}</ion-button></ion-col></ion-row>
 
     </ion-grid> 
   </ion-content>

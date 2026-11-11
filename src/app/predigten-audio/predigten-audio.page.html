@@ -3,19 +3,19 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="100" pullMax="200">
     <ion-refresher-content 
       pullingIcon="arrow-down-outline" 
-      [pullingText]="userState.isOnline ? 'ziehen zum Aktualisieren' : 'Aktualisierung geht nur online'" 
+      [pullingText]="(userState.isOnline ? 'COMMON.PULL_TO_REFRESH' : 'COMMON.REFRESH_ONLINE_ONLY') | translate" 
       refreshingSpinner="circular"
-      [refreshingText]="userState.isOnline ? 'es wird aktualisiert...' : 'Aktualisierung geht nur online'">
+      [refreshingText]="(userState.isOnline ? 'COMMON.REFRESHING' : 'COMMON.REFRESH_ONLINE_ONLY') | translate">
     </ion-refresher-content>
   </ion-refresher>
 <!-- es wird aktualisiert... -->
 
   <div class="predigt-title">
-    <ion-label class="header-label">PREDIGTEN</ion-label>
+    <ion-label class="header-label">{{ 'SERMONS.TITLE' | translate }}</ion-label>
   </div>
   <img src="../assets/swipe-down.png" class="swipedown">
   <ion-list>
-   <ion-searchbar #searchbar placeholder="durchsuche Predigten" [debounce]="1000" (ionInput)="filterPredigten($event)"></ion-searchbar>
+   <ion-searchbar #searchbar [placeholder]="'SERMONS.SEARCH' | translate" [debounce]="1000" (ionInput)="filterPredigten($event)"></ion-searchbar>
    <div *ngFor="let predigt of gefiltertePredigten">
    <!--   <div *ngFor="let predigt of predigten"> -->
       <app-predigt-element [predigt]="predigt"></app-predigt-element>
@@ -24,7 +24,7 @@
   </ion-list>
 
   <!--  && predigten.length>0 -->
-  <ion-button *ngIf="isViewCompact && userState.isOnline && !currentListWasSetByLocalDb" class="centered" (click)="getMoreSermons()">mehr</ion-button>
+  <ion-button *ngIf="isViewCompact && userState.isOnline && !currentListWasSetByLocalDb" class="centered" (click)="getMoreSermons()">{{ 'SERMONS.MORE' | translate }}</ion-button>
   <!--
   <p *ngIf="!userState.isOnline && predigten.length<1" class="centered"><br/><br/><br/>App ist offline und es sind keine Predigten offline verfügbar. (Tipp: Predigten vorher per WLAN herunterladen, damit sie offline zur Vergügung stehen)!</p>
   

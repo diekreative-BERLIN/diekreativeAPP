@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -39,6 +40,7 @@ imports:
     AboutusPageRoutingModule,
     DemoMaterialModule,
     MatNativeDateModule,
+    TranslateModule
   ],
   declarations: [AboutusPage]
 })

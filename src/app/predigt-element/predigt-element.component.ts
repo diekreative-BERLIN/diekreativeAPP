@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, Input } from '@angular/core';
 //import { NewsRss } from '../communications/news-rss';
 import { Platform } from '@ionic/angular';
@@ -43,6 +44,7 @@ export class PredigtElementComponent {
     private router: Router,
     private popover: PopoverController,
     private _zone: NgZone,
+    public translate: TranslateService,
   ) { }
 
   //check if a sermon is saved locally
@@ -128,7 +130,7 @@ export class PredigtElementComponent {
 
   //social sharing of current sermon
   async shareLink(predigturl,titel,excerpt){
-    var message = "Hör dir diese Predigt an!\n\n"+excerpt
+    var message = this.translate.instant('SERMONS.SHARE_MESSAGE')+"\n\n"+excerpt
     var subject = ""+titel
     var url = ""+predigturl
     var options = {

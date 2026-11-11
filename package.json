@@ -44,6 +44,7 @@
     "@ionic/storage": "^3.0.6",
     "@jofr/capacitor-media-session": "^4.0.0",
     "@mediagrid/capacitor-native-audio": "^1.2.0",
+    "@ngx-translate/core": "^15.0.0",
     "angularx-qrcode": "^17.0.1",
     "capacitor-blob-writer": "^1.1.17",
     "capacitor-email-composer": "^6.0.0",

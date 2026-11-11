@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar class="head">
-    <ion-label slot="start">Details zu eingeloggter Person</ion-label>
-    <ion-button slot="end" (click)="dismiss()">zurück</ion-button>
+    <ion-label slot="start">{{ 'PERSON.TITLE' | translate }}</ion-label>
+    <ion-button slot="end" (click)="dismiss()">{{ 'COMMON.BACK' | translate }}</ion-button>
     &nbsp;&nbsp;
   </ion-toolbar>
 </ion-header>
@@ -9,8 +9,8 @@
 <ion-content>
   <ion-item>
     &nbsp;<br>
-  Eingeloggt als {{userService.fullusername}}
+  {{ 'PERSON.LOGGED_IN_AS' | translate: { name: userService.fullusername } }}
   <br>&nbsp;
   </ion-item>
-  <ion-button (click)="logout()" expand="block">Logout</ion-button>
+  <ion-button (click)="logout()" expand="block">{{ 'PERSON.LOGOUT' | translate }}</ion-button>
 </ion-content>

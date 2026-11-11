@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { UserstateService } from './userstate.service';
@@ -13,7 +14,8 @@ export class TueroeffnerService {
     private userstate:UserstateService,
     private standort:StandortService,
     private alertCtrl:AlertController,
-    private loadingCtrl:LoadingController
+    private loadingCtrl:LoadingController,
+    private translate:TranslateService
   ) {
   }
 
@@ -27,14 +29,14 @@ export class TueroeffnerService {
     }
     if (this.pruefungLaeuft) { return; }
     this.pruefungLaeuft = true;
-    const loading = await this.loadingCtrl.create({ message: 'Standort wird geprüft…' });
+    const loading = await this.loadingCtrl.create({ message: this.translate.instant('DOOR.CHECKING') });
     await loading.present();
     try {
       const ergebnis = await this.standort.istAmStandort(id);
       await loading.dismiss();
       if (!ergebnis.erlaubt) {
         const alert = await this.alertCtrl.create({
-          header: 'Nicht vor Ort',
+          header: this.translate.instant('DOOR.NOT_ON_SITE'),
           message: ergebnis.grund,
           buttons: ['OK']
         });

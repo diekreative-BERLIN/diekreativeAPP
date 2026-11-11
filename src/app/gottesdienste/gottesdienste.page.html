@@ -4,9 +4,9 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="100" pullMax="200">
     <ion-refresher-content 
       pullingIcon="arrow-down-outline" 
-      pullingText="ziehen zum Aktualisieren" 
+      [pullingText]="'COMMON.PULL_TO_REFRESH' | translate" 
       refreshingSpinner="circular"
-      refreshingText="es wird aktualisiert...">
+      [refreshingText]="'COMMON.REFRESHING' | translate">
     </ion-refresher-content>
   </ion-refresher>
 
@@ -14,14 +14,14 @@
   <div>
 
   <div class="gottesdienst-title" style="background-color: #fff;">
-    <ion-label class="header-label" color="light">GOTTESDIENSTE</ion-label>   </div>
+    <ion-label class="header-label" color="light">{{ 'GODI.TITLE' | translate }}</ion-label>   </div>
     <div class="pfeil"> <img src="../assets/svg/pfeil_blue_1.svg" id="pfeile" > </div>
 
-    <h1 class="gottesdienst-text">WILLKOMMEN</h1>
-    <h2 class="gottesdienst-text">Wir freuen uns auf dich!</h2>
-    <p class="gottesdienst-text">Schau gerne mal bei uns vorbei – vor Ort oder in unserem Live-Stream. Wir feiern Gottesdienst auf Deutsch mit englischer Übersetzung.</p>
+    <h1 class="gottesdienst-text">{{ 'GODI.WELCOME' | translate }}</h1>
+    <h2 class="gottesdienst-text">{{ 'GODI.LOOKING_FORWARD' | translate }}</h2>
+    <p class="gottesdienst-text">{{ 'GODI.INTRO' | translate }}</p>
    
-    <p class="next-gd">nächster Gottesdienst</p>
+    <p class="next-gd">{{ 'GODI.NEXT' | translate }}</p>
     <div *ngIf="!isGodiToday || eventProgressState == 2">
       <ion-card class="info-gd" (click)="showGoDiDetails(1)">
         <ion-card-header class="gd-header">
@@ -37,7 +37,7 @@
   <div *ngIf="isGodiToday && eventProgressState < 0">
     <ion-card class="info-gd" (click)="showGoDiDetails(1)">
       <ion-card-header class="gd-header">
-        <ion-card-title class="gd-date">heute, {{AppPageGodiInfo}}</ion-card-title>
+        <ion-card-title class="gd-date">{{ 'GODI.TODAY' | translate }}, {{AppPageGodiInfo}}</ion-card-title>
       </ion-card-header>
     
       <ion-card-content>
@@ -53,7 +53,7 @@
       <mat-expansion-panel hideToggle="true" #vision>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            heute, {{AppPageGodiInfo}}
+            {{ 'GODI.TODAY' | translate }}, {{AppPageGodiInfo}}
           </mat-panel-title>
           <ion-icon *ngIf="!vision.expanded" name="chevron-down"></ion-icon>
           <ion-icon *ngIf="vision.expanded" name="close"></ion-icon>
@@ -68,14 +68,14 @@
                 <ion-button (click)="checkin()" class="qr-button">
                   <ion-icon name="qr-code-outline"></ion-icon>
                   &nbsp;&nbsp;
-                  <ion-label>Dein QR-Code für Check-in</ion-label>
+                  <ion-label>{{ 'GODI.QR' | translate }}</ion-label>
                 </ion-button>
               </ion-row>
               <ion-row class="newRow" *ngIf="eventProgressState == 1 && SkriptAvailable==1">
                 <ion-button (click)="showSkript()" class="qr-button">
                   <ion-icon name="reader-outline"></ion-icon>
                   &nbsp;&nbsp;
-                  <ion-label>Predigtskript</ion-label>
+                  <ion-label>{{ 'GODI.SCRIPT' | translate }}</ion-label>
                 </ion-button>
               </ion-row>
               <br/>
@@ -83,19 +83,19 @@
 
                 <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && ZoomAvailable>0">
                   <ion-button (click)="helpZoom()" class="qr-button">
-                    <ion-label>vor Ort&nbsp;&nbsp;</ion-label>
+                    <ion-label>{{ 'GODI.ON_SITE' | translate }}&nbsp;&nbsp;</ion-label>
                     <ion-icon name="help-circle-outline"></ion-icon>
                   </ion-button>
                 </ion-col>
                 <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && LiveVoiceAvailable>0">
                   <ion-button (click)="helpLiveVoice()" class="qr-button">
-                    <ion-label>Translation&nbsp;&nbsp;</ion-label>
+                    <ion-label>{{ 'GODI.TRANSLATION' | translate }}&nbsp;&nbsp;</ion-label>
                     <ion-icon name="help-circle-outline"></ion-icon>
                   </ion-button>
                 </ion-col>
                 <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && YTAvailable>0">
                   <ion-button (click)="helpYT()" class="qr-button">
-                    <ion-label>livestream&nbsp;&nbsp;</ion-label>
+                    <ion-label>{{ 'GODI.LIVESTREAM' | translate }}&nbsp;&nbsp;</ion-label>
                     <ion-icon name="help-circle-outline"></ion-icon>
                   </ion-button>
                 </ion-col>

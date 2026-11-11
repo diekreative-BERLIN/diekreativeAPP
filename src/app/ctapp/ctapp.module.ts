@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +14,8 @@ import { CtappPage } from './ctapp.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    CtappPageRoutingModule
+    CtappPageRoutingModule,
+    TranslateModule
   ],
   declarations: [CtappPage]
 })

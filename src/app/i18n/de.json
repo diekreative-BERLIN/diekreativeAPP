@@ -1,0 +1,366 @@
+{
+  "COMMON": {
+    "PULL_TO_REFRESH": "ziehen zum Aktualisieren",
+    "REFRESHING": "es wird aktualisiert...",
+    "REFRESH_ONLINE_ONLY": "Aktualisierung geht nur online",
+    "BACK": "zurück",
+    "OK": "OK",
+    "CANCEL": "Abbrechen",
+    "YES": "Ja",
+    "NO": "Nein",
+    "OFFLINE": "Du bist offline. Es können keine Details angezeigt werden!",
+    "NO_IFRAMES": "Dein Browser unterstützt leider keine iFrames!"
+  },
+  "MENU": {
+    "WELCOME": "Hallo, Herzlich Willkommen.",
+    "LOGIN": "Login",
+    "SETTINGS": "Einstellungen",
+    "CT_APP": "Churchtools App",
+    "ABOUT_APP": "über diese App",
+    "CONTACT": "Kontakt",
+    "MEDIATHEK": "Mediathek",
+    "TERMINE": "Termine",
+    "TAGUNDNACHT": "Tagundnacht",
+    "GOTTESDIENSTE": "Gottesdienste",
+    "LIFEGROUPS": "Lifegroups",
+    "KURSPLATTFORM": "Kursplattform",
+    "ABOUT_US": "über uns",
+    "ERLEBT": "Erlebt",
+    "IMPRINT": "Impressum"
+  },
+  "TABS": {
+    "HOME": "HOME",
+    "DIRECTIONS": "ANFAHRT",
+    "TAGUNDNACHT": "TAGUNDNACHT",
+    "GIVE": "GEBEN"
+  },
+  "SETTINGS": {
+    "TITLE": "Einstellungen",
+    "LANGUAGE": "Sprache (Language)",
+    "LANGUAGE_HINT": "Standardmäßig richtet sich die App nach der Sprache deines Smartphones.",
+    "LANGUAGE_AUTO": "Automatisch (Gerätesprache)",
+    "LOCATION": "Standort",
+    "LOCATION_HINT": "Wähle deinen Standort. Danach richten sich z. B. die angezeigten Gottesdienste und Termine.",
+    "ALL_LOCATIONS": "Alle Standorte",
+    "LOCATIONS_AFTER_LOGIN": "Die Standorte werden nach dem Login geladen.",
+    "LOCATIONS_LOADING": "Standorte werden geladen …",
+    "HOMESCREEN_EDIT": "Homescreen bearbeiten",
+    "DONE": "Fertig",
+    "RESET": "Reset",
+    "CACHE_TITLE": "Lokaler Cache (Mediathek)",
+    "CACHE_DELETE_BEFORE": "heruntergeladene Predigten nach",
+    "CACHE_DELETE_AFTER": "Tagen löschen",
+    "CACHE_USED": "aktuell benutzter Cache:",
+    "CACHE_CLEAR": "Cache leeren",
+    "PICKER_DAYS": "löschen nach {{days}} Tagen",
+    "PICKER_CANCEL": "Abbruch"
+  },
+  "HOMESCREEN": {
+    "Mediathek": "Mediathek",
+    "Termine": "Termine",
+    "Tagundnacht": "Tagundnacht",
+    "Gottesdienste": "Gottesdienste",
+    "LifeGroups": "LifeGroups",
+    "Ueberuns": "Über uns",
+    "Geben": "Geben",
+    "Erlebt": "Erlebt",
+    "Kursplattform": "Kursplattform",
+    "Ministryteam": "Ministryteam"
+  },
+  "CAMPUS": {
+    "ALL": "Alle Standorte",
+    "FALLBACK": "Standort {{id}}",
+    "SELECTED": "Standort „{{name}}“ wurde ausgewählt. Du kannst ihn jederzeit in den Einstellungen ändern."
+  },
+  "DOOR": {
+    "CHECKING": "Standort wird geprüft…",
+    "NOT_ON_SITE": "Nicht vor Ort",
+    "TOO_FAR": "Du bist ca. {{distanz}} von {{ort}} entfernt. Die Tür kann nur direkt vor Ort geöffnet werden.",
+    "NO_LOCATION": "Dein Standort konnte nicht ermittelt werden. Bitte erlaube der App den Zugriff auf deinen Standort und schalte die Ortung ein.",
+    "NO_LOCATION_WIFI": "Alternativ: Verbinde dich mit dem WLAN \"diekreative Guest\"."
+  },
+  "KURS": {
+    "TITLE": "Kursplattform",
+    "LOGGING_IN": "Anmeldung bei der Kursplattform …",
+    "AUTO_LOGIN_FAILED": "Die automatische Anmeldung hat nicht geklappt.",
+    "NO_TOKEN": "Für die automatische Anmeldung fehlt der App dein ChurchTools-Zugang. Bitte melde dich in der App einmal ab und wieder an.",
+    "UNREACHABLE": "Die Kursplattform ist gerade nicht erreichbar.",
+    "SELF_LOGIN": "Du kannst dich auf der Kursplattform aber auch selbst anmelden.",
+    "OPEN_ANYWAY": "Trotzdem öffnen"
+  },
+  "TOTP": {
+    "HEADER": "2-Faktor-Authentifizierung",
+    "SUBHEADER": "Bitte gib den Code aus deiner Authenticator-App ein.",
+    "PLACEHOLDER": "6-stelliger Code",
+    "CONFIRM": "Bestätigen"
+  },
+  "USER": {
+    "LOGGED_OUT": "Hinweis: Du wurdest ausgeloggt. Logge Dich erneut ein für den Türöffner & Co. (Fehler-Nr {{nr}})",
+    "LOGGED_OUT_SELF": "Hinweis: Du hast Dich ausgeloggt. Logge Dich erneut ein für den Türöffner & Co."
+  },
+  "LOGIN": {
+    "TITLE": "Churchtools Login",
+    "USERNAME": "Benutzername",
+    "PASSWORD": "Passwort",
+    "BUTTON": "Login",
+    "INFO": "Wenn Du bei unserer Churchtools Instanz (diekreative.church.tools) einen Account hast, kannst Du Dich hier mit Deinen Zugangsdaten einloggen. Dadurch werden erweiterte Funktionen in der App freigeschaltet wie z.B. Gebetshaus Funktionen wie der Türöffner, Checkin-QR Codes für den Kids Checkin und ein direkter Zugang zur Kursplattform. Wenn Du noch keinen Zugang bei Churchtools hast, schreib uns gerne eine Mail an office(at)diekreative.org",
+    "INVALID": "Logindaten sind ungültig. Benutzername oder Passwort stimmen nicht oder Zugang gesperrt.\n\nBitte prüfe auch ob WLAN oder mobile Daten aktiviert sind, da ein Login bei fehlender Verbindung nicht möglich ist."
+  },
+  "PERSON": {
+    "TITLE": "Details zu eingeloggter Person",
+    "LOGGED_IN_AS": "Eingeloggt als {{name}}",
+    "LOGOUT": "Logout"
+  },
+  "DIRECTIONS": {
+    "TITLE": "ANFAHRT",
+    "SUBTITLE": "Hier findest du uns",
+    "SERVICE": "GOTTESDIENST",
+    "SERVICE_TIME": "Gottesdienst jeweils sonntags um 10:30 Uhr",
+    "PRAYERHOUSE": "GEBETSHAUS",
+    "ALL_YEAR": "24/7 im Jahr"
+  },
+  "TUN": {
+    "SUBTITLE": "Wir beten 24 Stunden - 7 Tage - 52 Wochen <br> Du bist herzlich eingeladen mitzubeten",
+    "PRAYER_CAL": "Gebetskalender",
+    "PRAYER_CAL_HN": "Gebetskalender Hohen Neuendorf",
+    "FREE_SHIFTS": "Freie Gebetsschichten",
+    "MY_SHIFTS": "Meine Gebetsschichten",
+    "OUTSIDE": "Aussen",
+    "INSIDE": "Innen",
+    "HN_GATE": "HN Tor",
+    "HN_WAGON": "HN Wagen",
+    "CURRENT_PRAYER": "Aktuelles Gebet",
+    "NEXT_PRAYER": "Nächstes Gebet",
+    "WEEK_FOCUS": "Wochenschwerpunkt",
+    "PERSECUTED": "Gebet für verfolgte Christen",
+    "PERSECUTED_DEFAULT": "Gebet für Verfolgte",
+    "LOADING_TOPICS": "<ul><li>..einen kleinen Moment bitte..</li><li>..Daten werden geladen</li></ul>",
+    "MY_SHIFTS_TITLE": "Meine Gebets-<br>schichten",
+    "FREE_SHIFTS_TITLE": "Freie Gebets-<br>schichten",
+    "CAL_TITLE": "Gebets-kalender",
+    "CAL_HN_TITLE": "Gebets-kalender Hohen Neuendorf",
+    "CAL_LOADING": "Gebetskalender wird geladen...",
+    "SWAP": "tauschen",
+    "RELEASE": "freigeben",
+    "TAKEOVER": "übernehmen",
+    "CANT_SWAP": "Die Schicht '{{format}}' kann nicht mehr getauscht werden. Sie wurde bereits einmal freigegeben und übernommen bzw. getauscht",
+    "CANT_RELEASE": "Die Schicht '{{format}}' kann nicht mehr freigegeben werden. Sie wurde bereits einmal freigegeben und übernommen bzw. getauscht",
+    "RELEASE_CONFIRM": "Möchtest du deine Schicht wirklich freigeben?",
+    "SWAP_QUESTION": "Wer wird deine Schicht übernehmen?",
+    "NAME": "Name",
+    "PRAYER_FORM": "Gebetsform",
+    "ENTER": "eintragen",
+    "TAKEOVER_THANKS": "Toll, dass du die Schicht übernimmst!",
+    "NEED_NAME": "bitte trag den Namen der Person ein, die für Dich die Gebetsschicht übernimmt",
+    "NEED_FORM_SWAP": "bitte noch die Gebetsform angeben. Z.B. A+F für Anbetung und Fürbitte",
+    "NEED_FORM": "bitte Deine Gebetsform angeben. Z.B. A+F für Anbetung und Fürbitte",
+    "SHIFT_TAKEN": "Oops, da war jemand schneller als Du. Die Schicht wurde gerade bereits von jemand anderem übernommen. Danke dennoch für Deine Bereitschaft!"
+  },
+  "GODI": {
+    "TITLE": "GOTTESDIENSTE",
+    "WELCOME": "WILLKOMMEN",
+    "LOOKING_FORWARD": "Wir freuen uns auf dich!",
+    "INTRO": "Schau gerne mal bei uns vorbei – vor Ort oder in unserem Live-Stream. Wir feiern Gottesdienst auf Deutsch mit englischer Übersetzung.",
+    "NEXT": "nächster Gottesdienst",
+    "TODAY": "heute",
+    "QR": "Dein QR-Code für Check-in",
+    "SCRIPT": "Predigtskript",
+    "ON_SITE": "vor Ort",
+    "TRANSLATION": "Translation",
+    "LIVESTREAM": "livestream",
+    "ORIGINAL": "Original",
+    "ENGLISH": "english",
+    "TIME_FORMAT": "HH:mm [Uhr]",
+    "QR_TIME_FORMAT": "DD.MM. HH:mm [Uhr]",
+    "QR_AVAILABLE_FROM": "QR Checkin steht ab {{zeit}} zur Verfügung",
+    "INFO": "Info",
+    "ZOOM_TITLE": "Gottesdienst per Zoom",
+    "ZOOM_TEXT": "zum Mithören vor Ort via Zoom.\n\nZoom hat nur eine geringe zeitliche Verzögerung und eignet sich somit gut zum Mithören des Gottesdienstes vor Ort vom eigenen Smartphone aus.\nFür den Empfang von Bild und Ton muss die kostenlose Zoom App auf dem Smartphone installiert sein. Zudem empfiehlt sich eine WLAN Verbindung zu nutzen um das Datenvolumen zu schonen.\n\nFür weitere Infos sprich bitte die Info an.\n\n~~~~~ english ~~~~~\nFor english speaking guests we provide a live translation over zoom.\nPlease make sure that you have installed the zoom client on your smartphone (free of charge) and have enough mobile data (or use WiFi) before clicking the \"english\" button.\nAs soon as zoom starts up, you will be able to choose the english translation channel.\nFeel free to contact our info desk for more information.",
+    "LIVEVOICE_TITLE": "Übersetzung per LiveVoice",
+    "LIVEVOICE_TEXT": "zum Mithören via LiveVoice vom eigenen Smartphone aus.\n\nDazu muss die kostenlose LiveVoice App auf dem Smartphone installiert sein. Es fällt nur ein geringes Datenvolumen an.\n\nFür weitere Infos sprich bitte die Info an.\n\n~~~~~ english ~~~~~\n\nFor international guests we provide live translation via LiveVoice App.\nPlease make sure that you have installed the LiveVoice app on your smartphone (free of charge) and have enough mobile data (or use WiFi) before clicking the \"english\" button.\n\nFeel free to contact our info desk for more information.",
+    "YT_TITLE": "YouTube Livestream",
+    "YT_TEXT": "Öffnet den aktuellen Livestream in YouTube\n\nDas ist der bevorzugte Weg, um von zuhause aus an der aktuellen Veranstaltung teilzunehmen."
+  },
+  "CHECKIN": {
+    "SHOW_QR": "Zeige einfach den folgenden QR Code beim Checkin vor, und schon bist Du eingecheckt!",
+    "MORE_FAMILY": "weitere Familienmitglieder?",
+    "MORE_FAMILY_TEXT": "wenn weitere Familienmitglieder zur aktuellen Gruppe hinzugefügt wurden, dann kannst Du sie hier neu einlesen",
+    "FAMILY_HINT": "Deine Familienmitglieder müssen in Churchtools in Beziehung zu Dir stehen und auch Teil in dieser Veranstaltungsgruppe sein. Der Checkin hilft Dir gerne weiter."
+  },
+  "TERMINE": {
+    "TITLE": "Termine",
+    "LOADING": "Terminseite wird geladen..."
+  },
+  "ABOUT": {
+    "TITLE": "ÜBER UNS",
+    "HEARTBEAT": "Unser Herzschlag",
+    "WHO": "Wer wir sind",
+    "WHO_TEXT": "Wir sind eine Gemeinde, die tagundnacht (an)betet, Menschen findet, fördert und freisetzt, und den Himmel auf die Erde bringt.",
+    "VISION": "Unsere Vision",
+    "VISION_1": "Menschen, die wissen, dass Gott sie leidenschaftlich liebt",
+    "VISION_2": "und dass sie ihrerseits Gott leidenschaftlich lieben",
+    "VISION_3": "und ein jeder seine Leidenschaften und Begabungen erkennt und trainiert",
+    "VISION_P1": "All das soll finden – fördern – freisetzen ausdrücken!",
+    "VISION_P2": "Unter “Himmel auf die Erde bringen” verstehen wir, was Jesus in Mt 6,10 sagt: dein Reich komme, dein Wille geschehe, wie im Himmel so auch auf Erden. Gottes Wille ist also: Himmel auf Erden.",
+    "VISION_P3": "Jesus erklärt, dass sein Reich, die Königsherrschaft Gottes (der Himmel) vor der Tür steht. Gottes Welt ist zum Greifen nah. Seine Lösungen und Antworten, seine Heilungskraft, seine Liebe, seine Fähigkeit zu befreien. Gott ist die Antwort für alle Probleme dieser Welt, unserer Gesellschaften, unserer Familien und unseres persönlichen Lebens.",
+    "VISION_P4": "Gott möchte ganze Nationen verändern, sie mit Leidenschaft für seinen Sohn entzünden und Segen in alle Lebensbereiche und Sphären der Gesellschaft geben.",
+    "VISION_P5": "Davon träumen wir und dafür wollen wir uns von Gott gebrauchen lassen.",
+    "BELIEVE": "Was wir glauben",
+    "BELIEVE_P1": "Wir glauben, <b>dass Gott ist.</b> Dass er da ist, dass er nah ist, dass er gut ist, dass er erfahrbar ist. Mitten in Berlin oder sonst wo.",
+    "BELIEVE_P2": "Dass die alte Botschaft der Bibel heute relevant ist und heute erlebbar ist.",
+    "BELIEVE_P3": "Wir glauben auch, dass Gott heute noch prophetisch spricht, und Er einiges in Berlin vorhat. Über unserer Stadt Berlin gibt es viele prophetische Verheißungen. Gott hat gesprochen, dass es eine Stadt sein wird, in der viele Menschen Heilung erfahren werden. Heilung an Leib und Seele.",
+    "BELIEVE_P4": "Wir glauben an Erweckung und Transformation ganzer Länder!",
+    "BELIEVE_P5": "Daran wollen wir als Gemeinde teilhaben, das erwarten wir, danach strecken wir uns aus!",
+    "LEADERSHIP": "Gemeindeleitung",
+    "BIO_CHRISTOPHE": "Ältester und Gesamtverantwortlicher. Er ist mit Miriam verheiratet. Gemeinsam haben sie drei Kinder.",
+    "BIO_MARC": "Ältester und Pastor für Kinder und Jugend. Verantwortlich für die IT und Leitung diekreative Akademie. Marc ist IT-Spezialist und mit Steffi verheiratet.",
+    "BIO_MATTHIAS": "Ältester und Leiter des Bereichs Administration und Personal. Er überblickt zusammen mit Rike pastoral den Bereich \"Ehrenamtliche Mitarbeiterschaft\".",
+    "BIO_RIKE": "Pastorin für Familie. Verheiratet mit Matthias. Gemeinsam haben sie vier Kinder. Sie leiten unsere Ehearbeit \"Gute Beziehungen\".",
+    "BIO_KARSTEN": "Pastor für Kunst und Musik. Leitet die Lobpreis-, Multimedia- und Öffentlichkeitsarbeit. Er ist mit Marisa verheiratet. Sie haben drei Kinder.",
+    "BIO_MARISA": "Verheiratet mit Karsten. Sie ist Erziehungswissenschaftlerin im Bereich Kita-Qualität und Familienförderung.",
+    "BIO_JUTTA": "Leiterin der Diakonie und des Alpha-Kurses. Sie ist außerdem unterstützend bei der lifeGroup-Koordination tätig. Jutta hat vier erwachsene Kinder."
+  },
+  "CTAPP": {
+    "INTRO": "Die offizielle Churchtools App gibt Dir eine Übersicht über Dienste und Gruppen, ermöglicht einen sicheren Gruppenchat direkt in der Churchtools App und mehr..",
+    "STEP1": "1. ChurchTools App installieren",
+    "STEP1_TEXT": "Hier kannst Du direkt die Churchtools App herunterladen:",
+    "STEP2": "2. App mit Churchtools verbinden",
+    "STEP2_TEXT": "Und dann kannst Du mit einem Klick auf die folgende Schaltfläche die Churchtools App direkt mit Deinem Benutzernamen in Churchtools einloggen und loslegen ;-)",
+    "CONNECT": "ChurchTools App verbinden"
+  },
+  "ERLEBT": {
+    "TITLE": "ERLEBT",
+    "HEADLINE": "GOTT IST REAL",
+    "SUBLINE": "Wir freuen uns von dir zu hören!",
+    "TEXT": "Du hast etwas tolles mit Gott erlebt? Lass es uns wissen, damit wir uns mit Dir freuen können und ER dadurch verherrlicht wird!",
+    "INPUT_LABEL": "das hab ich erlebt",
+    "ASK_USE": "Dürfen wir Dein Zeugnis in anonymisierter Form verwenden? z.B. für die Website",
+    "YN": "J/N",
+    "PRIVACY": "Mit dem Absenden des Formulars erkläre ich mich mit der Verarbeitung meiner personenbezogenen Daten entsprechend der Datenschutzerklärung einverstanden.",
+    "SEND": "mein Erlebnis versenden"
+  },
+  "LIFEGROUPS": {
+    "TITLE": "LIFEGROUPS",
+    "JOIN": "SEI DABEI",
+    "GET_IN_TOUCH": "Get in touch",
+    "INTRO": "Finde deinen Platz in unseren lifeGroups. Wöchentliche Gruppentreffen mit tollen Leitern und eigenen Visionen an unterschiedlichen Standorten in ganz Berlin. <br /><br />Get in touch mit Gott und Menschen – in unseren lifeGroups.",
+    "FIND": "Finde deine lifeGroup",
+    "OVERVIEW": "Hier findest du eine erste Übersicht über unsere lifeGroups. Für weitere Informationen und um an einer lifeGroup teilzunehmen besuche vor oder nach dem Gottesdienst unsere Info."
+  },
+  "MINISTRY": {
+    "TITLE": "MINISTRYTEAM",
+    "SUBTITLE": "Du bist Teil vom Ministry Team von<br>diekreative BERLIN",
+    "VIDEO": "Aufnahme Ministryschulung",
+    "SCRIPT": "Skript Ministryteam"
+  },
+  "SERMONS": {
+    "TITLE": "PREDIGTEN",
+    "SEARCH": "durchsuche Predigten",
+    "MORE": "mehr",
+    "LISTEN": "ANHÖREN",
+    "SHARE": "TEILEN",
+    "SAVE": "SPEICHERN",
+    "SAVED": "GESPEICHERT",
+    "SCRIPT": "SKRIPT",
+    "YOUTUBE": "YOUTUBE",
+    "SHARE_MESSAGE": "Hör dir diese Predigt an!"
+  },
+  "CREDITS": {
+    "WELCOME": "schön dass Du unsere App installiert hast!<br>Diese App ist direkt aus unserer Mitte heraus geboren.<br><b>von der Community für die Community!</b><br>",
+    "INTRO": "Hier findest Du die Geschichte dieser App sowie den technischen Hintergrund über die verwendeten Komponenten.",
+    "HISTORY": "History",
+    "FRAMEWORKS": "Frameworks",
+    "FRAMEWORKS_INTRO": "Diese App wurde mit Hilfe der folgenden Softwarekomponenten (Frameworks) entwickelt",
+    "IONIC": "Open-Source-Webframework zur Erstellung von Hybrid-Apps.<br>Das Layout der App wurde mithilfe von html und css Befehlen in Ionic programmiert.",
+    "ANGULAR": "TypeScript-basiertes Front-End-Webapplikationsframework.<br>Die Funktionen der App sind mit Angular/TypeScript programmiert.",
+    "CAPACITOR": "Framework zur Erstellung hybrider Applikationen für mobile Endgeräte.<br>Mit Hilfe von Capacitor wurde die App für iOS und Android kompiliert.",
+    "H": {
+      "V204": {
+        "DATE": "November 2026",
+        "TITLE": "V2.04",
+        "TEXT": "Der Türöffner hat ein neues Sicherheitsfeature: die Tür lässt sich nur noch innerhalb eines bestimmten Radius vor Ort bedinen. Dazu muss die Standortbestimmung für die App aktiviert werden oder aber die App muss mit dem Gäste-WLAN im Gebetshaus verbunden sein. Die App erlaubt nun die Auswahl des Campus-Standortes um die entsprechenden Termine zu sehen. Unsere Kursplattform wurde in die App integriert mit autom. Anmeldung für registrierte Benutzer. Die App gibt es jetzt auch auf Englisch (kann in den Einstellungen geändert werden)."
+      },
+      "V203": {
+        "DATE": "Sommer 2026",
+        "TITLE": "V2.03",
+        "TEXT": "Unsere Icons haben ein neues Gesicht bekommen. Das Login mit 2 Faktor Authentifizierung ist nun unterstützt. Unter Android wurde das Problem gelöst, dass man sich nicht erneut einloggen konnte."
+      },
+      "V202": {
+        "DATE": "Weihnachten 2025",
+        "TITLE": "V2.02",
+        "TEXT": "Kleine Fehlerbehebungen und für registrierte Nutzer zusätzlicher Gebetskalender in Hohen Neuendorf."
+      },
+      "V201": {
+        "DATE": "August 2025",
+        "TITLE": "V2.01",
+        "TEXT": "Kleine Fehlerbehebungen und für registrierte Nutzer Zugang für's Gebet in Hohen Neuendorf."
+      },
+      "V200": {
+        "DATE": "Juni 2025",
+        "TITLE": "V2.00",
+        "TEXT": "Eine neue Generation der App ist fertig! Nebst der Tatsache dass die App auf neuen Programmquellen basiert, interessiert den Anwender sicherlich mehr was in der Oberfläche neu ist. Neu sind die Predigten <b>durchsuchbar</b>, und können im <b>Hintergrund abgespielt</b> werden. Die App läuft nun auch im Querformat (für Tablets praktisch). Für registrierte Nutzer (mit diekreative Churchtools Zugang) werden entsprechend weitere Funktionen wie Türöffner zu Gebetshaus und -Baracke sowie Infos für das Ministry Team freigeschaltet."
+      },
+      "V108": {
+        "DATE": "Frühjahr 2023",
+        "TITLE": "V1.08",
+        "TEXT": "Überarbeitung der Mediathek. Du kannst nun Predigten inkl. der Predigtskripte lokal auf Deinen Gerätespeicher herunterladen (am besten per WLAN), damit Du unterwegs Daten sparst bzw. im Flugmodus Predigten anhören kannst. Bei vielen Terminen stehen weitere Infos zur Verfügung und die können nun auch unter iOS (bisher nur Android) angezeigt werden. Auch einige Fehler wurden behoben (lifeGroups z.B. werden nun wieder korrekt angezeigt). Wir sind gespannt auf Dein Feedback und würden uns über eine Bewertung im PlayStore / App Store freuen."
+      },
+      "V107": {
+        "DATE": "November 2022",
+        "TITLE": "V1.07",
+        "TEXT": "Ab sofort kannst Du den Homescreen bearbeiten und die Kacheln selbst anordnen. Die Mediathek lädt schneller - es werden jeweils nur die letzten 20 Predigten angezeigt. Mit dem 'MEHR' Button kannst Du die restlichen Predigten anzeigen lassen."
+      },
+      "V106": {
+        "DATE": "Dezember 2021",
+        "TITLE": "V1.06",
+        "TEXT": "*WEIHNACHTS-UPDATE* ;-)   Ein Update war schon länger fällig. Nun ist es endlich da. Neu hinzugekommen ist die Terminübersicht und die Möglichkeit, auch Familienmitglieder über den QR Code zum Gottesdienst einzuchecken. Auf jeder Seite wo aktuelle Informationen angezeigt werden, kann die Anzeige mit swipe-down aktualisiert werden. Zudem gab es einige Fehlerbehebungen und Optimierungen."
+      },
+      "V105": {
+        "DATE": "1. April 2021",
+        "TITLE": "V1.05",
+        "TEXT": "kein Aprilscherz! Es gibt endlich wieder mal ein größeres Update. Die App läuft nun auch auf iPad und für Android Nutzer wird nun der Zurück-Button ausgewertet (extra für Basti ;-) ) Wenn es für den Gottesdienst ein Predigtskript gibt, kann dies direkt in der App unter \"Gottesdienste\" angezeigt werden. Ebenso kann man von dort aus direkt den YouTube Livestream starten bzw. den Gottesdienst über die Zoom App mithören (sinnvoll für Gottesdienstbesucher vor Ort, die darüber den Ton besser hören können bzw. der englisch-Übersetzung lauschen können)."
+      },
+      "RELEASE": {
+        "DATE": "10. Januar 2021",
+        "TITLE": "offizielles App Release",
+        "TEXT": "Zu unserem Gebetsgottesdienst wird die App für iOS und Android freigegeben und beworben!"
+      },
+      "APPSTORE": {
+        "DATE": "31. Dezember 2020",
+        "TITLE": "erste Version im App Store!",
+        "TEXT": "Pünktlich zum Jahresende erscheint die erste (Vorab-)Version der App im Apple App Store ;-)"
+      },
+      "TROPFEN": {
+        "DATE": "bis Ende Oktober 2020",
+        "TITLE": "steter Tropfen..",
+        "TEXT": "Es wird nach aussen hin etwas ruhig um die App. Im Hintergrund läuft aber ganz viel. Login zu Churchtools, Türöffner, Freigeben und Übernehmen von Gebetsschichten.. all das funktioniert nun! Die App steht nun wirklich kurz vor dem ersten Release!"
+      },
+      "PARTY": {
+        "DATE": "19. August 2020",
+        "TITLE": "App Release Party",
+        "TEXT": "Mittlerweile steht die alpha Version der App. Das muss im Kleingarten von <b>Anja</b> gefeiert werden! Und die App wird natürlich live präsentiert. Und letzte Aufgaben werden verteilt. Es gibt doch noch ein paar Schönheitskorrekturen und die Anbindung an Türöffner, Gebetskalender etc. muss noch realisiert werden."
+      },
+      "HACKATON": {
+        "DATE": "31. Juli- 4. August 2020",
+        "TITLE": "App Hackaton",
+        "TEXT": "Mitten in der Sommerpause \"verschanzen\" wir uns im schönen Gussow, im Gästehaus der Stadtmission und begeben uns an die Arbeit. Es waren arbeitsreiche Tage, die viel Spaß und Freude gemacht haben. Und das Ergebnis lässt sich sehen. Auch wenn wir leider am letzten Tag die App noch nicht auf unsere Smartphones installieren konnten. Das Designen und Programmieren einer App nimmt mehr Zeit in Anspruch als manch einer denken würde.",
+        "TEXT2": "Danke an alle Mitstreiter! Ihr seid mit Abstand die besten! ;-)"
+      },
+      "KICKOFF": {
+        "DATE": "25. April 2020",
+        "TITLE": "App Kickoff Meeting",
+        "TEXT": "<b>Es geht los!</b> Es haben sich genügend verrückte Leute aus unserer Gemeinde gefunden, die sich 4 Stunden lang in unser Zoom Kickoff Meeting einklinken und ihre Ideen und Fähigkeiten mit einbringen. Erste Teams werden gebildet und erste Wünsche für die App formuliert. Und es wird bereits jetzt festgelegt, dass wir in der Sommerpause einen <b>App-Hackaton</b> organisieren wollen, wo wir die App gemeinsam entwickeln!"
+      },
+      "TEAM": {
+        "DATE": "Februar 2020",
+        "TITLE": "Projektteam wird geboren",
+        "TEXT": "<b>Andrea</b> hört von unserer Idee und bringt einen Entwickler ins Spiel - <b>Christian</b> - und erklärt sich zudem spontan dazu bereit ein Teil der Kosten für die App zu sponsern, da sie an unser Projekt glaubt!<br>So treffen wir uns zu dritt (Marc, Mirine, Christian), mitten in der COVID Lockdown Phase per Zoom und werden uns schnell einig, dass die App aus unserer Mitte heraus geboren werden soll. D.h. wir wollen die App nicht outsourcen sondern komplett selbst gestalten und entwickeln!"
+      },
+      "IDEE": {
+        "DATE": "Januar 2020",
+        "TITLE": "erste Idee",
+        "TEXT": "<b>Marc:</b> Wir als Gemeinde möchten das Potenzial der Menschen finden, fördern und freisetzen. Als ehemaliger IT-ler kam mir die Frage auf, ob wir nicht auch im Bereich der IT in der Christenheit kreativ sein könnten und als Pionier vorangehen könnten.  Es gab ein erstes Treffen und Gedankenaustausch mit <b>Mirine</b>. Viele gute Ideen kamen zusammen, doch wie setzen wir die um? Eine Entwicklungsfirma beauftragen? Selber in die Materie eintauchen?.."
+      }
+    }
+  }
+}

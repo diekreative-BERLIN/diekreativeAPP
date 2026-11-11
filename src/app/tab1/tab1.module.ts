@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,7 +15,8 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab1PageRoutingModule
+    Tab1PageRoutingModule,
+    TranslateModule
   ],
   declarations: [Tab1Page,GridHomescreenComponent,SlideShowComponent]
 })

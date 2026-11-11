@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +15,8 @@ import { SafePipe } from '../SafePipe';
     CommonModule,
     FormsModule,
     IonicModule,
-    TerminePagePageRoutingModule
+    TerminePagePageRoutingModule,
+    TranslateModule
   ],
   declarations: [TerminePage, SafePipe]
 })
