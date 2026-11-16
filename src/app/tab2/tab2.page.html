@@ -19,7 +19,24 @@
        </ion-col>
      </ion-row>
 
-    <ion-row class="rowfullwidth">
+    <!-- Gottesdienst an einem anderen Standort (feste Angaben aus campus.service.ts) -->
+    <ion-row class="rowfullwidth" *ngIf="gottesdienst as gd">
+      <ion-col class="col_img_left">
+        <a target="_blank" [href]="gd.mapsUrl"><img [src]="gd.bild" class="campus-bild"></a>
+      </ion-col>
+      <ion-col>
+        <ion-label class="mini-headline">{{ 'DIRECTIONS.SERVICE' | translate }}</ion-label>
+        <br>
+        <br>
+        <ion-label class="subtext">{{ gd.ort | uppercase }}<br>
+          <ng-container *ngFor="let zeile of gd.adresszeilen">{{ zeile }}<br></ng-container>
+          <br>{{ gd.zeitKey | translate }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <!-- diekreative Berlin bzw. "Alle Standorte": feste Angaben -->
+    <ion-row class="rowfullwidth" *ngIf="!gottesdienst">
       <ion-col class="col_img_left">
         <a target= "_blank" href="https://www.google.com/maps/place/Motorwerk/@52.5633559,13.4592242,17z/data=!4m5!3m4!1s0x47a84dbe7226dc47:0x376e04be31aef322!8m2!3d52.5633559!4d13.4614129"> <img src="../assets/kacheln/Motorwerk.png" id="MOTORWERK" style="width:162px;height:162px;"></a>
       </ion-col>

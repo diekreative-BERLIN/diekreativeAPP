@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 
 import { DomSanitizer } from "@angular/platform-browser";
 import { UserstateService } from '../userstate.service';
+import { SpracheService } from '../sprache.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -21,6 +23,7 @@ export class TerminePage implements OnInit {
     secUrl: ''
   };
   isIOS = false;
+  private sprachWechsel: Subscription;
 
   constructor(
     private platform: Platform,
@@ -28,7 +31,8 @@ export class TerminePage implements OnInit {
     private router: Router,
     private sanitizer: DomSanitizer,
     public userState:UserstateService,
-    private translate:TranslateService
+    private translate:TranslateService,
+    private sprache:SpracheService
     ) {
       if (window.addEventListener) {
         window.addEventListener("message", this.receiveMessage.bind(this), false);
@@ -61,9 +65,27 @@ export class TerminePage implements OnInit {
 
     if(this.userState.isOnline) {
       //this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframeLink+"?reload=0");
-      this.browser.secUrl = this.sanitizer.sanitize(SecurityContext.URL,this.iframeLink+"?reload=" + (new Date()).getTime() + Math.floor(Math.random() * 1000000) );
+      this.browser.secUrl = this.sanitizer.sanitize(SecurityContext.URL, this.termineUrl());
       console.log('secUrl: '+this.browser.secUrl);
     }
+
+    // Sprache in den Einstellungen geändert -> Termine in der neuen Sprache neu laden
+    this.sprachWechsel = this.translate.onLangChange.subscribe(() => {
+      if(this.userState.isOnline) {
+        this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.termineUrl());
+      }
+    });
+  }
+
+  /**
+   * URL der Termin-Seite:
+   * - reload=<Zufallswert> umgeht Caches, damit immer die aktuellen Termine kommen
+   * - lang=de|en gibt die in der App gewählte Sprache an das Kalender-Plugin weiter
+   */
+  termineUrl(): string {
+    return this.iframeLink
+      + "?reload=" + (new Date()).getTime() + Math.floor(Math.random() * 1000000)
+      + "&lang=" + this.sprache.aktuell;
   }
 
   /*
@@ -81,6 +103,7 @@ export class TerminePage implements OnInit {
 
   ngOnDestroy() {
     window.removeEventListener('message',this.receiveMessage);
+    this.sprachWechsel?.unsubscribe();
   }
 
   openSafari(link) {
@@ -131,7 +154,7 @@ hideLoader() {
     if (event) {
       if(this.userState.isOnline) {
         //this.refresher = (new Date()).getTime() + Math.floor(Math.random() * 1000000);
-        this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframeLink+"?reload=" + (new Date()).getTime() + Math.floor(Math.random() * 1000000) );
+        this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.termineUrl());
       }
       event.target.complete();
     }

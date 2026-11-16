@@ -42,8 +42,6 @@
     "LOCATION": "Location",
     "LOCATION_HINT": "Choose your location. The services and events shown are based on it.",
     "ALL_LOCATIONS": "All locations",
-    "LOCATIONS_AFTER_LOGIN": "Locations are loaded after you log in.",
-    "LOCATIONS_LOADING": "Loading locations …",
     "HOMESCREEN_EDIT": "Edit home screen",
     "DONE": "Done",
     "RESET": "Reset",
@@ -117,7 +115,9 @@
     "SERVICE": "SERVICE",
     "SERVICE_TIME": "Service every Sunday at 10:30 am",
     "PRAYERHOUSE": "HOUSE OF PRAYER",
-    "ALL_YEAR": "24/7, all year round"
+    "ALL_YEAR": "24/7, all year round",
+    "SERVICE_TIME_MARZAHN": "Service every Sunday at 11:00 am",
+    "SERVICE_TIME_WEST": "Service every Sunday at 5:00 pm (doors open at 4:30 pm)"
   },
   "TUN": {
     "SUBTITLE": "We pray 24 hours - 7 days - 52 weeks <br> You are warmly invited to pray with us",

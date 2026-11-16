@@ -24,7 +24,6 @@ export class SettingsPage implements OnInit, OnDestroy {
   readonly alleStandorte = 'alle';
   campusse: Campus[] = [];
   aktiverCampusId: number | null = null;
-  campusLaedt = false;
   sprachWahl: SprachWahl = 'auto';
   private campusAbos: Subscription[] = [];
   public isDisabled = true;
@@ -79,9 +78,6 @@ export class SettingsPage implements OnInit, OnDestroy {
     return this.campusService.campusName(this.aktiverCampusId);
   }
 
-  istInListe(id: number): boolean {
-    return this.campusse.some((c) => c.id === id);
-  }
 
   campusGewaehlt(ev: any) {
     const wert = ev.detail.value;
@@ -91,15 +87,6 @@ export class SettingsPage implements OnInit, OnDestroy {
     }
   }
 
-  /** Beim Öffnen des Standort-Bereichs die Liste auffrischen (klappt nur angemeldet). */
-  private async aktualisiereCampusse() {
-    if (!this.userState.loggedin) {
-      return;
-    }
-    this.campusLaedt = this.campusse.length === 0;
-    await this.campusService.ladeCampusse(this.userState.logintoken);
-    this.campusLaedt = false;
-  }
 
   ionViewWillEnter() {
     Preferences.get({ key: 'settings_cache' }).then((value) => {
@@ -249,9 +236,6 @@ export class SettingsPage implements OnInit, OnDestroy {
   accordionGroupChange = (ev: any) => {
     if (ev.detail.value == "cache") {
       this.getFilesAndSize();
-    }
-    if (ev.detail.value == "standort") {
-      this.aktualisiereCampusse();
     }
   }
 

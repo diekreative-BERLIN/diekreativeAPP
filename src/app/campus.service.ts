@@ -6,25 +6,80 @@ import { Preferences } from '@capacitor/preferences';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-/** Ein Standort (Campus) der Gemeinde, wie ihn ChurchTools liefert. */
+/** Angaben für die Anfahrt-Seite (Block "Gottesdienst"). */
+export interface CampusAnfahrt {
+  /** Name des Ortes, z. B. "Jugendhaus Trinity" */
+  ort: string;
+  adresszeilen: string[];
+  /** Übersetzungsschlüssel für die Gottesdienstzeit */
+  zeitKey: string;
+  /** Kartenausschnitt mit markiertem Standort (assets) */
+  bild: string;
+  mapsUrl: string;
+}
+
+/** Ein Standort (Campus) der Gemeinde. Die ID entspricht der Campus-ID in ChurchTools. */
 export interface Campus {
   id: number;
   name: string;
+  /** null = feste Angaben auf der Anfahrt-Seite (Motorwerk) verwenden */
+  anfahrt: CampusAnfahrt | null;
 }
 
-const PREF_CAMPUS_LISTE = 'campusListe';
-const PREF_CAMPUS_AUSWAHL = 'campusAuswahl';
+/** ChurchTools-Campus-ID des Hauptstandorts "diekreative Berlin". */
+export const HAUPT_CAMPUS_ID = 1;
 
 /**
- * Verwaltet die Standorte (ChurchTools-"Campusse") und den in der App aktiven Standort.
+ * ChurchTools-Campus-ID "unbekannt/andere": wird nicht zur Auswahl angeboten,
+ * Personen mit diesem Standort bekommen beim Login "diekreative Berlin".
+ */
+const UNBEKANNT_CAMPUS_ID = 0;
+
+/**
+ * Feste Standortliste. Statisch, damit die Auswahl auch ohne Login funktioniert
+ * (/api/campuses und die Standortprofile sind bei ChurchTools nur angemeldet lesbar).
+ * Adressen und Zeiten stammen von diekreative.org/campus-marzahn bzw. /campus-west (Stand 11/2026).
+ */
+export const CAMPUSSE: Campus[] = [
+  {
+    id: HAUPT_CAMPUS_ID,
+    name: 'diekreative Berlin',
+    anfahrt: null
+  },
+  {
+    id: 2,
+    name: 'Campus Marzahn',
+    anfahrt: {
+      ort: 'Jugendhaus Trinity',
+      adresszeilen: ['Blenheimstraße 33', '12685 Berlin'],
+      zeitKey: 'DIRECTIONS.SERVICE_TIME_MARZAHN',
+      bild: '../assets/kacheln/CampusMarzahn.png',
+      mapsUrl: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Jugendhaus Trinity, Blenheimstraße 33, 12685 Berlin')
+    }
+  },
+  {
+    id: 5,
+    name: 'Campus West',
+    anfahrt: {
+      ort: 'H10 Hotel',
+      adresszeilen: ['Joachimsthaler Straße 31-32', '10719 Berlin'],
+      zeitKey: 'DIRECTIONS.SERVICE_TIME_WEST',
+      bild: '../assets/kacheln/CampusWest.png',
+      mapsUrl: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('H10 Hotel, Joachimsthaler Straße 31-32, 10719 Berlin')
+    }
+  }
+];
+
+const PREF_CAMPUS_AUSWAHL = 'campusAuswahl';
+/** Nicht mehr benötigte Zwischenspeicher früherer Versionen */
+const ALTE_PREFS = ['campusListe', 'campusProfile'];
+
+/**
+ * Verwaltet den in der App aktiven Standort (ChurchTools-"Campus").
  *
  * - Ohne Auswahl (null) ist die App standortunabhängig ("Alle Standorte").
  * - Die Auswahl wird lokal gespeichert und kann in den Einstellungen geändert werden.
  * - Beim Login wird der Standort der Person vorausgewählt.
- *
- * Hinweis: /api/campuses ist bei ChurchTools nur mit Anmeldung lesbar. Die Liste wird
- * deshalb nach dem Login geladen und lokal zwischengespeichert, damit sie auch
- * offline bzw. nach dem Ausloggen in den Einstellungen verfügbar bleibt.
  */
 @Injectable({
   providedIn: 'root'
@@ -33,8 +88,8 @@ export class CampusService {
 
   private readonly REST_API_SERVER = environment.churchtoolsurl + '/api';
 
-  /** Alle bekannten Standorte, sortiert nach Name. */
-  public readonly campusse = new BehaviorSubject<Campus[]>([]);
+  /** Alle auswählbaren Standorte. */
+  public readonly campusse = new BehaviorSubject<Campus[]>(CAMPUSSE);
 
   /** ID des aktiven Standorts, null = alle Standorte. */
   public readonly aktiverCampusId = new BehaviorSubject<number | null>(null);
@@ -49,7 +104,7 @@ export class CampusService {
     this.bereit = this.platform.ready().then(() => this.ladeGespeichertes());
   }
 
-  /** Der aktive Standort als Objekt (oder null, wenn alle Standorte gelten bzw. unbekannt). */
+  /** Der aktive Standort als Objekt (oder null, wenn alle Standorte gelten). */
   public get aktiverCampus(): Campus | null {
     return this.findeCampus(this.aktiverCampusId.value);
   }
@@ -58,10 +113,10 @@ export class CampusService {
     if (id == null) {
       return null;
     }
-    return this.campusse.value.find((c) => c.id === id) ?? null;
+    return CAMPUSSE.find((c) => c.id === id) ?? null;
   }
 
-  /** Anzeigename eines Standorts, auch wenn er (noch) nicht in der Liste ist. */
+  /** Anzeigename eines Standorts. */
   public campusName(id: number | null): string {
     if (id == null) {
       return this.translate.instant('CAMPUS.ALL');
@@ -72,39 +127,8 @@ export class CampusService {
   /** Setzt den aktiven Standort (null = alle) und speichert ihn. */
   public async setzeCampus(id: number | null): Promise<void> {
     await this.bereit;
-    this.aktiverCampusId.next(id);
-    await Preferences.set({ key: PREF_CAMPUS_AUSWAHL, value: JSON.stringify({ campusId: id }) });
-  }
-
-  /**
-   * Lädt alle Standorte von ChurchTools. Mit Logintoken wird dieser mitgeschickt,
-   * ansonsten wird die Session (Cookie) des Logins verwendet.
-   * Gibt true zurück, wenn die Liste erfolgreich aktualisiert wurde.
-   */
-  public async ladeCampusse(logintoken?: string): Promise<boolean> {
-    await this.bereit;
-    try {
-      const headers: Record<string, string> = {};
-      if (logintoken) {
-        headers['Authorization'] = 'Login ' + logintoken;
-      }
-      const res = await CapacitorHttp.get({ url: this.REST_API_SERVER + '/campuses', headers });
-      const daten = this.parseJson(res.data)?.data;
-      if (res.status !== 200 || !Array.isArray(daten)) {
-        console.log('Campusse konnten nicht geladen werden, Status ' + res.status);
-        return false;
-      }
-      const liste: Campus[] = daten
-        .filter((c) => c && c.id != null)
-        .map((c) => ({ id: Number(c.id), name: String(c.name ?? c.nameTranslated ?? `Standort ${c.id}`) }))
-        .sort((a, b) => a.name.localeCompare(b.name, 'de'));
-      this.campusse.next(liste);
-      await Preferences.set({ key: PREF_CAMPUS_LISTE, value: JSON.stringify(liste) });
-      return true;
-    } catch (err) {
-      console.log('Fehler beim Laden der Campusse ' + JSON.stringify(err));
-      return false;
-    }
+    this.aktiverCampusId.next(this.gueltigeId(id));
+    await this.speichereAuswahl();
   }
 
   /**
@@ -130,18 +154,20 @@ export class CampusService {
    * Nach einem Login: Standort der Person übernehmen und den Nutzer darauf hinweisen.
    * Ohne Standort bei der Person bleibt die bisherige Auswahl unverändert.
    */
-  public async uebernehmeCampusDerPerson(campusId: unknown, logintoken?: string): Promise<void> {
+  public async uebernehmeCampusDerPerson(campusId: unknown): Promise<void> {
     const id = Number(campusId);
     if (campusId == null || campusId === '' || !Number.isFinite(id)) {
       console.log('Person hat keinen Standort hinterlegt, Auswahl bleibt unverändert');
       return;
     }
-    // Liste auffrischen, damit der Name im Hinweis stimmt (bei Fehler: zwischengespeicherte Liste).
-    await this.ladeCampusse(logintoken);
     await this.setzeCampus(id);
+    const gewaehlt = this.aktiverCampusId.value;
+    if (gewaehlt == null) {
+      return;
+    }
 
     const toast = await this.toastCtrl.create({
-      message: this.translate.instant('CAMPUS.SELECTED', { name: this.campusName(id) }),
+      message: this.translate.instant('CAMPUS.SELECTED', { name: this.campusName(gewaehlt) }),
       duration: 5000,
       position: 'bottom',
       buttons: [{ text: 'OK', role: 'cancel' }]
@@ -154,16 +180,42 @@ export class CampusService {
     await this.setzeCampus(null);
   }
 
+  /** true, wenn für den Standort die festen Angaben (Motorwerk) gelten. */
+  public istHauptCampus(id: number | null): boolean {
+    return id === HAUPT_CAMPUS_ID;
+  }
+
+  /** "unbekannt/andere" wird zu "diekreative Berlin", unbekannte IDs zu "Alle Standorte". */
+  private gueltigeId(id: number | null): number | null {
+    if (id == null) {
+      return null;
+    }
+    if (id === UNBEKANNT_CAMPUS_ID) {
+      return HAUPT_CAMPUS_ID;
+    }
+    if (!this.findeCampus(id)) {
+      console.log('Unbekannter Standort ' + id + ' – es gelten alle Standorte');
+      return null;
+    }
+    return id;
+  }
+
+  private async speichereAuswahl(): Promise<void> {
+    await Preferences.set({ key: PREF_CAMPUS_AUSWAHL, value: JSON.stringify({ campusId: this.aktiverCampusId.value }) });
+  }
+
   private async ladeGespeichertes(): Promise<void> {
     try {
-      const liste = await Preferences.get({ key: PREF_CAMPUS_LISTE });
-      const campusse = this.parseJson(liste.value);
-      if (Array.isArray(campusse)) {
-        this.campusse.next(campusse);
-      }
       const auswahl = await Preferences.get({ key: PREF_CAMPUS_AUSWAHL });
-      const id = this.parseJson(auswahl.value)?.campusId;
-      this.aktiverCampusId.next(typeof id === 'number' ? id : null);
+      const gespeichert = this.parseJson(auswahl.value)?.campusId;
+      const id = this.gueltigeId(typeof gespeichert === 'number' ? gespeichert : null);
+      this.aktiverCampusId.next(id);
+      if (gespeichert !== undefined && id !== gespeichert) {
+        await this.speichereAuswahl();
+      }
+      for (const key of ALTE_PREFS) {
+        await Preferences.remove({ key });
+      }
     } catch (err) {
       console.log('Fehler beim Lesen der Standort-Einstellungen ' + JSON.stringify(err));
     }

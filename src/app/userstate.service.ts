@@ -221,16 +221,14 @@ export class UserstateService {
 
         // Standort (Campus): Bei einem echten Login (mit Benutzername/Passwort) den Standort
         // der Person vorauswählen. Beim automatischen Login mit Token beim App-Start bleibt
-        // die Auswahl aus den Einstellungen erhalten, nur die Standortliste wird aufgefrischt.
+        // die Auswahl aus den Einstellungen erhalten.
         if (username !== undefined && password !== undefined) {
           let campusId = res2.data.data.campusId;
           if (!('campusId' in res2.data.data)) {
             campusId = await this.campusService.ladeCampusIdDerPerson(personid, this.logintoken);
           }
           console.log('Standort (campusId) der Person: ' + campusId);
-          this.campusService.uebernehmeCampusDerPerson(campusId, this.logintoken);
-        } else {
-          this.campusService.ladeCampusse(this.logintoken);
+          this.campusService.uebernehmeCampusDerPerson(campusId);
         }
         //logintoken MUSS in currentUser gespeichert werden. Wenn er noch nicht bekannt ist, dann später ergänzen!!
         //console.log("logintoken schon bekannt? "+this.logintoken);
@@ -325,7 +323,6 @@ export class UserstateService {
         }
         console.log("logintoken vorhanden: " + !!token);
         this.logintoken = token || "";
-        this.campusService.ladeCampusse(this.logintoken);
         //console.log("has Logintoken");
         await Preferences.set({key: 'usertoken', value: JSON.stringify({logintoken: this.logintoken})})
         .then(

@@ -42,8 +42,6 @@
     "LOCATION": "Standort",
     "LOCATION_HINT": "Wähle deinen Standort. Danach richten sich z. B. die angezeigten Gottesdienste und Termine.",
     "ALL_LOCATIONS": "Alle Standorte",
-    "LOCATIONS_AFTER_LOGIN": "Die Standorte werden nach dem Login geladen.",
-    "LOCATIONS_LOADING": "Standorte werden geladen …",
     "HOMESCREEN_EDIT": "Homescreen bearbeiten",
     "DONE": "Fertig",
     "RESET": "Reset",
@@ -117,7 +115,9 @@
     "SERVICE": "GOTTESDIENST",
     "SERVICE_TIME": "Gottesdienst jeweils sonntags um 10:30 Uhr",
     "PRAYERHOUSE": "GEBETSHAUS",
-    "ALL_YEAR": "24/7 im Jahr"
+    "ALL_YEAR": "24/7 im Jahr",
+    "SERVICE_TIME_MARZAHN": "Gottesdienst jeweils sonntags um 11:00 Uhr",
+    "SERVICE_TIME_WEST": "Gottesdienst jeweils sonntags um 17:00 Uhr (Ankommen ab 16:30 Uhr)"
   },
   "TUN": {
     "SUBTITLE": "Wir beten 24 Stunden - 7 Tage - 52 Wochen <br> Du bist herzlich eingeladen mitzubeten",

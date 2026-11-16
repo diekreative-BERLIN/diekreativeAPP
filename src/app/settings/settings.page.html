@@ -46,15 +46,7 @@
             <ion-label>{{ campus.name }}</ion-label>
             <ion-radio slot="start" [value]="campus.id"></ion-radio>
           </ion-item>
-          <ion-item *ngIf="aktiverCampusId != null && !istInListe(aktiverCampusId)">
-            <ion-label>{{ aktiverCampusName }}</ion-label>
-            <ion-radio slot="start" [value]="aktiverCampusId"></ion-radio>
-          </ion-item>
         </ion-radio-group>
-        <p class="hinweis" *ngIf="campusse.length === 0 && !campusLaedt">
-          {{ 'SETTINGS.LOCATIONS_AFTER_LOGIN' | translate }}
-        </p>
-        <p class="hinweis" *ngIf="campusLaedt">{{ 'SETTINGS.LOCATIONS_LOADING' | translate }}</p>
       </div>
     </ion-accordion>
     <ion-accordion value="homescreen">
