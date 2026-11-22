@@ -84,6 +84,26 @@ ion-card {
 
 .image{
     position:center;
+    display: block;
+    width: 100%;
+}
+
+/* Kachelbeschriftung über dem Bild (gleiche Schrift/Größe/Position wie die früher eingebrannte Schrift) */
+.kachel-text {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  text {
+    /* 'Lato bold' ist im Theme als eigene Schrift (Gewicht 400) eingebunden – kein font-weight:bold, sonst wird künstlich nachgefettet */
+    font-family: 'Lato bold', 'Lato', sans-serif;
+    font-weight: normal;
+    font-size: 82px;
+    fill: #fff;
+    text-transform: uppercase;
+  }
 }
 
 ios hydrated {margin: 0px!important;}

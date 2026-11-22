@@ -8,7 +8,9 @@ import { Router } from '@angular/router';
 import { DomSanitizer } from "@angular/platform-browser";
 import { UserstateService } from '../userstate.service';
 import { SpracheService } from '../sprache.service';
+import { CampusService, TERMINE_ANSICHT_ALLE } from '../campus.service';
 import { Subscription } from 'rxjs';
+import { distinctUntilChanged, skip } from 'rxjs/operators';
 
 
 @Component({
@@ -24,6 +26,12 @@ export class TerminePage implements OnInit {
   };
   isIOS = false;
   private sprachWechsel: Subscription;
+  private campusWechsel: Subscription;
+
+  /** Name des gewählten Standorts für die Überschrift ("Alle Standorte", wenn keiner gewählt ist). */
+  get campusName(): string {
+    return this.campus.campusName(this.campus.aktiverCampusId.value);
+  }
 
   constructor(
     private platform: Platform,
@@ -32,7 +40,8 @@ export class TerminePage implements OnInit {
     private sanitizer: DomSanitizer,
     public userState:UserstateService,
     private translate:TranslateService,
-    private sprache:SpracheService
+    private sprache:SpracheService,
+    private campus:CampusService
     ) {
       if (window.addEventListener) {
         window.addEventListener("message", this.receiveMessage.bind(this), false);
@@ -65,27 +74,46 @@ export class TerminePage implements OnInit {
 
     if(this.userState.isOnline) {
       //this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframeLink+"?reload=0");
-      this.browser.secUrl = this.sanitizer.sanitize(SecurityContext.URL, this.termineUrl());
-      console.log('secUrl: '+this.browser.secUrl);
+      this.ladeTermine();
     }
 
     // Sprache in den Einstellungen geändert -> Termine in der neuen Sprache neu laden
     this.sprachWechsel = this.translate.onLangChange.subscribe(() => {
       if(this.userState.isOnline) {
-        this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.termineUrl());
+        this.ladeTermine();
       }
     });
+
+    // Standort geändert (Einstellungen, Login oder gespeicherte Auswahl erst nach dem Start geladen)
+    // -> Termine des neuen Standorts laden; skip(1): der aktuelle Wert ist oben schon geladen
+    this.campusWechsel = this.campus.aktiverCampusId.pipe(distinctUntilChanged(), skip(1)).subscribe(() => {
+      if(this.userState.isOnline) {
+        this.ladeTermine();
+      }
+    });
+  }
+
+  /**
+   * Lädt die Termin-Seite (neu) in das iframe.
+   * secUrl muss ein Text sein: die "safe"-Pipe im Template macht daraus erst die sichere URL.
+   */
+  ladeTermine() {
+    this.browser.secUrl = this.sanitizer.sanitize(SecurityContext.URL, this.termineUrl());
+    console.log('secUrl: '+this.browser.secUrl);
   }
 
   /**
    * URL der Termin-Seite:
    * - reload=<Zufallswert> umgeht Caches, damit immer die aktuellen Termine kommen
    * - lang=de|en gibt die in der App gewählte Sprache an das Kalender-Plugin weiter
+   * - campus=… gibt den in der App gewählten Standort weiter (Ansicht im Plugin, "haupt" = alle Standorte)
    */
   termineUrl(): string {
+    const ansicht = this.campus.aktiverCampus?.termineAnsicht ?? TERMINE_ANSICHT_ALLE;
     return this.iframeLink
       + "?reload=" + (new Date()).getTime() + Math.floor(Math.random() * 1000000)
-      + "&lang=" + this.sprache.aktuell;
+      + "&lang=" + this.sprache.aktuell
+      + "&campus=" + encodeURIComponent(ansicht);
   }
 
   /*
@@ -104,6 +132,7 @@ export class TerminePage implements OnInit {
   ngOnDestroy() {
     window.removeEventListener('message',this.receiveMessage);
     this.sprachWechsel?.unsubscribe();
+    this.campusWechsel?.unsubscribe();
   }
 
   openSafari(link) {
@@ -154,7 +183,7 @@ hideLoader() {
     if (event) {
       if(this.userState.isOnline) {
         //this.refresher = (new Date()).getTime() + Math.floor(Math.random() * 1000000);
-        this.browser.secUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.termineUrl());
+        this.ladeTermine();
       }
       event.target.complete();
     }

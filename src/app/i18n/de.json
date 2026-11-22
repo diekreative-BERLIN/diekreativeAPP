@@ -65,6 +65,18 @@
     "Kursplattform": "Kursplattform",
     "Ministryteam": "Ministryteam"
   },
+  "KACHEL": {
+    "Mediathek": "MEDIA|THEK",
+    "Termine": "TERMINE",
+    "Tagundnacht": "TAG|UND|NACHT",
+    "Gottesdienste": "GOTTES|DIENSTE",
+    "LifeGroups": "LIFE|GROUPS",
+    "Ueberuns": "ÜBER|UNS",
+    "Geben": "GEBEN",
+    "Erlebt": "ER|LEBT",
+    "Kursplattform": "KURSE",
+    "Ministryteam": "MINISTRY|TEAM"
+  },
   "CAMPUS": {
     "ALL": "Alle Standorte",
     "FALLBACK": "Standort {{id}}",

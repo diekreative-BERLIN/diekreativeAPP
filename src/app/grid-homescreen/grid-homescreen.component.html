@@ -13,7 +13,14 @@
 
     <ng-container *ngFor="let entry of form">
       <ion-col *ngIf="entry.isChecked && hasPermission(entry.permissionID)" sizeLg="4" sizeMd="4" sizeXs="6">
-        <ion-card (click)="handleClick(entry.id)"> <img class="image" src="assets/kacheln/Kachel_Startseite_{{entry.id}}.png"/></ion-card>
+        <ion-card (click)="handleClick(entry.id)">
+          <img class="image" src="assets/kacheln/Kachel_Startseite_{{entry.id}}.png"/>
+          <!-- Beschriftung als skalierendes SVG: Koordinaten beziehen sich auf die 500x500 px Kachelgrafik -->
+          <svg class="kachel-text" viewBox="0 0 500 500" aria-hidden="true">
+            <text *ngFor="let zeile of zeilen('KACHEL.' + entry.id | translate); let i = index; let anzahl = count"
+                  x="58" [attr.y]="423 - (anzahl - 1 - i) * 82">{{ zeile }}</text>
+          </svg>
+        </ion-card>
       </ion-col>
   </ng-container>
 

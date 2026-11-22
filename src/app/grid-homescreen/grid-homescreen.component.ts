@@ -26,6 +26,15 @@ export class GridHomescreenComponent implements OnInit {
     this.userState.homescreen.subscribe((form)=>{this.form=form});
   }
 
+  /** Kachelbeschriftung: Zeilenumbrüche sind in den Übersetzungen mit "|" markiert. */
+  zeilen(text: string): string[] {
+    // Ohne Übersetzung (z. B. Kacheln mit eingebrannter Schrift) keinen Text darüberlegen
+    if (!text || text.startsWith('KACHEL.')) {
+      return [];
+    }
+    return text.split('|');
+  }
+
   openWebsite(url:string){
     this.platform.ready().then(async () => {
       await InAppBrowser.openInSystemBrowser({url:url,options:DefaultSystemBrowserOptions});
