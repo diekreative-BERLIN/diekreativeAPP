@@ -33,7 +33,7 @@ export class MinistryteamPage implements OnInit {
   }
 
   ngOnInit(){
-    //links coming from diekreative.org/addons/dkEvents/index.php
+    //links coming from diekreative.org/addons/dkEventsHelper/index.php
       this.events.getEventLinks().then((result)=>{
         this.MVideo = (result.data).mvideo;
         this.MScript = (result.data).mscript;

@@ -257,8 +257,9 @@ export class ChurchapiService {
   }
 
   //get next sunday services
-  public getNextGoDiEvents(){
-    return CapacitorHttp.get({url:this.PRAY_API_SERVER+"/calendar/read",headers:{token:this.PRAY_API_SERVER_token}});
+  /** Nächste Gottesdienste aus dem ChurchTools-Kalender des Standorts (2 = Motorwerk, 54 = Marzahn, 65 = West). */
+  public getNextGoDiEvents(kalenderId: number){
+    return CapacitorHttp.get({url:environment.godiurl, params:{calendar:String(kalenderId)}, headers:{token:this.PRAY_API_SERVER_token}});
   }
 
   /////////////////// get next prayer watches /////

@@ -22,6 +22,10 @@ export interface CampusAnfahrt {
 export interface Campus {
   id: number;
   name: string;
+  /** Ansicht im Kalender-Plugin dkEvents (URL-Parameter campus= auf der Termin-Seite) */
+  termineAnsicht: string;
+  /** ChurchTools-Kalender mit den Gottesdiensten dieses Standorts (Seite "Gottesdienste") */
+  godiKalenderId: number;
   /** null = feste Angaben auf der Anfahrt-Seite (Motorwerk) verwenden */
   anfahrt: CampusAnfahrt | null;
 }
@@ -44,11 +48,15 @@ export const CAMPUSSE: Campus[] = [
   {
     id: HAUPT_CAMPUS_ID,
     name: 'diekreative Berlin',
+    termineAnsicht: 'motorwerk',
+    godiKalenderId: 2,
     anfahrt: null
   },
   {
     id: 2,
     name: 'Campus Marzahn',
+    termineAnsicht: 'marzahn',
+    godiKalenderId: 54,
     anfahrt: {
       ort: 'Jugendhaus Trinity',
       adresszeilen: ['Blenheimstraße 33', '12685 Berlin'],
@@ -60,6 +68,8 @@ export const CAMPUSSE: Campus[] = [
   {
     id: 5,
     name: 'Campus West',
+    termineAnsicht: 'citywest',
+    godiKalenderId: 65,
     anfahrt: {
       ort: 'H10 Hotel',
       adresszeilen: ['Joachimsthaler Straße 31-32', '10719 Berlin'],
@@ -69,6 +79,12 @@ export const CAMPUSSE: Campus[] = [
     }
   }
 ];
+
+/** Ansicht im Kalender-Plugin dkEvents, wenn kein Standort gewählt ist ("Alle Standorte") */
+export const TERMINE_ANSICHT_ALLE = 'haupt';
+
+/** Gottesdienst-Kalender, wenn kein Standort gewählt ist: der des Hauptcampus (Motorwerk) */
+export const GODI_KALENDER_ALLE = 2;
 
 const PREF_CAMPUS_AUSWAHL = 'campusAuswahl';
 /** Nicht mehr benötigte Zwischenspeicher früherer Versionen */
@@ -178,6 +194,11 @@ export class CampusService {
   /** Nach dem Logout ist die App wieder standortunabhängig. */
   public async zuruecksetzen(): Promise<void> {
     await this.setzeCampus(null);
+  }
+
+  /** ChurchTools-Kalender mit den Gottesdiensten des aktiven Standorts. */
+  public get godiKalenderId(): number {
+    return this.aktiverCampus?.godiKalenderId ?? GODI_KALENDER_ALLE;
   }
 
   /** true, wenn für den Standort die festen Angaben (Motorwerk) gelten. */

@@ -81,19 +81,19 @@
               <br/>
               <ion-row>
 
-                <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && ZoomAvailable>0">
+                <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && zeigeStreamLinks && ZoomAvailable>0">
                   <ion-button (click)="helpZoom()" class="qr-button">
                     <ion-label>{{ 'GODI.ON_SITE' | translate }}&nbsp;&nbsp;</ion-label>
                     <ion-icon name="help-circle-outline"></ion-icon>
                   </ion-button>
                 </ion-col>
-                <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && LiveVoiceAvailable>0">
+                <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && zeigeStreamLinks && LiveVoiceAvailable>0">
                   <ion-button (click)="helpLiveVoice()" class="qr-button">
                     <ion-label>{{ 'GODI.TRANSLATION' | translate }}&nbsp;&nbsp;</ion-label>
                     <ion-icon name="help-circle-outline"></ion-icon>
                   </ion-button>
                 </ion-col>
-                <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && YTAvailable>0">
+                <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && zeigeStreamLinks && YTAvailable>0">
                   <ion-button (click)="helpYT()" class="qr-button">
                     <ion-label>{{ 'GODI.LIVESTREAM' | translate }}&nbsp;&nbsp;</ion-label>
                     <ion-icon name="help-circle-outline"></ion-icon>
@@ -102,7 +102,7 @@
 
               </ion-row>
               <ion-row>
-                <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && ZoomAvailable>0">
+                <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && zeigeStreamLinks && ZoomAvailable>0">
                   <ion-button (click)="launchZoomMeeting1()" class="qr-button">
                     <ion-icon name="headset-outline"></ion-icon>
                     &nbsp;&nbsp;
@@ -115,14 +115,14 @@
                     <ion-label>english</ion-label>
                   </ion-button>
               </ion-col>
-              <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && LiveVoiceAvailable>0">
+              <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && zeigeStreamLinks && LiveVoiceAvailable>0">
                 <ion-button (click)="launchLiveVoice()" class="qr-button">
                   <ion-icon name="headset-outline"></ion-icon>
                   &nbsp;&nbsp;
                   <ion-label>LiveVoice</ion-label>
                 </ion-button>
               </ion-col>
-              <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && YTAvailable>0">
+              <ion-col class="watchLinks" *ngIf="eventProgressState == 1 && zeigeStreamLinks && YTAvailable>0">
                 <ion-button (click)="launchYTlive()" class="qr-button">
                   <ion-icon name="logo-youtube"></ion-icon>
                   &nbsp;&nbsp;

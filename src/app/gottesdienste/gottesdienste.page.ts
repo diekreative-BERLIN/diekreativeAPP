@@ -27,6 +27,7 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 //In App Browser
 import { DefaultSystemBrowserOptions, InAppBrowser } from '@capacitor/inappbrowser';
 import { UserstateService } from '../userstate.service';
+import { CampusService } from '../campus.service';
 
 //download file withouth FileTransfer - https://stackoverflow.com/questions/61892608/how-to-download-file-from-url-in-ionic-5-without-using-filetransfer
 //14.07.23: did not work - deactivate again
@@ -80,12 +81,24 @@ export class GottesdienstePage {
 
   AppPageGodiInfoDate = "";
   AppPageGodiInfo = "";
+  /** Kalender, aus dem die gespeicherten Gottesdienst-Infos stammen (Standortwechsel -> neu laden) */
+  AppPageGodiKalender: number = null;
   AppPageGodiInfotext = "";
   //nov '22 -> no more qr checkin needed -> deactivated!
   //AppPageGodiQRcheckin = true;
   AppPageGodiQRcheckin = false;
 
   AppPageGoDiQRcheckinCode = "false";
+
+  /**
+   * Livestream (YouTube) und Übersetzung (Zoom/LiveVoice) gibt es nur für den Hauptcampus (Motorwerk),
+   * von dort wird gestreamt. Die anderen Campusse zeigen den Stream per Beamer -> dort nur das Skript.
+   * Ohne Standortauswahl ("Alle Standorte") gelten die Angaben des Hauptcampus.
+   */
+  get zeigeStreamLinks(): boolean {
+    const id = this.campus.aktiverCampusId.value;
+    return id == null || this.campus.istHauptCampus(id);
+  }
 
   constructor (
     private churchtools:ChurchapiService,
@@ -95,7 +108,8 @@ export class GottesdienstePage {
     private modalController: ModalController,
     public userState: UserstateService,
     private alertController: AlertController,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private campus: CampusService
     //private nativeHTTP: HTTP
   ) {
     platform.ready().then(async () => {
@@ -136,6 +150,7 @@ export class GottesdienstePage {
           this.AppPageGodiInfoDate = AppPg.godi_infodate;
           this.AppPageGodiInfo = AppPg.godi_info;
           this.AppPageGodiInfotext = AppPg.godi_infotext;
+          this.AppPageGodiKalender = AppPg.godi_kalender ?? null;
 
           console.log("-> godi qrcheckin: "+AppPg.godi_qrcheckin);
           //console.log("qrcode="+AppPg.godi_qrcheckincode);
@@ -323,7 +338,7 @@ async checkin(){
   //save GoDi Info
   public async saveGoDiInfo() {
     console.log('>>>>>> SAVE!!! saveGoDiInfo: godi_timestamp: '+this.AppPageGodiTimestamp+', godi_start:'+this.AppPageGodiEvntStart+', godi_end:'+ this.AppPageGodiEvntEnd + ', godi_infodate: '+this.AppPageGodiInfoDate+', godi_info: '+this.AppPageGodiInfo+', godi_infotext: '+this.AppPageGodiInfotext+', godi_qrcheckin: '+this.AppPageGodiQRcheckin);
-    await Preferences.set({key: 'AppPageStorage', value: JSON.stringify({godi_timestamp: this.AppPageGodiTimestamp, godi_start: this.AppPageGodiEvntStart, godi_end: this.AppPageGodiEvntEnd, godi_infodate: this.AppPageGodiInfoDate, godi_info: this.AppPageGodiInfo, godi_infotext: this.AppPageGodiInfotext, godi_qrcheckin: this.AppPageGodiQRcheckin})}).then(
+    await Preferences.set({key: 'AppPageStorage', value: JSON.stringify({godi_timestamp: this.AppPageGodiTimestamp, godi_start: this.AppPageGodiEvntStart, godi_end: this.AppPageGodiEvntEnd, godi_infodate: this.AppPageGodiInfoDate, godi_info: this.AppPageGodiInfo, godi_infotext: this.AppPageGodiInfotext, godi_qrcheckin: this.AppPageGodiQRcheckin, godi_kalender: this.AppPageGodiKalender})}).then(
       () => console.log('Stored AppPageStorage item!'),
       error => console.error('Error storing AppPageStorage item', error)
     );
@@ -338,15 +353,21 @@ async checkin(){
 
   //read GoDi Events within next 7 days
   public getNextGoDiEvents(readNextDay) {
-    this.churchtools.getNextGoDiEvents().then((result)=>{
-      console.log('nextGoDi Services (readNextDay? '+readNextDay+'): ' + result.data);
+    const kalenderId = this.campus.godiKalenderId;
+    this.churchtools.getNextGoDiEvents(kalenderId).then((result)=>{
+      console.log('nextGoDi Services Kalender '+kalenderId+' (readNextDay? '+readNextDay+'): ' + result.data);
+      if (!Array.isArray(result.data) || result.data.length == 0) {
+        console.log('keine Gottesdienste im Kalender '+kalenderId+' gefunden');
+        return;
+      }
+      this.AppPageGodiKalender = kalenderId;
       //let retval = JSON.parse(JSON.stringify(result)).data ;
       //this.momentjs.tz.setDefault('Europe/Berlin');
       let i=0;
       let starttime = this.momentjs( (result.data[i].start) * 1000).subtract(this.fixForCurrentTimeZone, 'h');
       //get next Event > consider if result still holds current event - if so, then read next id.
       if (readNextDay>0) {
-        if (this.momentjs( starttime ).format('YYMMDD') == this.momentjs( this.timestampLocal ).format('YYMMDD') ) {
+        if (result.data.length > 1 && this.momentjs( starttime ).format('YYMMDD') == this.momentjs( this.timestampLocal ).format('YYMMDD') ) {
           i=1;
           starttime = this.momentjs( (result.data)[i].start * 1000).subtract(this.fixForCurrentTimeZone, 'h');
         }
@@ -544,8 +565,9 @@ private isEmpty(obj) {
     this.Weekday = this.momentjs(this.timestampLocal).format('d');
     let Hour = ( (this.momentjs(this.timestampLocal).format('H')*1.0)+(this.momentjs( this.timestampLocal ).format('m')/60) );
 
-    //last timestamp same day?
-    if (this.momentjs( this.AppPageGodiTimestamp ).format('YYMMDD') != this.momentjs( this.timestampLocal ).format('YYMMDD') ) {
+    //last timestamp same day? (oder Standort gewechselt -> Gottesdienst des neuen Standorts lesen)
+    if (this.momentjs( this.AppPageGodiTimestamp ).format('YYMMDD') != this.momentjs( this.timestampLocal ).format('YYMMDD')
+        || this.AppPageGodiKalender != this.campus.godiKalenderId ) {
       //alert('different timestamp -> read from CT');
       //different read timestamp!
       console.log('last timestamp '+this.momentjs( this.AppPageGodiTimestamp ).format('YYMMDD') +' is not same date as now '+this.momentjs( this.timestampLocal ).format('YYMMDD') );
