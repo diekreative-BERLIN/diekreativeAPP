@@ -97,41 +97,20 @@ export class UserstateService {
         this.isMinistryTeam = user.isMinistryTeam;
         if (this.isOnline) {
           this.churchtools.loginWithToken(this.personid, this.logintoken).then(async (res)=>{
-            console.log("Login With token: of person "+this.personid+" and logintoken "+this.logintoken+"res:");
-            console.log(res);
-            //console.log("login status="+ (JSON.parse(res.data)).status)
+            console.log("Login With token: of person "+this.personid+" res status: "+res?.status);
             if(res.status == 200){
               await this.userLoginSuccessful(this.personid);
+            } else if (res.status == 401 || res.status == 403) {
+              // ChurchTools lehnt das Token ausdrücklich ab -> wirklich ausloggen
+              console.log("---> User loged out A (Token abgelehnt, Status " + res.status + ")");
+              await this.loginVerwerfen('1');
             } else {
-              await Preferences.remove({key: 'currentUser'});
-              this.loggedin = false;
-              this.personid = 0;
-              this.isGebetLeiter = false;
-              this.hasTuerOeffner = false;
-              this.hasTuerOeffnerHN = false;
-              this.isMinistryTeam = false;
-              this.logintoken = "";
-              this.fullusername = "";
-              this.shortusername = "";
-              this.explicitusername = "";
-              console.log("---> User loged out A")
-              alert(this.translate.instant('USER.LOGGED_OUT', { nr: '1' }));
+              // z. B. 503 Wartung, 502, 500: ChurchTools ist gerade nicht erreichbar
+              await this.loginBeiStoerungBehalten('1', 'Status ' + res?.status);
             }
           }).catch(async (err)=>{
-            console.log("Error Login with token"+JSON.stringify(err));
-            await Preferences.remove({key: 'currentUser'});
-            this.loggedin = false;
-            this.personid = 0;
-            this.isGebetLeiter = false;
-            this.hasTuerOeffner = false;
-            this.hasTuerOeffnerHN = false;
-            this.isMinistryTeam = false;
-            this.logintoken = "";
-            this.fullusername = "";
-            this.shortusername = "";
-            this.explicitusername = "";
-            console.log("---> User loged out B")
-              alert(this.translate.instant('USER.LOGGED_OUT', { nr: '2' }));
+            // Netzwerkfehler / Timeout
+            await this.loginBeiStoerungBehalten('2', JSON.stringify(err));
           })
           }
         }
@@ -169,6 +148,52 @@ export class UserstateService {
 
   }
 
+  /**
+   * Ist ChurchTools (z. B. wegen Wartung) nicht erreichbar, bleibt ein bestehender Login
+   * so lange gültig, bis die letzte erfolgreiche Prüfung länger als 12 Stunden her ist.
+   * So steht niemand wegen einer Wartung vor verschlossener Tür.
+   */
+  private static readonly LOGIN_KULANZ_MS = 12 * 60 * 60 * 1000;
+  private static readonly KEY_VERIFIED_AT = 'loginVerifiedAt';
+
+  private async merkeLoginGeprueft() {
+    await Preferences.set({key: UserstateService.KEY_VERIFIED_AT, value: String(Date.now())});
+  }
+
+  private async loginBeiStoerungBehalten(fehlerNr: string, grund: string) {
+    const result = await Preferences.get({key: UserstateService.KEY_VERIFIED_AT});
+    let geprueftAm = parseInt(result.value ?? '', 10);
+    if (isNaN(geprueftAm)) {
+      // Ältere App-Version ohne Zeitstempel: Kulanzzeit beginnt jetzt
+      geprueftAm = Date.now();
+      await this.merkeLoginGeprueft();
+    }
+    const alter = Date.now() - geprueftAm;
+    if (alter < UserstateService.LOGIN_KULANZ_MS) {
+      console.log("Login-Prüfung nicht möglich (" + grund + "), Login bleibt aktiv. Letzte Prüfung vor "
+        + Math.round(alter / 60000) + " Min.");
+      return;
+    }
+    console.log("---> User loged out (Login-Prüfung seit über 12h nicht möglich: " + grund + ")");
+    await this.loginVerwerfen(fehlerNr);
+  }
+
+  private async loginVerwerfen(fehlerNr: string) {
+    await Preferences.remove({key: 'currentUser'});
+    await Preferences.remove({key: UserstateService.KEY_VERIFIED_AT});
+    this.loggedin = false;
+    this.personid = 0;
+    this.isGebetLeiter = false;
+    this.hasTuerOeffner = false;
+    this.hasTuerOeffnerHN = false;
+    this.isMinistryTeam = false;
+    this.logintoken = "";
+    this.fullusername = "";
+    this.shortusername = "";
+    this.explicitusername = "";
+    alert(this.translate.instant('USER.LOGGED_OUT', { nr: fehlerNr }));
+  }
+
   /** Liest den Token aus einer Antwort der Form {"data": "<token>"} (Objekt oder JSON-Text). */
   private extractLoginToken(res: any): string {
     if (!res || res.status < 200 || res.status >= 300) {
@@ -196,6 +221,8 @@ export class UserstateService {
     }
     this.personid = personid;
     this.loggedin = true;
+    // Wird nur nach erfolgreicher Anmeldung bzw. Token-Prüfung aufgerufen
+    await this.merkeLoginGeprueft();
     console.log(">person id: "+personid)
     this.churchtools.getGroupsForLoggedInPerson(personid).then( (res)=>{
 
@@ -252,23 +279,34 @@ export class UserstateService {
     var isMinistryTeam = false;
 
     //console.log("foreach:");
-    res.data.data.forEach(async (element)=>{
+    // Rechte frisch aus den Gruppen ermitteln, damit auch entzogene Rechte übernommen werden.
+    // Bei Fehlerstatus (z. B. 503) oder unlesbarer Antwort bleiben die bisherigen Rechte erhalten.
+    const gruppen = (res?.status >= 200 && res?.status < 300 && Array.isArray(res?.data?.data)) ? res.data.data : null;
+    if (gruppen) {
+      this.hasTuerOeffner = false;
+      this.hasTuerOeffnerHN = false;
+      this.isGebetLeiter = false;
+      this.isMinistryTeam = false;
+    } else {
+      console.log("Gruppenliste nicht lesbar, behalte bisherige Rechte");
+    }
+    (gruppen || []).forEach((element)=>{
       //9=Zugang Gebetshaus
       //1135=Zugang Bauwagen Gebet Hohen Neuendorf
       //42=tagundnacht Gebetsleiter
       //52=Ministry Team
       //console.log(element.group);
 
-      if( "9" == element?.group.domainIdentifier ) { //9=Merkmal: Zugang Gebetsraum
+      if( "9" == element?.group?.domainIdentifier ) { //9=Merkmal: Zugang Gebetsraum
         this.hasTuerOeffner = true;
       }
-      if( "1135" == element?.group.domainIdentifier ) { //1135=Zugang Bauwagen Gebet Hohen Neuendorf
+      if( "1135" == element?.group?.domainIdentifier ) { //1135=Zugang Bauwagen Gebet Hohen Neuendorf
         this.hasTuerOeffnerHN = true;
       }
-      if( "42" == element?.group.domainIdentifier ) { //42=tagundnacht Gebetsleiter
+      if( "42" == element?.group?.domainIdentifier ) { //42=tagundnacht Gebetsleiter
         this.isGebetLeiter = true;
       }
-      if( "52" == element?.group.domainIdentifier ) { //52=Ministry Team
+      if( "52" == element?.group?.domainIdentifier ) { //52=Ministry Team
         this.isMinistryTeam = true;
       }
       /*
@@ -371,12 +409,13 @@ export class UserstateService {
     ;
 
   }).catch((err)=>{
-    this.isGebetLeiter = false;
-    this.hasTuerOeffner = false;
-    this.hasTuerOeffnerHN = false;
-    this.logintoken = "";
+    // Gruppen konnten nicht geladen werden (z. B. ChurchTools-Wartung).
+    // Bisherige Rechte und Token bleiben erhalten, damit der Türöffner weiter funktioniert.
     console.log("dropped here with error " + JSON.stringify(err));
-    alert(this.translate.instant('USER.LOGGED_OUT', { nr: '4' }));
+    if (username !== undefined && password !== undefined) {
+      // Nur bei einer frischen Anmeldung melden; beim App-Start stillschweigend weiterarbeiten.
+      alert(this.translate.instant('USER.LOGGED_OUT', { nr: '4' }));
+    }
   });
   await Preferences.set({key: 'currentUser', value: JSON.stringify({personid: this.personid, fullusername: this.fullusername,
     isGebetLeiter:this.isGebetLeiter,
@@ -595,6 +634,7 @@ public removeLocalSermon(fname) {
     this.explicitusername = "";
     await Preferences.remove({key: 'currentUser'});
     await Preferences.remove({key: 'usertoken'});
+    await Preferences.remove({key: UserstateService.KEY_VERIFIED_AT});
     await Preferences.remove({key: 'CheckinDataStorage'});
     await this.campusService.zuruecksetzen();
     console.log("user has been logged out");
