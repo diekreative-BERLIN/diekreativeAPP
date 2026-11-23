@@ -1,6 +1,6 @@
 .text {
     position: relative;
-    color: #777777;
+    color: var(--dk-text);
     font-family: 'Lato bold';
     text-align: center;
     font-style: bold;
@@ -16,7 +16,7 @@
     background-color: #03fd039e;
 }
 .status3g_false {
-    background-color: white;
+    background-color: var(--dk-surface);
 }
 
 .nav_fwd {
@@ -37,7 +37,7 @@
 
 .text2 {
     position: relative;
-    color: #777777;
+    color: var(--dk-text);
     font-family: 'Lato bold';
     text-align: center;
     font-style: bold;
@@ -46,7 +46,7 @@
 
 .text3 {
     position: relative;
-    color: #777777;
+    color: var(--dk-text);
     font-family: 'Lato bold';
     text-align: center;
     font-style: bold;

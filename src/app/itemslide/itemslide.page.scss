@@ -13,7 +13,7 @@ h1.ueberuns-text {
     font: Bold 27px/27px Lato;
     letter-spacing: 2.02px;
     text-transform: uppercase;
-    color: #003D58;
+    color: var(--dk-heading);
     opacity: 1;
 
 }
@@ -60,7 +60,8 @@ h1.ueberuns-text {
     opacity: 1; 
 }
 
-.pfeil {
+// nur auf dieser Seite (ViewEncapsulation.None macht das CSS global)
+app-itemslide .pfeil {
     position: absolute;
     top: 110px;
     left: 31px;
@@ -78,12 +79,12 @@ h1.ueberuns-text {
     font-family: 'Source Sans Pro';
     font-weight: 400;
     font-style: normal;
-    //color: #474747;
+    //color: var(--dk-text-strong);
     font-size: 16;
 }
 
 .swap {
-    background-color: #003D58;
+    background-color: var(--ion-color-primary);
     font-family: 'Source Sans Pro';
     font-style: normal;
     font-weight: 600;

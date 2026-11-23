@@ -13,7 +13,7 @@ h1.ueberuns-text {
     font: Bold 27px/27px Lato;
     letter-spacing: 2.02px;
     text-transform: uppercase;
-    color: #003D58;
+    color: var(--dk-heading);
     opacity: 1;
 
 }
@@ -52,7 +52,8 @@ h1.ueberuns-text {
     opacity: 1; 
 }
 
-.pfeil {
+// nur auf dieser Seite (ViewEncapsulation.None macht das CSS global)
+app-tun-takewatches .pfeil {
     position: absolute;
     top: 110px;
     left: 31px;

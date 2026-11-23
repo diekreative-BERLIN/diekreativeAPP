@@ -30,6 +30,29 @@
         </ion-radio-group>
       </div>
     </ion-accordion>
+    <ion-accordion value="darstellung">
+      <ion-item slot="header" color="light">
+        <ion-icon name="contrast-outline" slot="start"></ion-icon>
+        <ion-label>{{ 'SETTINGS.APPEARANCE' | translate }}</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <p class="hinweis">{{ 'SETTINGS.APPEARANCE_HINT' | translate }}</p>
+        <ion-radio-group [value]="darstellungWahl" (ionChange)="darstellungGewaehlt($event)">
+          <ion-item>
+            <ion-label>{{ 'SETTINGS.APPEARANCE_AUTO' | translate }}</ion-label>
+            <ion-radio slot="start" value="auto"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>{{ 'SETTINGS.APPEARANCE_LIGHT' | translate }}</ion-label>
+            <ion-radio slot="start" value="hell"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>{{ 'SETTINGS.APPEARANCE_DARK' | translate }}</ion-label>
+            <ion-radio slot="start" value="dunkel"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </div>
+    </ion-accordion>
     <ion-accordion value="standort">
       <ion-item slot="header" color="light">
         <ion-label>{{ 'SETTINGS.LOCATION' | translate }}</ion-label>

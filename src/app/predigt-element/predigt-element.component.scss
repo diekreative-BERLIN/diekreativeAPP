@@ -15,7 +15,7 @@
 }
 
 .predigttitel{
-    color: #777777;
+    color: var(--dk-text);
     font-family: 'Source Sans Pro';
     font-style: normal;
     font-weight: 600;
@@ -23,7 +23,7 @@
     font-size: 14px;
 }
 .title {
-    color: #1E3653;
+    color: var(--dk-heading-alt);
     font-family: 'Source Sans Pro';
     font-style: normal;
     font-weight: 700;
@@ -32,7 +32,7 @@
     white-space: break-spaces;
 }
 div {
-    color: #777777;
+    color: var(--dk-text);
     font-family: 'Source Sans Pro';
     font-style: normal;
     font-weight: 400;
@@ -76,7 +76,7 @@ div {
 }
 .ion-color-primary {
     //424242
-    --ion-color-base: #1E3653 !important;
+    --ion-color-base: var(--dk-heading-alt) !important;
 }
 
 .ion-color-secondary {
@@ -92,8 +92,8 @@ div {
     margin: 10px 2%;
     padding: 3px;
     text-align: center;
-    background-color: #f4f4f4;
-    border: 1px solid #dcdcdc;
+    background-color: var(--dk-surface-soft);
+    border: 1px solid var(--dk-border-soft);
     color: #fff;
     border-radius: 20px;
 }

@@ -22,6 +22,7 @@ import { GdCheckinPageModule } from './gd-checkin/gd-checkin.module';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { SpracheService, StatischerTranslateLoader } from './sprache.service';
+import { DarstellungService } from './darstellung.service';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 registerLocaleData(localeDe, 'de');
@@ -48,6 +49,12 @@ registerLocaleData(localeDe, 'de');
       provide: APP_INITIALIZER,
       useFactory: (sprache: SpracheService) => () => sprache.init(),
       deps: [SpracheService],
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (darstellung: DarstellungService) => () => darstellung.init(),
+      deps: [DarstellungService],
       multi: true
     },
     HttpClientModule,

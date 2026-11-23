@@ -1,6 +1,6 @@
 
 .tagundnacht-title {
-    box-shadow: 0px 3px 6px #00000029;
+    box-shadow: 0px 3px 6px var(--dk-shadow);
     width:100%; 
     height:209px; 
     background-image: url('../../assets/headerimages/Header_Unterseiten_MINISTRYTEAM.jpg'); 
@@ -32,7 +32,7 @@
     text-align: left;
     font: Regular 14px/18px Source Sans Pro;
     letter-spacing: 0px;
-    color: #777777;
+    color: var(--dk-text);
     opacity: 1;
 }
 
@@ -65,7 +65,7 @@ ion-button {
     font-weight: 400;
     //font: normal normal normal 14px/18px Source Sans Pro;
     letter-spacing: 0px;
-    //color: #777777;
+    //color: var(--dk-text);
     font-size: 14px;
 }
 

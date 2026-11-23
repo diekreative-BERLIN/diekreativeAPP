@@ -1,6 +1,6 @@
 
 .gottesdienst-title {
-    box-shadow: 0px 3px 6px #00000029;
+    box-shadow: 0px 3px 6px var(--dk-shadow);
     width:100%; 
     height:209px; 
     background-image: url('../../assets/headerimages/Header_Unterseiten_GOTTESDIENST.jpg');   
@@ -23,7 +23,7 @@ h1.gottesdienst-text {
     margin-left: 26%;
     font: Bold var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-lato);
     letter-spacing: var(--unnamed-character-spacing-1-5);
-    color: #003D58;
+    color: var(--dk-heading);
     text-align: left;
     font-family:  Lato;
     font-size: 27px;
@@ -42,7 +42,7 @@ h2.gottesdienst-text {
     text-align: left;
     font: Bold 20px/27px Lato;
     letter-spacing: 1.5px;
-    color: #777777;
+    color: var(--dk-text);
     opacity: 1;
 }
 
@@ -59,14 +59,14 @@ p.gottesdienst-text {
     font-size:15px;
     letter-spacing: 0px;
     font-weight:450!important;
-    color: #707070;
+    color: var(--dk-text-soft);
     opacity: 1;
     line-height: normal;
 }
 
 
 .gottesdienst-icon {
-    color:#1E3653;
+    color:var(--dk-heading-alt);
     margin-left:6%;
     white-space:normal;
     white-space:nowrap;
@@ -92,13 +92,14 @@ p.gottesdienst-text {
     font-size:15px;
     letter-spacing: 0px;
     font-weight:450!important;
-    color: #707070;
+    color: var(--dk-text-soft);
     opacity: 1;
     line-height: normal;
 }
 
 
-.pfeil {
+// nur auf dieser Seite (ViewEncapsulation.None macht das CSS global)
+app-gottesdienste .pfeil {
     position: absolute;
     top: 280px;
     left: -30px;
@@ -113,7 +114,7 @@ p.gottesdienst-text {
     font-style: normal;
     font-weight: 700;
     text-transform: uppercase;
-    color: #1E3653;
+    color: var(--dk-heading-alt);
     font-size: 15px;
     padding-left: 20px;
     margin-right: 6%;
@@ -126,7 +127,7 @@ p.gottesdienst-text {
     font-style: normal;
     font-weight: 400;
     letter-spacing: 0px;
-    color: #777777;
+    color: var(--dk-text);
 }
 .gd-header {
     padding-top: 15px;
@@ -136,7 +137,7 @@ ion-card-content {
     font-size: 14px;
 }
 .gd-date {
-    color: #070707;
+    color: var(--dk-ink);
     font-size: 16px;
 }
 
@@ -152,12 +153,12 @@ ion-card-content {
   }
   
   .mat-expansion-panel-header-title {
-    //color: #1E3653;
+    //color: var(--dk-heading-alt);
     font-family: 'Source Sans Pro';
     font-style: normal;
     font-weight: 700;
     //font-size: 15px;
-    color: #070707;
+    color: var(--dk-ink);
     font-size: 16px;
   }
   .example-headers-align .mat-expansion-panel-header-description {
@@ -176,7 +177,7 @@ ion-card-content {
     font-weight: 700;
     //font: normal normal bold 16px/20px Source Sans Pro;
     letter-spacing: 0px;
-    color: #474747;
+    color: var(--dk-text-strong);
     //text-transform: uppercase;
 }
 .ng-star-inserted {
@@ -185,7 +186,7 @@ ion-card-content {
     font-weight: 400;
     //font: normal normal normal 14px/18px Source Sans Pro;
     letter-spacing: 0px;
-    color: #777777;
+    color: var(--dk-text);
 }
 //kein Schatten und nur einfache Linie zwischen den Expansion Elementen
 /*
@@ -218,7 +219,7 @@ ion-card-content {
     font-size: 14px;
     letter-spacing: 0px;
     font-weight: 450 !important;
-    color: #707070;
+    color: var(--dk-text-soft);
     line-height: normal;
 }
 
@@ -276,7 +277,7 @@ display: table;
 margin-left: -1px;
 */
 .watchLinks {
-    border: 1px solid #ECEEEF;
+    border: 1px solid var(--dk-border-soft);
 }
 /*
 .watchLinksHeader {
@@ -284,7 +285,7 @@ margin-left: -1px;
     font-size: 14px;
     letter-spacing: 0px;
     font-weight: 450 !important;
-    color: #707070;
+    color: var(--dk-text-soft);
     line-height: 30px;
     text-transform: uppercase;
     padding-left: 10px;
@@ -294,7 +295,7 @@ margin-left: -1px;
     font-size: 14px;
     letter-spacing: 0px;
     font-weight: 450 !important;
-    color: #707070;
+    color: var(--dk-text-soft);
     line-height: normal;
     //text-align: right;
 }

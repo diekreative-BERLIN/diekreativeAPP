@@ -13,7 +13,7 @@ h1.ueberuns-text {
         font: Bold 27px/27px Lato;
         letter-spacing: 2.02px;
         text-transform: uppercase;
-        color: #003D58;
+        color: var(--dk-heading);
         opacity: 1;
     
     }
@@ -22,7 +22,7 @@ h1.ueberuns-text {
         position: absolute;
         top: 10px;
         left: 5px;
-        color: #003e588a;
+        color: var(--dk-text-muted);
     }
     
     .positionierung {

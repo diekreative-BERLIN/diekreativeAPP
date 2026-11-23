@@ -5,7 +5,7 @@ ion-slides {
 
   .shadow {
     margin-bottom:5%;
-    -moz-box-shadow:    0px 3px 6px #00000029;
-    -webkit-box-shadow: 0px 3px 6px #00000029;
-    box-shadow: 0px 3px 6px #00000029;
+    -moz-box-shadow:    0px 3px 6px var(--dk-shadow);
+    -webkit-box-shadow: 0px 3px 6px var(--dk-shadow);
+    box-shadow: 0px 3px 6px var(--dk-shadow);
   }

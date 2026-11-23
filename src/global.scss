@@ -35,6 +35,15 @@ $app-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($app-theme);
 
+// Dunkles Material-Theme (nur Farben) – aktiv, wenn body.dark gesetzt ist
+$app-dark-theme: mat.define-dark-theme((
+  color: (
+    primary: $app-primary,
+    accent: $app-accent,
+    warn: $app-warn,
+  )
+));
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -101,7 +110,9 @@ $app-theme: mat.define-light-theme((
 body { 
   text-align: left;
   letter-spacing: 0px;
-  color: #777777;
+  color: var(--dk-text);
+  // expliziter Hintergrund, sonst scheint bei transparentem Header die Systemfarbe durch
+  background: var(--ion-background-color, #fff);
   opacity: 1;
   font: normal normal normal 14px/18px Source Sans Pro;
  }
@@ -140,3 +151,27 @@ ion-app {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/*
+ * Dunkelmodus – globale Anpassungen
+ * ----------------------------------------------------------------------------
+ * Die Farbvariablen stehen in theme/variables.scss (body.dark).
+ */
+body.dark {
+  @include mat.all-component-colors($app-dark-theme);
+
+  // Dunkelblaue Grafiken (Logo, Pfeile, Kreuze, Punkte) aufhellen
+  #logo,
+  img[src*="_blue"] {
+    filter: invert(1) hue-rotate(180deg);
+  }
+
+  // Ionic-Elemente mit color="primary" als Text/Icon wären auf dunklem Grund kaum lesbar
+  ion-label.ion-color-primary,
+  ion-text.ion-color-primary,
+  ion-icon.ion-color-primary {
+    --ion-color-base: var(--dk-heading) !important;
+  }
+}
+

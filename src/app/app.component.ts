@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 //import { ConnectivityService } from './connectivity.service';
 import { AlertController } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { StatusBar, Style } from '@capacitor/status-bar';
+import { DarstellungService } from './darstellung.service';
 import { Network } from '@capacitor/network';
 import { EmailComposer, OpenOptions } from 'capacitor-email-composer'
 //import { DefaultWebViewOptions, InAppBrowser } from '@capacitor/inappbrowser';
@@ -34,7 +34,8 @@ export class AppComponent implements OnInit {
     public userState: UserstateService,
     private router: Router,
     public alertController: AlertController,
-    private kursplattform: KursplattformService
+    private kursplattform: KursplattformService,
+    private darstellung: DarstellungService
   ) {
     console.log('app.component -> es geht los!');
     this.initializeApp();
@@ -55,12 +56,8 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(
       () => {
         SplashScreen.hide().then(() => {
-          //status bar
-          if(this.platform.is('android')) {
-            //white background and black text
-            StatusBar.setBackgroundColor({color: '#ffffff'});
-          } 
-          StatusBar.setStyle({style: Style.Default});
+          //status bar: hell oder dunkel je nach Darstellung
+          this.darstellung.statusBarAnpassen();
         });
         }
       );

@@ -1,6 +1,6 @@
 
 //import Material theme
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+// Material-Theme kommt aus global.scss (ein Import hier würde wegen ViewEncapsulation.None die ganze App überschreiben)
 //Material stuff
 .example-action-buttons {
     padding-bottom: 20px;
@@ -12,7 +12,7 @@
   }
   
   .mat-expansion-panel-header-title {
-    color: #1E3653;
+    color: var(--dk-heading-alt);
     font-family: 'Source Sans Pro';
     font-style: normal;
     font-weight: 700;
@@ -34,7 +34,7 @@
     font-weight: 400;
     //font: normal normal bold 16px/20px Source Sans Pro;
     letter-spacing: 0px;
-    color: #474747;
+    color: var(--dk-text-strong);
     text-transform: uppercase;
 }
 .ng-star-inserted {
@@ -43,13 +43,13 @@
     font-weight: 400;
     //font: normal normal normal 14px/18px Source Sans Pro;
     letter-spacing: 0px;
-    color: #777777;
+    color: var(--dk-text);
 }
 
 //kein Schatten und nur einfache Linie zwischen den Expansion Elementen
 .mat-expansion-panel:not([class*='mat-elevation-z']) {
     box-shadow: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+    border-bottom: 1px solid var(--dk-border);
     border-radius: 0px !important;
 }
 //kein Abstand zwischen den Expansion Elementen
@@ -86,7 +86,7 @@ div {
   margin-right: 14px;
   margin-top: 20px;
   margin-bottom: 20px;
-  color: #474747;
+  color: var(--dk-text-strong);
 }
 
 //logo in center

@@ -8,6 +8,7 @@ import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Subscription } from 'rxjs';
 import { Campus, CampusService } from '../campus.service';
 import { SprachWahl, SpracheService } from '../sprache.service';
+import { DarstellungService, DarstellungWahl } from '../darstellung.service';
 import { TranslateService } from '@ngx-translate/core';
 
 const MEDIA_FOLDER_NAME = 'temp_files';
@@ -25,6 +26,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   campusse: Campus[] = [];
   aktiverCampusId: number | null = null;
   sprachWahl: SprachWahl = 'auto';
+  darstellungWahl: DarstellungWahl = 'auto';
   private campusAbos: Subscription[] = [];
   public isDisabled = true;
   cachefiles = [];
@@ -40,6 +42,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     private pickerCtrl: PickerController,
     private campusService: CampusService,
     private sprache: SpracheService,
+    private darstellung: DarstellungService,
     private translate: TranslateService
   ) {
     //this.form = this.form.concat(this.userState.AppHomescreen);
@@ -52,7 +55,8 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.campusAbos.push(
       this.campusService.campusse.subscribe((liste) => this.campusse = liste),
       this.campusService.aktiverCampusId.subscribe((id) => this.aktiverCampusId = id),
-      this.sprache.wahl.subscribe((wahl) => this.sprachWahl = wahl)
+      this.sprache.wahl.subscribe((wahl) => this.sprachWahl = wahl),
+      this.darstellung.wahl.subscribe((wahl) => this.darstellungWahl = wahl)
     );
   }
 
@@ -69,6 +73,15 @@ export class SettingsPage implements OnInit, OnDestroy {
     const wahl = ev.detail.value as SprachWahl;
     if (wahl && wahl !== this.sprachWahl) {
       this.sprache.setze(wahl);
+    }
+  }
+
+  // Darstellung (Hell/Dunkel)
+
+  darstellungGewaehlt(ev: any) {
+    const wahl = ev.detail.value as DarstellungWahl;
+    if (wahl && wahl !== this.darstellungWahl) {
+      this.darstellung.setze(wahl);
     }
   }
 

@@ -1,5 +1,5 @@
 .title {
-    box-shadow: 0px 3px 6px #00000029;
+    box-shadow: 0px 3px 6px var(--dk-shadow);
     width:100%; 
     height:209px; 
     background-image: url('../../assets/headerimages/Header_Unterseiten_ERLEBT.jpg'); 
@@ -29,7 +29,7 @@ h1.text {
     margin-left: 26%;
     font: Bold var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-lato);
     letter-spacing: var(--unnamed-character-spacing-1-5);
-    color: #003D58;
+    color: var(--dk-heading);
     text-align: left;
     font-family:  Lato;
     font-size: 27px;
@@ -46,7 +46,7 @@ h2.text {
     text-align: left;
     font: Bold 20px/27px Lato;
     letter-spacing: 1.5px;
-    color: #777777;
+    color: var(--dk-text);
     opacity: 1;
 }
 
@@ -59,12 +59,13 @@ p.text {
     font-size:15px;
     letter-spacing: 0px;
     font-weight:450!important;
-    color: #707070;
+    color: var(--dk-text-soft);
     opacity: 1;
     line-height: normal;
 }
 
-.pfeil {
+// nur auf dieser Seite (ViewEncapsulation.None macht das CSS global)
+app-erlebt .pfeil {
     position: absolute;
     top: 46%;
     left: -8.4%;
@@ -106,7 +107,7 @@ p.text {
     font-family: Lato;
     font-size: 14px;
     font: Lato 14px/18px Lato;
-    color: #777777;
+    color: var(--dk-text);
     padding-top: 25px;
 }
 .input_use {
@@ -115,12 +116,12 @@ p.text {
 .ask_use {
   font-family: Lato;
   font-size: 14px;
-  color: #777777;
+  color: var(--dk-text);
 }
 .check {
   font-family: Lato;
   font-size: 12px;
-  color: #777777;
+  color: var(--dk-text);
   line-height: 10px!important;
   margin-right: 10px;
 }

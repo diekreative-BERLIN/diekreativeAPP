@@ -1,6 +1,6 @@
     .ueber-uns-title {
 
-        box-shadow: 0px 3px 6px #00000029;
+        box-shadow: 0px 3px 6px var(--dk-shadow);
         width:100%; 
         height:209px; 
         background-image: url('../../assets/headerimages/Header_Unterseiten_UEBER-UNS.jpg'); 
@@ -30,7 +30,7 @@
         text-align: left;
         font: Bold 27px/27px Lato;
         letter-spacing: 2.02px;
-        color: #003D58;
+        color: var(--dk-heading);
         opacity: 1;
     }
     
@@ -44,7 +44,7 @@
         font-weight: 600px;
         font: Bold 20px/27px Lato;
         letter-spacing: 1.5px;
-        color: #777777;
+        color: var(--dk-text);
         opacity: 1;
     }
     
@@ -55,7 +55,7 @@
         text-align: left;
         font: Bold 20px/27px Lato;
         letter-spacing: 1.5px;
-        color: #777777;
+        color: var(--dk-text);
         opacity: 1;
     }
     
@@ -70,7 +70,7 @@
         text-align: left;
         font: Regular 14px/18px Source Sans Pro;
         letter-spacing: 0px;
-        color: #707070;
+        color: var(--dk-text-soft);
         opacity: 1;
     }
 
@@ -98,7 +98,8 @@
     position: absolute;
 }
 
-.pfeil {
+// nur auf dieser Seite (ViewEncapsulation.None macht das CSS global)
+app-aboutus .pfeil {
     position: absolute;
     top: 351px;
     left: 318px;
@@ -124,7 +125,7 @@
     font: SemiBold 14px/18px Source Sans Pro;
     font-weight: 600;
     letter-spacing: 0px;
-    color: #777777;
+    color: var(--dk-text);
 }
 
 #text{
@@ -150,7 +151,7 @@
 
 
 //import Material theme
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+// Material-Theme kommt aus global.scss (ein Import hier würde wegen ViewEncapsulation.None die ganze App überschreiben)
 //Material stuff
 .example-action-buttons {
     padding-bottom: 20px;
@@ -162,7 +163,7 @@
   }
   
   .mat-expansion-panel-header-title {
-    color: #1E3653;
+    color: var(--dk-heading-alt);
     font-family: 'Source Sans Pro';
     font-style: normal;
     font-weight: 700;
@@ -184,7 +185,7 @@
     font-weight: 700;
     //font: normal normal bold 16px/20px Source Sans Pro;
     letter-spacing: 0px;
-    color: #474747;
+    color: var(--dk-text-strong);
     text-transform: uppercase;
 }
 .ng-star-inserted {
@@ -193,12 +194,12 @@
     font-weight: 400;
     //font: normal normal normal 14px/18px Source Sans Pro;
     letter-spacing: 0px;
-    color: #777777;
+    color: var(--dk-text);
 }
 //kein Schatten und nur einfache Linie zwischen den Expansion Elementen
 .mat-expansion-panel:not([class*='mat-elevation-z']) {
     box-shadow: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+    border-bottom: 1px solid var(--dk-border);
     border-radius: 0px !important;
 }
 //kein Abstand zwischen den Expansion Elementen

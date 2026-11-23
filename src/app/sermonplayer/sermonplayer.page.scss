@@ -85,7 +85,7 @@ ion-content {
       }
       
       .darkColor {
-        color: black !important;
+        color: var(--dk-ink) !important;
         font-size: 32px;
         margin-left: 3px;
       }
