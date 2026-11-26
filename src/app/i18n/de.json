@@ -89,6 +89,9 @@
   },
   "DOOR": {
     "CHECKING": "Standort wird geprüft…",
+    "FAILED": "Tür konnte nicht geöffnet werden",
+    "NO_TOKEN": "Deine Anmeldung ist unvollständig. Bitte melde dich ab und wieder an, dann funktioniert der Türöffner wieder.",
+    "SERVER_REJECTED": "Der Türserver hat die Anfrage abgelehnt. Bitte melde dich ab und wieder an.",
     "NOT_ON_SITE": "Nicht vor Ort",
     "TOO_FAR": "Du bist ca. {{distanz}} von {{ort}} entfernt. Die Tür kann nur direkt vor Ort geöffnet werden.",
     "NO_LOCATION": "Dein Standort konnte nicht ermittelt werden. Bitte erlaube der App den Zugriff auf deinen Standort und schalte die Ortung ein.",

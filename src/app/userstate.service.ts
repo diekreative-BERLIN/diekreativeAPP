@@ -100,6 +100,8 @@ export class UserstateService {
             console.log("Login With token: of person "+this.personid+" res status: "+res?.status);
             if(res.status == 200){
               await this.userLoginSuccessful(this.personid);
+              // Ohne Logintoken funktioniert der Türöffner nicht -> ggf. nachladen
+              await this.stelleLoginTokenSicher();
             } else if (res.status == 401 || res.status == 403) {
               // ChurchTools lehnt das Token ausdrücklich ab -> wirklich ausloggen
               console.log("---> User loged out A (Token abgelehnt, Status " + res.status + ")");
@@ -205,6 +207,28 @@ export class UserstateService {
     }
     const token = body?.data;
     return (typeof token === 'string' && token.length > 0) ? token : "";
+  }
+
+  /**
+   * Stellt sicher, dass ein Logintoken vorhanden ist (wird z. B. vom Türöffner gebraucht).
+   * Fehlt er, wird er über die ChurchTools-Sitzung der App nachgeladen und gespeichert.
+   * @returns true, wenn danach ein Token vorhanden ist
+   */
+  public async stelleLoginTokenSicher(): Promise<boolean> {
+    if (this.logintoken) { return true; }
+    if (!this.loggedin || !this.personid) { return false; }
+    try {
+      const token = this.extractLoginToken(await this.churchtools.getLoginTokenViaSession(this.personid));
+      if (token) {
+        this.logintoken = token;
+        await Preferences.set({key: 'usertoken', value: JSON.stringify({logintoken: token})});
+        console.log("logintoken nachgeladen");
+        return true;
+      }
+    } catch (e) {
+      console.log("logintoken: Nachladen fehlgeschlagen", e);
+    }
+    return false;
   }
 
   public async userLoginSuccessful(personid,username?,password?){

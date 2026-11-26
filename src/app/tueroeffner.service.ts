@@ -53,8 +53,34 @@ export class TueroeffnerService {
   private PRAY_API_SERVER_token = environment.prayerapitoken;
   private HN_API_SERVER_token = environment.tokenHN;
 
+  private async zeigeFehler(textKey: string) {
+    const alert = await this.alertCtrl.create({
+      header: this.translate.instant('DOOR.FAILED'),
+      message: this.translate.instant(textKey),
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  /** Der Türserver (Schivelbeiner) braucht den Logintoken; ohne ihn antwortet er nur mit "null". */
+  private async mitLoginToken(senden: () => Promise<any>) {
+    if (!(await this.userstate.stelleLoginTokenSicher())) {
+      console.log("Türöffner: kein Logintoken vorhanden");
+      await this.zeigeFehler('DOOR.NO_TOKEN');
+      return;
+    }
+    return senden();
+  }
+
+  /** Antwort des Türservers prüfen: "null" bedeutet abgelehnt (z. B. ungültiger Token). */
+  private async pruefeAntwort(res: any) {
+    if (res?.status !== 200 || res?.data === null || res?.data === undefined) {
+      await this.zeigeFehler('DOOR.SERVER_REJECTED');
+    }
+  }
+
   public openFrontDoor(){
-    return this.nurVorOrt('schivelbeiner', () => this.sendFrontDoor());
+    return this.nurVorOrt('schivelbeiner', () => this.mitLoginToken(() => this.sendFrontDoor()));
   }
 
   private sendFrontDoor(){
@@ -71,13 +97,14 @@ export class TueroeffnerService {
     };
     return CapacitorHttp.post(options).then((res)=>{
       console.log("response frontdoor" + JSON.stringify(res));
+      return this.pruefeAntwort(res);
     }).catch((err)=>{
       console.log("error frontdoor " + JSON.stringify(err));
     });
   }
 
   public openSecondDoor(){
-    return this.nurVorOrt('schivelbeiner', () => this.sendSecondDoor());
+    return this.nurVorOrt('schivelbeiner', () => this.mitLoginToken(() => this.sendSecondDoor()));
   }
 
   private sendSecondDoor(){
@@ -90,6 +117,7 @@ export class TueroeffnerService {
         token:this.PRAY_API_SERVER_token}
       }).then((res)=>{
         console.log("response second door " + JSON.stringify(res));
+        return this.pruefeAntwort(res);
       }).catch((err)=>{
         console.log("error second door " + JSON.stringify(err));
       });

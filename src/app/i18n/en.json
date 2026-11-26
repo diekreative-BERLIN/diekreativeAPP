@@ -89,6 +89,9 @@
   },
   "DOOR": {
     "CHECKING": "Checking location…",
+    "FAILED": "Door could not be opened",
+    "NO_TOKEN": "Your login is incomplete. Please log out and log in again to use the door opener.",
+    "SERVER_REJECTED": "The door server rejected the request. Please log out and log in again.",
     "NOT_ON_SITE": "Not on site",
     "TOO_FAR": "You are about {{distanz}} away from {{ort}}. The door can only be opened on site.",
     "NO_LOCATION": "Your location could not be determined. Please allow the app to access your location and turn on location services.",
