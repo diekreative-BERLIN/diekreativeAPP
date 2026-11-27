@@ -399,6 +399,9 @@ export class ChurchapiService {
     return CapacitorHttp.get({url:this.REST_API_SERVER+'/'+request});
   }
 
+  // 2026-11-27: QR-Checkin ist seit Nov. 2022 abgeschaltet und die Endpunkte /checkin/validity und
+  // /checkin/familyqr gibt es in der API (dkApp_watches) nicht -> Aufrufe auskommentiert.
+  /*
   /////////////////// Get validity of certificate /////
   public getCheckValidity(personid){
     var request = "personHash"+'='+Md5.hashStr( String(personid) ); //pass personID as string
@@ -410,6 +413,7 @@ export class ChurchapiService {
     var request = "groupID="+groupid+"&personID="+personid;
     return CapacitorHttp.get({url:this.PRAY_API_SERVER+"/checkin/familyqr"+'/?'+request,headers:{token:this.PRAY_API_SERVER_token}});
   }
+  */
 
 }
 

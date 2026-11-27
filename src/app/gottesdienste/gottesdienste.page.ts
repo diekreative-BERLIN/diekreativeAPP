@@ -280,11 +280,13 @@ async checkin(){
       } else {
 
         //query new validity (but only if we're online)
+        // 2026-11-27: /checkin/validity gibt es in der API nicht (QR-Checkin abgeschaltet) -> auskommentiert
+        /*
         if (this.userState.isOnline) {
           //get validity from db and compare wit timestamp !!with async/await!!
           await this.churchtools.getCheckValidity(zeile.personid).then((result)=>{
             ablauf = this.momentjs(JSON.stringify(JSON.parse(result.data)), "YYYYMMDD H:mm:ss").format("X");
-            
+
             //console.log('validity neu ausgelesen: '+ablauf);
             if (timestampLocal < ablauf && ablauf != 'Invalid date') {
               is3gok = true;
@@ -292,6 +294,7 @@ async checkin(){
             }
           });
         }
+        */
 
       }
 
@@ -509,11 +512,14 @@ async checkin(){
     //4. loop through current tempFamilyData and get validity for entries which have a valid qrcode
     for (var i=0; i < tempFamilyData.length; i++) {
       if (tempFamilyData[i].qrcode != '') {
+        // 2026-11-27: /checkin/validity gibt es in der API nicht (QR-Checkin abgeschaltet) -> auskommentiert
+        /*
         let ablauf = '';
         await this.churchtools.getCheckValidity(tempFamilyData[i].personid).then((result)=>{
           ablauf = this.momentjs(result.data, "YYYYMMDD H:mm:ss").format("X");
           tempFamilyData[i].validity = ablauf;
         })
+        */
         this.familyQRdata.push(tempFamilyData[i]);
       }
     }
@@ -527,6 +533,10 @@ async checkin(){
     console.log('get qr code for whole family..'+number+' (personID '+this.personid+', groupID '+this.groupid+')');
     this.familyQRdata = [];
 
+    // 2026-11-27: /checkin/familyqr gibt es in der API nicht (QR-Checkin abgeschaltet) -> auskommentiert.
+    // Der Aufruf lief bisher immer in den Fehlerfall, daher hier direkt dessen Ergebnis:
+    this.AppPageGoDiQRcheckinCode = "false";
+    /*
     await this.churchtools.getFamilyQRcodes(this.personid, this.groupid).then((result)=>{
       console.log(result);
       let tempdata = result.data;
@@ -538,6 +548,7 @@ async checkin(){
       console.log("Error getting FamilyQRcode"+JSON.stringify(err));
       this.AppPageGoDiQRcheckinCode = "false";
     })
+    */
 
   }
 
